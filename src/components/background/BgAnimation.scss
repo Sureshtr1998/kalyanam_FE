@@ -1,0 +1,65 @@
+.bg-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background: 
+    url('../../assets/bg_dark.png');
+}
+
+
+/* Floating Deepa and Om */
+.floating-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+
+.floating {
+  position: absolute;
+  bottom: 0px; /* start below the container */
+  font-size: 2rem;
+  opacity: 0.8;
+  animation: floatUp linear infinite;
+}
+
+.floating.om {
+  color: #ff9900;
+  font-size: 2.5rem;
+}
+
+.floating.raam {
+  color: #ff6600; /* choose a distinct orange */
+  font-size: 2.2rem;
+  font-weight:200;
+}
+
+/* Random positions and durations */
+.floating:nth-child(1) { left: 5%; animation-duration: 8s; }
+.floating:nth-child(2) { left: 25%; animation-duration: 10s; }
+.floating:nth-child(3) { left: 55%; animation-duration: 12s; }
+.floating:nth-child(4) { left: 75%; animation-duration: 9s; }
+.floating:nth-child(5) { left: 95%; animation-duration: 7s; }
+
+
+/* Animation keyframes */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50vh) scale(1);
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.8);
+    opacity: 0;
+  }
+}

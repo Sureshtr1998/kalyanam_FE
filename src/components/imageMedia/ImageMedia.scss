@@ -1,0 +1,57 @@
+.image-upload-card {
+  padding: 1.5rem;
+  text-align: center;
+   background: transparent;
+    box-shadow: none;
+   min-width: 14rem;
+   border-radius: 1rem;
+   justify-self: center;
+  .image-upload-btn {
+    margin-bottom: 1rem;
+  }
+
+  .preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+
+  .preview-item {
+    position: relative;
+    width: 12rem;
+    min-width: 12rem;
+    height: 12rem;
+    overflow: hidden;
+    border: 2px solid goldenrod;
+    background-color: antiquewhite;
+    border-radius: 1rem;
+    align-content: center;
+    .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+
+      &:hover {
+        background: rgba(255, 0, 0, 1);
+      }
+    }
+  }
+}
+
+.p-image-preview-enter-done{
+    width: 35rem;
+  }

@@ -1,0 +1,30 @@
+.auth-content {
+ width: 24rem;
+ justify-self: center;
+ margin-top: 3rem;
+}
+
+.login_card{
+  border-radius: 1rem;
+  background-color: #f5e5d1;
+}
+
+.p-field {
+  background: transparent;
+  border: none; 
+  border-bottom: 2px solid orange;
+
+  &:focus {
+    border: none ;
+    box-shadow: none;
+    outline: none;
+  border-bottom: 2px solid orange;
+
+  }
+}
+
+.login-button{
+  background-color: orange;
+  width: 100%;
+  border-radius: 1rem;
+}
