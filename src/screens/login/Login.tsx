@@ -65,6 +65,12 @@ const Login = () => {
                             className="p-field"
                             placeholder="Email"
                             value={email}
+                            onKeyDown={(e) => {
+                                console.log("HEYYY")
+                                if (e.key === "Enter") {
+                                    loginUser();
+                                }
+                            }}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <div className="mt-4 w-full" />
@@ -73,6 +79,11 @@ const Login = () => {
                             type="password"
                             placeholder="Password"
                             value={password}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    loginUser();
+                                }
+                            }}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <div className="mt-8">

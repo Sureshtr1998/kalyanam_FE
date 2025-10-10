@@ -109,7 +109,6 @@ const Register = () => {
             });
             localStorage.setItem(user_login_token, res.data.token);
             navigate('/home');
-            console.log('Response:', res.data);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error(err);
@@ -124,7 +123,6 @@ const Register = () => {
 
     };
     const mediaFileHandler = (files: File[]) => {
-        console.log(files, "FILES")
         setImages(files)
     }
     return (

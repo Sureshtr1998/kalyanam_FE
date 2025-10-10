@@ -1,14 +1,14 @@
 import Topbar from "../../components/topbar/Topbar"
 
-const Home = () => {
+const Profile = () => {
 
     return <div>
 
         <Topbar />
         <div className="mt-32">
-            Welcome User
+            Profile
         </div>
     </div>
 }
 
-export default Home
+export default Profile

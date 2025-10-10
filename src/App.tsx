@@ -5,6 +5,8 @@ import Login from './screens/login/Login'
 import Register from './screens/register/Register'
 import Home from './screens/home/Home'
 import ProtectedRoute from './components/misc/ProtectedRoute'
+import Invitations from './screens/invitations/Invitations'
+import Profile from './screens/profile/Profile'
 
 
 const AppContent = () => {
@@ -27,6 +29,22 @@ const AppContent = () => {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invitations"
+            element={
+              <ProtectedRoute>
+                <Invitations />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

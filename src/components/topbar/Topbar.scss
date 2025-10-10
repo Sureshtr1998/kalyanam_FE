@@ -1,0 +1,42 @@
+.app-topbar {
+  background: linear-gradient(90deg, #f6d5ad,#fdc47e);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .app-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+  }
+
+  .p-button {
+    color: white;
+  }
+
+
+  .left-btn{
+    border-radius: 10px;
+    background-color: orange;
+  }
+
+  .topbar-avatar{
+    display: 'flex';
+    background-color: "transparent !important";
+    justify-content: 'flex-end';
+  }
+
+  .avatar-icon{
+    background-color: orange;
+  }
+}
+
+ .sidebar-filter{
+    background-color: #f5e5d1;
+  }
