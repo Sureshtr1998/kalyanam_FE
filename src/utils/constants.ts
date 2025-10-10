@@ -31,3 +31,31 @@ export const createdByOptions = [
     { label: 'Sibling', value: 'Sibling' },
     { label: 'Relative/Friend', value: 'Friend' },
 ];
+
+export const qualificationOptions = [
+    { label: "10th", value: "10th" },
+    { label: "12th", value: "12th" },
+    { label: "Diploma", value: "diploma" },
+    // Bachelor Degrees
+    { label: "B.Sc (Science)", value: "bsc" },
+    { label: "B.A (Arts)", value: "ba" },
+    { label: "B.Com (Commerce)", value: "bcom" },
+    { label: "B.Tech / B.E (Engineering)", value: "btech" },
+    { label: "BBA (Business Administration)", value: "bba" },
+    { label: "BCA (Computer Applications)", value: "bca" },
+
+    // Master Degrees
+    { label: "M.Sc (Science)", value: "msc" },
+    { label: "M.A (Arts)", value: "ma" },
+    { label: "M.Com (Commerce)", value: "mcom" },
+    { label: "M.Tech / M.E (Engineering)", value: "mtech" },
+    { label: "MBA (Business Administration)", value: "mba" },
+    { label: "MCA (Computer Applications)", value: "mca" },
+    { label: "PhD", value: "phd" },
+    { label: "Other", value: "other" }
+]
+
+
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export const user_login_token = 'kalyanam_token'

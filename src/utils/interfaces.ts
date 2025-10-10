@@ -1,6 +1,8 @@
 export interface RegisterForm {
     fullName: string;
     maritalStatus: string;
+    email: string;
+    qualification: string;
     password: string;
     subCaste: string;
     pincode: string;
@@ -11,4 +13,5 @@ export interface RegisterForm {
     motherTongue: string;
     dob: Date | null;
     profileCreatedBy: string;
+    images: string[]
 }

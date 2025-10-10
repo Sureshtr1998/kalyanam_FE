@@ -3,11 +3,16 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import BgAnimation from './components/background/BgAnimation'
 import Login from './screens/login/Login'
 import Register from './screens/register/Register'
+import Home from './screens/home/Home'
+import ProtectedRoute from './components/misc/ProtectedRoute'
+
 
 const AppContent = () => {
   const location = useLocation()
 
+
   const isAnimation = location.pathname === '/'
+
 
   return (
     <>
@@ -17,6 +22,14 @@ const AppContent = () => {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </>

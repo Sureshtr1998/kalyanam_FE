@@ -5,19 +5,21 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import './Register.scss';
-import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions } from '../../utils/constants';
+import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, user_login_token } from '../../utils/constants';
 import { Divider } from 'primereact/divider';
 import { InputMask } from 'primereact/inputmask';
 import type { RegisterForm } from '../../utils/interfaces';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import ImageMedia from '../../components/imageMedia/ImageMedia';
-
+import api from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
     const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
     const toast = useRef<Toast | null>(null);
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState<RegisterForm>({
         fullName: '',
@@ -32,6 +34,9 @@ const Register = () => {
         motherTongue: '',
         dob: null,
         profileCreatedBy: '',
+        email: '',
+        qualification: '',
+        images: []
     });
 
 
@@ -41,7 +46,7 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Check if all fields are filled
@@ -53,8 +58,7 @@ const Register = () => {
         setErrorMsgs([]);
 
         const newErrors: string[] = [];
-
-
+        if (!emailRegex.test(formData.email)) newErrors.push("Invalid Email.");
         if (formData.password !== formData.confirmPassword) {
             newErrors.push("The confirmation password must match your password.");
         }
@@ -74,19 +78,48 @@ const Register = () => {
                     severity: 'error',
                     summary: 'Validation Error',
                     detail: msg,
-                    life: 5000, // 5 seconds
+                    life: 3000, // 5 seconds
                 });
             });
             return;
         }
+        try {
+            const formPayload = new FormData();
 
-        toast.current?.show({
-            severity: 'success',
-            summary: 'Registration Successful',
-            detail: 'Your details have been submitted successfully!',
-            life: 5000,
-        });
+            // Append all fields
+            Object.entries(formData).forEach(([key, value]) => {
+                formPayload.append(key, value as string);
+            });
 
+            // Append images
+            images.forEach((file) => {
+                formPayload.append('images', file);
+            });
+
+            // Send request to backend
+            const res = await api.post('/user-register', formPayload, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+
+            toast.current?.show({
+                severity: 'success',
+                summary: 'Registration Successful',
+                detail: 'Your details have been submitted successfully!',
+                life: 3000,
+            });
+            localStorage.setItem(user_login_token, res.data.token);
+            navigate('/home');
+            console.log('Response:', res.data);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            console.error(err);
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Registration Failed',
+                detail: err.response?.data?.msg || 'Server error',
+                life: 3000,
+            });
+        }
 
 
     };
@@ -139,6 +172,27 @@ const Register = () => {
                         <div className="field-container">
                             <label className="field-label" htmlFor="confirmpassword">Confirm Password</label>
                             <Password style={{ borderColor: 'red' }} maxLength={15} className="field-input" id="confirm-password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} toggleMask feedback={false} />
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="field-container">
+                            <label className="field-label" htmlFor="email">Email</label>
+
+                            <InputText type='email'
+                                className="field-input" id="email" name="email" value={formData.email} onChange={handleChange} />
+                        </div>
+                        <div className="field-container">
+                            <label className="field-label" htmlFor="qualification">Qualification</label>
+                            <Dropdown
+                                id="qualification"
+                                name="qualification"
+                                value={formData.qualification}
+                                options={qualificationOptions}
+                                onChange={handleChange}
+                                placeholder="Select"
+                                className="field-input"
+                            />
                         </div>
                     </div>
 

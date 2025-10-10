@@ -10,6 +10,13 @@
     margin-bottom: 1rem;
   }
 
+  .image-upload-btn{
+    .p-component {
+    background-color: orange;
+    border-radius: 1rem;
+    }
+  }
+
   .preview-grid {
     display: flex;
     flex-wrap: wrap;
