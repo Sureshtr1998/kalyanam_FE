@@ -66,7 +66,6 @@ const Login = () => {
                             placeholder="Email"
                             value={email}
                             onKeyDown={(e) => {
-                                console.log("HEYYY")
                                 if (e.key === "Enter") {
                                     loginUser();
                                 }

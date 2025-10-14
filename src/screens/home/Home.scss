@@ -1,0 +1,30 @@
+.profile-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1rem;
+  height: 80vh;
+  overflow-y: auto;
+  justify-items: center;
+}
+
+/* Medium screens and up (md) */
+@media (min-width: 850px) {
+  .profile-cards {
+    grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+  }
+}
+
+/* Large screens and up (lg) */
+@media (min-width: 1500px) {
+  .profile-cards {
+    grid-template-columns: repeat(3, 1fr); /* lg:grid-cols-3 */
+  }
+}
+
+/* Extra Large screens and up (lg) */
+@media (min-width: 2000px) {
+  .profile-cards {
+    grid-template-columns: repeat(4, 1fr); /* lg:grid-cols-3 */
+  }
+}

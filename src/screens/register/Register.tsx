@@ -5,10 +5,10 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import './Register.scss';
-import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, user_login_token } from '../../utils/constants';
+import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, user_login_token, formDefaultVals } from '../../utils/constants';
 import { Divider } from 'primereact/divider';
 import { InputMask } from 'primereact/inputmask';
-import type { RegisterForm } from '../../utils/interfaces';
+import type { UserDetails } from '../../utils/interfaces';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import ImageMedia from '../../components/imageMedia/ImageMedia';
@@ -21,23 +21,7 @@ const Register = () => {
     const toast = useRef<Toast | null>(null);
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState<RegisterForm>({
-        fullName: '',
-        maritalStatus: '',
-        password: '',
-        confirmPassword: '',
-        subCaste: '',
-        pincode: '',
-        mobile: '',
-        alternateMob: '',
-        gender: '',
-        motherTongue: '',
-        dob: null,
-        profileCreatedBy: '',
-        email: '',
-        qualification: '',
-        images: []
-    });
+    const [formData, setFormData] = useState<UserDetails>(formDefaultVals);
 
 
 
@@ -100,14 +84,13 @@ const Register = () => {
             const res = await api.post('/user-register', formPayload, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-
+            localStorage.setItem(user_login_token, res.data.token);
             toast.current?.show({
                 severity: 'success',
                 summary: 'Registration Successful',
                 detail: 'Your details have been submitted successfully!',
                 life: 3000,
             });
-            localStorage.setItem(user_login_token, res.data.token);
             navigate('/home');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
@@ -146,13 +129,13 @@ const Register = () => {
                         </div>
 
                         <div className="field-container">
-                            <label htmlFor="maritalStatus" className="field-label">
+                            <label htmlFor="relationshipStatus" className="field-label">
                                 Marital Status
                             </label>
                             <Dropdown
-                                id="maritalStatus"
-                                name="maritalStatus"
-                                value={formData.maritalStatus}
+                                id="relationshipStatus"
+                                name="relationshipStatus"
+                                value={formData.relationshipStatus}
                                 options={maritalOptions}
                                 onChange={handleChange}
                                 placeholder="Select"
@@ -241,8 +224,10 @@ const Register = () => {
                             />
                         </div>
                         <div className="field-container">
-                            <label className="field-label" htmlFor="pincode">Pincode</label>
-                            <InputMask mask="999999" className="field-input" id="pincode" name="pincode" value={formData.pincode} onChange={handleChange} />
+                            <label htmlFor="gotra" className="field-label">Gotra</label>
+                            <InputText
+                                className="field-input" id="gotra" name="gotra" value={formData.gotra} onChange={handleChange} />
+
                         </div>
                     </div>
 

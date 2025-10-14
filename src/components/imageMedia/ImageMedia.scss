@@ -1,19 +1,19 @@
 .image-upload-card {
   padding: 1.5rem;
   text-align: center;
-   background: transparent;
-    box-shadow: none;
-   min-width: 14rem;
-   border-radius: 1rem;
-   justify-self: center;
+  background: transparent;
+  box-shadow: none;
+  min-width: 14rem;
+  border-radius: 1rem;
+  justify-self: center;
   .image-upload-btn {
     margin-bottom: 1rem;
   }
 
-  .image-upload-btn{
+  .image-upload-btn {
     .p-component {
-    background-color: orange;
-    border-radius: 1rem;
+      background-color: orange;
+      border-radius: 1rem;
     }
   }
 
@@ -23,7 +23,6 @@
     justify-content: center;
     gap: 1rem;
   }
-
 
   .preview-item {
     position: relative;
@@ -59,6 +58,6 @@
   }
 }
 
-.p-image-preview-enter-done{
-    width: 35rem;
-  }
+.p-image-preview-enter-done {
+  width: 35rem;
+}

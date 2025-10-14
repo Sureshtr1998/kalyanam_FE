@@ -7,10 +7,8 @@
   z-index: 0;
   background-size: cover;
   background-position: center;
-  background: 
-    url('../../assets/bg_dark.png');
+  background: url("../../assets/bg_dark.png");
 }
-
 
 /* Floating Deepa and Om */
 .floating-container {
@@ -37,16 +35,30 @@
 .floating.raam {
   color: #ff6600; /* choose a distinct orange */
   font-size: 2.2rem;
-  font-weight:200;
+  font-weight: 200;
 }
 
 /* Random positions and durations */
-.floating:nth-child(1) { left: 5%; animation-duration: 8s; }
-.floating:nth-child(2) { left: 25%; animation-duration: 10s; }
-.floating:nth-child(3) { left: 55%; animation-duration: 12s; }
-.floating:nth-child(4) { left: 75%; animation-duration: 9s; }
-.floating:nth-child(5) { left: 95%; animation-duration: 7s; }
-
+.floating:nth-child(1) {
+  left: 5%;
+  animation-duration: 8s;
+}
+.floating:nth-child(2) {
+  left: 25%;
+  animation-duration: 10s;
+}
+.floating:nth-child(3) {
+  left: 55%;
+  animation-duration: 12s;
+}
+.floating:nth-child(4) {
+  left: 75%;
+  animation-duration: 9s;
+}
+.floating:nth-child(5) {
+  left: 95%;
+  animation-duration: 7s;
+}
 
 /* Animation keyframes */
 @keyframes floatUp {

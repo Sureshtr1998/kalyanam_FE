@@ -1,25 +1,23 @@
-
 ::-webkit-scrollbar {
-  width: 8px; 
-  height: 8px; 
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FDF9F0;
+  background: #fdf9f0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #B8860B;
+  background-color: #b8860b;
   border-radius: 10px;
-  border: 2px solid #FDF9F0; 
+  border: 2px solid #fdf9f0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #B8860B; 
+  background-color: #b8860b;
 }
-
 
 * {
   scrollbar-width: thin; // 'auto' or 'thin'
-  scrollbar-color: #B8860B #FDF9F0;
+  scrollbar-color: #b8860b #fdf9f0;
 }
