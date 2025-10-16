@@ -40,6 +40,10 @@
     font-weight: 400;
     color: rgb(49, 49, 49);
     width: 10rem;
+    &.required::after {
+      content: " *";
+      color: red;
+    }
   }
 
   @media (max-width: 768px) {

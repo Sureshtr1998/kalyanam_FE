@@ -4,6 +4,7 @@ import { Card } from 'primereact/card';
 import "./ProfileCard.scss"
 import { Image } from 'primereact/image';
 import { Button } from "primereact/button";
+import { qualificationOptions } from "../../utils/constants";
 
 
 interface ProfileCardProps {
@@ -36,7 +37,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
                         </div>
                         <div className="content-div">
                             <p className="content-label">Qualification:  </p>
-                            &nbsp;{qualification}
+                            &nbsp;{qualificationOptions.find(option => option.value === qualification)?.label || ''}
                         </div>
                         <div className="content-div">
 

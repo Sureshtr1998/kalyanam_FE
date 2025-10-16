@@ -7,6 +7,7 @@ import Home from './screens/home/Home'
 import ProtectedRoute from './components/misc/ProtectedRoute'
 import Invitations from './screens/invitations/Invitations'
 import Profile from './screens/profile/Profile'
+import Settings from './screens/settings/Settings'
 
 
 const AppContent = () => {
@@ -37,6 +38,14 @@ const AppContent = () => {
             element={
               <ProtectedRoute>
                 <Invitations />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
               </ProtectedRoute>
             }
           />

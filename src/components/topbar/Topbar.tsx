@@ -26,6 +26,11 @@ const Topbar = () => {
             command: () => navigate('/invitations')
         },
         {
+            label: 'Settings',
+            icon: 'pi pi-cog',
+            command: () => navigate('/settings')
+        },
+        {
             label: 'Sign Out',
             icon: 'pi pi-sign-out',
             command: () => {

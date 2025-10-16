@@ -10,11 +10,9 @@ const PersonalDetails = (props: ProfileInfo) => {
     const { userData, handleChange } = props
 
     return <div>
-
-
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="height" className="field-label">Height</label>
+                <label htmlFor="height" className="field-label required">Height</label>
                 <Dropdown
                     id="height"
                     name="height"
@@ -42,7 +40,7 @@ const PersonalDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="country" className="field-label">Country</label>
+                <label htmlFor="country" className="field-label required">Country</label>
                 <Dropdown
                     id="country"
                     filter
@@ -55,7 +53,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                 />
             </div>
             <div className="field-container">
-                <label htmlFor="residingStatus" className="field-label">Residing Status</label>
+                <label htmlFor="residingStatus" className="field-label required">Residing Status</label>
                 <Dropdown
                     id="residingStatus"
                     name="residingStatus"
@@ -72,7 +70,7 @@ const PersonalDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label className="field-label" htmlFor="qualification">Qualification</label>
+                <label className="field-label required" htmlFor="qualification">Qualification</label>
                 <Dropdown
                     id="qualification"
                     name="qualification"
@@ -98,7 +96,7 @@ const PersonalDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="employedIn" className="field-label">Employed In</label>
+                <label htmlFor="employedIn" className="field-label required">Employed In</label>
                 <Dropdown
                     id="employedIn"
                     name="employedIn"
@@ -117,7 +115,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                     placeholder="In LPA"
                     suffix=" LPA"
                     value={userData.salary}
-                    onChange={handleChange}
+                    onValueChange={(e) => handleChange({ target: { name: 'salary', value: e.value } })}
                     className="field-input"
                 />
             </div>
@@ -154,7 +152,7 @@ const PersonalDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="diet" className="field-label">Diet</label>
+                <label htmlFor="diet" className="field-label required">Diet</label>
                 <Dropdown
                     id="diet"
                     name="diet"

@@ -5,18 +5,20 @@ import { InputText } from "primereact/inputtext"
 import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions } from "../../../utils/constants"
 import type { ProfileInfo } from "../../../utils/interfaces"
 import { InputTextarea } from "primereact/inputtextarea"
+import ImageMedia from "../../../components/imageMedia/ImageMedia"
 
 
 
 
-const BasicDetails = (props: ProfileInfo) => {
+const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) => void, handleNew: (files: File[]) => void }) => {
 
-    const { userData, handleChange } = props
+    const { userData, handleChange, handleExisting, handleNew } = props
 
     return <div>
+        {userData.images && <ImageMedia initialImages={userData.images} onUrlChange={handleExisting} onChange={handleNew} />}
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="fullName" className="field-label">
+                <label htmlFor="fullName" className="field-label required">
                     Name of {userData.gender === 'Male' ? 'Groom' : 'Bride'}
                 </label>
                 <InputText
@@ -29,13 +31,13 @@ const BasicDetails = (props: ProfileInfo) => {
             </div>
 
             <div className="field-container">
-                <label htmlFor="relationshipStatus" className="field-label">
+                <label htmlFor="martialStatus" className="field-label required">
                     Marital Status
                 </label>
                 <Dropdown
-                    id="relationshipStatus"
-                    name="relationshipStatus"
-                    value={userData.relationshipStatus}
+                    id="martialStatus"
+                    name="martialStatus"
+                    value={userData.martialStatus}
                     options={maritalOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -85,7 +87,7 @@ const BasicDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label className="field-label" htmlFor="motherTongue">Mother Tongue</label>
+                <label className="field-label required" htmlFor="motherTongue">Mother Tongue</label>
                 <Dropdown
                     id="motherTongue"
                     name="motherTongue"
@@ -127,7 +129,7 @@ const BasicDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label className="field-label" htmlFor="subCaste">Sub Caste</label>
+                <label className="field-label required" htmlFor="subCaste">Sub Caste</label>
                 <Dropdown
                     id="subCaste"
                     name="subCaste"

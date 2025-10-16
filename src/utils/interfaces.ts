@@ -1,7 +1,7 @@
 export interface UserDetails {
     //Registration mandatory fields
     fullName: string;
-    relationshipStatus: string;
+    martialStatus: string;
     email: string;
     qualification: string;
     password: string;
@@ -33,14 +33,14 @@ export interface UserDetails {
 
     //Family details
     familyStatus?: string
-    elderBro?: number
-    youngerBro?: number
-    elderSis?: number
-    youngerSis?: number
-    elderBroMar?: number
-    youngerBroMar?: number
-    elderSisMar?: number
-    youngerSisMar?: number
+    elderBro?: string
+    youngerBro?: string
+    elderSis?: string
+    youngerSis?: string
+    elderBroMar?: string
+    youngerBroMar?: string
+    elderSisMar?: string
+    youngerSisMar?: string
     fatherName?: string
     fatherStatus?: string
     fatherOccup?: string
@@ -51,14 +51,16 @@ export interface UserDetails {
 
 
     //Partner preference
-    ageFrom?: number
-    ageTo?: number
-    prelationshipStatus?: string;
+    ageFrom?: string
+    ageTo?: string
+    pMartialStatus?: string[];
     heightFrom?: string
     heightTo?: string
-    pSubCaste?: string
-    pEmployedIn?: string
+    pSubCaste?: string[]
+    pEmployedIn?: string[]
     pNote?: string
+    pQualification?: string[]
+    pCountry?: string[]
 
     //Backend Data and Flags
     _id?: string

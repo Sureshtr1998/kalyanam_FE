@@ -10,6 +10,7 @@ export const parentStatus = [
     { label: 'Deceased', value: 'Deceased' },
 ]
 
+
 export const familyStatus = [
     { label: 'Lower Middle Class', value: 'Lower Middle Class' },
     { label: 'Middle Class', value: 'Middle Class' },
@@ -263,6 +264,17 @@ export const nakshatraOptions = [
 
 ];
 
+export const ageOptions = Array.from({ length: 60 - 18 + 1 }, (_, i) => {
+    const age = i + 18;
+    return { label: age.toString(), value: age.toString() };
+});
+
+export const noSiblingOptions = Array.from({ length: 8 }, (_, i) => {
+    const sib = i;
+    return { label: sib.toString(), value: sib.toString() };
+});
+
+
 export const heightOptions = [
     { label: "4'0\" (122 cm)", value: "4'0\"" },
     { label: "4'1\" (125 cm)", value: "4'1\"" },
@@ -326,7 +338,7 @@ export const residingOptions = [
 ]
 
 export const subCasteOptions = [
-    { label: 'Smartha', value: 'Male' },
+    { label: 'Smartha', value: 'Smartha' },
     { label: 'Madhwa/Vaishnava', value: 'Madhwa' },
     { label: 'Iyer', value: 'Iyer' },
     { label: 'Sri Vaishnava/Iyengar', value: 'Iyengar' },
@@ -354,20 +366,20 @@ export const qualificationOptions = [
     { label: "12th", value: "12th" },
     { label: "Diploma", value: "diploma" },
     // Bachelor Degrees
-    { label: "B.Sc (Science)", value: "bsc" },
-    { label: "B.A (Arts)", value: "ba" },
-    { label: "B.Com (Commerce)", value: "bcom" },
-    { label: "B.Tech / B.E (Engineering)", value: "btech" },
-    { label: "BBA (Business Administration)", value: "bba" },
-    { label: "BCA (Computer Applications)", value: "bca" },
+    { label: "B.Sc", value: "bsc" },
+    { label: "B.A", value: "ba" },
+    { label: "B.Com", value: "bcom" },
+    { label: "B.Tech / B.E", value: "btech" },
+    { label: "BBA", value: "bba" },
+    { label: "BCA", value: "bca" },
 
     // Master Degrees
-    { label: "M.Sc (Science)", value: "msc" },
-    { label: "M.A (Arts)", value: "ma" },
-    { label: "M.Com (Commerce)", value: "mcom" },
-    { label: "M.Tech / M.E (Engineering)", value: "mtech" },
-    { label: "MBA (Business Administration)", value: "mba" },
-    { label: "MCA (Computer Applications)", value: "mca" },
+    { label: "M.Sc", value: "msc" },
+    { label: "M.A", value: "ma" },
+    { label: "M.Com", value: "mcom" },
+    { label: "M.Tech / M.E", value: "mtech" },
+    { label: "MBA", value: "mba" },
+    { label: "MCA", value: "mca" },
     { label: "PhD", value: "phd" },
     { label: "Other", value: "other" }
 ]
@@ -380,7 +392,7 @@ export const user_login_token = 'kalyanam_token'
 
 export const formDefaultVals = {
     fullName: '',
-    relationshipStatus: '',
+    martialStatus: '',
     password: '',
     confirmPassword: '',
     subCaste: '',
@@ -395,3 +407,22 @@ export const formDefaultVals = {
     qualification: '',
     images: [],
 }
+
+export const mandatoryFields = [
+    "fullName",
+    "martialStatus",
+    "motherTongue",
+    "subCaste",
+    "height",
+    "country",
+    "residingStatus",
+    "employedIn",
+    "qualification",
+    "diet",
+    "motherName",
+    "fatherName",
+    "ageFrom",
+    "ageTo",
+    "pEmployedIn",
+    "pQualification"
+] as const;

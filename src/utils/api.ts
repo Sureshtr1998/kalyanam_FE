@@ -23,7 +23,6 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && [401, 403].includes(error.response.status)) {
-            console.warn("Session expired or unauthorized. Logging out...");
             localStorage.removeItem(user_login_token);
 
             // Redirect to login

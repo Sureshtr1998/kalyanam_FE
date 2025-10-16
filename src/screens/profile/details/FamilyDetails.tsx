@@ -2,8 +2,7 @@ import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext"
 import { InputTextarea } from "primereact/inputtextarea"
 import type { ProfileInfo } from "../../../utils/interfaces"
-import { familyStatus, parentStatus } from "../../../utils/constants"
-import { InputNumber } from "primereact/inputnumber"
+import { familyStatus, noSiblingOptions, parentStatus } from "../../../utils/constants"
 
 const FamilyDetails = (props: ProfileInfo) => {
 
@@ -14,24 +13,26 @@ const FamilyDetails = (props: ProfileInfo) => {
         <div className="form-row">
             <div className="field-container">
                 <label htmlFor="elderBro" className="field-label">Elder Brothers</label>
-                <InputNumber
-                    min={0}
-                    type="number"
+                <Dropdown
                     id="elderBro"
                     name="elderBro"
                     value={userData.elderBro}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
+
             </div>
             <div className="field-container">
                 <label htmlFor="elderBroMar" className="field-label">Elder Brothers Married</label>
-                <InputNumber
+                <Dropdown
                     id="elderBroMar"
                     name="elderBroMar"
-                    type="number"
                     value={userData.elderBroMar}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
@@ -44,25 +45,26 @@ const FamilyDetails = (props: ProfileInfo) => {
 
             <div className="field-container">
                 <label htmlFor="youngerBro" className="field-label">Younger Brothers</label>
-                <InputNumber
-                    min={0}
-                    type="number"
+                <Dropdown
                     id="youngerBro"
                     name="youngerBro"
                     value={userData.youngerBro}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
 
             <div className="field-container">
                 <label htmlFor="youngerBroMar" className="field-label">Younger Brothers Married</label>
-                <InputNumber
+                <Dropdown
                     id="youngerBroMar"
                     name="youngerBroMar"
-                    type="number"
                     value={userData.youngerBroMar}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
@@ -72,24 +74,25 @@ const FamilyDetails = (props: ProfileInfo) => {
         <div className="form-row">
             <div className="field-container">
                 <label htmlFor="elderSis" className="field-label">Elder Sisters</label>
-                <InputNumber
-                    min={0}
-                    type="number"
+                <Dropdown
                     id="elderSis"
                     name="elderSis"
                     value={userData.elderSis}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
             <div className="field-container">
                 <label htmlFor="elderSisMar" className="field-label">Elder Sisters Married</label>
-                <InputNumber
+                <Dropdown
                     id="elderSisMar"
                     name="elderSisMar"
-                    type="number"
                     value={userData.elderSisMar}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
@@ -100,25 +103,26 @@ const FamilyDetails = (props: ProfileInfo) => {
 
             <div className="field-container">
                 <label htmlFor="youngerSis" className="field-label">Younger Sisters</label>
-                <InputNumber
+                <Dropdown
                     id="youngerSis"
                     name="youngerSis"
-                    min={0}
-                    type="number"
                     value={userData.youngerSis}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
 
             <div className="field-container">
                 <label htmlFor="youngerSisMar" className="field-label">Younger Sisters Married</label>
-                <InputNumber
+                <Dropdown
                     id="youngerSisMar"
                     name="youngerSisMar"
-                    type="number"
                     value={userData.youngerSisMar}
+                    options={noSiblingOptions}
                     onChange={handleChange}
+                    placeholder="Select"
                     className="field-input"
                 />
             </div>
@@ -126,7 +130,7 @@ const FamilyDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="fatherName" className="field-label">Father's Name</label>
+                <label htmlFor="fatherName" className="field-label required">Father's Name</label>
                 <InputText
                     id="fatherName"
                     name="fatherName"
@@ -152,7 +156,7 @@ const FamilyDetails = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label htmlFor="motherName" className="field-label">Mother's Name</label>
+                <label htmlFor="motherName" className="field-label required">Mother's Name</label>
                 <InputText
                     id="motherName"
                     name="motherName"

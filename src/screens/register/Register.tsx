@@ -94,7 +94,6 @@ const Register = () => {
             navigate('/home');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            console.error(err);
             toast.current?.show({
                 severity: 'error',
                 summary: 'Registration Failed',
@@ -129,13 +128,13 @@ const Register = () => {
                         </div>
 
                         <div className="field-container">
-                            <label htmlFor="relationshipStatus" className="field-label">
+                            <label htmlFor="martialStatus" className="field-label">
                                 Marital Status
                             </label>
                             <Dropdown
-                                id="relationshipStatus"
-                                name="relationshipStatus"
-                                value={formData.relationshipStatus}
+                                id="martialStatus"
+                                name="martialStatus"
+                                value={formData.martialStatus}
                                 options={maritalOptions}
                                 onChange={handleChange}
                                 placeholder="Select"
