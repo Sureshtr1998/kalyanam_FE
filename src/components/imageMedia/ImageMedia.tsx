@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FileUpload, type FileUploadHandlerEvent } from "primereact/fileupload";
 import { Card } from "primereact/card";
-import { Image } from "primereact/image";
 import { Message } from "primereact/message";
 import "./ImageMedia.scss";
+import CarouselImages from "../carousel/CarouselImages";
 
 interface ImageUploadProps {
     onChange?: (files: File[]) => void;
@@ -87,42 +87,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({ onChange, initialImages = [], 
 
             {error && <Message severity="error" text={error} className="mt-3" />}
             <div className="preview-grid">
-                {existingUrls.map((url, index) => (
-                    <div className="preview-item" key={`existing-${index}`}>
-                        <Image
-                            src={url}
-                            alt={`uploaded-${index}`}
-                            preview
-                            width="120"
-                            height="120"
-                        />
-                        <button
-                            type="button"
-                            className="remove-btn pi pi-times"
-                            onClick={() => onRemove(index, true)}
-                        ></button>
-                    </div>
-                ))}
-
-                {uploadedFiles.map((file, index) => {
-                    const objectUrl = URL.createObjectURL(file);
-                    return (
-                        <div className="preview-item" key={`file-${index}`}>
-                            <Image
-                                src={objectUrl}
-                                alt={`preview-${index}`}
-                                preview
-                                width="120"
-                                height="120"
-                            />
-                            <button
-                                type="button"
-                                className="remove-btn pi pi-times"
-                                onClick={() => onRemove(index, false)}
-                            ></button>
-                        </div>
-                    );
-                })}
+                {(existingUrls.length > 0 || uploadedFiles.length > 0) && <CarouselImages remove={onRemove} images={[...existingUrls, ...uploadedFiles]} />}
             </div>
         </Card>
     );

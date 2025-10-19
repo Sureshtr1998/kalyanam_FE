@@ -1,0 +1,87 @@
+.card-dialog {
+  width: 90%;
+  height: 90%;
+  border: 2px solid goldenrod;
+  object-fit: cover;
+}
+
+.p-dialog-header {
+  background-color: rgb(244, 198, 114);
+  text-align: center;
+}
+
+.view-content {
+  display: flex;
+  gap: 2rem;
+
+  .stepper-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-data {
+    border: 2px solid goldenrod;
+    border-radius: 0.5rem;
+    flex: 1 1 auto;
+    display: flex;
+  }
+}
+
+.next-btn {
+  background-color: orange;
+}
+
+.content-details {
+  width: 100%;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  .row-container {
+    display: flex;
+    margin-top: 0.5rem;
+    border-bottom: 2px solid goldenrod;
+    gap: 2rem;
+    padding-bottom: 0.5rem;
+    .container {
+      display: flex;
+      .label {
+        color: #6a5900;
+        font-weight: 400;
+        margin-right: 1rem;
+      }
+      .value {
+        color: #6a5900;
+        font-weight: 600;
+        margin-left: auto;
+      }
+    }
+  }
+  .row-container:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .view-content {
+    display: block;
+    gap: 0;
+    justify-items: center;
+  }
+}
+@media (max-width: 600px) {
+  .row-container {
+    display: block !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  .row-container > * {
+    display: block;
+    border-bottom: 2px solid goldenrod;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .row-container > *:last-child {
+    border-bottom: none;
+  }
+}

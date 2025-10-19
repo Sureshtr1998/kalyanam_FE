@@ -33,27 +33,6 @@
     background-color: antiquewhite;
     border-radius: 1rem;
     align-content: center;
-    .remove-btn {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: rgba(255, 0, 0, 0.8);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-
-      &:hover {
-        background: rgba(255, 0, 0, 1);
-      }
-    }
   }
 }
 

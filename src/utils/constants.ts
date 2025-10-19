@@ -339,9 +339,9 @@ export const residingOptions = [
 
 export const subCasteOptions = [
     { label: 'Smartha', value: 'Smartha' },
-    { label: 'Madhwa/Vaishnava', value: 'Madhwa' },
+    { label: 'Madhwa/Vaishnava', value: 'Madhwa/Vaishnava' },
     { label: 'Iyer', value: 'Iyer' },
-    { label: 'Sri Vaishnava/Iyengar', value: 'Iyengar' },
+    { label: 'Sri Vaishnava/Iyengar', value: 'Sri Vaishnava/Iyengar' },
     { label: 'Other', value: 'Other' },
 ];
 

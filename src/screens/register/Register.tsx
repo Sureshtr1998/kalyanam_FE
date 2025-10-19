@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Dropdown } from 'primereact/dropdown';
@@ -10,15 +10,16 @@ import { Divider } from 'primereact/divider';
 import { InputMask } from 'primereact/inputmask';
 import type { UserDetails } from '../../utils/interfaces';
 import { Message } from 'primereact/message';
-import { Toast } from 'primereact/toast';
 import ImageMedia from '../../components/imageMedia/ImageMedia';
 import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../../components/toastProvider/ToastProvider';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
     const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
-    const toast = useRef<Toast | null>(null);
+    const { showToast } = useToast();
+
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState<UserDetails>(formDefaultVals);
@@ -58,12 +59,8 @@ const Register = () => {
 
         if (newErrors.length > 0) {
             newErrors.forEach((msg) => {
-                toast.current?.show({
-                    severity: 'error',
-                    summary: 'Validation Error',
-                    detail: msg,
-                    life: 3000, // 5 seconds
-                });
+                showToast("error", "Validation Error", msg);
+
             });
             return;
         }
@@ -85,21 +82,13 @@ const Register = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             localStorage.setItem(user_login_token, res.data.token);
-            toast.current?.show({
-                severity: 'success',
-                summary: 'Registration Successful',
-                detail: 'Your details have been submitted successfully!',
-                life: 3000,
-            });
+            showToast("success", "Registration Successful", 'Your details have been submitted successfully!');
+
+
             navigate('/home');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Registration Failed',
-                detail: err.response?.data?.msg || 'Server error',
-                life: 3000,
-            });
+            showToast("error", "Registration Failed", err.response?.data?.msg || 'Server error');
         }
 
 
@@ -109,7 +98,6 @@ const Register = () => {
     }
     return (
         <div>
-            <Toast ref={toast} position="bottom-left" />
             <div className="register-container">
                 <ImageMedia onChange={mediaFileHandler} />
                 <form className="register-form">

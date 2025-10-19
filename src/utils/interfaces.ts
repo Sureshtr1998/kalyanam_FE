@@ -62,8 +62,17 @@ export interface UserDetails {
     pQualification?: string[]
     pCountry?: string[]
 
+    //Interests
+
+    sent?: string[]
+    received?: string[]
+    accepted?: string[]
+    declined?: string[]
+    invitationStatus?: 'accept' | 'decline' | 'sent' | 'received' | 'pending',
+
     //Backend Data and Flags
     _id?: string
+    uniqueId?: string
     age?: number
     hasCompleteProfile?: boolean
 

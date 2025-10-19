@@ -1,0 +1,32 @@
+.invitations-container {
+  padding: 2rem;
+
+  td {
+    border: 1px solid goldenrod;
+    color: #6a5900;
+    font-weight: 400;
+  }
+  th {
+    background-color: rgb(255, 210, 152);
+    border: 1px solid goldenrod;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    color: #6a5900;
+  }
+
+  .p-button-sm {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .text-yellow-700 {
+    color: #b8860b;
+  }
+
+  .flex.gap-2 {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

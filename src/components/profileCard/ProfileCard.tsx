@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import type { UserDetails } from "../../utils/interfaces";
 import { Card } from 'primereact/card';
 import "./ProfileCard.scss"
 import { Image } from 'primereact/image';
 import { Button } from "primereact/button";
 import { qualificationOptions } from "../../utils/constants";
+import ViewCard from "../viewCard/ViewCard";
+import { fetchLabel } from "../../utils/utils";
+import api from "../../utils/api";
+import { useToast } from "../toastProvider/ToastProvider";
 
 
 interface ProfileCardProps {
@@ -14,10 +18,28 @@ interface ProfileCardProps {
 
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
-    const { fullName, age, subCaste, qualification, motherTongue, images, gotra } = match;
+    const { fullName, age, subCaste, qualification, motherTongue, images, gotra, _id } = match;
+
+    const [visible, setVisible] = useState(false);
+    const { showToast } = useToast();
+
+
+
+    const sendInterest = async () => {
+        try {
+            await api.post('/send-interest', { receiverId: _id });
+            showToast("success", "Success", "Interest sent successfully");
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            showToast("error", "Error", err.response.data.msg || "Something went wrong");
+        }
+    }
 
     return (
         <div className="profile-card">
+
+            {visible && <ViewCard user={match} hide={() => setVisible(false)} />}
             <Card className="card-comp" title={
                 <div className="card-title">
                     <span>{fullName}</span>
@@ -37,7 +59,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
                         </div>
                         <div className="content-div">
                             <p className="content-label">Qualification:  </p>
-                            &nbsp;{qualificationOptions.find(option => option.value === qualification)?.label || ''}
+                            &nbsp;{fetchLabel(qualificationOptions, qualification)}
                         </div>
                         <div className="content-div">
 
@@ -52,8 +74,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
                     </div>
                 </div>
                 <div className="action-items">
-                    <Button className="action-btn">View Profile</Button>
-                    <Button className="action-btn">Send Interest</Button>
+                    <Button className="action-btn" onClick={() => setVisible(true)}>View Profile</Button>
+                    <Button onClick={sendInterest} className="action-btn">Send Interest</Button>
                 </div>
             </Card>
 

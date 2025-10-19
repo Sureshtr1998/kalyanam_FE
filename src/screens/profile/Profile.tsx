@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import Topbar from "../../components/topbar/Topbar"
 import api from "../../utils/api"
 import type { UserDetails } from "../../utils/interfaces"
 import "./Profile.scss"
 import "../register/Register.scss"
-import { Toast } from "primereact/toast"
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import { formDefaultVals, mandatoryFields } from "../../utils/constants"
 import BasicDetails from "./details/BasicDetails"
@@ -12,10 +11,12 @@ import PersonalDetails from "./details/PersonalDetails"
 import FamilyDetails from "./details/FamilyDetails"
 import PartnerPreferences from "./details/PartnerPreferences"
 import { Button } from "primereact/button"
+import { useToast } from "../../components/toastProvider/ToastProvider"
 
 const Profile = () => {
 
-    const toast = useRef<Toast | null>(null);
+    const { showToast } = useToast();
+
     const [userData, setUserData] = useState<UserDetails>(formDefaultVals)
     const [allImgs, setAllImgs] = useState<File[] | string[]>([])
 
@@ -58,12 +59,7 @@ const Profile = () => {
 
         if (newErrors.length > 0) {
             newErrors.forEach((msg) => {
-                toast.current?.show({
-                    severity: 'error',
-                    summary: 'Validation Error',
-                    detail: msg,
-                    life: 3000,
-                });
+                showToast("error", "Validation Error", msg);
             });
             return;
         }
@@ -90,21 +86,10 @@ const Profile = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
-
-            toast.current?.show({
-                severity: "success",
-                summary: "Success",
-                detail: "Profile updated successfully",
-                life: 3000,
-            });
+            showToast("success", "Success", 'Profile updated successfully');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            toast.current?.show({
-                severity: "error",
-                summary: "Error",
-                detail: err.message || "Something went wrong",
-                life: 3000,
-            });
+            showToast("error", "Error", err.response.data.msg || "Something went wrong");
         }
     }
 
@@ -128,7 +113,6 @@ const Profile = () => {
     return <div className="w-full">
 
         <Topbar />
-        <Toast ref={toast} position="bottom-left" />
 
         <div className="profile-container">
             <form className="profile-form">

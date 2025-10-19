@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { Toast } from 'primereact/toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
@@ -10,11 +9,13 @@ import bgImage from '../../assets/rama-seetha.png';
 import api from '../../utils/api';
 import './Login.scss';
 import { user_login_token } from '../../utils/constants';
+import { useToast } from '../../components/toastProvider/ToastProvider';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const toast = useRef<Toast>(null);
+    const { showToast } = useToast();
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const Login = () => {
 
     const loginUser = async () => {
         if (!email || !password) {
-            toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Please enter email and password', life: 3000 });
+            showToast("error", "Error", "Please enter email and password");
             return;
         }
 
@@ -38,24 +39,16 @@ const Login = () => {
 
             // Save token and user
             localStorage.setItem(user_login_token, token);
-
-            toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Logged in successfully', life: 3000 });
-
+            showToast("success", "Success", "Logged in successfully");
             navigate('/home');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            toast.current?.show({
-                severity: 'error',
-                summary: 'Login Failed',
-                detail: err.response?.data?.msg || 'Server error',
-                life: 3000,
-            });
+            showToast("error", "Login Failed", err.response?.data?.msg || 'Server error');
         }
     };
 
     return (
         <div className="auth-page-container">
-            <Toast ref={toast} position="bottom-left" />
             <div className="auth-content">
                 <Card className="login_card">
                     <Image src={bgImage} width="350" />
