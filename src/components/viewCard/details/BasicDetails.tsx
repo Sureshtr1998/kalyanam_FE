@@ -29,6 +29,18 @@ const BasicDetails = (props: { user: UserDetails }) => {
 
         </div>
 
+        {user.mobile && <div className="row-container">
+            <div className='container'>
+                <div className="label"> Mobile Number </div>
+                <div className="value"> {user.mobile ?? '-'}</div>
+            </div>
+            <div className='container'>
+                <div className="label">Alternate Mobile Number </div>
+                <div className="value">  {user.alternateMob ?? '-'}</div>
+            </div>
+        </div>
+        }
+
         <div className="row-container">
             <div className='container'>
                 <div className="label"> Profile Created By </div>

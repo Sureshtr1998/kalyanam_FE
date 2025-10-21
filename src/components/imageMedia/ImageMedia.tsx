@@ -19,7 +19,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({ onChange, initialImages = [], 
     const fileUploadRef = useRef<FileUpload>(null);
 
     useEffect(() => {
-        setExistingUrls(initialImages)
+        if (initialImages.length > 0) setExistingUrls(initialImages)
     }, [initialImages])
     // Handle file selection
     const onSelect = (e: FileUploadHandlerEvent) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DataTable } from "primereact/datatable";
+import { DataTable, type DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import Topbar from "../../components/topbar/Topbar";
@@ -8,6 +8,10 @@ import "./Invitations.scss";
 import type { UserDetails } from "../../utils/interfaces";
 import ViewCard from "../../components/viewCard/ViewCard";
 import { useToast } from "../../components/toastProvider/ToastProvider";
+import { FilterMatchMode } from "primereact/api";
+import { InputText } from "primereact/inputtext";
+import { IconField } from 'primereact/iconfield';
+import { InputIcon } from 'primereact/inputicon';
 
 
 
@@ -22,6 +26,13 @@ const Invitations = () => {
     useEffect(() => {
         init();
     }, []);
+
+    const [filters, setFilters] = useState<DataTableFilterMeta>({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    });
+
+    const globalValue =
+        (filters["global"] as { value: string | null })?.value ?? "";
 
 
     const init = async () => {
@@ -118,34 +129,60 @@ const Invitations = () => {
     );
 
 
+    const renderHeader = () => {
+        return <div className="flex justify-content-end">
+            <IconField iconPosition="left">
+                <InputIcon className="pi pi-search" />
+                <InputText value={globalValue} onChange={(e) =>
+                    setFilters({
+                        ...filters,
+                        global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS },
+                    })
+                }
+                    placeholder="Search invitations..."
 
+                />
+            </IconField>
+        </div>
+
+
+    }
 
     return (
         <div>
             <Topbar />
-            {user && <ViewCard user={user} hide={() => setUser(undefined)} />}
+            {user && <ViewCard user={user} hide={() => setUser(undefined)} isAccept={user.invitationStatus === 'accept'} />}
 
             <div className="invitations-container mt-16">
-
                 <DataTable
                     value={invitations}
-                    loading={loading}
-                    showGridlines
-                    tableStyle={{ minWidth: "60rem" }}
+                    filters={filters}
+                    onFilter={(e) => setFilters(e.filters)}
+                    globalFilterFields={[
+                        "uniqueId",
+                        "fullName",
+                        "gotra",
+                        "motherTongue",
+                        "subCaste",
+                    ]}
                     paginator
                     rows={7}
+                    loading={loading}
                     emptyMessage="No invitations found"
+                    showGridlines
+                    tableStyle={{ minWidth: "60rem" }}
+                    header={renderHeader()}
                 >
+                    <Column field="uniqueId" header="ID" />
                     <Column field="fullName" header="Name" />
                     <Column field="age" header="Age" />
-                    <Column field="martialStatus" header="Martial Status" />
                     <Column field="gotra" header="Gotra" />
                     <Column field="motherTongue" header="Mother Tongue" />
                     <Column field="subCaste" header="Sub Caste" />
                     <Column header="Profile" body={viewProfileTemplate} />
                     <Column header="Status" body={statusTemplate} />
-
                 </DataTable>
+
             </div>
         </div>
     );

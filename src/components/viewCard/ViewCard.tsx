@@ -11,21 +11,30 @@ import BasicDetails from "./details/BasicDetails";
 import PersonalDetails from "./details/PersonalDetails";
 import FamilyDetails from "./details/FamilyDetails";
 import PartnerPreferences from "./details/PartnerPreferences";
+import { Message } from "primereact/message";
 
-const ViewCard = (props: { user: UserDetails, hide: () => void }) => {
-    const { user, hide } = props
+const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boolean }) => {
+    const { user, hide, isAccept } = props
     const stepperRef = useRef<{ nextCallback?: () => void, prevCallback?: () => void }>(null);
 
 
     return <Dialog draggable={false}
         resizable={false}
         visible={true}
-        header={<div className="header-dialog"> {user.fullName}</div>}
+        header={<div className="header-dialog"> {user.fullName} - {user.uniqueId}</div>}
         onHide={hide}
         className="card-dialog"
     >
         <div>
-            <div className="mt-8">
+            <div className="mt-4">
+                <div className="mb-4 text-center">
+                    {!isAccept && <Message
+                        severity="info"
+                        text="The phone number will be visible under Basic Details only after mutual acceptance."
+                        className="info-msg"
+                    />
+                    }
+                </div>
                 <div className="view-content">
                     <CarouselImages images={user.images} />
                     <div className="ml-8  w-full card flex justify-content-center">
