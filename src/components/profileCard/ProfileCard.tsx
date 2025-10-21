@@ -13,22 +13,34 @@ import { useToast } from "../toastProvider/ToastProvider";
 
 interface ProfileCardProps {
     match: UserDetails;
+    hideProfile: (id: string) => void
 }
 
 
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
     const { fullName, age, subCaste, qualification, motherTongue, images, gotra, _id } = match;
 
     const [visible, setVisible] = useState(false);
     const { showToast } = useToast();
 
 
+    const hideUser = async () => {
+        try {
+            const res = await api.post('/hide-profile', { userId: _id });
+            showToast("success", "Success", res.data.msg || "Profile has been hidden successfully");
+            hideProfile(_id ?? '')
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            showToast("error", "Error", err.response.data.msg || "Something went wrong");
+        }
+    }
 
     const sendInterest = async () => {
         try {
             await api.post('/send-interest', { receiverId: _id });
             showToast("success", "Success", "Interest sent successfully");
+            hideProfile(_id ?? '')
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
@@ -43,7 +55,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match }) => {
             <Card className="card-comp" title={
                 <div className="card-title">
                     <span>{fullName}</span>
-                    <i title="Hide user profile" className="title-icon pi pi-eye-slash" style={{ fontSize: '1rem' }}></i>
+                    <i onClick={hideUser} title="Hide user profile" className="title-icon pi pi-eye-slash" style={{ fontSize: '1rem' }}></i>
                 </div>
             }>
                 <div className="flex">

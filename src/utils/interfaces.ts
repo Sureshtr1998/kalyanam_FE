@@ -76,6 +76,9 @@ export interface UserDetails {
     age?: number
     hasCompleteProfile?: boolean
 
+    isHidden?: boolean
+    hideProfiles?: string[]
+
 }
 
 

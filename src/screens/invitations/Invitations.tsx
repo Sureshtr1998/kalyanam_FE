@@ -30,7 +30,6 @@ const Invitations = () => {
             const res = await api.get("/fetch-invitation-status");
             if (res.data?.invitations) {
                 setInvitations(res.data.invitations);
-                setInvitations([...res.data.invitations, ...res.data.invitations, ...res.data.invitations]);
             }
         } finally {
             setLoading(false);
@@ -136,7 +135,7 @@ const Invitations = () => {
                     <Column field="motherTongue" header="Mother Tongue" />
                     <Column field="subCaste" header="Sub Caste" />
                     <Column header="Profile" body={viewProfileTemplate} />
-                    <Column header="Actions" body={statusTemplate} />
+                    <Column header="Status" body={statusTemplate} />
 
                 </DataTable>
             </div>
