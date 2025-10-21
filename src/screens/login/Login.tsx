@@ -10,22 +10,19 @@ import api from '../../utils/api';
 import './Login.scss';
 import { user_login_token } from '../../utils/constants';
 import { useToast } from '../../components/toastProvider/ToastProvider';
+import ForgotPassword from '../../components/forgotPassword/ForgotPassword';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isForgotPwd, setIsForgotPwd] = useState<boolean>(false)
     const { showToast } = useToast();
-
     const navigate = useNavigate();
 
     useEffect(() => {
         const token_val = localStorage.getItem(user_login_token);
-
-        if (token_val) {
-            navigate('/home');
-        }
+        if (token_val) navigate('/home');
     }, []);
-
 
     const loginUser = async () => {
         if (!email || !password) {
@@ -37,7 +34,6 @@ const Login = () => {
             const res = await api.post('/login', { email, password });
             const { token } = res.data;
 
-            // Save token and user
             localStorage.setItem(user_login_token, token);
             showToast("success", "Success", "Logged in successfully");
             navigate('/home');
@@ -52,43 +48,50 @@ const Login = () => {
             <div className="auth-content">
                 <Card className="login_card">
                     <Image src={bgImage} width="350" />
-                    <div className="grid mt-4">
-                        <InputText
-                            className="p-field"
-                            placeholder="Email"
-                            value={email}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    loginUser();
-                                }
+                    {isForgotPwd ?
+                        <ForgotPassword />
+                        :
+                        <form
+                            className="grid mt-4"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                loginUser();
                             }}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <div className="mt-4 w-full" />
-                        <InputText
-                            className="p-field"
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    loginUser();
-                                }
-                            }}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <div className="mt-8">
-                            <Button onClick={loginUser} label="Login" className="login-button" />
-                        </div>
+                        >
+                            <InputText
+                                className="p-field"
+                                placeholder="Email"
+                                value={email}
+                                autoComplete="username"
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <div className="mt-4 w-full" />
+                            <InputText
+                                className="p-field"
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                autoComplete="current-password"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <div className="mt-8">
+                                <Button type="submit" label="Login" className="login-button" />
+                            </div>
 
-                        <Divider />
-                        <p style={{ placeSelf: 'center' }}>
-                            <b>New User?</b>{' '}
-                            <Link to="/register">
-                                <span className="underline"> Sign Up here </span>
-                            </Link>
-                        </p>
-                    </div>
+                            <Divider />
+                            <p style={{ placeSelf: 'center' }}>
+                                <b>New User?</b>{' '}
+                                <Link to="/register">
+                                    <span className="underline"> Sign Up here </span>
+                                </Link>
+                            </p>
+                            <p className='mt-2' style={{ placeSelf: 'center' }}>
+                                <b>Forgot Password? </b>{' '}
+                                <span onClick={() => setIsForgotPwd(true)} className="cursor-pointer underline">Click here to reset </span>
+                            </p>
+
+                        </form>
+                    }
                 </Card>
             </div>
         </div>

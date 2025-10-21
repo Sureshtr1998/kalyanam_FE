@@ -36,11 +36,19 @@ const Invitations = () => {
         }
     };
 
-    const handleAction = async (id: string | undefined, action: string) => {
+    const handleAction = async (id: string | undefined, action: 'accept' | 'decline') => {
         try {
-            await api.post('/interest-action', { userId: id, action });
-            await init()
-            showToast("success", "Success", "Interest sent successfully");
+            const res = await api.post('/interest-action', { userId: id, action });
+
+            setInvitations(prev =>
+                prev.map(user =>
+                    user._id === id
+                        ? { ...user, invitationStatus: action }
+                        : user
+                )
+            );
+
+            showToast("success", "Success", res.data.msg || '');
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
