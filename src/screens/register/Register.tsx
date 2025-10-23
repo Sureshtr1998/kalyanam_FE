@@ -14,9 +14,11 @@ import ImageMedia from '../../components/imageMedia/ImageMedia';
 import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../components/toastProvider/ToastProvider';
+import RegisterModal from '../../components/registerModal/RegisterModal';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
+    const [isValidate, setValidate] = useState<boolean>(false)
     const [errorMsgs, setErrorMsgs] = useState<string[]>([]);
     const { showToast } = useToast();
 
@@ -64,6 +66,12 @@ const Register = () => {
             });
             return;
         }
+
+        setValidate(true)
+    };
+
+    const registerUser = async () => {
+
         try {
             const formPayload = new FormData();
 
@@ -90,14 +98,14 @@ const Register = () => {
         } catch (err: any) {
             showToast("error", "Registration Failed", err.response?.data?.msg || 'Server error');
         }
+    }
 
-
-    };
     const mediaFileHandler = (files: File[]) => {
         setImages(files)
     }
     return (
         <div>
+            {isValidate && <RegisterModal onSuccess={registerUser} email={formData.email} mobile={formData.mobile} onHide={() => setValidate(false)} />}
             <div className="register-container">
                 <ImageMedia onChange={mediaFileHandler} />
                 <form className="register-form">

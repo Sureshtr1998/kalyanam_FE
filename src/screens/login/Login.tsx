@@ -11,6 +11,7 @@ import './Login.scss';
 import { user_login_token } from '../../utils/constants';
 import { useToast } from '../../components/toastProvider/ToastProvider';
 import ForgotPassword from '../../components/forgotPassword/ForgotPassword';
+import ContactUs from '../../components/contactUs/ContactUs';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -47,6 +48,7 @@ const Login = () => {
         <div className="auth-page-container">
             <div className="auth-content">
                 <Card className="login_card">
+                    <ContactUs />
                     <Image src={bgImage} width="350" />
                     {isForgotPwd ?
                         <ForgotPassword />
