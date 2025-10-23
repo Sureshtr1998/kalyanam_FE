@@ -1,5 +1,5 @@
 import axios from "axios";
-import { user_login_token } from "./constants";
+import { getItem, removeItem, user_login_token } from "./localStore";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -10,7 +10,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem(user_login_token);
+        const token = getItem(user_login_token)?.token
         if (token) {
             config.headers["x-auth-token"] = token;
         }
@@ -23,7 +23,7 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && [401, 403].includes(error.response.status)) {
-            localStorage.removeItem(user_login_token);
+            removeItem(user_login_token)
 
             // Redirect to login
             if (window.location.pathname !== "/") {

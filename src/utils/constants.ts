@@ -387,8 +387,6 @@ export const qualificationOptions = [
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const user_login_token = 'kalyanam_token'
-
 
 export const formDefaultVals = {
     fullName: '',

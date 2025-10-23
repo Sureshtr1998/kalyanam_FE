@@ -8,10 +8,10 @@ import { Image } from 'primereact/image';
 import bgImage from '../../assets/rama-seetha.png';
 import api from '../../utils/api';
 import './Login.scss';
-import { user_login_token } from '../../utils/constants';
 import { useToast } from '../../components/toastProvider/ToastProvider';
 import ForgotPassword from '../../components/forgotPassword/ForgotPassword';
 import ContactUs from '../../components/contactUs/ContactUs';
+import { getItem, setItem, user_login_token } from '../../utils/localStore';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token_val = localStorage.getItem(user_login_token);
+        const token_val = getItem(user_login_token)?.token
         if (token_val) navigate('/home');
     }, []);
 
@@ -33,9 +33,7 @@ const Login = () => {
 
         try {
             const res = await api.post('/login', { email, password });
-            const { token } = res.data;
-
-            localStorage.setItem(user_login_token, token);
+            setItem(user_login_token, res.data)
             showToast("success", "Success", "Logged in successfully");
             navigate('/home');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -5,7 +5,7 @@ import api from "../../utils/api";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
-import { user_login_token } from "../../utils/constants";
+import { removeItem, user_login_token } from "../../utils/localStore";
 
 const Settings = () => {
     const { showToast } = useToast();
@@ -13,7 +13,7 @@ const Settings = () => {
 
 
     const logOff = () => {
-        localStorage.removeItem(user_login_token);
+        removeItem(user_login_token)
         navigate('/')
     }
 

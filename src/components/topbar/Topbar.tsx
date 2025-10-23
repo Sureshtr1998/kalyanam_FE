@@ -5,8 +5,8 @@ import { Sidebar } from 'primereact/sidebar';
 import { Avatar } from 'primereact/avatar';
 import { Menu } from 'primereact/menu';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { user_login_token } from '../../utils/constants';
 import './Topbar.scss';
+import { getItem, removeItem, user_login_token } from '../../utils/localStore';
 
 const Topbar = () => {
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Topbar = () => {
             label: 'Sign Out',
             icon: 'pi pi-sign-out',
             command: () => {
-                localStorage.removeItem(user_login_token);
+                removeItem(user_login_token)
                 navigate('/');
             }
         }
@@ -64,7 +64,11 @@ const Topbar = () => {
         <div className="topbar-avatar">
             <Menu model={avatarMenuItems} popup ref={menu} />
             <Avatar
-                label="S"
+                label={
+                    getItem(user_login_token)?.username
+                        ? getItem(user_login_token).username.slice(0, 2).toUpperCase()
+                        : ''
+                }
                 shape="circle"
                 size="normal"
                 style={{ cursor: 'pointer' }}

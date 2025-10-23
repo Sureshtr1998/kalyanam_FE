@@ -5,7 +5,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
 import './Register.scss';
-import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, user_login_token, formDefaultVals } from '../../utils/constants';
+import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, formDefaultVals } from '../../utils/constants';
 import { Divider } from 'primereact/divider';
 import { InputMask } from 'primereact/inputmask';
 import type { UserDetails } from '../../utils/interfaces';
@@ -15,6 +15,7 @@ import api from '../../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../components/toastProvider/ToastProvider';
 import RegisterModal from '../../components/registerModal/RegisterModal';
+import { setItem, user_login_token } from '../../utils/localStore';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
@@ -89,7 +90,7 @@ const Register = () => {
             const res = await api.post('/user-register', formPayload, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            localStorage.setItem(user_login_token, res.data.token);
+            setItem(user_login_token, res.data)
             showToast("success", "Registration Successful", 'Your details have been submitted successfully!');
 
 
