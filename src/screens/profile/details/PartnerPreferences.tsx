@@ -7,7 +7,7 @@ import { normalizeToArray } from "../../../utils/utils"
 
 const PartnerPreferences = (props: ProfileInfo) => {
 
-    const { userData, handleChange } = props
+    const { userData, handleChange, isFilter } = props
 
     return <div>
 
@@ -49,7 +49,7 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     value={userData.heightFrom}
                     options={heightOptions}
                     onChange={handleChange}
-                    placeholder="Select"
+                    placeholder="Any"
                     className="field-input"
                 />
             </div>
@@ -61,7 +61,7 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     value={userData.heightTo}
                     options={heightOptions}
                     onChange={handleChange}
-                    placeholder="Select"
+                    placeholder="Any"
                     className="field-input"
                 />
             </div>
@@ -77,20 +77,20 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     options={subCasteOptions}
                     onChange={handleChange}
                     value={normalizeToArray(userData.pSubCaste)}
-                    placeholder="Select"
+                    placeholder="Any"
                     maxSelectedLabels={1}
                     className="field-input" />
 
             </div>
             <div className="field-container">
-                <label htmlFor="pEmployedIn" className="field-label required">Employed In</label>
+                <label htmlFor="pEmployedIn" className="field-label">Employed In</label>
                 <MultiSelect
                     id="pEmployedIn"
                     name="pEmployedIn"
                     options={employedInOptions}
                     onChange={handleChange}
                     value={normalizeToArray(userData.pEmployedIn)}
-                    placeholder="Select"
+                    placeholder="Any"
                     maxSelectedLabels={1}
                     className="field-input" />
             </div>
@@ -98,7 +98,7 @@ const PartnerPreferences = (props: ProfileInfo) => {
 
         <div className="form-row">
             <div className="field-container">
-                <label className="field-label required" htmlFor="pQualification">Qualification</label>
+                <label className="field-label" htmlFor="pQualification">Qualification</label>
                 <MultiSelect
                     id="pQualification"
                     name="pQualification"
@@ -106,7 +106,7 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     options={qualificationOptions}
                     onChange={handleChange}
                     maxSelectedLabels={1}
-                    placeholder="Select"
+                    placeholder="Any"
                     className="field-input"
                 />
             </div>
@@ -136,13 +136,13 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     value={normalizeToArray(userData.pMartialStatus)}
                     options={maritalOptions}
                     onChange={handleChange}
-                    placeholder="Select"
+                    placeholder="Any"
                     maxSelectedLabels={1}
                     className="field-input" />
 
 
             </div>
-            <div className="field-container">
+            {!isFilter && <div className="field-container">
                 <label htmlFor="pNote" className="field-label">Additional Notes</label>
                 <InputTextarea
                     id="pNote"
@@ -153,6 +153,7 @@ const PartnerPreferences = (props: ProfileInfo) => {
                     rows={3}
                 />
             </div>
+            }
         </div>
 
     </div>

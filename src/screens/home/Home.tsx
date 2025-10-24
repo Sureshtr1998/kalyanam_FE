@@ -8,24 +8,44 @@ import "./Home.scss"
 import { Image } from "primereact/image"
 import parashuram from "../../assets/parashuram.png"
 import { useToast } from "../../components/toastProvider/ToastProvider"
+import { formDefaultVals } from "../../utils/constants"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
     const [matches, setMatches] = useState<UserDetails[]>([])
+    const [userData, setUserData] = useState<UserDetails>(formDefaultVals)
+
     const { showToast } = useToast();
+    const navigate = useNavigate();
+
 
     const [page, setPage] = useState(1)
     const [totalRecords, setTotalRecords] = useState(0)
     const rowsPerPage = 10
 
     useEffect(() => {
-        fetchProfiles(page)
-    }, [page])
+        fetchUserProfile()
+    }, [])
 
-    const fetchProfiles = async (pageNumber: number) => {
+    useEffect(() => {
+        if (userData.fullName) fetchProfiles(page, userData)
+    }, [page, userData])
+
+    const fetchUserProfile = async () => {
+        const res = await api.get('/my-profile')
+        if (!res.data.profile?.hasCompleteProfile) {
+            navigate('/profile')
+        }
+        setUserData(res.data.profile)
+    }
+
+    const fetchProfiles = async (pageNumber: number, filters: UserDetails) => {
         try {
-            const res = await api.get(
-                `/fetch-profiles?page=${pageNumber}&limit=${rowsPerPage}`
-            )
+            const res = await api.post("/fetch-profiles", {
+                page: pageNumber,
+                limit: rowsPerPage,
+                filters,
+            });
             setMatches(res.data.profiles)
             setTotalRecords(res.data.totalProfiles)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,9 +65,14 @@ const Home = () => {
         setPage(event.page + 1) // PrimeReact paginator pages are 0-indexed
     }
 
+    const applyFilter = (filterData: UserDetails) => {
+        fetchProfiles(1, filterData)
+        setUserData(filterData)
+    }
+
     return (
-        <div>
-            <Topbar />
+        <div className="home-cards">
+            <Topbar applyFilter={applyFilter} userData={userData} />
             <div className="mt-20">
                 <div className="profile-cards">
                     {matches.length > 0 ? (

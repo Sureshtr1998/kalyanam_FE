@@ -12,6 +12,7 @@ import FamilyDetails from "./details/FamilyDetails"
 import PartnerPreferences from "./details/PartnerPreferences"
 import { Button } from "primereact/button"
 import { useToast } from "../../components/toastProvider/ToastProvider"
+import { Message } from "primereact/message"
 
 const Profile = () => {
 
@@ -68,7 +69,7 @@ const Profile = () => {
 
             // Append all userData fields
             Object.entries(userData).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
+                if (value?.length > 0) {
                     formData.append(key, value);
                 }
             });
@@ -116,6 +117,12 @@ const Profile = () => {
 
         <div className="profile-container">
             <form className="profile-form">
+                {!userData?.hasCompleteProfile && <Message
+                    severity="info"
+                    text="Please complete all required fields to view user profiles. Fields marked with an asterisk (*) are mandatory."
+                    className="info-msg"
+                />
+                }
                 <Accordion className="accordion-data" multiple activeIndex={[0]}>
                     {/* Basic Details */}
                     <AccordionTab header="Basic Details" >

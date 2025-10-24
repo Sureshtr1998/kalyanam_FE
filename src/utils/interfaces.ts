@@ -86,4 +86,5 @@ export interface ProfileInfo {
     userData: UserDetails
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleChange: (event: any) => void
+    isFilter?: boolean
 }

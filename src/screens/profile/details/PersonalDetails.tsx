@@ -32,7 +32,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                     placeholder="In kgs"
                     suffix=" kg"
                     value={userData.weight}
-                    onChange={handleChange}
+                    onValueChange={(e) => handleChange({ target: { name: 'weight', value: e.value } })}
                     className="field-input"
                 />
             </div>

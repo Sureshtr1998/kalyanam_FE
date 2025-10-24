@@ -7,8 +7,16 @@ import { Menu } from 'primereact/menu';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Topbar.scss';
 import { getItem, removeItem, user_login_token } from '../../utils/localStore';
+import Filter from '../filter/Filter';
+import type { UserDetails } from '../../utils/interfaces';
 
-const Topbar = () => {
+interface Props {
+    userData?: UserDetails
+    applyFilter?: (filterData: UserDetails) => void
+}
+
+const Topbar = (props: Props) => {
+    const { userData, applyFilter } = props
     const navigate = useNavigate();
     const location = useLocation();
     const menu = useRef<Menu>(null);
@@ -42,9 +50,8 @@ const Topbar = () => {
 
     const filterContent = (
         <div >
-            <Sidebar className='sidebar-filter' visible={visible} onHide={() => setVisible(false)}>
-                <h2>Filter</h2>
-                <p>Filter Details</p>
+            <Sidebar header='Filter' className='sidebar-filter' visible={visible} onHide={() => setVisible(false)}>
+                {userData && <Filter applyFilter={applyFilter} userData={userData} onHide={() => setVisible(false)} />}
             </Sidebar>
             <Button className='left-btn' icon="pi pi-filter" onClick={() => setVisible(true)} />
         </div>
