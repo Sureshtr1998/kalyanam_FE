@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../components/toastProvider/ToastProvider';
 import RegisterModal from '../../components/registerModal/RegisterModal';
 import { setItem, user_login_token } from '../../utils/localStore';
+import { Fieldset } from 'primereact/fieldset';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
@@ -108,6 +109,33 @@ const Register = () => {
         <div>
             {isValidate && <RegisterModal onSuccess={registerUser} email={formData.email} mobile={formData.mobile} onHide={() => setValidate(false)} />}
             <div className="register-container">
+                <Fieldset collapsed className='important-note' legend="Before You Begin Your Journey" toggleable>
+
+                    <strong> 1) </strong>
+                    We've very recently launched the app, so you might not find many profiles initially. By{" "}
+                    <strong>November end</strong>, we’ll be adding all active profiles here.
+                    <strong>
+                        <br />
+                        2) </strong>
+                    You’ll receive email notifications whenever someone sends you an interest or accepts your interest.
+                    <br />
+
+                    <strong> 3) </strong>
+                    We’re currently charging a <strong>minimal registration fee of ₹251 </strong>
+                    per year for our new users.
+                    <strong>
+                        <br />
+
+                        4) </strong>
+                    For any issues or special assistance, please contact{" "}
+                    <a
+                        href="mailto:seetharamakalyana@gmail.com"
+                        style={{ color: "#e07b00", textDecoration: "none", fontWeight: 500 }}
+                    >
+                        seetharamakalyana@gmail.com
+                    </a>
+                    . We’ll respond to your query within <strong>24 hours</strong>.
+                </Fieldset>
                 <ImageMedia onChange={mediaFileHandler} />
                 <form className="register-form">
                     <div className="form-row">
