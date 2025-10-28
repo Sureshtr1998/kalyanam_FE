@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import Topbar from "../../components/topbar/Topbar"
 import api from "../../utils/api"
-import type { UserDetails } from "../../utils/interfaces"
+import type { UserDataType, UserDetails } from "../../utils/interfaces"
 import "./Profile.scss"
 import "../register/Register.scss"
 import { Accordion, AccordionTab } from 'primereact/accordion';
-import { formDefaultVals, mandatoryFields } from "../../utils/constants"
+import { formDefaultVals, mandatoryBasicFields, mandatoryFamilyFields, mandatoryPartnerFields, mandatoryPersonalFields } from "../../utils/constants"
 import BasicDetails from "./details/BasicDetails"
 import PersonalDetails from "./details/PersonalDetails"
 import FamilyDetails from "./details/FamilyDetails"
@@ -27,31 +27,46 @@ const Profile = () => {
     }, [])
 
     useEffect(() => {
-        setAllImgs(userData.images)
-    }, [userData.images])
+        setAllImgs(userData.basic.images)
+    }, [userData.basic.images])
+
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleChange = (e: any) => {
-        setUserData({ ...userData, [e.target.name]: e.target.value });
+    const handleChange = (e: any, section: UserDataType) => {
+        const { name, value } = e.target;
+        setUserData({
+            ...userData,
+            [section]: {
+                ...userData[section],
+                [name]: value,
+            },
+        });
     };
-
 
     const init = async () => {
         const res = await api.get('/my-profile')
         setUserData(res.data.profile)
     }
 
+    const hasEmptyFields = <T extends object>(
+        obj: T,
+        fields: (keyof T)[]
+    ): boolean => {
+        return fields.some((field) => !(obj?.[field]));
+    };
+
+
+
     const saveChanges = async () => {
         const newErrors: string[] = [];
 
 
-        const isAnyFieldEmpty = mandatoryFields.some((field) => {
-            if (!userData[field]) {
-                return true
-            }
-        });
+        const isBasicEmpty = hasEmptyFields(userData.basic, mandatoryBasicFields);
+        const isPersonalEmpty = hasEmptyFields(userData.personal, mandatoryPersonalFields);
+        const isFamilyEmpty = hasEmptyFields(userData.family, mandatoryFamilyFields);
+        const isPartnerEmpty = hasEmptyFields(userData.partner, mandatoryPartnerFields);
 
-        if (isAnyFieldEmpty) {
+        if (isBasicEmpty || isPersonalEmpty || isFamilyEmpty || isPartnerEmpty) {
             newErrors.push("Please fill all mandatory fields.");
         }
 
@@ -64,33 +79,46 @@ const Profile = () => {
             });
             return;
         }
+
         try {
-            const formData = new FormData();
+            let uploadedUrls: string[] = [];
 
-            // Append all userData fields
-            Object.entries(userData).forEach(([key, value]) => {
-                if (value?.length > 0) {
-                    formData.append(key, value);
-                }
-            });
+            const newFiles = allImgs.filter((item) => item instanceof File);
+            const existingUrls = allImgs.filter((item) => typeof item === "string");
 
-            // Append images
-            allImgs.forEach((item) => {
-                if (item instanceof File) {
-                    formData.append("images", item);
-                } else if (typeof item === "string") {
-                    formData.append("imageUrls", item);
-                }
-            });
+            if (newFiles.length > 0) {
+                const imgFormData = new FormData();
+                newFiles.forEach((file) => imgFormData.append("images", file));
 
-            await api.post('/my-profile', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
+                const imgRes = await api.post("/my-profile/upload-images", imgFormData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                uploadedUrls = imgRes.data.urls;
+            }
 
-            showToast("success", "Success", 'Profile updated successfully');
+            // 2️⃣ Combine existing and new URLs
+            const finalUrls = [...existingUrls, ...uploadedUrls];
+
+            // 3️⃣ Send updated profile JSON
+            const payload = {
+                ...userData,
+                basic: {
+                    ...userData.basic,
+                    images: finalUrls,
+                },
+                hasCompleteProfile: true,
+            };
+
+            await api.post("/my-profile", payload);
+
+            showToast("success", "Success", "Profile updated successfully");
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            showToast("error", "Error", err.response.data.msg || "Something went wrong");
+            showToast(
+                "error",
+                "Error",
+                err.response?.data?.msg || "Something went wrong"
+            );
         }
     }
 
@@ -126,23 +154,23 @@ const Profile = () => {
                 <Accordion className="accordion-data" multiple activeIndex={[0]}>
                     {/* Basic Details */}
                     <AccordionTab header="Basic Details" >
-                        <BasicDetails handleExisting={handleExisting} handleNew={handleNew} userData={userData} handleChange={handleChange} />
+                        <BasicDetails handleExisting={handleExisting} handleNew={handleNew} basicData={userData.basic} handleChange={(e) => handleChange(e, 'basic')} />
                     </AccordionTab>
 
 
                     {/* Personal Details */}
                     <AccordionTab header="Personal Details">
-                        <PersonalDetails userData={userData} handleChange={handleChange} />
+                        <PersonalDetails personalData={userData.personal} handleChange={(e) => handleChange(e, 'personal')} />
                     </AccordionTab>
 
                     {/* Family Details */}
                     <AccordionTab header="Family Details">
-                        <FamilyDetails userData={userData} handleChange={handleChange} />
+                        <FamilyDetails familyData={userData.family} handleChange={(e) => handleChange(e, 'family')} />
                     </AccordionTab>
 
                     {/* Partner Preferences  */}
                     <AccordionTab header="Partner Preferences">
-                        <PartnerPreferences userData={userData} handleChange={handleChange} />
+                        <PartnerPreferences partnerData={userData.partner} handleChange={(e) => handleChange(e, 'partner')} />
                     </AccordionTab>
 
 

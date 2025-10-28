@@ -20,10 +20,20 @@ const Filter = (props: Props) => {
     }, [])
 
 
+
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleChange = (e: any) => {
-        setFilterData({ ...filterData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFilterData({
+            ...filterData,
+            partner: {
+                ...filterData['partner'],
+                [name]: value,
+            },
+        });
     };
+
 
     const onClick = () => {
         applyFilter?.(filterData)
@@ -31,7 +41,7 @@ const Filter = (props: Props) => {
     }
 
     return <div className="filter-preferences">
-        <PartnerPreferences isFilter userData={filterData} handleChange={handleChange} />
+        {filterData.partner && <PartnerPreferences isFilter partnerData={filterData.partner} handleChange={handleChange} />}
         <Button onClick={onClick} className="apply-btn" rounded>Apply</Button>
     </div>
 }

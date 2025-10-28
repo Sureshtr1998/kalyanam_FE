@@ -1,12 +1,19 @@
 import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext"
 import { InputTextarea } from "primereact/inputtextarea"
-import type { ProfileInfo } from "../../../utils/interfaces"
+import type { FamilyDetailsIn } from "../../../utils/interfaces"
 import { familyStatus, noSiblingOptions, parentStatus } from "../../../utils/constants"
 
-const FamilyDetails = (props: ProfileInfo) => {
 
-    const { userData, handleChange } = props
+interface Props {
+    familyData: FamilyDetailsIn
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    handleChange: (event: any) => void
+}
+
+const FamilyDetails = (props: Props) => {
+
+    const { familyData = {}, handleChange } = props
 
     return <div>
 
@@ -16,7 +23,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="elderBro"
                     name="elderBro"
-                    value={userData.elderBro}
+                    value={familyData.elderBro}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -29,7 +36,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="elderBroMar"
                     name="elderBroMar"
-                    value={userData.elderBroMar}
+                    value={familyData.elderBroMar}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -48,7 +55,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="youngerBro"
                     name="youngerBro"
-                    value={userData.youngerBro}
+                    value={familyData.youngerBro}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -61,7 +68,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="youngerBroMar"
                     name="youngerBroMar"
-                    value={userData.youngerBroMar}
+                    value={familyData.youngerBroMar}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -77,7 +84,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="elderSis"
                     name="elderSis"
-                    value={userData.elderSis}
+                    value={familyData.elderSis}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -89,7 +96,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="elderSisMar"
                     name="elderSisMar"
-                    value={userData.elderSisMar}
+                    value={familyData.elderSisMar}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -106,7 +113,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="youngerSis"
                     name="youngerSis"
-                    value={userData.youngerSis}
+                    value={familyData.youngerSis}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -119,7 +126,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="youngerSisMar"
                     name="youngerSisMar"
-                    value={userData.youngerSisMar}
+                    value={familyData.youngerSisMar}
                     options={noSiblingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -134,7 +141,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <InputText
                     id="fatherName"
                     name="fatherName"
-                    value={userData.fatherName}
+                    value={familyData.fatherName}
                     onChange={handleChange}
                     className="field-input"
                 />
@@ -144,7 +151,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="fatherStatus"
                     name="fatherStatus"
-                    value={userData.fatherStatus}
+                    value={familyData.fatherStatus}
                     options={parentStatus}
                     onChange={handleChange}
                     placeholder="Select"
@@ -160,7 +167,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <InputText
                     id="motherName"
                     name="motherName"
-                    value={userData.motherName}
+                    value={familyData.motherName}
                     onChange={handleChange}
                     className="field-input"
                 />
@@ -170,7 +177,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="motherStatus"
                     name="motherStatus"
-                    value={userData.motherStatus}
+                    value={familyData.motherStatus}
                     options={parentStatus}
                     onChange={handleChange}
                     placeholder="Select"
@@ -185,7 +192,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <InputText
                     id="fatherOccup"
                     name="fatherOccup"
-                    value={userData.fatherOccup}
+                    value={familyData.fatherOccup}
                     onChange={handleChange}
                     className="field-input"
                 />
@@ -195,7 +202,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <InputText
                     id="motherOccup"
                     name="motherOccup"
-                    value={userData.motherOccup}
+                    value={familyData.motherOccup}
                     onChange={handleChange}
                     className="field-input"
                 />
@@ -208,7 +215,7 @@ const FamilyDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="familyStatus"
                     name="familyStatus"
-                    value={userData.familyStatus}
+                    value={familyData.familyStatus}
                     options={familyStatus}
                     onChange={handleChange}
                     placeholder="Select"
@@ -216,11 +223,11 @@ const FamilyDetails = (props: ProfileInfo) => {
                 />
             </div>
             <div className="field-container">
-                <label htmlFor="fNote" className="field-label">Additional Notes</label>
+                <label htmlFor="note" className="field-label">Additional Notes</label>
                 <InputTextarea
-                    id="fNote"
-                    name="fNote"
-                    value={userData.fNote}
+                    id="note"
+                    name="note"
+                    value={familyData.note}
                     onChange={handleChange}
                     className="field-input"
                     rows={3}

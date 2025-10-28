@@ -1,37 +1,42 @@
-export interface UserDetails {
-    //Registration mandatory fields
+export interface BasicDetailsIn {
     fullName: string;
     martialStatus: string;
     email: string;
-    qualification: string;
     password: string;
-    subCaste: string;
-    gotra: string;
     confirmPassword: string;
+    subCaste: string;
+    gothra: string;
     mobile: string;
     alternateMob: string;
     gender: string;
     motherTongue: string;
     dob: Date | null;
+    age?: number;
     profileCreatedBy: string;
-    images: string[]
-    bNote?: string
+    images: string[];
+    qualification: string;
+    note?: string;
+    uniqueId?: string
 
-    //Personal Details
+}
+
+export interface PersonalDetailsIn {
     height?: string
     country?: string
     residingStatus?: string
     weight?: number
     diet?: string
+    workCity?: string
     address?: string
     salary?: number
     employedIn?: string
     rashi?: string
     nakshatra?: string
-    mNote?: string
+    note?: string
 
+}
 
-    //Family details
+export interface FamilyDetailsIn {
     familyStatus?: string
     elderBro?: string
     youngerBro?: string
@@ -47,44 +52,54 @@ export interface UserDetails {
     motherName?: string
     motherStatus?: string
     motherOccup?: string
-    fNote?: string
+    note?: string
+}
 
-
-    //Partner preference
+export interface PartnerDetailsIn {
     ageFrom?: string
     ageTo?: string
-    pMartialStatus?: string[];
+    martialStatus?: string[];
     heightFrom?: string
     heightTo?: string
-    pSubCaste?: string[]
-    pEmployedIn?: string[]
-    pNote?: string
-    pQualification?: string[]
-    pCountry?: string[]
+    subCaste?: string[]
+    employedIn?: string[]
+    note?: string
+    qualification?: string[]
+    country?: string[]
+}
 
-    //Interests
-
+export interface InterestsIn {
     sent?: string[]
     received?: string[]
     accepted?: string[]
     declined?: string[]
     invitationStatus?: 'accept' | 'decline' | 'sent' | 'received' | 'pending',
+}
 
-    //Backend Data and Flags
+export interface TransactionsIn {
+    transactionId: string
+    dateOfTrans: string
+    amountPaid: number
+    noOfInterest: number
+}
+
+export interface UserDetails {
+    basic: BasicDetailsIn
+
+    personal: PersonalDetailsIn
+
+    family: FamilyDetailsIn
+
+    partner: PartnerDetailsIn
+
+    interests?: InterestsIn
+
+    transactions?: TransactionsIn
+
     _id?: string
-    uniqueId?: string
-    age?: number
     hasCompleteProfile?: boolean
-
     isHidden?: boolean
     hideProfiles?: string[]
-
 }
 
-
-export interface ProfileInfo {
-    userData: UserDetails
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    handleChange: (event: any) => void
-    isFilter?: boolean
-}
+export type UserDataType = "basic" | "personal" | "partner" | "family"

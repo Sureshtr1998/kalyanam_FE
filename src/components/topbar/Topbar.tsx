@@ -72,8 +72,8 @@ const Topbar = (props: Props) => {
             <Menu model={avatarMenuItems} popup ref={menu} />
             <Avatar
                 label={
-                    getItem(user_login_token)?.username
-                        ? getItem(user_login_token).username.slice(0, 2).toUpperCase()
+                    getItem(user_login_token)?.fullName
+                        ? getItem(user_login_token).fullName.slice(0, 2).toUpperCase()
                         : ''
                 }
                 shape="circle"

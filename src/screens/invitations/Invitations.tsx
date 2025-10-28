@@ -74,8 +74,8 @@ const Invitations = () => {
         let colorClass = "";
         let label = "";
 
-        if (rowData.invitationStatus !== 'received') {
-            switch (rowData.invitationStatus) {
+        if (rowData.interests?.invitationStatus !== 'received') {
+            switch (rowData.interests?.invitationStatus) {
                 case "accept":
                     colorClass = "text-green-700";
                     label = "Accepted";
@@ -151,7 +151,7 @@ const Invitations = () => {
     return (
         <div>
             <Topbar />
-            {user && <ViewCard user={user} hide={() => setUser(undefined)} isAccept={user.invitationStatus === 'accept'} />}
+            {user && <ViewCard user={user} hide={() => setUser(undefined)} isAccept={user.interests?.invitationStatus === 'accept'} />}
 
             <div className="invitations-container mt-16">
                 <DataTable
@@ -161,7 +161,7 @@ const Invitations = () => {
                     globalFilterFields={[
                         "uniqueId",
                         "fullName",
-                        "gotra",
+                        "gothra",
                         "motherTongue",
                         "subCaste",
                     ]}
@@ -173,12 +173,12 @@ const Invitations = () => {
                     tableStyle={{ minWidth: "60rem" }}
                     header={renderHeader()}
                 >
-                    <Column field="uniqueId" header="ID" />
-                    <Column field="fullName" header="Name" />
-                    <Column field="age" header="Age" />
-                    <Column field="gotra" header="Gotra" />
-                    <Column field="motherTongue" header="Mother Tongue" />
-                    <Column field="subCaste" header="Sub Caste" />
+                    <Column field="basic.uniqueId" header="ID" />
+                    <Column field="basic.fullName" header="Name" />
+                    <Column field="basic.age" header="Age" />
+                    <Column field="basic.gothra" header="Gothra" />
+                    <Column field="basic.motherTongue" header="Mother Tongue" />
+                    <Column field="basic.subCaste" header="Sub Caste" />
                     <Column header="Profile" body={viewProfileTemplate} />
                     <Column header="Status" body={statusTemplate} />
                 </DataTable>

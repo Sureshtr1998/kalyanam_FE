@@ -19,7 +19,8 @@ interface ProfileCardProps {
 
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
-    const { fullName, age, subCaste, qualification, motherTongue, images, gotra, _id } = match;
+    const { fullName, age, subCaste, motherTongue, images, gothra, qualification } = match.basic
+    const userId = match._id
 
     const [visible, setVisible] = useState(false);
     const { showToast } = useToast();
@@ -27,9 +28,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
 
     const hideUser = async () => {
         try {
-            const res = await api.post('/hide-profile', { userId: _id });
+            const res = await api.post('/hide-profile', { userId: userId });
             showToast("success", "Success", res.data.msg || "Profile has been hidden successfully");
-            hideProfile(_id ?? '')
+            hideProfile(userId ?? '')
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             showToast("error", "Error", err.response.data.msg || "Something went wrong");
@@ -38,9 +39,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
 
     const sendInterest = async () => {
         try {
-            await api.post('/send-interest', { receiverId: _id });
+            await api.post('/send-interest', { receiverId: userId });
             showToast("success", "Success", "Interest sent successfully");
-            hideProfile(_id ?? '')
+            hideProfile(userId ?? '')
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
@@ -80,8 +81,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
                         </div>
                         <div className="content-div">
 
-                            <p className="content-label">Gotra:</p>
-                            &nbsp;{gotra}
+                            <p className="content-label">Gothra:</p>
+                            &nbsp;{gothra}
                         </div>
                     </div>
                 </div>

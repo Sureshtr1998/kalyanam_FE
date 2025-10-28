@@ -1,13 +1,19 @@
 import { Dropdown } from "primereact/dropdown"
 import { InputText } from "primereact/inputtext"
 import { InputTextarea } from "primereact/inputtextarea"
-import { countryOptions, dietOptions, employedInOptions, heightOptions, nakshatraOptions, qualificationOptions, rashiOptions, residingOptions } from "../../../utils/constants"
-import type { ProfileInfo } from "../../../utils/interfaces"
+import { countryOptions, dietOptions, employedInOptions, heightOptions, nakshatraOptions, rashiOptions, residingOptions } from "../../../utils/constants"
+import type { PersonalDetailsIn } from "../../../utils/interfaces"
 import { InputNumber } from "primereact/inputnumber"
 
-const PersonalDetails = (props: ProfileInfo) => {
+interface Props {
+    personalData: PersonalDetailsIn
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    handleChange: (event: any) => void
+}
 
-    const { userData, handleChange } = props
+const PersonalDetails = (props: Props) => {
+
+    const { personalData = {}, handleChange } = props
 
     return <div>
         <div className="form-row">
@@ -16,7 +22,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="height"
                     name="height"
-                    value={userData.height}
+                    value={personalData.height}
                     options={heightOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -31,7 +37,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                     name="weight"
                     placeholder="In kgs"
                     suffix=" kg"
-                    value={userData.weight}
+                    value={personalData.weight}
                     onValueChange={(e) => handleChange({ target: { name: 'weight', value: e.value } })}
                     className="field-input"
                 />
@@ -45,7 +51,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                     id="country"
                     filter
                     name="country"
-                    value={userData.country}
+                    value={personalData.country}
                     options={countryOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -57,7 +63,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="residingStatus"
                     name="residingStatus"
-                    value={userData.residingStatus || ''}
+                    value={personalData.residingStatus || ''}
                     options={residingOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -67,40 +73,13 @@ const PersonalDetails = (props: ProfileInfo) => {
         </div>
 
 
-
-        <div className="form-row">
-            <div className="field-container">
-                <label className="field-label required" htmlFor="qualification">Qualification</label>
-                <Dropdown
-                    id="qualification"
-                    name="qualification"
-                    value={userData.qualification}
-                    options={qualificationOptions}
-                    onChange={handleChange}
-                    placeholder="Select"
-                    className="field-input"
-                />
-            </div>
-
-            <div className="field-container">
-                <label htmlFor="address" className="field-label">Address</label>
-                <InputText
-                    id="address"
-                    name="address"
-                    value={userData.address || ''}
-                    onChange={handleChange}
-                    className="field-input"
-                />
-            </div>
-        </div>
-
         <div className="form-row">
             <div className="field-container">
                 <label htmlFor="employedIn" className="field-label required">Employed In</label>
                 <Dropdown
                     id="employedIn"
                     name="employedIn"
-                    value={userData.employedIn}
+                    value={personalData.employedIn}
                     options={employedInOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -114,7 +93,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                     name="salary"
                     placeholder="In LPA"
                     suffix=" LPA"
-                    value={userData.salary}
+                    value={personalData.salary}
                     onValueChange={(e) => handleChange({ target: { name: 'salary', value: e.value } })}
                     className="field-input"
                 />
@@ -127,7 +106,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="rashi"
                     name="rashi"
-                    value={userData.rashi}
+                    value={personalData.rashi}
                     options={rashiOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -140,7 +119,7 @@ const PersonalDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="nakshatra"
                     name="nakshatra"
-                    value={userData.nakshatra}
+                    value={personalData.nakshatra}
                     options={nakshatraOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -156,19 +135,45 @@ const PersonalDetails = (props: ProfileInfo) => {
                 <Dropdown
                     id="diet"
                     name="diet"
-                    value={userData.diet}
+                    value={personalData.diet}
                     options={dietOptions}
                     onChange={handleChange}
                     placeholder="Select"
                     className="field-input"
                 />
             </div>
+
             <div className="field-container">
-                <label htmlFor="mNote" className="field-label">Additional Notes</label>
+                <label htmlFor="address" className="field-label">Address</label>
+                <InputText
+                    id="address"
+                    name="address"
+                    value={personalData.address || ''}
+                    onChange={handleChange}
+                    className="field-input"
+                />
+            </div>
+
+        </div>
+
+        <div className="form-row">
+
+            <div className="field-container">
+                <label htmlFor="workCity" className="field-label">Work City</label>
+                <InputText
+                    id="workCity"
+                    name="workCity"
+                    value={personalData.workCity || ''}
+                    onChange={handleChange}
+                    className="field-input"
+                />
+            </div>
+            <div className="field-container">
+                <label htmlFor="note" className="field-label">Additional Notes</label>
                 <InputTextarea
-                    id="mNote"
-                    name="mNote"
-                    value={userData.mNote}
+                    id="note"
+                    name="note"
+                    value={personalData.note}
                     onChange={handleChange}
                     className="field-input"
                     rows={3}

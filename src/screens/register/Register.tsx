@@ -8,7 +8,7 @@ import './Register.scss';
 import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions, emailRegex, formDefaultVals } from '../../utils/constants';
 import { Divider } from 'primereact/divider';
 import { InputMask } from 'primereact/inputmask';
-import type { UserDetails } from '../../utils/interfaces';
+import type { BasicDetailsIn } from '../../utils/interfaces';
 import { Message } from 'primereact/message';
 import ImageMedia from '../../components/imageMedia/ImageMedia';
 import api from '../../utils/api';
@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../components/toastProvider/ToastProvider';
 import RegisterModal from '../../components/registerModal/RegisterModal';
 import { setItem, user_login_token } from '../../utils/localStore';
-import { Fieldset } from 'primereact/fieldset';
+import RegisterNote from '../../components/note/RegisterNote';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
@@ -26,8 +26,7 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState<UserDetails>(formDefaultVals);
-
+    const [formData, setFormData] = useState<BasicDetailsIn>(formDefaultVals.basic);
 
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,39 +67,42 @@ const Register = () => {
             });
             return;
         }
-
         setValidate(true)
     };
 
     const registerUser = async () => {
-
         try {
-            const formPayload = new FormData();
+            let imageUrls: string[] = [];
 
-            // Append all fields
-            Object.entries(formData).forEach(([key, value]) => {
-                formPayload.append(key, value as string);
-            });
+            // 1️⃣ Upload images first
+            if (images.length > 0) {
+                const imgFormData = new FormData();
+                images.forEach((file) => imgFormData.append("images", file));
 
-            // Append images
-            images.forEach((file) => {
-                formPayload.append('images', file);
-            });
+                const imgRes = await api.post("/user-register/upload-images", imgFormData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
 
-            // Send request to backend
-            const res = await api.post('/user-register', formPayload, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-            setItem(user_login_token, res.data)
-            showToast("success", "Registration Successful", 'Your details have been submitted successfully!');
+                imageUrls = imgRes.data.urls;
+            }
 
+            // 2️⃣ Submit registration data
+            const payload = {
+                ...formData,
+                images: imageUrls,
+            };
 
-            navigate('/home');
+            const res = await api.post("/user-register", payload);
+
+            setItem(user_login_token, res.data);
+            showToast("success", "Registration Successful", "Your details have been submitted successfully!");
+            navigate("/home");
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            showToast("error", "Registration Failed", err.response?.data?.msg || 'Server error');
+            showToast("error", "Registration Failed", err.response?.data?.msg || "Server error");
         }
-    }
+    };
+
 
     const mediaFileHandler = (files: File[]) => {
         setImages(files)
@@ -109,33 +111,7 @@ const Register = () => {
         <div>
             {isValidate && <RegisterModal onSuccess={registerUser} email={formData.email} mobile={formData.mobile} onHide={() => setValidate(false)} />}
             <div className="register-container">
-                <Fieldset collapsed className='important-note' legend="Before You Begin Your Journey" toggleable>
-
-                    <strong> 1) </strong>
-                    We've very recently launched the app, so you might not find many profiles initially. By{" "}
-                    <strong>November end</strong>, we’ll be adding all active profiles here.
-                    <strong>
-                        <br />
-                        2) </strong>
-                    You’ll receive email notifications whenever someone sends you an interest or accepts your interest.
-                    <br />
-
-                    <strong> 3) </strong>
-                    We’re currently charging a <strong>minimal registration fee of ₹251 </strong>
-                    per year for our new users.
-                    <strong>
-                        <br />
-
-                        4) </strong>
-                    For any issues or special assistance, please contact{" "}
-                    <a
-                        href="mailto:seetharamakalyana@gmail.com"
-                        style={{ color: "#e07b00", textDecoration: "none", fontWeight: 500 }}
-                    >
-                        seetharamakalyana@gmail.com
-                    </a>
-                    . We’ll respond to your query within <strong>24 hours</strong>.
-                </Fieldset>
+                <RegisterNote />
                 <ImageMedia onChange={mediaFileHandler} />
                 <form className="register-form">
                     <div className="form-row">
@@ -209,7 +185,7 @@ const Register = () => {
                                 className="field-input" id="mobile" name="mobile" value={formData.mobile} onChange={handleChange} />
                         </div>
                         <div className="field-container">
-                            <label className="field-label" htmlFor="alternateMob">Alternate Mobile Number</label>
+                            <label className="field-label" htmlFor="alternateMob">Alternate Contact</label>
                             <InputMask mask="9999999999" className="field-input" id="alternateMob" name="alternateMob" value={formData.alternateMob} onChange={handleChange} />
                         </div>
                     </div>
@@ -248,9 +224,9 @@ const Register = () => {
                             />
                         </div>
                         <div className="field-container">
-                            <label htmlFor="gotra" className="field-label">Gotra</label>
+                            <label htmlFor="gothra" className="field-label">Gothra</label>
                             <InputText
-                                className="field-input" id="gotra" name="gotra" value={formData.gotra} onChange={handleChange} />
+                                className="field-input" id="gothra" name="gothra" value={formData.gothra} onChange={handleChange} />
 
                         </div>
                     </div>

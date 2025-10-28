@@ -2,47 +2,47 @@ import { Calendar } from "primereact/calendar"
 import { Dropdown } from "primereact/dropdown"
 import { InputMask } from "primereact/inputmask"
 import { InputText } from "primereact/inputtext"
-import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions } from "../../../utils/constants"
-import type { ProfileInfo } from "../../../utils/interfaces"
+import { maritalOptions, motherTongueOptions, createdByOptions, genderOptions, subCasteOptions, qualificationOptions } from "../../../utils/constants"
+import type { BasicDetailsIn } from "../../../utils/interfaces"
 import { InputTextarea } from "primereact/inputtextarea"
 import ImageMedia from "../../../components/imageMedia/ImageMedia"
 
 
+interface Props {
+    basicData: BasicDetailsIn
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    handleChange: (event: any) => void
+    handleExisting: (files: string[]) => void
+    handleNew: (files: File[]) => void
+}
 
 
-const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) => void, handleNew: (files: File[]) => void }) => {
+const BasicDetails = (props: Props) => {
 
-    const { userData, handleChange, handleExisting, handleNew } = props
+    const { basicData, handleChange, handleExisting, handleNew } = props
 
     return <div>
-        {userData.images && <ImageMedia initialImages={userData.images} onUrlChange={handleExisting} onChange={handleNew} />}
+        {basicData.images && <ImageMedia initialImages={basicData.images} onUrlChange={handleExisting} onChange={handleNew} />}
         <div className="form-row">
             <div className="field-container">
                 <label htmlFor="fullName" className="field-label required">
-                    Name of {userData.gender === 'Male' ? 'Groom' : 'Bride'}
+                    Name of {basicData.gender === 'Male' ? 'Groom' : 'Bride'}
                 </label>
                 <InputText
                     id="fullName"
                     name="fullName"
-                    value={userData.fullName}
+                    value={basicData.fullName}
                     onChange={handleChange}
                     className="field-input"
                 />
             </div>
 
             <div className="field-container">
-                <label htmlFor="martialStatus" className="field-label required">
-                    Marital Status
+                <label htmlFor="profileId" className="field-label">
+                    Profile ID
                 </label>
-                <Dropdown
-                    id="martialStatus"
-                    name="martialStatus"
-                    value={userData.martialStatus}
-                    options={maritalOptions}
-                    onChange={handleChange}
-                    placeholder="Select"
-                    className="field-input"
-                />
+                <InputText disabled type='profileId'
+                    className="field-input" id="profileId" name="profileId" value={basicData.uniqueId} />
 
             </div>
         </div>
@@ -52,7 +52,7 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                 <label className="field-label" htmlFor="email">Email</label>
 
                 <InputText disabled type='email'
-                    className="field-input" id="email" name="email" value={userData.email} onChange={handleChange} />
+                    className="field-input" id="email" name="email" value={basicData.email} />
             </div>
 
             <div className="field-container">
@@ -62,7 +62,7 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                     disabled
                     id="gender"
                     name="gender"
-                    value={userData.gender}
+                    value={basicData.gender}
                     options={genderOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -77,11 +77,11 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                 <InputMask
                     disabled
                     mask="9999999999"
-                    className="field-input" id="mobile" name="mobile" value={userData.mobile} onChange={handleChange} />
+                    className="field-input" id="mobile" name="mobile" value={basicData.mobile} />
             </div>
             <div className="field-container">
-                <label className="field-label" htmlFor="alternateMob">Alternate Mobile Number</label>
-                <InputMask mask="9999999999" className="field-input" id="alternateMob" name="alternateMob" value={userData.alternateMob} onChange={handleChange} />
+                <label className="field-label" htmlFor="alternateMob">Alternate Contact</label>
+                <InputMask mask="9999999999" className="field-input" id="alternateMob" name="alternateMob" value={basicData.alternateMob} onChange={handleChange} />
             </div>
         </div>
 
@@ -91,7 +91,7 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                 <Dropdown
                     id="motherTongue"
                     name="motherTongue"
-                    value={userData.motherTongue}
+                    value={basicData.motherTongue}
                     options={motherTongueOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -101,7 +101,7 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
 
             <div className="field-container">
                 <label className="field-label" htmlFor="dob">Date of Birth</label>
-                <Calendar disabled id="dob" className="field-input" name="dob" value={userData.dob ? new Date(userData.dob) : null} onChange={handleChange} showIcon dateFormat="dd/mm/yy" />
+                <Calendar disabled id="dob" className="field-input" name="dob" value={basicData.dob ? new Date(basicData.dob) : null} showIcon dateFormat="dd/mm/yy" />
             </div>
         </div>
 
@@ -111,7 +111,7 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                 <Dropdown
                     id="profileCreatedBy"
                     name="profileCreatedBy"
-                    value={userData.profileCreatedBy}
+                    value={basicData.profileCreatedBy}
                     options={createdByOptions}
                     onChange={handleChange}
                     placeholder="Select"
@@ -119,9 +119,9 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
                 />
             </div>
             <div className="field-container">
-                <label htmlFor="gotra" className="field-label">Gotra</label>
+                <label htmlFor="gothra" className="field-label">Gothra</label>
                 <InputText
-                    className="field-input" id="gotra" name="gotra" value={userData.gotra} onChange={handleChange} />
+                    className="field-input" id="gothra" name="gothra" value={basicData.gothra} onChange={handleChange} />
 
             </div>
         </div>
@@ -129,23 +129,55 @@ const BasicDetails = (props: ProfileInfo & { handleExisting: (files: string[]) =
 
         <div className="form-row">
             <div className="field-container">
+                <label className="field-label required" htmlFor="qualification">Qualification</label>
+                <Dropdown
+                    id="qualification"
+                    name="qualification"
+                    value={basicData.qualification}
+                    options={qualificationOptions}
+                    onChange={handleChange}
+                    placeholder="Select"
+                    className="field-input"
+                />
+            </div>
+
+            <div className="field-container">
                 <label className="field-label required" htmlFor="subCaste">Sub Caste</label>
                 <Dropdown
                     id="subCaste"
                     name="subCaste"
-                    value={userData.subCaste}
+                    value={basicData.subCaste}
                     options={subCasteOptions}
                     onChange={handleChange}
                     placeholder="Select"
                     className="field-input"
                 />
             </div>
+        </div>
+
+        <div className="form-row">
+
             <div className="field-container">
-                <label htmlFor="bNote" className="field-label">Additional Notes</label>
+                <label htmlFor="martialStatus" className="field-label required">
+                    Marital Status
+                </label>
+                <Dropdown
+                    id="martialStatus"
+                    name="martialStatus"
+                    value={basicData.martialStatus}
+                    options={maritalOptions}
+                    onChange={handleChange}
+                    placeholder="Select"
+                    className="field-input"
+                />
+
+            </div>
+            <div className="field-container">
+                <label htmlFor="note" className="field-label">Additional Notes</label>
                 <InputTextarea
-                    id="bNote"
-                    name="bNote"
-                    value={userData.bNote}
+                    id="note"
+                    name="note"
+                    value={basicData.note}
                     onChange={handleChange}
                     className="field-input"
                     rows={3}

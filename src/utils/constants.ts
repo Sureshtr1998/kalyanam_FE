@@ -1,3 +1,5 @@
+import type { BasicDetailsIn, FamilyDetailsIn, PartnerDetailsIn, PersonalDetailsIn } from "./interfaces";
+
 export const maritalOptions = [
     { label: 'Unmarried', value: 'Unmarried' },
     { label: 'Widowed', value: 'Widowed' },
@@ -390,36 +392,43 @@ export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
 export const formDefaultVals = {
-    fullName: '',
-    martialStatus: '',
-    password: '',
-    confirmPassword: '',
-    subCaste: '',
-    gotra: '',
-    mobile: '',
-    alternateMob: '',
-    gender: '',
-    motherTongue: '',
-    dob: null,
-    profileCreatedBy: '',
-    email: '',
-    qualification: '',
-    images: [],
+    basic: {
+        fullName: '',
+        martialStatus: '',
+        password: '',
+        confirmPassword: '',
+        subCaste: '',
+        gothra: '',
+        mobile: '',
+        alternateMob: '',
+        gender: '',
+        motherTongue: '',
+        dob: null,
+        profileCreatedBy: '',
+        email: '',
+        images: [],
+        qualification: ''
+    }, personal: {}, family: {}, partner: {}
 }
 
-export const mandatoryFields = [
-    "fullName",
-    "martialStatus",
-    "motherTongue",
-    "subCaste",
+export const mandatoryBasicFields: (keyof BasicDetailsIn)[] = [
+    'fullName', 'martialStatus', 'motherTongue', 'subCaste'
+]
+
+export const mandatoryPersonalFields: (keyof PersonalDetailsIn)[] = [
     "height",
     "country",
     "residingStatus",
     "diet",
+]
+export const mandatoryFamilyFields: (keyof FamilyDetailsIn)[] = [
     "motherName",
     "fatherName",
+]
+
+export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "ageFrom",
     "ageTo",
-    "pEmployedIn",
-    "pQualification"
-] as const;
+    "employedIn",
+    "qualification"
+]

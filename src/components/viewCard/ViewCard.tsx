@@ -7,10 +7,10 @@ import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
 import { useRef } from "react";
 import { Button } from "primereact/button";
-import BasicDetails from "./details/BasicDetails";
-import PersonalDetails from "./details/PersonalDetails";
-import FamilyDetails from "./details/FamilyDetails";
-import PartnerPreferences from "./details/PartnerPreferences";
+import BasicDetails from "./cardsData/BasicCardInfo";
+import PersonalDetails from "./cardsData/PersonalCardInfo";
+import FamilyDetails from "./cardsData/FamilyCardInfo";
+import PartnerPreferences from "./cardsData/PartnerPreferenceCardInfo";
 import { Message } from "primereact/message";
 
 const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boolean }) => {
@@ -21,7 +21,7 @@ const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boole
     return <Dialog draggable={false}
         resizable={false}
         visible={true}
-        header={<div className="header-dialog"> {user.fullName} - {user.uniqueId}</div>}
+        header={<div className="header-dialog"> {user.basic.fullName}</div>}
         onHide={hide}
         className="card-dialog"
     >
@@ -36,13 +36,13 @@ const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boole
                     }
                 </div>
                 <div className="view-content">
-                    <CarouselImages images={user.images} />
+                    <CarouselImages images={user.basic.images} />
                     <div className="ml-8  w-full card flex justify-content-center">
                         <Stepper ref={stepperRef as any} orientation="vertical" style={{ flexBasis: '50rem' }}>
                             <StepperPanel header="Basic Details">
                                 <div className="stepper-container">
                                     <div className="content-data">
-                                        <BasicDetails user={user} />
+                                        <BasicDetails basic={user.basic} />
                                     </div>
                                 </div>
                                 <div className="flex pt-4 justify-content-end">
@@ -52,7 +52,7 @@ const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boole
                             <StepperPanel header="Personal Details">
                                 <div className="stepper-container">
                                     <div className="content-data">
-                                        <PersonalDetails user={user} />
+                                        <PersonalDetails personal={user.personal} />
                                     </div>
                                 </div>
                                 <div className="flex pt-4 justify-content-between justify-between">
@@ -63,7 +63,7 @@ const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boole
                             <StepperPanel header="Family Details">
                                 <div className="stepper-container">
                                     <div className="content-data">
-                                        <FamilyDetails user={user} />
+                                        <FamilyDetails family={user.family} />
                                     </div>
                                 </div>
                                 <div className="flex pt-4 justify-content-between justify-between">
@@ -74,7 +74,7 @@ const ViewCard = (props: { user: UserDetails, hide: () => void, isAccept?: boole
                             <StepperPanel header="Partner Preference ">
                                 <div className="stepper-container">
                                     <div className="content-data">
-                                        <PartnerPreferences user={user} />
+                                        <PartnerPreferences partner={user.partner} />
                                     </div>
                                 </div>
                                 <div className="flex pt-4 justify-content-start">

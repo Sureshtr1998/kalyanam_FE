@@ -12,3 +12,9 @@ export const normalizeToArray = (value: string | string[] | undefined): string[]
 export const fetchLabel = (options: { label: string, value: string }[], value: string | undefined) => {
     return options.find(option => option.value === value)?.label || '-'
 }
+
+
+export const arrayLabel = (value: string | string[] | undefined, options: { label: string, value: string }[]) => {
+    if (!value || !value.length) return '-'
+    return normalizeToArray(value).map(val => fetchLabel(options, val)).join(', ')
+}

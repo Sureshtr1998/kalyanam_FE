@@ -28,7 +28,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        if (userData.fullName) fetchProfiles(page, userData)
+        if (userData.basic.fullName) fetchProfiles(page, userData)
     }, [page, userData])
 
     const fetchUserProfile = async () => {
