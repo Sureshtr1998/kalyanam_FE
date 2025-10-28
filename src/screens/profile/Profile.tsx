@@ -13,6 +13,7 @@ import PartnerPreferences from "./details/PartnerPreferences"
 import { Button } from "primereact/button"
 import { useToast } from "../../components/toastProvider/ToastProvider"
 import { Message } from "primereact/message"
+import Spinner from "../../components/spinner/Spinner"
 
 const Profile = () => {
 
@@ -20,6 +21,8 @@ const Profile = () => {
 
     const [userData, setUserData] = useState<UserDetails>(formDefaultVals)
     const [allImgs, setAllImgs] = useState<File[] | string[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
     useEffect(() => {
         init()
@@ -44,8 +47,16 @@ const Profile = () => {
     };
 
     const init = async () => {
-        const res = await api.get('/my-profile')
-        setUserData(res.data.profile)
+        try {
+            setIsLoading(true)
+            const res = await api.get('/my-profile')
+            setUserData(res.data.profile)
+            setIsLoading(false)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            showToast('error', 'Error', err.response?.data?.msg || 'Unable to load user data');
+            setIsLoading(false)
+        }
     }
 
     const hasEmptyFields = <T extends object>(
@@ -81,6 +92,7 @@ const Profile = () => {
         }
 
         try {
+            setIsLoading(true)
             let uploadedUrls: string[] = [];
 
             const newFiles = allImgs.filter((item) => item instanceof File);
@@ -112,6 +124,7 @@ const Profile = () => {
             await api.post("/my-profile", payload);
 
             showToast("success", "Success", "Profile updated successfully");
+            setIsLoading(false)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             showToast(
@@ -119,6 +132,8 @@ const Profile = () => {
                 "Error",
                 err.response?.data?.msg || "Something went wrong"
             );
+            setIsLoading(false)
+
         }
     }
 
@@ -142,6 +157,7 @@ const Profile = () => {
     return <div className="w-full">
 
         <Topbar />
+        <Spinner isLoading={isLoading} />
 
         <div className="profile-container">
             <form className="profile-form">

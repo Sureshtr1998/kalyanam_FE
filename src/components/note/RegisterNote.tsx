@@ -1,4 +1,5 @@
 import { Fieldset } from "primereact/fieldset"
+import "./RegisterNote.scss"
 
 const RegisterNote = () => {
 

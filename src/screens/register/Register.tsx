@@ -17,6 +17,7 @@ import { useToast } from '../../components/toastProvider/ToastProvider';
 import RegisterModal from '../../components/registerModal/RegisterModal';
 import { setItem, user_login_token } from '../../utils/localStore';
 import RegisterNote from '../../components/note/RegisterNote';
+import Spinner from '../../components/spinner/Spinner';
 
 const Register = () => {
     const [images, setImages] = useState<File[]>([]);
@@ -27,7 +28,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState<BasicDetailsIn>(formDefaultVals.basic);
-
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleChange = (e: any) => {
@@ -67,10 +68,12 @@ const Register = () => {
             });
             return;
         }
-        setValidate(true)
+        registerUser()
+        // setValidate(true)
     };
 
     const registerUser = async () => {
+        setIsLoading(true)
         try {
             let imageUrls: string[] = [];
 
@@ -97,8 +100,11 @@ const Register = () => {
             setItem(user_login_token, res.data);
             showToast("success", "Registration Successful", "Your details have been submitted successfully!");
             navigate("/home");
+            setIsLoading(false)
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
+            setIsLoading(false)
             showToast("error", "Registration Failed", err.response?.data?.msg || "Server error");
         }
     };
@@ -113,6 +119,8 @@ const Register = () => {
             <div className="register-container">
                 <RegisterNote />
                 <ImageMedia onChange={mediaFileHandler} />
+                <Spinner isLoading={isLoading} />
+
                 <form className="register-form">
                     <div className="form-row">
                         <div className="field-container">

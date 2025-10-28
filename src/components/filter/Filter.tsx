@@ -4,6 +4,7 @@ import "./Filter.scss"
 import { formDefaultVals } from "../../utils/constants"
 import type { UserDetails } from "../../utils/interfaces"
 import { Button } from "primereact/button"
+import { Link } from "react-router-dom"
 
 interface Props {
     userData: UserDetails
@@ -42,7 +43,15 @@ const Filter = (props: Props) => {
 
     return <div className="filter-preferences">
         {filterData.partner && <PartnerPreferences isFilter partnerData={filterData.partner} handleChange={handleChange} />}
+
         <Button onClick={onClick} className="apply-btn" rounded>Apply</Button>
+        <p className="mt-4" style={{ fontSize: '0.9rem', color: '#555' }}>
+            <strong>Note:</strong> Data comes from{' '}
+            <Link to="/profile" style={{ textDecoration: 'underline', color: '#007bff' }}>
+                Partner Preferences
+            </Link>
+            . Update there to change them.
+        </p>
     </div>
 }
 

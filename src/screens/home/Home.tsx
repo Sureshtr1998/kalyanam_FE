@@ -10,10 +10,13 @@ import parashuram from "../../assets/parashuram.png"
 import { useToast } from "../../components/toastProvider/ToastProvider"
 import { formDefaultVals } from "../../utils/constants"
 import { useNavigate } from "react-router-dom"
+import Spinner from "../../components/spinner/Spinner"
 
 const Home = () => {
     const [matches, setMatches] = useState<UserDetails[]>([])
     const [userData, setUserData] = useState<UserDetails>(formDefaultVals)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
     const { showToast } = useToast();
     const navigate = useNavigate();
@@ -32,15 +35,24 @@ const Home = () => {
     }, [page, userData])
 
     const fetchUserProfile = async () => {
-        const res = await api.get('/my-profile')
-        if (!res.data.profile?.hasCompleteProfile) {
-            navigate('/profile')
+        try {
+            setIsLoading(true)
+            const res = await api.get('/my-profile')
+            if (!res.data.profile?.hasCompleteProfile) {
+                navigate('/profile')
+            }
+            setUserData(res.data.profile)
+            setIsLoading(false)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            showToast('error', 'Error', err.response?.data?.msg || 'Unable to load user data');
+            setIsLoading(false)
         }
-        setUserData(res.data.profile)
     }
 
     const fetchProfiles = async (pageNumber: number, filters: UserDetails) => {
         try {
+            setIsLoading(true)
             const res = await api.post("/fetch-profiles", {
                 page: pageNumber,
                 limit: rowsPerPage,
@@ -48,10 +60,11 @@ const Home = () => {
             });
             setMatches(res.data.profiles)
             setTotalRecords(res.data.totalProfiles)
+            setIsLoading(false)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
+            setIsLoading(false)
             showToast('error', 'Error', err.response?.data?.msg || 'Unable to fetch profiles');
-
         }
     }
 
@@ -73,6 +86,7 @@ const Home = () => {
     return (
         <div className="home-cards">
             <Topbar applyFilter={applyFilter} userData={userData} />
+            <Spinner isLoading={isLoading} />
             <div className="mt-20">
                 <div className="profile-cards">
                     {matches.length > 0 ? (
