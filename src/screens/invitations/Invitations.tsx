@@ -42,13 +42,17 @@ const Invitations = () => {
             if (res.data?.invitations) {
                 setInvitations(res.data.invitations);
             }
-        } finally {
+            setLoading(false);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            showToast('error', 'Error', err.response?.data?.msg || 'Unable to load invitations');
             setLoading(false);
         }
     };
 
     const handleAction = async (id: string | undefined, action: 'accept' | 'decline') => {
         try {
+            setLoading(true)
             const res = await api.post('/interest-action', { userId: id, action });
 
             setInvitations(prev =>
@@ -60,10 +64,12 @@ const Invitations = () => {
             );
 
             showToast("success", "Success", res.data.msg || '');
+            init()
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             showToast("error", "Error", err.response.data.msg || "Something went wrong");
+            setLoading(false)
         }
     };
 

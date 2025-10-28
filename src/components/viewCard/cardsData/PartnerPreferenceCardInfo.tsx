@@ -1,7 +1,7 @@
 
-import { countryOptions, employedInOptions, maritalOptions, qualificationOptions, subCasteOptions } from "../../../utils/constants"
+import { countryOptions, employedInOptions, heightOptions, maritalOptions, qualificationOptions, subCasteOptions } from "../../../utils/constants"
 import type { PartnerDetailsIn } from "../../../utils/interfaces"
-import { arrayLabel } from "../../../utils/utils"
+import { arrayLabel, fetchLabel } from "../../../utils/utils"
 
 const PartnerPreferences = (props: { partner: PartnerDetailsIn }) => {
     const { partner } = props
@@ -22,11 +22,11 @@ const PartnerPreferences = (props: { partner: PartnerDetailsIn }) => {
         <div className="row-container">
             <div className='container'>
                 <div className="label"> Height From </div>
-                <div className="value"> {partner.heightFrom ?? '-'}</div>
+                <div className="value"> {fetchLabel(heightOptions, partner.heightFrom)}</div>
             </div>
             <div className='container'>
                 <div className="label"> Height To </div>
-                <div className="value"> {partner.heightTo ?? '-'}</div>
+                <div className="value"> {fetchLabel(heightOptions, partner.heightTo)}</div>
             </div>
 
         </div>
