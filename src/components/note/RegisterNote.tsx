@@ -23,10 +23,10 @@ const RegisterNote = () => {
             4) </strong>
         For any issues or special assistance, please contact{" "}
         <a
-            href="mailto:seetharamakalyana@gmail.com"
+            href="mailto:contactus@seetharamakalyana.in"
             style={{ color: "#e07b00", textDecoration: "none", fontWeight: 500 }}
         >
-            seetharamakalyana@gmail.com
+            contactus@seetharamakalyana.in
         </a>
         . We’ll respond to your query within <strong>24 hours</strong>.
     </Fieldset>

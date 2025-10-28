@@ -9,7 +9,7 @@ const ContactUs = () => {
                     <span className="icon">
                         <i className="pi pi-envelope"></i>
                     </span>
-                    <span className="title">seetharamakalyana@gmail.com</span>
+                    <span className="title">contactus@seetharamakalyana.in</span>
                 </li>
             </ul>
         </div>
