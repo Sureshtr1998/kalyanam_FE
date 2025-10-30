@@ -105,7 +105,7 @@ export interface UserDetails {
 
 export type UserDataType = "basic" | "personal" | "partner" | "family"
 
-export type FormType = 'login' | 1 | 2 | 3 | 'success';
+export type FormType = 'login' | 1 | 2 | 3 | 'success' | 'forgotPassword';
 
 export type SelectType = { label: string; value: string; }
 
