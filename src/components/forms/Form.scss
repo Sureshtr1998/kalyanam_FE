@@ -1,0 +1,91 @@
+@use "../../styles/variables" as vars;
+@use "sass:color";
+
+.input-text {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid vars.$border-color;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease-in-out;
+  outline: none;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px vars.$accent-ring;
+    border-color: vars.$accent-ring;
+  }
+}
+
+.field-icon {
+  color: vars.$accent-ring;
+  z-index: 2;
+}
+
+.dropdown-field {
+  width: 100%;
+  padding-left: 2.5rem; // pl-10
+  border: 1px solid vars.$border-color;
+  border-radius: 0.5rem; // rounded-lg
+  background-color: #ffffffcc; // bg-white/80 (semi-transparent)
+  outline: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.p-dropdown.p-component.p-inputwrapper-focus {
+  border-color: vars.$accent-ring;
+  box-shadow: 0 0 0 2px vars.$accent-ring;
+}
+
+.p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+  border-color: vars.$accent-ring;
+  box-shadow: 0 0 0 2px vars.$accent-ring;
+}
+
+.p-datepicker-trigger {
+  background-color: white;
+  color: vars.$accent-ring;
+  &:focus {
+    border-color: vars.$accent-ring;
+    box-shadow: 0 0 0 2px vars.$accent-ring;
+  }
+}
+
+.update-btn {
+  width: 100%;
+  padding: 0.75rem 0;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: vars.$accent-color-bg;
+  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1);
+  place-content: center;
+
+  &:hover {
+    background-color: vars.$accent-color-bg-hover;
+    transform: scale(1.01);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.heading {
+  font-size: 1.5rem; // text-2xl
+  font-weight: 600; // font-semibold
+  margin-bottom: 2rem; // mb-8
+  text-align: center;
+  color: vars.$text-color;
+}

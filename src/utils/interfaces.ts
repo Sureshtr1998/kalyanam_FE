@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BasicDetailsIn {
     fullName: string;
     martialStatus: string;
@@ -103,3 +104,16 @@ export interface UserDetails {
 }
 
 export type UserDataType = "basic" | "personal" | "partner" | "family"
+
+export type FormType = 'login' | 1 | 2 | 3 | 'success';
+
+export type SelectType = { label: string; value: string; }
+
+export type StepsType = {
+    handleChange: (e: any) => void
+    setCurrentForm?: (val: FormType) => void
+    handleNext?: () => void
+    handleBack?: () => void
+    setImages?: (val: File[]) => void
+    formData: BasicDetailsIn
+}

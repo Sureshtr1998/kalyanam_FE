@@ -354,7 +354,11 @@ export const motherTongueOptions = [
     { label: 'Hindi', value: 'Hindi' },
     { label: 'Tamil', value: 'Tamil' },
     { label: 'Telugu', value: 'Telugu' },
+    { label: 'Bengali', value: 'Bengali' },
+    { label: 'Konkani', value: 'Konkani' },
+    { label: 'Marathi', value: 'Marathi' },
     { label: 'Malayalam', value: 'Malayalam' },
+    { label: 'Others', value: 'Others' },
 ];
 
 export const createdByOptions = [
@@ -432,3 +436,5 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "employedIn",
     "qualification"
 ]
+
+export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'

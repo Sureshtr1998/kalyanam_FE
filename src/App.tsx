@@ -1,6 +1,5 @@
 import './App.scss'
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
-import BgAnimation from './components/background/BgAnimation'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Login from './screens/login/Login'
 import Register from './screens/register/Register'
 import Home from './screens/home/Home'
@@ -9,22 +8,17 @@ import Invitations from './screens/invitations/Invitations'
 import Profile from './screens/profile/Profile'
 import Settings from './screens/settings/Settings'
 import { ToastProvider } from './components/toastProvider/ToastProvider'
+import Lander from './screens/lander/Lander'
 
 
 const AppContent = () => {
-  const location = useLocation()
-
-
-  const isAnimation = location.pathname === '/'
-
-
   return (
     <>
-      <BgAnimation isAnimation={isAnimation} />
       <ToastProvider>
         <div style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path='/' element={<Login />} />
+            <Route path='/lander' element={<Lander />} />
             <Route path='/register' element={<Register />} />
             <Route
               path="/home"
