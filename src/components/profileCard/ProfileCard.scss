@@ -1,58 +1,154 @@
+@use "../../styles/variables" as vars;
+
 .profile-card {
-  width: 30rem;
+  border: 1px solid vars.$border-color;
+  border-radius: 0.75rem;
+  background-color: vars.$bg-color;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 
-  .card-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 500;
-    color: #3a2a1a;
+  &:hover {
+    border-color: #d97706; // $accent-color-bg
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25);
+    transform: translateY(-3px);
   }
-
-  .title-icon {
-    font-weight: bold;
-    color: goldenrod;
-    cursor: pointer;
-  }
-
-  .card-comp {
-    border: 2px solid rgb(218, 180, 84);
+  .card-elegant {
+    background-color: vars.$bg-color;
     border-radius: 1rem;
-  }
-  .img-user {
-    img {
-      width: 8rem;
-      height: 8rem;
-      border-radius: 50%;
-      border: 2px solid goldenrod;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(vars.$text-color, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
     }
   }
-  .content-info {
-    display: inline;
-    margin-left: 2rem;
-  }
-  .content-div {
-    display: flex;
-    margin-top: 0.7rem;
-    color: rgb(103, 87, 0);
-    font-weight: 600;
-    border-bottom: 1px solid gold;
+
+  .img-section {
+    position: relative;
+    height: 16rem;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .profile-id {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0.4rem 0.6rem;
+      background-color: rgba(vars.$text-color, 0.85);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-bottom-right-radius: 0.5rem;
+    }
+
+    .hide-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.75);
+      color: vars.$text-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+
+      &:hover {
+        background-color: vars.$text-color;
+        color: #fff;
+      }
+    }
   }
 
-  .action-items {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  .details {
+    padding: 1rem;
+
+    .name {
+      color: vars.$text-color;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .info {
+      font-size: 0.875rem;
+      color: vars.$text-color;
+      line-height: 1.6;
+
+      .label {
+        color: vars.$accent-color-bg;
+        font-weight: 600;
+        display: inline-block;
+        width: 6rem;
+      }
+    }
   }
-  .action-btn {
-    color: white;
-    background-color: orange;
-    border-radius: 1rem;
-    width: 100%;
-    margin: 0 4px;
-    justify-content: center;
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-top: 1px solid rgba(vars.$border-color, 0.5);
+
+    .icon-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 2px solid vars.$border-color;
+      background-color: vars.$bg-color;
+      color: vars.$accent-color-bg;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: vars.$accent-color-bg;
+        color: #fff;
+      }
+    }
+
+    .primary-btn {
+      flex-grow: 1;
+      background-color: vars.$accent-color-bg;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(vars.$accent-color-bg, 0.4);
+      transition: background-color 0.2s ease, transform 0.1s ease;
+
+      &:hover {
+        background-color: vars.$accent-color-bg-hover;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(vars.$accent-ring, 0.5);
+      }
+    }
   }
 }

@@ -1,0 +1,6 @@
+@use "../../styles/variables" as vars;
+
+.wrapper-comp {
+  min-height: 100vh;
+  background-color: vars.$bg-color;
+}

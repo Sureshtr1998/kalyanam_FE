@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Topbar from "../../components/topbar/Topbar";
 import api from "../../utils/api";
 import type { UserDataType, UserDetails } from "../../utils/interfaces";
 import "./Profile.scss";
@@ -172,7 +171,6 @@ const Profile = () => {
 
   return (
     <div className="w-full">
-      <Topbar />
       <Spinner isLoading={isLoading} />
 
       <div className="profile-container">

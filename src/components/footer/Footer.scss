@@ -1,0 +1,10 @@
+@use "../../styles/variables" as vars;
+
+footer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  background-color: vars.$text-color;
+  color: vars.$bg-color;
+}

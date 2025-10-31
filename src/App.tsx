@@ -7,8 +7,16 @@ import Profile from "./screens/profile/Profile";
 import Settings from "./screens/settings/Settings";
 import { ToastProvider } from "./components/toastProvider/ToastProvider";
 import Lander from "./screens/lander/Lander";
+import Footer from "./components/footer/Footer";
+import Wrapper from "./components/wrapper/Wrapper";
+import { useState } from "react";
+import { formDefaultVals } from "./utils/constants";
+import type { UserDetails } from "./utils/interfaces";
 
 const AppContent = () => {
+  const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
+  const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
+
   return (
     <>
       <ToastProvider>
@@ -19,7 +27,13 @@ const AppContent = () => {
               path="/home"
               element={
                 <ProtectedRoute>
-                  <Home />
+                  <Wrapper applyFilter={setFilterData} userData={userData}>
+                    <Home
+                      setUserDetails={setUserData}
+                      filterData={filterData}
+                    />
+                  </Wrapper>
+                  <Footer />
                 </ProtectedRoute>
               }
             />
@@ -43,7 +57,9 @@ const AppContent = () => {
               path="/profile"
               element={
                 <ProtectedRoute>
-                  <Profile />
+                  <Wrapper>
+                    <Profile />
+                  </Wrapper>
                 </ProtectedRoute>
               }
             />

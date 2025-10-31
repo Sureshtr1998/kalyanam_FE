@@ -7,7 +7,6 @@ import LoginForm from "../../components/forms/LoginForm";
 import type { FormType } from "../../utils/interfaces";
 import RegistrationForm from "../../components/forms/register/RegistrationForm";
 import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
-import ContactUs from "../../components/contactUs/ContactUs";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
@@ -22,7 +21,6 @@ const Lander = () => {
   };
   return (
     <div>
-      <ContactUs />
       <div
         className={`min-h-screen flex ${BG_COLOR} font-sans justify-center items-center`}>
         <div className="w-full max-w-7xl md:grid md:grid-cols-2 overflow-hidden shadow-2xl rounded-2xl m-4">
