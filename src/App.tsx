@@ -7,7 +7,6 @@ import Profile from "./screens/profile/Profile";
 import Settings from "./screens/settings/Settings";
 import { ToastProvider } from "./components/toastProvider/ToastProvider";
 import Lander from "./screens/lander/Lander";
-import Footer from "./components/footer/Footer";
 import Wrapper from "./components/wrapper/Wrapper";
 import { useState } from "react";
 import { formDefaultVals } from "./utils/constants";
@@ -33,7 +32,6 @@ const AppContent = () => {
                       filterData={filterData}
                     />
                   </Wrapper>
-                  <Footer />
                 </ProtectedRoute>
               }
             />
