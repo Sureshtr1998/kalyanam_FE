@@ -1,25 +1,20 @@
-import './App.scss'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Login from './screens/login/Login'
-import Register from './screens/register/Register'
-import Home from './screens/home/Home'
-import ProtectedRoute from './components/misc/ProtectedRoute'
-import Invitations from './screens/invitations/Invitations'
-import Profile from './screens/profile/Profile'
-import Settings from './screens/settings/Settings'
-import { ToastProvider } from './components/toastProvider/ToastProvider'
-import Lander from './screens/lander/Lander'
-
+import "./App.scss";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./screens/home/Home";
+import ProtectedRoute from "./components/misc/ProtectedRoute";
+import Invitations from "./screens/invitations/Invitations";
+import Profile from "./screens/profile/Profile";
+import Settings from "./screens/settings/Settings";
+import { ToastProvider } from "./components/toastProvider/ToastProvider";
+import Lander from "./screens/lander/Lander";
 
 const AppContent = () => {
   return (
     <>
       <ToastProvider>
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ position: "relative", zIndex: 1 }}>
           <Routes>
-            <Route path='/' element={<Login />} />
-            <Route path='/lander' element={<Lander />} />
-            <Route path='/register' element={<Register />} />
+            <Route path="/" element={<Lander />} />
             <Route
               path="/home"
               element={
@@ -56,15 +51,15 @@ const AppContent = () => {
         </div>
       </ToastProvider>
     </>
-  )
-}
+  );
+};
 
 function App() {
   return (
     <Router>
       <AppContent />
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

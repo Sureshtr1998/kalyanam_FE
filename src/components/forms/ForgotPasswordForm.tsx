@@ -81,7 +81,7 @@ const ForgotPasswordForm = (props: Props) => {
     setLoading(true);
     try {
       const res = await api.post("/reset-password", { email, newPassword });
-      window.location.href = "/lander";
+      window.location.href = "/";
       setTimeout(() => {
         showToast("success", "Password Reset", res.data.msg);
       }, 500);
