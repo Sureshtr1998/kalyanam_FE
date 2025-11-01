@@ -44,11 +44,9 @@ const RegistrationForm = (props: Props) => {
     });
   };
 
-  // --- Utility Functions ---
   const errorMsg = "Please fill in all the fields.";
 
   const validateStep = (currentStep: 1 | 2 | 3): boolean => {
-    // return true
     setMessage(null);
     if (currentStep === 1) {
       if (
@@ -90,7 +88,6 @@ const RegistrationForm = (props: Props) => {
       }
     }
 
-    // Step 3 validation is only for final submission, allowing them to proceed if 'note' is filled
     if (currentStep === 3) {
       if (!images.length) {
         setMessage({ text: "Please upload atleast one image", type: "error" });

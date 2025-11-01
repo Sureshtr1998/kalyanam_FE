@@ -47,7 +47,9 @@ const AppContent = () => {
               path="/settings"
               element={
                 <ProtectedRoute>
-                  <Settings />
+                  <Wrapper>
+                    <Settings />
+                  </Wrapper>
                 </ProtectedRoute>
               }
             />

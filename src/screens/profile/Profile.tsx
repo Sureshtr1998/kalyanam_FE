@@ -18,6 +18,7 @@ import { Button } from "primereact/button";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import { Message } from "primereact/message";
 import Spinner from "../../components/spinner/Spinner";
+import Overview from "./details/Overview";
 
 const Profile = () => {
   const { showToast } = useToast();
@@ -182,12 +183,15 @@ const Profile = () => {
               className="info-msg"
             />
           )}
-          <Accordion className="accordion-data" multiple activeIndex={[0]}>
+          <Overview
+            handleExisting={handleExisting}
+            handleNew={handleNew}
+            basicData={userData.basic}
+          />
+          <Accordion className="accordion-data">
             {/* Basic Details */}
-            <AccordionTab header="Basic Details">
+            <AccordionTab className="accordion-tab" header="Basic Details">
               <BasicDetails
-                handleExisting={handleExisting}
-                handleNew={handleNew}
                 basicData={userData.basic}
                 handleChange={(e) => handleChange(e, "basic")}
               />

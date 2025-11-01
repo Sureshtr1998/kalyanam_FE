@@ -1,5 +1,162 @@
-.action-items {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
+@use "../../styles/variables" as vars;
+
+.profile-settings-card {
+  background: vars.$card-bg;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(vars.$border-color, 0.5);
+  margin-bottom: 2rem;
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: vars.$text-color;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .card-description {
+    color: #4b5563;
+    margin-bottom: 1rem;
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: vars.$bg-color;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(vars.$border-color, 0.5);
+
+    .toggle-label {
+      font-weight: 500;
+      color: vars.$text-color;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e5e7eb;
+        transition: 0.4s;
+        border-radius: 34px;
+
+        &::before {
+          position: absolute;
+          content: "";
+          height: 20px;
+          width: 20px;
+          left: 2px;
+          top: 2px;
+          background-color: white;
+          border: 1px solid #d1d5db;
+          border-radius: 50%;
+          transition: 0.4s;
+        }
+      }
+
+      input:checked + .slider {
+        background-color: vars.$accent-color-bg;
+      }
+
+      input:checked + .slider::before {
+        transform: translateX(20px);
+        border-color: white;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 0 4px vars.$accent-ring;
+      }
+    }
+  }
+
+  .view-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    background: vars.$accent-ring;
+    color: vars.$text-color;
+    transition: background 0.15s ease-in-out;
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      background: vars.$accent-color-bg-hover;
+    }
+  }
+}
+
+.delete-account-card {
+  background: #fef2f2;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #fca5a5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  .delete-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .delete-warning {
+    color: #b91c1c;
+    margin-bottom: 1rem;
+  }
+
+  .delete-btn {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    background: #dc2626;
+    color: white;
+    transition: background 0.15s ease-in-out, transform 0.1s ease-in-out;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+
+    &:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.p-dialog-header {
+  background-color: vars.$bg-color;
+  height: 3rem;
+}
+
+.p-dialog-title {
+  color: vars.$text-color;
+}
+.p-dialog-content {
+  padding-top: 1rem;
+  color: vars.$text-color;
+
+  .pi-exclamation-triangle {
+    color: #d32f2f;
+  }
 }

@@ -90,10 +90,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
 
         {/* Actions Section */}
         <div className="actions">
-          <Button className="icon-btn" title="Shortlist Profile">
-            <i className="pi pi-bookmark"></i>
-          </Button>
-
           <Button className="primary-btn" onClick={() => setVisible(true)}>
             View Profile
           </Button>

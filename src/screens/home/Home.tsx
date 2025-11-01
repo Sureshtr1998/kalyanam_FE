@@ -68,6 +68,11 @@ const Home = (props: Props) => {
         filters,
       });
       setMatches(res.data.profiles);
+      // setMatches([
+      //   ...res.data.profiles,
+      //   ...res.data.profiles,
+      //   ...res.data.profiles,
+      // ]);
       setTotalRecords(res.data.totalProfiles);
       setIsLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
