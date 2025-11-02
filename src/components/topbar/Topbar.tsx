@@ -29,9 +29,6 @@ const Topbar = ({ applyFilter }: Props) => {
   const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
 
   useEffect(() => {
-    console.log(userData, "userData");
-  }, [userData]);
-  useEffect(() => {
     if (location.pathname === "/home") {
       fetchUserProfile();
     }

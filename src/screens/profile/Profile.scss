@@ -1,9 +1,12 @@
 @use "../../styles/variables" as vars;
 
 .profile-form {
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  @media (max-width: 500px) {
+    padding: 0;
+  }
 }
 
 .accordion-data {

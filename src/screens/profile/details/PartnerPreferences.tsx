@@ -17,9 +17,10 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (event: any) => void;
   isFilter?: boolean;
+  isReadOnly?: boolean;
 }
 const PartnerPreferences = (props: Props) => {
-  const { partnerData = {}, handleChange, isFilter } = props;
+  const { partnerData = {}, handleChange, isFilter, isReadOnly } = props;
 
   return (
     <div>
@@ -30,6 +31,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.ageFrom}
           onChange={handleChange}
           options={ageOptions}
+          disabled={isReadOnly}
           icon="pi pi-sort-numeric-up"
           required={!isFilter}
         />
@@ -41,6 +43,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.ageTo}
           onChange={handleChange}
           options={ageOptions}
+          disabled={isReadOnly}
           icon="pi pi-sort-numeric-down"
         />
       </div>
@@ -52,6 +55,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.heightFrom}
           onChange={handleChange}
           options={heightOptions}
+          disabled={isReadOnly}
           icon="pi pi-chart-line"
         />
 
@@ -61,6 +65,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.heightTo}
           onChange={handleChange}
           options={heightOptions}
+          disabled={isReadOnly}
           icon="pi pi-chart-bar"
         />
       </div>
@@ -72,6 +77,7 @@ const PartnerPreferences = (props: Props) => {
           value={normalizeToArray(partnerData.subCaste)}
           onChange={handleChange}
           options={subCasteOptions}
+          disabled={isReadOnly}
           icon="pi pi-book"
           isMultiselect
         />
@@ -82,6 +88,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.employedIn}
           onChange={handleChange}
           options={employedInOptions}
+          disabled={isReadOnly}
           icon="pi pi-briefcase"
           isMultiselect
           required={!isFilter}
@@ -95,6 +102,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.qualification}
           onChange={handleChange}
           options={qualificationOptions}
+          disabled={isReadOnly}
           icon="pi pi-graduation-cap"
           isMultiselect
         />
@@ -104,6 +112,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.country}
           onChange={handleChange}
           options={countryOptions}
+          disabled={isReadOnly}
           icon="pi pi-globe"
           isMultiselect
           filter
@@ -117,6 +126,7 @@ const PartnerPreferences = (props: Props) => {
           value={partnerData.martialStatus}
           onChange={handleChange}
           options={maritalOptions}
+          disabled={isReadOnly}
           icon="pi pi-heart"
           isMultiselect
         />
@@ -127,6 +137,7 @@ const PartnerPreferences = (props: Props) => {
             label="Additional Notes"
             name="note"
             value={partnerData.note}
+            disabled={isReadOnly}
             icon="pi pi-pen-to-square"
           />
         )}

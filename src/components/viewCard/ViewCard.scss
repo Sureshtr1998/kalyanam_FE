@@ -1,3 +1,5 @@
+@use "../../styles/variables" as vars;
+
 .card-dialog {
   width: 90%;
   height: 90%;
@@ -6,13 +8,30 @@
 }
 
 .info-msg {
-  border-radius: 2rem;
-  border: 2px solid darkgoldenrod;
+  background-color: vars.$bg-color;
+  border: 2px solid vars.$border-color;
+  padding: 8px;
+  color: vars.$text-color;
+  width: fit-content;
+  align-self: center;
+}
+
+.p-inline-message-text {
+  font-size: 10px;
+}
+.p-inline-message .p-inline-message-icon.p-icon {
+  color: vars.$accent-color-bg;
+  font-size: 10px;
 }
 
 .p-dialog-header {
   background-color: rgb(244, 198, 114);
   text-align: center;
+
+  .p-dialog-header-close {
+    position: relative;
+    top: -1rem;
+  }
 }
 
 .view-content {

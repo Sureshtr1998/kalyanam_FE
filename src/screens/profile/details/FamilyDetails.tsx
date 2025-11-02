@@ -11,10 +11,11 @@ interface Props {
   familyData: FamilyDetailsIn;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (event: any) => void;
+  isReadOnly: boolean;
 }
 
 const FamilyDetails = (props: Props) => {
-  const { familyData = {}, handleChange } = props;
+  const { familyData = {}, handleChange, isReadOnly } = props;
 
   return (
     <div>
@@ -25,6 +26,7 @@ const FamilyDetails = (props: Props) => {
           name="elderBro"
           value={familyData.elderBro}
           icon="pi pi-arrow-up"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
         <FormInput
@@ -33,6 +35,7 @@ const FamilyDetails = (props: Props) => {
           name="elderBroMar"
           value={familyData.elderBroMar}
           icon="pi pi-link"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
       </div>
@@ -44,6 +47,7 @@ const FamilyDetails = (props: Props) => {
           name="youngerBro"
           value={familyData.youngerBro}
           icon="pi pi-arrow-down"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
         <FormInput
@@ -52,6 +56,7 @@ const FamilyDetails = (props: Props) => {
           name="youngerBroMar"
           value={familyData.youngerBroMar}
           icon="pi pi-link"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
       </div>
@@ -63,6 +68,7 @@ const FamilyDetails = (props: Props) => {
           name="elderSis"
           value={familyData.elderSis}
           icon="pi pi-arrow-up"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
         <FormInput
@@ -71,6 +77,7 @@ const FamilyDetails = (props: Props) => {
           name="elderSisMar"
           value={familyData.elderSisMar}
           icon="pi pi-link"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
       </div>
@@ -82,6 +89,7 @@ const FamilyDetails = (props: Props) => {
           name="youngerSis"
           value={familyData.youngerSis}
           icon="pi pi-arrow-down"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
         <FormInput
@@ -90,6 +98,7 @@ const FamilyDetails = (props: Props) => {
           name="youngerSisMar"
           value={familyData.youngerSisMar}
           icon="pi pi-link"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
       </div>
@@ -101,6 +110,8 @@ const FamilyDetails = (props: Props) => {
           name="fatherName"
           value={familyData.fatherName}
           icon="pi pi-user"
+          disabled={isReadOnly}
+          onChange={handleChange}
         />
 
         <FormInput
@@ -109,6 +120,7 @@ const FamilyDetails = (props: Props) => {
           name="motherName"
           value={familyData.motherName}
           icon="pi pi-user"
+          disabled={isReadOnly}
           onChange={handleChange}
         />
       </div>
@@ -118,6 +130,7 @@ const FamilyDetails = (props: Props) => {
           name="fatherStatus"
           label="Father's Living Status"
           value={familyData.fatherStatus}
+          disabled={isReadOnly}
           onChange={handleChange}
           options={parentStatus}
           icon="pi pi-sun"
@@ -127,6 +140,7 @@ const FamilyDetails = (props: Props) => {
           name="motherStatus"
           label="Mother's Living Status"
           value={familyData.motherStatus}
+          disabled={isReadOnly}
           onChange={handleChange}
           options={parentStatus}
           icon="pi pi-moon"
@@ -138,6 +152,7 @@ const FamilyDetails = (props: Props) => {
           name="fatherOccup"
           label="Father's Occupation"
           value={familyData.fatherOccup}
+          disabled={isReadOnly}
           onChange={handleChange}
           options={employedInOptions}
           icon="pi pi-briefcase"
@@ -147,6 +162,7 @@ const FamilyDetails = (props: Props) => {
           name="motherOccup"
           label="Mother's Occupation"
           value={familyData.motherOccup}
+          disabled={isReadOnly}
           onChange={handleChange}
           options={employedInOptions}
           icon="pi pi-briefcase"
@@ -158,6 +174,7 @@ const FamilyDetails = (props: Props) => {
           name="familyStatus"
           label="Family Status"
           value={familyData.familyStatus}
+          disabled={isReadOnly}
           onChange={handleChange}
           options={familyStatus}
           icon="pi pi-sitemap"
@@ -167,6 +184,7 @@ const FamilyDetails = (props: Props) => {
           isTextArea
           label="Additional Notes"
           name="note"
+          disabled={isReadOnly}
           value={familyData.note}
           icon="pi pi-pen-to-square"
         />

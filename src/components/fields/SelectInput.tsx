@@ -1,7 +1,7 @@
 import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
 import type { SelectType } from "../../utils/interfaces";
-import { normalizeToArray } from "../../utils/utils";
+import { arrayLabel, normalizeToArray } from "../../utils/utils";
 
 interface Props {
   value: string | string[] | undefined;
@@ -42,23 +42,29 @@ const SelectInput = (props: Props) => {
       )}
 
       <div className="relative mb-4 w-full max-w-sm">
-        <span className="field-icon absolute left-3 top-1/5 pointer-events-none">
-          <i className={icon}></i>
-        </span>
+        {!(isMultiselect && disabled) && (
+          <span className="field-icon absolute left-3 top-1/5 pointer-events-none">
+            <i className={icon}></i>
+          </span>
+        )}
 
         {isMultiselect ? (
-          <MultiSelect
-            id={name}
-            name={name}
-            disabled={disabled}
-            value={normalizeToArray(value)}
-            options={options}
-            onChange={onChange}
-            maxSelectedLabels={1}
-            placeholder={placeholder ?? "Any"}
-            className="dropdown-field"
-            filter={filter}
-          />
+          disabled ? (
+            <div className="text-sm">{arrayLabel(value, options)}</div>
+          ) : (
+            <MultiSelect
+              id={name}
+              name={name}
+              disabled={disabled}
+              value={normalizeToArray(value)}
+              options={options}
+              onChange={onChange}
+              maxSelectedLabels={1}
+              placeholder={placeholder ?? "Any"}
+              className="dropdown-field"
+              filter={filter}
+            />
+          )
         ) : (
           <Dropdown
             id={name}

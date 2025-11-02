@@ -2,9 +2,10 @@
 
 .sidebar-filter {
   background-color: vars.$bg-color;
-
-  width: 50%;
-  min-width: 23rem;
+  width: 30rem;
+  @media (max-width: 500px) {
+    width: 23rem;
+  }
 }
 
 .topbar-container {

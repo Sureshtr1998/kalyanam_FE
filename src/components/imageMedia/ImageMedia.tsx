@@ -10,6 +10,7 @@ interface ImageUploadProps {
   onChange?: (files: File[]) => void;
   onUrlChange?: (files: string[]) => void;
   initialImages?: string[];
+  isReadOnly?: boolean;
 }
 
 const MAX_IMAGES = 3;
@@ -19,7 +20,8 @@ const ImageSlot: React.FC<{
   content: string | File;
   index: number;
   onRemove: (index: number) => void;
-}> = ({ content, index, onRemove }) => {
+  isReadOnly?: boolean;
+}> = ({ content, index, onRemove, isReadOnly }) => {
   const imageUrl =
     typeof content === "string" ? content : URL.createObjectURL(content);
 
@@ -30,16 +32,17 @@ const ImageSlot: React.FC<{
         preview
         className="w-full img-preview h-full object-cover transition-opacity duration-300 group-hover:opacity-80"
       />
-
-      <Button
-        icon="pi pi-trash"
-        className="p-button-danger p-button-rounded p-button-text delete-button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove(index);
-        }}
-        aria-label="Remove Image"
-      />
+      {!isReadOnly && (
+        <Button
+          icon="pi pi-trash"
+          className="p-button-danger p-button-rounded p-button-text delete-button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove(index);
+          }}
+          aria-label="Remove Image"
+        />
+      )}
     </div>
   );
 };
@@ -55,6 +58,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
   onChange,
   initialImages = [],
   onUrlChange,
+  isReadOnly,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [existingUrls, setExistingUrls] = useState<string[]>([]);
@@ -122,32 +126,40 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
   };
 
   return (
-    <div className="manage-profile-media-container">
-      <h2 className="header-title">Manage Profile Media</h2>
+    <div
+      className={`${
+        isReadOnly ? "w-full" : ""
+      } manage-profile-media-container`}>
+      <h2 className="header-title">
+        {isReadOnly ? "Profile Images" : "Manage Profile Media"}
+      </h2>
+      {!isReadOnly && (
+        <>
+          <div className="upload-controls">
+            <FileUpload
+              name="images"
+              mode="basic"
+              ref={fileUploadRef}
+              accept="image/png, image/jpeg, image/jpg"
+              chooseLabel="Select Images"
+              customUpload
+              auto
+              multiple
+              uploadHandler={onSelect}
+              disabled={allMedia.length >= MAX_IMAGES}
+              className="p-button-warning select-images-button"
+              maxFileSize={MAX_FILE_SIZE_MB * 1024 * 1024}
+            />
+            <span className="file-info">
+              Max {MAX_IMAGES} files | PNG, JPEG, JPG | Max {MAX_FILE_SIZE_MB}MB
+              each
+            </span>
+          </div>
 
-      <div className="upload-controls">
-        <FileUpload
-          name="images"
-          mode="basic"
-          ref={fileUploadRef}
-          accept="image/png, image/jpeg, image/jpg"
-          chooseLabel="Select Images"
-          customUpload
-          auto
-          multiple
-          uploadHandler={onSelect}
-          disabled={allMedia.length >= MAX_IMAGES}
-          className="p-button-warning select-images-button"
-          maxFileSize={MAX_FILE_SIZE_MB * 1024 * 1024}
-        />
-        <span className="file-info">
-          Max {MAX_IMAGES} files | PNG, JPEG, JPG | Max {MAX_FILE_SIZE_MB}MB
-          each
-        </span>
-      </div>
-
-      {error && (
-        <Message severity="error" text={error} className="error-message" />
+          {error && (
+            <Message severity="error" text={error} className="error-message" />
+          )}
+        </>
       )}
 
       <div className="image-slots-grid">
@@ -157,12 +169,14 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
             content={media}
             index={index}
             onRemove={onRemove}
+            isReadOnly={isReadOnly}
           />
         ))}
 
-        {Array.from({ length: slotsToFill }).map((_, index) => (
-          <EmptySlot key={`empty-${index}`} />
-        ))}
+        {!isReadOnly &&
+          Array.from({ length: slotsToFill }).map((_, index) => (
+            <EmptySlot key={`empty-${index}`} />
+          ))}
       </div>
     </div>
   );

@@ -20,7 +20,13 @@ import { Message } from "primereact/message";
 import Spinner from "../../components/spinner/Spinner";
 import Overview from "./details/Overview";
 
-const Profile = () => {
+interface Props {
+  user: UserDetails;
+}
+const Profile = (props: Props) => {
+  const { user } = props;
+
+  const isReadOnly = !!user;
   const { showToast } = useToast();
 
   const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
@@ -28,7 +34,8 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    init();
+    if (user) setUserData(user);
+    else init();
   }, []);
 
   useEffect(() => {
@@ -88,8 +95,20 @@ const Profile = () => {
       mandatoryPartnerFields
     );
 
-    if (isBasicEmpty || isPersonalEmpty || isFamilyEmpty || isPartnerEmpty) {
-      newErrors.push("Please fill all mandatory fields.");
+    if (isBasicEmpty) {
+      newErrors.push("Please fill all mandatory Basic Details fields.");
+    }
+
+    if (isPersonalEmpty) {
+      newErrors.push("Please fill all mandatory Personal Details fields.");
+    }
+
+    if (isFamilyEmpty) {
+      newErrors.push("Please fill all mandatory Family Details fields.");
+    }
+
+    if (isPartnerEmpty) {
+      newErrors.push("Please fill all mandatory Partner Details fields.");
     }
 
     if (!allImgs.length) newErrors.push("Please upload at least one image.");
@@ -176,14 +195,19 @@ const Profile = () => {
 
       <div className="profile-container">
         <form className="profile-form">
-          {!userData?.hasCompleteProfile && (
-            <Message
-              severity="info"
-              text="Please complete all required fields to view user profiles. Fields marked with an asterisk (*) are mandatory."
-              className="info-msg"
-            />
+          {!userData?.hasCompleteProfile && !isReadOnly && (
+            <>
+              <Message
+                severity="warn"
+                text="Please complete all required fields to view user profiles. Fields marked with an asterisk (*) are mandatory."
+                className="info-msg"
+              />
+              <div className="mb-4" />
+            </>
           )}
+
           <Overview
+            isReadOnly={isReadOnly}
             handleExisting={handleExisting}
             handleNew={handleNew}
             basicData={userData.basic}
@@ -201,6 +225,7 @@ const Profile = () => {
               }
               className="accordion-tab">
               <BasicDetails
+                isReadOnly={isReadOnly}
                 basicData={userData.basic}
                 handleChange={(e) => handleChange(e, "basic")}
               />
@@ -218,6 +243,7 @@ const Profile = () => {
               }
               className="accordion-tab">
               <PersonalDetails
+                isReadOnly={isReadOnly}
                 personalData={userData.personal}
                 handleChange={(e) => handleChange(e, "personal")}
               />
@@ -235,6 +261,7 @@ const Profile = () => {
               }
               className="accordion-tab">
               <FamilyDetails
+                isReadOnly={isReadOnly}
                 familyData={userData.family}
                 handleChange={(e) => handleChange(e, "family")}
               />
@@ -252,17 +279,20 @@ const Profile = () => {
                 </span>
               }>
               <PartnerPreferences
+                isReadOnly={isReadOnly}
                 partnerData={userData.partner}
                 handleChange={(e) => handleChange(e, "partner")}
               />
             </AccordionTab>
           </Accordion>
         </form>
-        <div className="pb-6 w-[20rem] justify-self-center">
-          <Button onClick={saveChanges} className="update-btn">
-            Save
-          </Button>
-        </div>
+        {!isReadOnly && (
+          <div className="pb-6 w-[20rem] justify-self-center">
+            <Button onClick={saveChanges} className="update-btn">
+              Save
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

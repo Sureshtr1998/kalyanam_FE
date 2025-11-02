@@ -15,10 +15,11 @@ interface Props {
   personalData: PersonalDetailsIn;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (event: any) => void;
+  isReadOnly: boolean;
 }
 
 const PersonalDetails = (props: Props) => {
-  const { personalData = {}, handleChange } = props;
+  const { personalData = {}, handleChange, isReadOnly } = props;
 
   return (
     <div>
@@ -27,6 +28,7 @@ const PersonalDetails = (props: Props) => {
           name="height"
           required
           label="Height"
+          disabled={isReadOnly}
           value={personalData.height}
           options={heightOptions}
           onChange={handleChange}
@@ -38,6 +40,7 @@ const PersonalDetails = (props: Props) => {
           type="number"
           name="weight"
           label="Weight"
+          disabled={isReadOnly}
           placeholder="In kgs"
           value={personalData.weight}
           onChange={handleChange}
@@ -49,6 +52,7 @@ const PersonalDetails = (props: Props) => {
         <SelectInput
           name="country"
           required
+          disabled={isReadOnly}
           label="Country"
           value={personalData.country}
           options={countryOptions}
@@ -65,6 +69,7 @@ const PersonalDetails = (props: Props) => {
           options={residingOptions}
           onChange={handleChange}
           placeholder="Select"
+          disabled={isReadOnly}
           icon="pi pi-home"
         />
       </div>
@@ -78,6 +83,7 @@ const PersonalDetails = (props: Props) => {
           options={employedInOptions}
           onChange={handleChange}
           placeholder="Select"
+          disabled={isReadOnly}
           icon="pi pi-briefcase"
         />
         <SelectInput
@@ -88,6 +94,7 @@ const PersonalDetails = (props: Props) => {
           options={dietOptions}
           onChange={handleChange}
           placeholder="Select"
+          disabled={isReadOnly}
           icon="pi pi-palette"
         />
       </div>
@@ -100,6 +107,7 @@ const PersonalDetails = (props: Props) => {
           options={rashiOptions}
           onChange={handleChange}
           placeholder="Select"
+          disabled={isReadOnly}
           icon="pi pi-moon"
         />
 
@@ -110,6 +118,7 @@ const PersonalDetails = (props: Props) => {
           options={nakshatraOptions}
           onChange={handleChange}
           placeholder="Select"
+          disabled={isReadOnly}
           icon="pi pi-star"
         />
       </div>
@@ -122,6 +131,7 @@ const PersonalDetails = (props: Props) => {
           placeholder="In LPA"
           value={personalData.salary}
           onChange={handleChange}
+          disabled={isReadOnly}
           icon="pi pi-indian-rupee"
         />
 
@@ -131,6 +141,7 @@ const PersonalDetails = (props: Props) => {
           placeholder="Address"
           value={personalData.address}
           onChange={handleChange}
+          disabled={isReadOnly}
           icon="pi pi-map-marker"
         />
       </div>
@@ -142,6 +153,7 @@ const PersonalDetails = (props: Props) => {
           placeholder=" Work City"
           value={personalData.workCity}
           onChange={handleChange}
+          disabled={isReadOnly}
           icon="pi pi-map"
         />
 
@@ -151,6 +163,7 @@ const PersonalDetails = (props: Props) => {
           label="Additional Notes"
           value={personalData.note}
           onChange={handleChange}
+          disabled={isReadOnly}
           icon="pi pi-pen-to-square"
         />
       </div>

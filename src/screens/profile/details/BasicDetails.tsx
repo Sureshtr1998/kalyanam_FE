@@ -14,10 +14,11 @@ interface Props {
   basicData: BasicDetailsIn;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (event: any) => void;
+  isReadOnly: boolean;
 }
 
 const BasicDetails = (props: Props) => {
-  const { basicData, handleChange } = props;
+  const { basicData, handleChange, isReadOnly } = props;
 
   return (
     <div>
@@ -54,6 +55,7 @@ const BasicDetails = (props: Props) => {
         />
         <FormInput
           required
+          disabled={isReadOnly}
           label="Gothra"
           name="gothra"
           value={basicData.gothra}
@@ -73,6 +75,7 @@ const BasicDetails = (props: Props) => {
 
         <FormInput
           type="number"
+          disabled={isReadOnly}
           label="Alternate Contact"
           name="alternateMob"
           value={basicData.alternateMob}
@@ -85,6 +88,7 @@ const BasicDetails = (props: Props) => {
         <SelectInput
           name="motherTongue"
           required
+          disabled={isReadOnly}
           label="Mother Tongue"
           value={basicData.motherTongue}
           onChange={handleChange}
@@ -100,6 +104,7 @@ const BasicDetails = (props: Props) => {
           options={maritalOptions}
           icon="pi pi-heart"
           required
+          disabled={isReadOnly}
         />
       </div>
 
@@ -107,6 +112,7 @@ const BasicDetails = (props: Props) => {
         <SelectInput
           name="profileCreatedBy"
           label="Profile Created By"
+          disabled={isReadOnly}
           value={basicData.profileCreatedBy}
           onChange={handleChange}
           options={createdByOptions}
@@ -128,6 +134,7 @@ const BasicDetails = (props: Props) => {
         <SelectInput
           name="qualification"
           label="Qualification"
+          disabled={isReadOnly}
           value={basicData.qualification}
           onChange={handleChange}
           options={qualificationOptions}
@@ -161,6 +168,7 @@ const BasicDetails = (props: Props) => {
           isTextArea
           label="Additional Notes"
           name="note"
+          disabled={isReadOnly}
           value={basicData.note}
           icon="pi pi-pen-to-square"
         />
