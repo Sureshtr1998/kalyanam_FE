@@ -190,7 +190,16 @@ const Profile = () => {
           />
           <Accordion className="accordion-data">
             {/* Basic Details */}
-            <AccordionTab className="accordion-tab" header="Basic Details">
+            <AccordionTab
+              header={
+                <span className="flex align-items-center gap-2 w-full">
+                  <span className="my-custom-icon">
+                    <i className="pi pi-user"></i>
+                  </span>
+                  <span className="ml-4 acc-header">Basic Details</span>
+                </span>
+              }
+              className="accordion-tab">
               <BasicDetails
                 basicData={userData.basic}
                 handleChange={(e) => handleChange(e, "basic")}
@@ -198,7 +207,16 @@ const Profile = () => {
             </AccordionTab>
 
             {/* Personal Details */}
-            <AccordionTab header="Personal Details">
+            <AccordionTab
+              header={
+                <span className="flex align-items-center gap-2 w-full">
+                  <span className="my-custom-icon">
+                    <i className="pi pi-heart"></i>
+                  </span>
+                  <span className="ml-4 acc-header">Personal Details</span>
+                </span>
+              }
+              className="accordion-tab">
               <PersonalDetails
                 personalData={userData.personal}
                 handleChange={(e) => handleChange(e, "personal")}
@@ -206,7 +224,16 @@ const Profile = () => {
             </AccordionTab>
 
             {/* Family Details */}
-            <AccordionTab header="Family Details">
+            <AccordionTab
+              header={
+                <span className="flex align-items-center gap-2 w-full">
+                  <span className="my-custom-icon">
+                    <i className="pi pi-users"></i>
+                  </span>
+                  <span className="ml-4 acc-header">Family Details</span>
+                </span>
+              }
+              className="accordion-tab">
               <FamilyDetails
                 familyData={userData.family}
                 handleChange={(e) => handleChange(e, "family")}
@@ -214,7 +241,16 @@ const Profile = () => {
             </AccordionTab>
 
             {/* Partner Preferences  */}
-            <AccordionTab header="Partner Preferences">
+            <AccordionTab
+              className="accordion-tab"
+              header={
+                <span className="flex align-items-center gap-2 w-full">
+                  <span className="my-custom-icon">
+                    <i className="pi pi-filter"></i>
+                  </span>
+                  <span className="ml-4 acc-header">Partner Preferences</span>
+                </span>
+              }>
               <PartnerPreferences
                 partnerData={userData.partner}
                 handleChange={(e) => handleChange(e, "partner")}
@@ -222,11 +258,12 @@ const Profile = () => {
             </AccordionTab>
           </Accordion>
         </form>
+        <div className="pb-6 w-[20rem] justify-self-center">
+          <Button onClick={saveChanges} className="update-btn">
+            Save
+          </Button>
+        </div>
       </div>
-      <Button onClick={saveChanges} className="profile-btn">
-        {" "}
-        Save{" "}
-      </Button>
     </div>
   );
 };

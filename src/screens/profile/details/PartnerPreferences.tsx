@@ -1,168 +1,138 @@
-import { Dropdown } from "primereact/dropdown"
-import { InputTextarea } from "primereact/inputtextarea"
-import { ageOptions, countryOptions, employedInOptions, heightOptions, maritalOptions, qualificationOptions, subCasteOptions } from "../../../utils/constants"
-import type { PartnerDetailsIn } from "../../../utils/interfaces"
-import { MultiSelect } from "primereact/multiselect"
-import { normalizeToArray } from "../../../utils/utils"
+import {
+  ageOptions,
+  countryOptions,
+  employedInOptions,
+  heightOptions,
+  maritalOptions,
+  qualificationOptions,
+  subCasteOptions,
+} from "../../../utils/constants";
+import type { PartnerDetailsIn } from "../../../utils/interfaces";
+import { normalizeToArray } from "../../../utils/utils";
+import SelectInput from "../../../components/fields/SelectInput";
+import FormInput from "../../../components/fields/FormInput";
 
 interface Props {
-    partnerData: PartnerDetailsIn
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    handleChange: (event: any) => void
-    isFilter?: boolean
+  partnerData: PartnerDetailsIn;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleChange: (event: any) => void;
+  isFilter?: boolean;
 }
 const PartnerPreferences = (props: Props) => {
+  const { partnerData = {}, handleChange, isFilter } = props;
 
-    const { partnerData = {}, handleChange, isFilter } = props
+  return (
+    <div>
+      <div className="form-row">
+        <SelectInput
+          name="ageFrom"
+          label="Age From"
+          value={partnerData.ageFrom}
+          onChange={handleChange}
+          options={ageOptions}
+          icon="pi pi-sort-numeric-up"
+          required={!isFilter}
+        />
 
-    return <div>
+        <SelectInput
+          name="ageTo"
+          label="Age To"
+          required={!isFilter}
+          value={partnerData.ageTo}
+          onChange={handleChange}
+          options={ageOptions}
+          icon="pi pi-sort-numeric-down"
+        />
+      </div>
 
-        <div className="form-row">
-            <div className="field-container">
-                <label htmlFor="ageFrom" className="field-label required">Age From</label>
-                <Dropdown
-                    id="ageFrom"
-                    name="ageFrom"
-                    value={partnerData.ageFrom}
-                    options={ageOptions}
-                    onChange={handleChange}
-                    placeholder="Select"
-                    className="field-input"
-                />
+      <div className="form-row">
+        <SelectInput
+          name="heightFrom"
+          label="Height From"
+          value={partnerData.heightFrom}
+          onChange={handleChange}
+          options={heightOptions}
+          icon="pi pi-chart-line"
+        />
 
-            </div>
-            <div className="field-container">
-                <label htmlFor="ageTo" className="field-label required">Age To</label>
-                <Dropdown
-                    id="ageTo"
-                    name="ageTo"
-                    value={partnerData.ageTo}
-                    options={ageOptions}
-                    onChange={handleChange}
-                    placeholder="Select"
-                    className="field-input"
-                />
-            </div>
-        </div>
+        <SelectInput
+          name="heightTo"
+          label="Height To"
+          value={partnerData.heightTo}
+          onChange={handleChange}
+          options={heightOptions}
+          icon="pi pi-chart-bar"
+        />
+      </div>
 
+      <div className="form-row">
+        <SelectInput
+          name="subCaste"
+          label="Sub Caste"
+          value={normalizeToArray(partnerData.subCaste)}
+          onChange={handleChange}
+          options={subCasteOptions}
+          icon="pi pi-book"
+          isMultiselect
+        />
 
-        <div className="form-row">
-            <div className="field-container">
-                <label htmlFor="heightFrom" className="field-label">Height From</label>
-                <Dropdown
-                    id="heightFrom"
-                    name="heightFrom"
-                    value={partnerData.heightFrom}
-                    options={heightOptions}
-                    onChange={handleChange}
-                    placeholder="Any"
-                    className="field-input"
-                />
-            </div>
-            <div className="field-container">
-                <label htmlFor="heightTo" className="field-label">Height To</label>
-                <Dropdown
-                    id="heightTo"
-                    name="heightTo"
-                    value={partnerData.heightTo}
-                    options={heightOptions}
-                    onChange={handleChange}
-                    placeholder="Any"
-                    className="field-input"
-                />
-            </div>
-        </div>
+        <SelectInput
+          name="employedIn"
+          label="Employed In"
+          value={partnerData.employedIn}
+          onChange={handleChange}
+          options={employedInOptions}
+          icon="pi pi-briefcase"
+          isMultiselect
+          required={!isFilter}
+        />
+      </div>
 
-        <div className="form-row">
-            <div className="field-container">
-                <label htmlFor="subCaste" className="field-label">Sub Caste</label>
+      <div className="form-row">
+        <SelectInput
+          name="qualification"
+          label="Qualification"
+          value={partnerData.qualification}
+          onChange={handleChange}
+          options={qualificationOptions}
+          icon="pi pi-graduation-cap"
+          isMultiselect
+        />
+        <SelectInput
+          name="country"
+          label="Country"
+          value={partnerData.country}
+          onChange={handleChange}
+          options={countryOptions}
+          icon="pi pi-globe"
+          isMultiselect
+          filter
+        />
+      </div>
 
-                <MultiSelect
-                    id="subCaste"
-                    name="subCaste"
-                    options={subCasteOptions}
-                    onChange={handleChange}
-                    value={normalizeToArray(partnerData.subCaste)}
-                    placeholder="Any"
-                    maxSelectedLabels={1}
-                    className="field-input" />
+      <div className="form-row">
+        <SelectInput
+          name="martialStatus"
+          label="Martial Status"
+          value={partnerData.martialStatus}
+          onChange={handleChange}
+          options={maritalOptions}
+          icon="pi pi-heart"
+          isMultiselect
+        />
 
-            </div>
-            <div className="field-container">
-                <label htmlFor="employedIn" className="field-label">Employed In</label>
-                <MultiSelect
-                    id="employedIn"
-                    name="employedIn"
-                    options={employedInOptions}
-                    onChange={handleChange}
-                    value={normalizeToArray(partnerData.employedIn)}
-                    placeholder="Any"
-                    maxSelectedLabels={1}
-                    className="field-input" />
-            </div>
-        </div>
-
-        <div className="form-row">
-            <div className="field-container">
-                <label className="field-label" htmlFor="qualification">Qualification</label>
-                <MultiSelect
-                    id="qualification"
-                    name="qualification"
-                    value={normalizeToArray(partnerData.qualification)}
-                    options={qualificationOptions}
-                    onChange={handleChange}
-                    maxSelectedLabels={1}
-                    placeholder="Any"
-                    className="field-input"
-                />
-            </div>
-            <div className="field-container">
-                <label htmlFor="country" className="field-label">Country</label>
-                <MultiSelect
-                    id="country"
-                    filter
-                    name="country"
-                    value={normalizeToArray(partnerData.country)}
-                    options={countryOptions}
-                    onChange={handleChange}
-                    maxSelectedLabels={1}
-                    placeholder="Select"
-                    className="field-input"
-                />
-            </div>
-        </div>
-
-        <div className="form-row">
-            <div className="field-container">
-                <label htmlFor="martialStatus" className="field-label">Martial Status</label>
-
-                <MultiSelect
-                    id="martialStatus"
-                    name="martialStatus"
-                    value={normalizeToArray(partnerData.martialStatus)}
-                    options={maritalOptions}
-                    onChange={handleChange}
-                    placeholder="Any"
-                    maxSelectedLabels={1}
-                    className="field-input" />
-
-
-            </div>
-            {!isFilter && <div className="field-container">
-                <label htmlFor="note" className="field-label">Additional Notes</label>
-                <InputTextarea
-                    id="note"
-                    name="note"
-                    value={partnerData.note || ''}
-                    onChange={handleChange}
-                    className="field-input"
-                    rows={3}
-                />
-            </div>
-            }
-        </div>
-
+        {!isFilter && (
+          <FormInput
+            isTextArea
+            label="Additional Notes"
+            name="note"
+            value={partnerData.note}
+            icon="pi pi-pen-to-square"
+          />
+        )}
+      </div>
     </div>
-}
+  );
+};
 
-export default PartnerPreferences
+export default PartnerPreferences;

@@ -13,7 +13,6 @@ import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
 
 const AppContent = () => {
-  const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
 
   return (
@@ -26,11 +25,8 @@ const AppContent = () => {
               path="/home"
               element={
                 <ProtectedRoute>
-                  <Wrapper applyFilter={setFilterData} userData={userData}>
-                    <Home
-                      setUserDetails={setUserData}
-                      filterData={filterData}
-                    />
+                  <Wrapper applyFilter={setFilterData}>
+                    <Home filterData={filterData} />
                   </Wrapper>
                 </ProtectedRoute>
               }

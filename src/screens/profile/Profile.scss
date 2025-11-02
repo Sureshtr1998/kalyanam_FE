@@ -1,65 +1,67 @@
 @use "../../styles/variables" as vars;
 
-.profile-container {
-  position: relative;
-}
-
 .profile-form {
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 }
 
-.p-accordion-content {
-  background-color: transparent;
-  border-color: goldenrod;
-  background-color: antiquewhite;
-}
-.accordion-tab {
-  .p-accordion-header-link {
-    color: vars.$text-color;
-    background-color: white;
-    border: 1px solid goldenrod;
+.accordion-data {
+  background-color: vars.$card-bg;
+  border-radius: 1rem;
+  border: 1px solid vars.$border-color;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  .acc-header {
+    align-content: center;
+  }
+
+  .p-accordion-tab-active {
+    .p-accordion-header-link {
+      background-color: vars.$bg-color;
+    }
+    .acc-header {
+      color: vars.$accent-ring;
+    }
+  }
+  .p-accordion-header {
+    background-color: vars.$card-bg;
+    border: 1px solid vars.$border-color;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
     margin-top: 1rem;
+
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background 0.2s ease;
+
+    .p-accordion-header-text {
+      color: vars.$text-color;
+      position: relative;
+      left: -1rem;
+    }
+
+    .p-accordion-toggle-icon {
+      color: vars.$text-color;
+      position: relative;
+      left: 98%;
+    }
+  }
+
+  .p-accordion-content {
+    background-color: vars.$bg-color;
+    border: 1px solid #f6d570;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .p-accordion-header-link {
+    border-radius: 1rem !important;
+    background-color: vars.$card-bg;
     &:hover {
       background-color: vars.$bg-color;
     }
   }
-}
-
-.field-container {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 1rem;
-
-  .field-label {
-    font-weight: 400;
-    color: rgb(49, 49, 49);
-    width: 10rem;
-    &.required::after {
-      content: " *";
-      color: red;
-    }
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-
-    .field-input {
-      width: 100%;
-    }
-  }
-}
-
-.profile-btn {
-  display: flex;
-  place-self: center;
-  background-color: orange;
-  width: 20rem;
-  border-radius: 1rem;
-  place-content: center;
-  margin-top: 1rem;
 }

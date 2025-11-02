@@ -324,6 +324,7 @@ export const employedInOptions = [
     { label: 'Business', value: 'Business' },
     { label: 'Defence', value: 'Defence' },
     { label: "Self Employed", value: "Self Employed" },
+    { label: "Retired", value: "Retired" },
     { label: "Not Working", value: "Not Working" },
 ];
 
@@ -416,12 +417,13 @@ export const formDefaultVals = {
 }
 
 export const mandatoryBasicFields: (keyof BasicDetailsIn)[] = [
-    'fullName', 'martialStatus', 'motherTongue', 'subCaste'
+    'qualification', 'gothra', 'martialStatus', 'motherTongue', 'subCaste'
 ]
 
 export const mandatoryPersonalFields: (keyof PersonalDetailsIn)[] = [
     "height",
     "country",
+    'employedIn',
     "residingStatus",
     "diet",
 ]
@@ -434,7 +436,6 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "ageFrom",
     "ageTo",
     "employedIn",
-    "qualification"
 ]
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'

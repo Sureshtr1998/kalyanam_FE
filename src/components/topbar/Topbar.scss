@@ -1,8 +1,10 @@
 @use "../../styles/variables" as vars;
 
 .sidebar-filter {
-  background-color: #f5e5d1;
-  width: 25rem;
+  background-color: vars.$bg-color;
+
+  width: 50%;
+  min-width: 23rem;
 }
 
 .topbar-container {

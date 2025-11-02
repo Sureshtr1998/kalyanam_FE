@@ -27,6 +27,7 @@
 
 .dropdown-field {
   width: 100%;
+
   padding-left: 2.5rem; // pl-10
   border: 1px solid vars.$border-color;
   border-radius: 0.5rem; // rounded-lg
@@ -36,6 +37,11 @@
 }
 
 .p-dropdown.p-component.p-inputwrapper-focus {
+  border-color: vars.$accent-ring;
+  box-shadow: 0 0 0 2px vars.$accent-ring;
+}
+
+.p-multiselect.p-component.p-inputwrapper-focus {
   border-color: vars.$accent-ring;
   box-shadow: 0 0 0 2px vars.$accent-ring;
 }
@@ -105,5 +111,45 @@
 
   &:hover {
     background-color: #d1d5db;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    gap: 0;
+    grid-template-columns: 1fr;
+  }
+}
+
+.my-custom-icon {
+  background-color: vars.$border-color;
+  border-radius: 50%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+  color: white;
+}
+
+.my-custom-icon .pi {
+  font-size: 1rem;
+  color: white;
+}
+
+.input-label {
+  font-size: small;
+  color: vars.$text-color;
+  margin-bottom: 0.5rem;
+  &.required::after {
+    content: " *";
+    color: red;
   }
 }

@@ -46,7 +46,7 @@ const Filter = (props: Props) => {
         />
       )}
 
-      <Button onClick={onClick} className="apply-btn" rounded>
+      <Button onClick={onClick} className="update-btn" rounded>
         Apply
       </Button>
       <p className="mt-4" style={{ fontSize: "0.9rem", color: "#555" }}>

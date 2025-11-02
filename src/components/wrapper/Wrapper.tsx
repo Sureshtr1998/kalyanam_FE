@@ -10,14 +10,10 @@ interface WrapperProps {
   userData?: UserDetails;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({
-  children,
-  applyFilter,
-  userData,
-}) => {
+const Wrapper: React.FC<WrapperProps> = ({ children, applyFilter }) => {
   return (
     <div>
-      <Topbar applyFilter={applyFilter} userData={userData} />
+      <Topbar applyFilter={applyFilter} />
       <div className="wrapper-comp">
         <main>{children}</main>
       </div>

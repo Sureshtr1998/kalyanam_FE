@@ -57,7 +57,7 @@ const Lander = () => {
               <img
                 src={seethaRama}
                 alt="Lord Rama and Seetha - Kalyana Symbol"
-                className="w-full h-40 object-cover object-top rounded-lg shadow-lg border-2 border-amber-300"
+                className="w-full h-40 min-h-[14rem] object-cover object-top rounded-lg shadow-lg border-2 border-amber-300"
                 onError={(e: any) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src =

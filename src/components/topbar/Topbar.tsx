@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { Avatar } from "primereact/avatar";
@@ -8,17 +8,64 @@ import { getItem, removeItem, user_login_token } from "../../utils/localStore";
 import Filter from "../filter/Filter";
 import type { UserDetails } from "../../utils/interfaces";
 import "./Topbar.scss";
+import { formDefaultVals } from "../../utils/constants";
+import api from "../../utils/api";
+import Spinner from "../spinner/Spinner";
+import { useToast } from "../toastProvider/ToastProvider";
 
 interface Props {
-  userData?: UserDetails;
   applyFilter?: (filterData: UserDetails) => void;
 }
 
-const Topbar = ({ userData, applyFilter }: Props) => {
+const Topbar = ({ applyFilter }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const menu = useRef<Menu>(null);
+  const { showToast } = useToast();
+
   const [visible, setVisible] = useState(false);
+  const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
+
+  useEffect(() => {
+    console.log(userData, "userData");
+  }, [userData]);
+  useEffect(() => {
+    if (location.pathname === "/home") {
+      fetchUserProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname === "/home"]);
+
+  const fetchUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      const res = await api.get("/my-profile");
+      if (!res.data.profile?.hasCompleteProfile) {
+        navigate("/profile");
+      }
+      setUserData(res.data.profile);
+      applyFilter?.(res.data.profile);
+      setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response?.data?.msg || "Unable to load user data"
+      );
+      setIsLoading(false);
+    }
+  };
+
+  const filterHandler = (filterData: UserDetails) => {
+    setUserData({
+      ...userData,
+      partner: filterData.partner,
+    });
+    applyFilter?.(filterData);
+  };
 
   const avatarMenuItems = [
     {
@@ -52,6 +99,8 @@ const Topbar = ({ userData, applyFilter }: Props) => {
 
   return (
     <div className="topbar-container">
+      <Spinner isLoading={isLoading} />
+
       <div className="topbar-content">
         {/* Left: Filter or Home */}
         <div className="left-section">
@@ -64,7 +113,7 @@ const Topbar = ({ userData, applyFilter }: Props) => {
                 onHide={() => setVisible(false)}>
                 {userData && (
                   <Filter
-                    applyFilter={applyFilter}
+                    applyFilter={filterHandler}
                     userData={userData}
                     onHide={() => setVisible(false)}
                   />
