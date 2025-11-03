@@ -21,7 +21,7 @@ import Spinner from "../../components/spinner/Spinner";
 import Overview from "./details/Overview";
 
 interface Props {
-  user: UserDetails;
+  user?: UserDetails;
 }
 const Profile = (props: Props) => {
   const { user } = props;
