@@ -50,7 +50,7 @@ const LoginForm = (props: Props) => {
 
       <FormInput
         name="email"
-        type="mail"
+        type="email"
         placeholder="Email Address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
