@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 
-type Type = "string" | "number" | "date";
+type Type = "text" | "number" | "date" | "password" | "email" | "tel";
 interface Props {
   type?: Type;
   name: string;
