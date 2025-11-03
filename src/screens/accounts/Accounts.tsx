@@ -1,13 +1,12 @@
 import { Button } from "primereact/button";
-import "./Settings.scss";
 import api from "../../utils/api";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
 import { removeItem, user_login_token } from "../../utils/localStore";
-import "./Settings.scss";
+import "./Accounts.scss";
 
-const Settings = () => {
+const Accounts = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -109,4 +108,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Accounts;

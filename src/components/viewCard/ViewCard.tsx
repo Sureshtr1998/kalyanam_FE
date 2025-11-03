@@ -20,7 +20,7 @@ const ViewCard = (props: {
       onHide={hide}
       className="card-dialog">
       <div>
-        <div className="mb-4 text-center">
+        <div className="mb-4 mt-2 text-center">
           {!isAccept && (
             <Message
               severity="info"

@@ -44,6 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
     try {
       await api.post("/send-interest", { receiverId: userId });
       showToast("success", "Success", "Interest sent successfully");
+      hideProfile(userId ?? "");
     } catch (err: any) {
       showToast(
         "error",

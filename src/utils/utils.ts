@@ -18,3 +18,11 @@ export const arrayLabel = (value: string | string[] | undefined, options: { labe
     if (!value || !value.length) return '-'
     return normalizeToArray(value).map(val => fetchLabel(options, val)).join(', ')
 }
+export const getInitials = (name: string = "") => {
+    return name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase();
+};

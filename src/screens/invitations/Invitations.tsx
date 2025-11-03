@@ -1,197 +1,236 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { DataTable, type DataTableFilterMeta } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import Topbar from "../../components/topbar/Topbar";
+import { Tag } from "primereact/tag";
+import { Avatar } from "primereact/avatar";
 import api from "../../utils/api";
 import "./Invitations.scss";
 import type { UserDetails } from "../../utils/interfaces";
 import ViewCard from "../../components/viewCard/ViewCard";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import { FilterMatchMode } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
-
-
+import FormInput from "../../components/fields/FormInput";
+import { getInitials } from "../../utils/utils";
 
 const Invitations = () => {
-    const [invitations, setInvitations] = useState<UserDetails[]>([]);
-    const [user, setUser] = useState<UserDetails>();
-    const [loading, setLoading] = useState<boolean>(false);
+  const [invitations, setInvitations] = useState<UserDetails[]>([]);
+  const [user, setUser] = useState<UserDetails>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { showToast } = useToast();
 
-    const { showToast } = useToast();
+  useEffect(() => {
+    init();
+  }, []);
 
+  const [filters, setFilters] = useState<DataTableFilterMeta>({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
 
-    useEffect(() => {
-        init();
-    }, []);
+  const globalValue =
+    (filters["global"] as { value: string | null })?.value ?? "";
 
-    const [filters, setFilters] = useState<DataTableFilterMeta>({
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    });
+  const init = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/fetch-invitation-status");
+      if (res.data?.invitations) {
+        setInvitations(res.data.invitations);
+      }
+      setLoading(false);
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response?.data?.msg || "Unable to load invitations"
+      );
+      setLoading(false);
+    }
+  };
 
-    const globalValue =
-        (filters["global"] as { value: string | null })?.value ?? "";
+  const handleAction = async (
+    id: string | undefined,
+    action: "accept" | "decline"
+  ) => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      const res = await api.post("/interest-action", { userId: id, action });
 
+      setInvitations((prev) =>
+        prev.map((user) =>
+          user._id === id
+            ? {
+                ...user,
+                interests: { ...user.interests, invitationStatus: action },
+              }
+            : user
+        )
+      );
 
-    const init = async () => {
-        try {
-            setLoading(true);
-            const res = await api.get("/fetch-invitation-status");
-            if (res.data?.invitations) {
-                setInvitations(res.data.invitations);
-            }
-            setLoading(false);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            showToast('error', 'Error', err.response?.data?.msg || 'Unable to load invitations');
-            setLoading(false);
-        }
-    };
+      showToast("success", "Success", res.data.msg || "Action successful");
+      setLoading(false);
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response?.data?.msg || "Something went wrong"
+      );
+      setLoading(false);
+    }
+  };
 
-    const handleAction = async (id: string | undefined, action: 'accept' | 'decline') => {
-        try {
-            setLoading(true)
-            const res = await api.post('/interest-action', { userId: id, action });
+  type InvitationStatus = "received" | "accept" | "decline" | "sent";
 
-            setInvitations(prev =>
-                prev.map(user =>
-                    user._id === id
-                        ? { ...user, invitationStatus: action }
-                        : user
-                )
-            );
+  const getStatusSeverity = (status: InvitationStatus) => {
+    switch (status) {
+      case "accept":
+        return "success";
+      case "decline":
+        return "danger";
+      case "sent":
+        return "warning";
+      case "received":
+        return "info";
+      default:
+        return "info";
+    }
+  };
 
-            showToast("success", "Success", res.data.msg || '');
-            init()
+  const getStatusLabel = (status: InvitationStatus) => {
+    switch (status) {
+      case "accept":
+        return "Accepted";
+      case "decline":
+        return "Declined";
+      case "sent":
+        return "Pending";
+      case "received":
+        return "Action Required";
+      default:
+        return "Unknown";
+    }
+  };
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            showToast("error", "Error", err.response.data.msg || "Something went wrong");
-            setLoading(false)
-        }
-    };
+  const profileBodyTemplate = (rowData: UserDetails) => {
+    const name = rowData.basic?.fullName || "N/A";
+    const id = rowData.basic?.uniqueId || "...";
+    const initials = getInitials(name);
 
-
-
-
-    const statusTemplate = (rowData: UserDetails) => {
-        let colorClass = "";
-        let label = "";
-
-        if (rowData.interests?.invitationStatus !== 'received') {
-            switch (rowData.interests?.invitationStatus) {
-                case "accept":
-                    colorClass = "text-green-700";
-                    label = "Accepted";
-                    break;
-                case "decline":
-                    colorClass = "text-red-700";
-                    label = "Declined";
-                    break;
-                case "sent":
-                    colorClass = "text-orange-500";
-                    label = "Pending";
-                    break;
-                default:
-                    colorClass = "text-gray-500";
-                    label = "Unknown";
-            }
-
-            return <span className={`font-semibold ${colorClass}`}>{label}</span>;
-        }
-
-
-        return (
-            <div className="flex gap-2">
-                <Button
-                    label="Accept"
-                    icon="pi pi-check"
-                    rounded
-                    className="p-button-success p-button-sm"
-                    onClick={() => handleAction(rowData._id, 'accept')}
-                />
-                <Button
-                    label="Decline"
-                    icon="pi pi-times"
-                    rounded
-                    className="p-button-danger p-button-sm"
-                    onClick={() => handleAction(rowData._id, 'decline')}
-                />
-            </div>
-        );
-    };
-
-    const viewProfileTemplate = (rowData: UserDetails) => (
-        <Button
-            label="View"
-            icon="pi pi-user"
-            className="p-button-sm"
-            rounded
-            style={{ backgroundColor: "#f8cb8e", borderColor: "orange" }}
-            onClick={() => setUser(rowData)}
-        />
-    );
-
-
-    const renderHeader = () => {
-        return <div className="flex justify-content-end">
-            <IconField iconPosition="left">
-                <InputIcon className="pi pi-search" />
-                <InputText value={globalValue} onChange={(e) =>
-                    setFilters({
-                        ...filters,
-                        global: { value: e.target.value, matchMode: FilterMatchMode.CONTAINS },
-                    })
-                }
-                    placeholder="Search invitations..."
-
-                />
-            </IconField>
+    return (
+      <div className="profile-cell">
+        <Avatar label={initials} shape="circle" />
+        <div>
+          <strong className="profile-name">{name}</strong>
+          <br />
+          <small className="profile-id">{id}</small>
         </div>
+      </div>
+    );
+  };
 
+  const statusAndActionTemplate = (rowData: UserDetails) => {
+    const status = rowData.interests?.invitationStatus as InvitationStatus;
 
+    if (status === "received") {
+      return (
+        <div className="flex gap-2">
+          <Button
+            label="Accept"
+            icon="pi pi-check"
+            className="p-button-success p-button-sm"
+            onClick={() => handleAction(rowData._id, "accept")}
+            loading={loading}
+          />
+          <Button
+            label="Decline"
+            icon="pi pi-times"
+            className="p-button-danger p-button-sm mr-4"
+            onClick={() => handleAction(rowData._id, "decline")}
+            loading={loading}
+          />
+        </div>
+      );
     }
 
     return (
-        <div>
-            <Topbar />
-            {user && <ViewCard user={user} hide={() => setUser(undefined)} isAccept={user.interests?.invitationStatus === 'accept'} />}
-
-            <div className="invitations-container mt-16">
-                <DataTable
-                    value={invitations}
-                    filters={filters}
-                    onFilter={(e) => setFilters(e.filters)}
-                    globalFilterFields={[
-                        "uniqueId",
-                        "fullName",
-                        "gothra",
-                        "motherTongue",
-                        "subCaste",
-                    ]}
-                    paginator
-                    rows={7}
-                    loading={loading}
-                    emptyMessage="No invitations found"
-                    showGridlines
-                    tableStyle={{ minWidth: "60rem" }}
-                    header={renderHeader()}
-                >
-                    <Column field="basic.uniqueId" header="ID" />
-                    <Column field="basic.fullName" header="Name" />
-                    <Column field="basic.age" header="Age" />
-                    <Column field="basic.gothra" header="Gothra" />
-                    <Column field="basic.motherTongue" header="Mother Tongue" />
-                    <Column field="basic.subCaste" header="Sub Caste" />
-                    <Column header="Profile" body={viewProfileTemplate} />
-                    <Column header="Status" body={statusTemplate} />
-                </DataTable>
-
-            </div>
-        </div>
+      <Tag
+        value={getStatusLabel(status)}
+        severity={getStatusSeverity(status)}
+        rounded
+      />
     );
+  };
+
+  const viewProfileTemplate = (rowData: UserDetails) => (
+    <Button
+      label="View Profile"
+      icon="pi pi-user"
+      className="p-button-sm p-button-accent"
+      onClick={() => setUser(rowData)}
+    />
+  );
+
+  return (
+    <div>
+      {user && (
+        <ViewCard
+          user={user}
+          hide={() => setUser(undefined)}
+          isAccept={user.interests?.invitationStatus === "accept"}
+        />
+      )}
+      <div className="filter-field">
+        <FormInput
+          name="search"
+          placeholder="Search by Name or ID..."
+          value={globalValue}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              global: {
+                value: e.target.value,
+                matchMode: FilterMatchMode.CONTAINS,
+              },
+            })
+          }
+          icon="pi pi-search"
+        />
+      </div>
+      <div className="invitations-container">
+        <DataTable
+          value={invitations}
+          filters={filters}
+          onFilter={(e) => setFilters(e.filters)}
+          globalFilterFields={["basic.uniqueId", "basic.fullName"]}
+          paginator
+          rows={7}
+          loading={loading}
+          emptyMessage="No invitations found"
+          dataKey="_id"
+          className="p-datatable-srk">
+          <Column
+            header="Profile"
+            body={profileBodyTemplate}
+            style={{ minWidth: "200px" }}
+          />
+
+          <Column
+            header="View"
+            body={viewProfileTemplate}
+            style={{ width: "160px" }}
+          />
+
+          <Column
+            header="Status / Action"
+            body={statusAndActionTemplate}
+            style={{ width: "280px" }}
+          />
+        </DataTable>
+      </div>
+    </div>
+  );
 };
 
 export default Invitations;

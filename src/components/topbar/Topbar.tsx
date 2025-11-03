@@ -12,6 +12,7 @@ import { formDefaultVals } from "../../utils/constants";
 import api from "../../utils/api";
 import Spinner from "../spinner/Spinner";
 import { useToast } from "../toastProvider/ToastProvider";
+import { getInitials } from "../../utils/utils";
 
 interface Props {
   applyFilter?: (filterData: UserDetails) => void;
@@ -76,9 +77,9 @@ const Topbar = ({ applyFilter }: Props) => {
       command: () => navigate("/invitations"),
     },
     {
-      label: "Settings",
+      label: "Account",
       icon: "pi pi-cog",
-      command: () => navigate("/settings"),
+      command: () => navigate("/account"),
     },
     {
       separator: true,
@@ -144,7 +145,7 @@ const Topbar = ({ applyFilter }: Props) => {
           <Avatar
             label={
               getItem(user_login_token)?.fullName
-                ? getItem(user_login_token).fullName.slice(0, 2).toUpperCase()
+                ? getInitials(getItem(user_login_token).fullName)
                 : "OM"
             }
             shape="circle"

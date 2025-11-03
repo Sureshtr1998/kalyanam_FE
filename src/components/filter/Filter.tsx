@@ -56,7 +56,7 @@ const Filter = (props: Props) => {
           style={{ textDecoration: "underline", color: "#007bff" }}>
           Partner Preferences
         </Link>
-        . Update there to change them.
+        . Update there to change the default filter data.
       </p>
     </div>
   );

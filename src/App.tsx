@@ -4,7 +4,7 @@ import Home from "./screens/home/Home";
 import ProtectedRoute from "./components/misc/ProtectedRoute";
 import Invitations from "./screens/invitations/Invitations";
 import Profile from "./screens/profile/Profile";
-import Settings from "./screens/settings/Settings";
+import Accounts from "./screens/accounts/Accounts";
 import { ToastProvider } from "./components/toastProvider/ToastProvider";
 import Lander from "./screens/lander/Lander";
 import Wrapper from "./components/wrapper/Wrapper";
@@ -35,16 +35,18 @@ const AppContent = () => {
               path="/invitations"
               element={
                 <ProtectedRoute>
-                  <Invitations />
+                  <Wrapper>
+                    <Invitations />
+                  </Wrapper>
                 </ProtectedRoute>
               }
             />
             <Route
-              path="/settings"
+              path="/account"
               element={
                 <ProtectedRoute>
                   <Wrapper>
-                    <Settings />
+                    <Accounts />
                   </Wrapper>
                 </ProtectedRoute>
               }
