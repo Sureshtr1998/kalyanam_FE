@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import api from "../../utils/api";
-import { useToast } from "../toastProvider/ToastProvider";
-import FormInput from "../fields/FormInput";
+import FormInput from "../../../fields/FormInput";
+import { useEffect, useState } from "react";
+import api from "../../../../utils/api";
+import { useToast } from "../../../toastProvider/ToastProvider";
 
 interface Props {
-  onHide: () => void;
-  onSuccess: () => void;
+  handleNext: () => void;
+  handleBack: () => void;
   email: string;
   mobile: string;
 }
 
-const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
-  const { showToast } = useToast();
+const Verify = (props: Props) => {
+  const { handleBack, handleNext, email, mobile } = props;
 
   const [emailOtp, setEmailOtp] = useState("");
   const [mobileOtp, setMobileOtp] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { showToast } = useToast();
 
   useEffect(() => {
     sendOtp();
@@ -39,7 +40,6 @@ const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
         "Failed",
         err.response?.data?.msg || "Failed to send OTP"
       );
-      onHide();
     }
   };
 
@@ -57,7 +57,7 @@ const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
         "Verified",
         res.data.msg || "Verification successful!"
       );
-      onSuccess();
+      handleNext();
     } catch (err: any) {
       showToast("error", "Failed", err.response?.data?.msg || "Invalid OTP");
     } finally {
@@ -66,20 +66,9 @@ const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
   };
 
   return (
-    <Dialog
-      header={
-        <div className="flex justify-between items-center w-full">
-          <div className="flex items-center">
-            <i className="pi pi-user mr-4" />
-            <span className="text-lg font-bold">Account Verification</span>
-          </div>
-        </div>
-      }
-      visible
-      onHide={onHide}
-      draggable={false}
-      resizable={false}
-      style={{ width: "400px" }}>
+    <div className="w-full max-w-sm">
+      <h3 className="heading">Step 4: Account Verification</h3>
+
       <p className="text-gray-700 mb-4 mt-2 text-sm">
         Please enter the 6-digit verification codes sent to your email and
         mobile number to proceed.
@@ -107,14 +96,20 @@ const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
         />
       </div>
 
-      <Button
-        label="VERIFY & PROCEED"
-        onClick={handleVerifyOtp}
-        className="update-btn"
-        disabled={loading || emailOtp.length !== 6 || mobileOtp.length !== 6}
-      />
+      <div className="flex justify-between gap-4 mt-6">
+        <Button onClick={handleBack} className="secondary-btn">
+          Back
+        </Button>
 
-      <div className="text-center mt-2">
+        <Button
+          disabled={loading || emailOtp.length !== 6 || mobileOtp.length !== 6}
+          onClick={handleVerifyOtp}
+          className="update-btn">
+          Verify & Proceed
+        </Button>
+      </div>
+
+      <div className="text-center mt-4">
         <button
           onClick={sendOtp}
           disabled={loading}
@@ -122,8 +117,8 @@ const RegisterModal = ({ onHide, onSuccess, email, mobile }: Props) => {
           <i className="w-4 h-4 mr-1 pi pi-sync" /> Resend OTPs
         </button>
       </div>
-    </Dialog>
+    </div>
   );
 };
 
-export default RegisterModal;
+export default Verify;

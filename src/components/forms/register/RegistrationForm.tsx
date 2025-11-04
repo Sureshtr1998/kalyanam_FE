@@ -4,12 +4,13 @@ import { formDefaultVals } from "../../../utils/constants";
 import Identity from "./steps/Identity";
 import Background from "./steps/Background";
 import Profile from "./steps/Profile";
-import RegisterModal from "../../registerModal/RegisterModal";
 import StepIndicator from "./steps/StepIndicator";
 import api from "../../../utils/api";
 import { setItem, user_login_token } from "../../../utils/localStore";
 import { useToast } from "../../toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
+import Verify from "./steps/Verify";
+import PaymentModal from "../../paymentModal/PaymentModal";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -17,8 +18,8 @@ interface Props {
 
 const RegistrationForm = (props: Props) => {
   const { setCurrentForm } = props;
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [isValidate, setValidate] = useState<boolean>(false);
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [isPayment, setPayment] = useState<boolean>(false);
 
   const [message, setMessage] = useState<{
     text: string;
@@ -46,7 +47,7 @@ const RegistrationForm = (props: Props) => {
 
   const errorMsg = "Please fill in all the fields.";
 
-  const validateStep = (currentStep: 1 | 2 | 3): boolean => {
+  const validateStep = (currentStep: 1 | 2 | 3 | 4): boolean => {
     setMessage(null);
     if (currentStep === 1) {
       if (
@@ -106,13 +107,13 @@ const RegistrationForm = (props: Props) => {
 
   const handleNext = () => {
     if (validateStep(step)) {
-      if (step === 3) setValidate(true);
-      setStep((prev) => Math.min(3, prev + 1) as 1 | 2 | 3);
+      if (step === 4) setPayment(true);
+      setStep((prev) => Math.min(4, prev + 1) as 1 | 2 | 3 | 4);
     }
   };
 
   const handleBack = () => {
-    setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3);
+    setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3 | 4);
   };
 
   const registerUser = async () => {
@@ -162,12 +163,10 @@ const RegistrationForm = (props: Props) => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      {isValidate && (
-        <RegisterModal
+      {isPayment && (
+        <PaymentModal
           onSuccess={registerUser}
-          email={formData.email}
-          mobile={formData.mobile}
-          onHide={() => setValidate(false)}
+          onHide={() => setPayment(false)}
         />
       )}
 
@@ -208,6 +207,14 @@ const RegistrationForm = (props: Props) => {
             setImages={setImages}
             handleBack={handleBack}
             formData={formData}
+          />
+        )}
+        {step === 4 && (
+          <Verify
+            handleBack={handleBack}
+            handleNext={handleNext}
+            email={formData.email}
+            mobile={formData.mobile}
           />
         )}
       </div>

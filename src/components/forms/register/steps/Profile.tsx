@@ -35,7 +35,7 @@ const Profile = (props: StepsType) => {
           Back
         </Button>
         <Button onClick={handleNext} className="update-btn">
-          COMPLETE REGISTRATION
+          Continue to Verification
         </Button>
       </div>
     </div>
