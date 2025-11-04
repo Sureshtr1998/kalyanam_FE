@@ -158,7 +158,6 @@ const Invitations = () => {
       <Tag
         value={getStatusLabel(status)}
         severity={getStatusSeverity(status)}
-        rounded
       />
     );
   };

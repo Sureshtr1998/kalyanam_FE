@@ -95,16 +95,13 @@ $standard-success-green-hover: #16a34a; // Tailwind Green 600
 }
 
 .p-tag.p-tag-success {
-  background-color: $standard-success-green;
   color: #ffffff;
 }
 
 .p-tag.p-tag-warning {
-  background-color: vars.$accent-ring;
   color: vars.$text-color;
 }
 .p-tag.p-tag-danger {
-  background-color: vars.$error-color;
   color: #ffffff;
 }
 .p-tag.p-tag-info {

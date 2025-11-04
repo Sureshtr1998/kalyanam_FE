@@ -1,3 +1,5 @@
+@use "../../styles/variables" as vars;
+
 .home-cards {
   .profile-cards {
     display: grid;
@@ -41,13 +43,12 @@
   .no-matches {
     text-align: center;
     padding: 3rem 1rem;
-    color: #6a5900;
+    color: vars.$text-color;
     position: absolute;
     height: 75vh;
     overflow: hidden;
-    border: 2px solid goldenrod;
+    border: 2px solid vars.$border-color;
     border-radius: 2rem;
-    background-color: antiquewhite;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: 2rem;
 
@@ -70,8 +71,8 @@
     }
   }
   .p-paginator {
-    background-color: antiquewhite;
-    border: 2px solid goldenrod;
-    border-radius: 2rem;
+    background-color: vars.$bg-color;
+    border: 2px solid vars.$border-color;
+    margin-bottom: 1rem;
   }
 }
