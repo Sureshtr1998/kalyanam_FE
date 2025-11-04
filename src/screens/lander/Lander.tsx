@@ -65,7 +65,7 @@ const Lander = () => {
           </div>
 
           {/* 2. Form Panel (Right Side on Desktop, Full Width on Mobile) */}
-          <div className="flex flex-col justify-center items-center p-6 sm:p-8 lg:p-12 bg-white/95 backdrop-blur-sm min-h-[650px]">
+          <div className="flex flex-col  items-center p-6 sm:p-8 lg:p-12 bg-white/95 backdrop-blur-sm min-h-[650px]">
             <div className="block md:hidden w-full mb-6">
               <img
                 src={seethaRama}

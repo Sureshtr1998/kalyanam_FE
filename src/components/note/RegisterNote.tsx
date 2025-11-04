@@ -1,6 +1,7 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import "./RegisterNote.scss";
+import { PRICING_COST, SUPPORT_EMAIL } from "../../utils/constants";
 
 interface Props {
   onHide: () => void;
@@ -38,17 +39,17 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
 
         <p>
           <strong>3)</strong> We’re currently charging a{" "}
-          <strong>minimal registration fee of ₹251</strong> per year for our new
-          users.
+          <strong>minimal registration fee of ₹{PRICING_COST}</strong> per year
+          for our new users.
         </p>
 
         <p>
           <strong>4)</strong> For any issues or special assistance, please
           contact{" "}
           <a
-            href="mailto:contactus@seetharamakalyana.in"
+            href={`mailto:${SUPPORT_EMAIL}`}
             className="text-[#e07b00] font-medium hover:underline">
-            contactus@seetharamakalyana.in
+            {SUPPORT_EMAIL}
           </a>
           . We’ll respond to your query within <strong>24 hours</strong>.
         </p>

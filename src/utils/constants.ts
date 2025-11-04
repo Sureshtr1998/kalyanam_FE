@@ -439,3 +439,4 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
 ]
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
+export const PRICING_COST = 251

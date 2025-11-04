@@ -1,0 +1,164 @@
+@use "../../styles/variables" as vars;
+
+.interactive-element-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-group {
+  position: relative;
+  display: inline-block;
+  height: 4rem;
+}
+
+.click-me-badge {
+  position: absolute;
+  left: 50%;
+  top: -1rem;
+  transform: translateX(-50%);
+
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  background-color: vars.$accent-ring;
+  color: vars.$text-color;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+
+  transition: all 300ms ease-in-out;
+  z-index: 20;
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  .icon-group:hover & {
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+.heart-icon-wrapper {
+  position: relative;
+  padding: 5px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+  margin-top: 1rem;
+
+  color: vars.$accent-color-bg;
+  background-color: vars.$card-bg;
+
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    animation: none;
+  }
+
+  .icon-group:hover & {
+    color: vars.$accent-color-bg-hover;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(vars.$accent-ring, 0.5);
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+
+    transition: transform 300ms ease-in-out;
+
+    .icon-group:hover & {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.tooltip-popover {
+  position: absolute;
+  left: 50%;
+  top: 2rem;
+  transform: translateX(-50%);
+  margin-top: 1rem;
+
+  width: 16rem;
+  @media (min-width: 768px) {
+    width: 20rem;
+  }
+
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  background-color: vars.$card-bg;
+  border-top: 4px solid vars.$accent-color-bg;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: all 300ms ease-in-out;
+  z-index: 10;
+
+  .icon-group:hover & {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 1.5rem;
+  }
+
+  p {
+    &.title {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: vars.$text-color;
+      margin-bottom: 0.5rem;
+    }
+
+    &.body {
+      font-size: 1rem;
+      color: #1f2937;
+      font-weight: 500;
+      word-wrap: break-word;
+      margin-bottom: 1rem;
+    }
+
+    &.email {
+      font-size: 0.875rem;
+      color: #4b5563;
+      word-wrap: break-word;
+    }
+  }
+
+  hr {
+    border-color: #e5e7eb;
+    margin-bottom: 1rem;
+  }
+}
+
+.tooltip-arrow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.5rem;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid vars.$card-bg;
+}
