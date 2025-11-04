@@ -138,7 +138,9 @@ const Profile = (props: Props) => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        uploadedUrls = imgRes.data.urls;
+        uploadedUrls = imgRes.data.urls.map(
+          (obj: { fileId: string; url: string }) => obj.url
+        );
       }
 
       // 2️⃣ Combine existing and new URLs

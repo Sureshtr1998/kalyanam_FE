@@ -11,6 +11,7 @@ import Wrapper from "./components/wrapper/Wrapper";
 import { useState } from "react";
 import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
+import { HelmetProvider } from "react-helmet-async";
 
 const AppContent = () => {
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
@@ -20,7 +21,14 @@ const AppContent = () => {
       <ToastProvider>
         <div style={{ position: "relative", zIndex: 1 }}>
           <Routes>
-            <Route path="/" element={<Lander />} />
+            <Route
+              path="/"
+              element={
+                <HelmetProvider>
+                  <Lander />
+                </HelmetProvider>
+              }
+            />
             <Route
               path="/home"
               element={

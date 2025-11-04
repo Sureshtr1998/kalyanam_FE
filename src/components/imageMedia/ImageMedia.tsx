@@ -37,6 +37,7 @@ const ImageSlot: React.FC<{
           icon="pi pi-trash"
           className="p-button-danger p-button-rounded p-button-text delete-button"
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             onRemove(index);
           }}
