@@ -133,7 +133,7 @@ const RegistrationForm = (props: Props) => {
           }
         );
 
-        imageUrls = imgRes.data.urls;
+        imageUrls = imgRes.data.media;
       }
 
       const payload = {

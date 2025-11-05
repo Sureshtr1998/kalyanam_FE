@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
-import type { UserDataType, UserDetails } from "../../utils/interfaces";
+import type {
+  ImageFile,
+  UserDataType,
+  UserDetails,
+} from "../../utils/interfaces";
 import "./Profile.scss";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import {
@@ -19,6 +24,7 @@ import { useToast } from "../../components/toastProvider/ToastProvider";
 import { Message } from "primereact/message";
 import Spinner from "../../components/spinner/Spinner";
 import Overview from "./details/Overview";
+import { isImageFile } from "../../utils/utils";
 
 interface Props {
   user?: UserDetails;
@@ -30,7 +36,8 @@ const Profile = (props: Props) => {
   const { showToast } = useToast();
 
   const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
-  const [allImgs, setAllImgs] = useState<File[] | string[]>([]);
+  const [allImgs, setAllImgs] = useState<(File | ImageFile)[]>([]);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,7 +49,6 @@ const Profile = (props: Props) => {
     setAllImgs(userData.basic.images);
   }, [userData.basic.images]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (e: any, section: UserDataType) => {
     const { name, value } = e.target;
     setUserData({
@@ -60,7 +66,6 @@ const Profile = (props: Props) => {
       const res = await api.get("/my-profile");
       setUserData(res.data.profile);
       setIsLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       showToast(
         "error",
@@ -117,15 +122,20 @@ const Profile = (props: Props) => {
       newErrors.forEach((msg) => {
         showToast("error", "Validation Error", msg);
       });
-      return;
+      // return;
     }
 
     try {
       setIsLoading(true);
-      let uploadedUrls: string[] = [];
 
-      const newFiles = allImgs.filter((item) => item instanceof File);
-      const existingUrls = allImgs.filter((item) => typeof item === "string");
+      // 1️⃣ Separate new files and existing image objects
+      const newFiles = allImgs.filter((item) => item instanceof File) as File[];
+      const existingImages = allImgs
+        .filter(isImageFile)
+        .map((obj: any) => ({ url: obj.url, fileId: obj.fileId }));
+
+      console.log(existingImages, allImgs, "existingImages");
+      let uploadedImages: { url: string; fileId: string }[] = [];
 
       if (newFiles.length > 0) {
         const imgFormData = new FormData();
@@ -138,20 +148,21 @@ const Profile = (props: Props) => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        uploadedUrls = imgRes.data.urls.map(
-          (obj: { fileId: string; url: string }) => obj.url
-        );
+
+        uploadedImages = imgRes.data.media.map((obj: ImageFile) => ({
+          url: obj.url,
+          fileId: obj.fileId,
+        }));
       }
 
-      // 2️⃣ Combine existing and new URLs
-      const finalUrls = [...existingUrls, ...uploadedUrls];
+      console.log(existingImages, uploadedImages, "uploadedImages");
+      const finalImages = [...existingImages, ...uploadedImages];
 
-      // 3️⃣ Send updated profile JSON
       const payload = {
         ...userData,
         basic: {
           ...userData.basic,
-          images: finalUrls,
+          images: finalImages,
         },
         hasCompleteProfile: true,
       };
@@ -160,7 +171,6 @@ const Profile = (props: Props) => {
 
       showToast("success", "Success", "Profile updated successfully");
       setIsLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       showToast(
         "error",
@@ -171,23 +181,20 @@ const Profile = (props: Props) => {
     }
   };
 
-  const handleExisting = (file: string[]) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setAllImgs((prev: any) => {
-      const filesOnly = prev.filter(
-        (item: File | string) => item instanceof File
-      );
-      return [...file, ...filesOnly];
+  const handleExisting = (file: ImageFile[]) => {
+    console.log(file, "file");
+    setAllImgs((prev) => {
+      const filesOnly = prev.filter((item) => item instanceof File);
+      return [...file, ...filesOnly] as (File | ImageFile)[];
     });
   };
 
   const handleNew = (files: File[]) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setAllImgs((prev: any) => {
-      const stringsOnly = prev.filter(
-        (item: File | string) => typeof item === "string"
+    setAllImgs((prev: (File | ImageFile)[]) => {
+      const existingImgsAndUrls = prev.filter(
+        (item) => !(item instanceof File)
       );
-      return [...stringsOnly, ...files];
+      return [...existingImgsAndUrls, ...files];
     });
   };
 

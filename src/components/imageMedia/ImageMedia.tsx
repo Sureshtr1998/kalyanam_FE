@@ -5,11 +5,12 @@ import { Message } from "primereact/message";
 import "./ImageMedia.scss";
 
 import { Image } from "primereact/image";
+import type { ImageFile } from "../../utils/interfaces";
 
 interface ImageUploadProps {
   onChange?: (files: File[]) => void;
-  onUrlChange?: (files: string[]) => void;
-  initialImages?: string[];
+  onUrlChange?: (files: ImageFile[]) => void;
+  initialImages?: ImageFile[];
   isReadOnly?: boolean;
 }
 
@@ -17,13 +18,13 @@ const MAX_IMAGES = 3;
 const MAX_FILE_SIZE_MB = 1;
 
 const ImageSlot: React.FC<{
-  content: string | File;
+  content: ImageFile | File;
   index: number;
   onRemove: (index: number) => void;
   isReadOnly?: boolean;
 }> = ({ content, index, onRemove, isReadOnly }) => {
   const imageUrl =
-    typeof content === "string" ? content : URL.createObjectURL(content);
+    content instanceof File ? URL.createObjectURL(content) : content.url;
 
   return (
     <div className="image-slot filled">
@@ -62,15 +63,17 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
   isReadOnly,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [existingUrls, setExistingUrls] = useState<string[]>([]);
+  const [existingMedia, setExistingMedia] = useState<ImageFile[]>([]);
   const [error, setError] = useState<string | null>(null);
   const fileUploadRef = useRef<FileUpload>(null);
 
   useEffect(() => {
-    if (initialImages.length > 0) setExistingUrls(initialImages);
+    if (initialImages.length > 0) {
+      setExistingMedia(initialImages);
+    }
   }, [initialImages]);
 
-  const allMedia = [...existingUrls, ...uploadedFiles];
+  const allMedia = [...existingMedia, ...uploadedFiles];
   const totalSlots = MAX_IMAGES;
   const slotsToFill = totalSlots - allMedia.length;
 
@@ -98,7 +101,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
       if (
         !allMedia.some(
           (media) =>
-            typeof media !== "string" &&
+            media instanceof File &&
             media.name === file.name &&
             media.size === file.size
         )
@@ -114,12 +117,12 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
   };
 
   const onRemove = (index: number) => {
-    if (index < existingUrls.length) {
-      const updatedUrls = existingUrls.filter((_, i) => i !== index);
-      setExistingUrls(updatedUrls);
+    if (index < existingMedia.length) {
+      const updatedUrls = existingMedia.filter((_, i) => i !== index);
+      setExistingMedia(updatedUrls);
       onUrlChange?.(updatedUrls);
     } else {
-      const fileIndex = index - existingUrls.length;
+      const fileIndex = index - existingMedia.length;
       const updatedFiles = uploadedFiles.filter((_, i) => i !== fileIndex);
       setUploadedFiles(updatedFiles);
       onChange?.(updatedFiles);

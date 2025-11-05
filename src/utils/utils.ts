@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
@@ -26,3 +27,7 @@ export const getInitials = (name: string = "") => {
         .substring(0, 2)
         .toUpperCase();
 };
+
+export const isImageFile = (item: any) => {
+    return item && typeof item === "object" && "url" in item && "fileId" in item;
+}

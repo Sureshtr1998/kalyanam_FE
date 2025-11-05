@@ -14,7 +14,7 @@ export interface BasicDetailsIn {
     dob: Date | null;
     age?: number;
     profileCreatedBy: string;
-    images: string[];
+    images: ImageFile[];
     qualification: string;
     note?: string;
     uniqueId?: string
@@ -116,4 +116,9 @@ export type StepsType = {
     handleBack?: () => void
     setImages?: (val: File[]) => void
     formData: BasicDetailsIn
+}
+
+export interface ImageFile {
+    fileId: string
+    url: string
 }

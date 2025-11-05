@@ -1,8 +1,8 @@
 import ImageMedia from "../../../components/imageMedia/ImageMedia";
-import type { BasicDetailsIn } from "../../../utils/interfaces";
+import type { BasicDetailsIn, ImageFile } from "../../../utils/interfaces";
 
 interface Props {
-  handleExisting: (files: string[]) => void;
+  handleExisting: (files: ImageFile[]) => void;
   handleNew: (files: File[]) => void;
   basicData: BasicDetailsIn;
   isReadOnly: boolean;
