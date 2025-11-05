@@ -77,6 +77,11 @@ const Topbar = ({ applyFilter }: Props) => {
       command: () => navigate("/invitations"),
     },
     {
+      label: "Hidden Profiles",
+      icon: "pi pi-eye-slash",
+      command: () => navigate("/hidden"),
+    },
+    {
       label: "Account",
       icon: "pi pi-cog",
       command: () => navigate("/account"),

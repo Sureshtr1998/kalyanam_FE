@@ -12,6 +12,7 @@ import { useState } from "react";
 import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
 import { HelmetProvider } from "react-helmet-async";
+import HiddenProfiles from "./screens/hiddenProfiles/HiddenProfiles";
 
 const AppContent = () => {
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
@@ -45,6 +46,16 @@ const AppContent = () => {
                 <ProtectedRoute>
                   <Wrapper>
                     <Invitations />
+                  </Wrapper>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/hidden"
+              element={
+                <ProtectedRoute>
+                  <Wrapper>
+                    <HiddenProfiles />
                   </Wrapper>
                 </ProtectedRoute>
               }
