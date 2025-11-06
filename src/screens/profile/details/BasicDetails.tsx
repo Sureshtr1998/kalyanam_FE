@@ -69,6 +69,7 @@ const BasicDetails = (props: Props) => {
           disabled
           label="Mobile Number"
           name="mobile"
+          maxLength={10}
           value={basicData.mobile}
           icon="pi pi-phone"
         />
@@ -76,6 +77,7 @@ const BasicDetails = (props: Props) => {
         <FormInput
           type="number"
           disabled={isReadOnly}
+          maxLength={10}
           label="Alternate Contact"
           name="alternateMob"
           value={basicData.alternateMob}

@@ -22,6 +22,7 @@ const Profile = (props: StepsType) => {
         name="mobile"
         placeholder="Mobile Number"
         value={mobile}
+        maxLength={10}
         onChange={handleChange}
         icon="pi pi-mobile"
       />
@@ -30,6 +31,7 @@ const Profile = (props: StepsType) => {
         name="alternateMob"
         placeholder="Alternate Mobile Number (Optional)"
         value={alternateMob}
+        maxLength={10}
         onChange={handleChange}
         icon="pi pi-phone"
       />

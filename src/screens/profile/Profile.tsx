@@ -122,7 +122,7 @@ const Profile = (props: Props) => {
       newErrors.forEach((msg) => {
         showToast("error", "Validation Error", msg);
       });
-      // return;
+      return;
     }
 
     try {

@@ -18,6 +18,7 @@ interface Props {
   disabled?: boolean;
   label?: string;
   required?: boolean;
+  maxLength?: number;
 }
 
 const FormInput = (props: Props) => {
@@ -32,6 +33,7 @@ const FormInput = (props: Props) => {
     disabled = false,
     label,
     required,
+    maxLength,
   } = props;
 
   return (
@@ -80,7 +82,12 @@ const FormInput = (props: Props) => {
             value={value as string}
             name={name}
             disabled={disabled}
-            onChange={onChange}
+            onChange={(e) => {
+              if (!maxLength || e.target.value.length <= maxLength) {
+                onChange?.(e); // only call if within limit or no limit
+              }
+            }}
+            maxLength={maxLength}
             className="input-text"
           />
         </IconField>
