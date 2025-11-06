@@ -20,11 +20,11 @@ const Profile = (props: StepsType) => {
       <FormInput
         type="number"
         name="mobile"
-        placeholder="Mobile Number"
+        placeholder="WhatsApp Number"
         value={mobile}
         maxLength={10}
         onChange={handleChange}
-        icon="pi pi-mobile"
+        icon="pi pi-whatsapp"
       />
       <FormInput
         type="number"

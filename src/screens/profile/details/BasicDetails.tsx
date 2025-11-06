@@ -67,11 +67,11 @@ const BasicDetails = (props: Props) => {
       <div className="form-row">
         <FormInput
           disabled
-          label="Mobile Number"
+          label="WhatsApp Number"
           name="mobile"
           maxLength={10}
           value={basicData.mobile}
-          icon="pi pi-phone"
+          icon="pi pi-whatsapp"
         />
 
         <FormInput

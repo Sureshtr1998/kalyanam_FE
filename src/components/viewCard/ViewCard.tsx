@@ -24,7 +24,7 @@ const ViewCard = (props: {
           {!isAccept && (
             <Message
               severity="info"
-              text="The Mobile Number and Email Id will be visible under Basic Details only after mutual acceptance."
+              text="The WhatsApp Number and Email Id will be visible under Basic Details only after mutual acceptance."
               className="info-msg"
             />
           )}

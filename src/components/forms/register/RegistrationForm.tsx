@@ -96,7 +96,7 @@ const RegistrationForm = (props: Props) => {
       }
       if (formData.mobile.length !== 10) {
         setMessage({
-          text: "Please enter a valid Mobile Number.",
+          text: "Please enter a valid WhatsApp Number.",
           type: "error",
         });
         return false;
