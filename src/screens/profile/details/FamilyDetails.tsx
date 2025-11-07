@@ -186,6 +186,7 @@ const FamilyDetails = (props: Props) => {
           name="note"
           disabled={isReadOnly}
           value={familyData.note}
+          onChange={handleChange}
           icon="pi pi-pen-to-square"
         />
       </div>

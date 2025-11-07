@@ -24,9 +24,9 @@ const Home = (props: Props) => {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    if (filterData._id) fetchProfiles(1, filterData);
+    if (filterData._id) fetchProfiles(page, filterData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterData]);
+  }, [filterData, page]);
 
   const fetchProfiles = async (pageNumber: number, filters: UserDetails) => {
     try {

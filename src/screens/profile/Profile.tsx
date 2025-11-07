@@ -65,6 +65,13 @@ const Profile = (props: Props) => {
       setIsLoading(true);
       const res = await api.get("/my-profile");
       setUserData(res.data.profile);
+      if (!res.data.profile.hasCompleteProfile) {
+        showToast(
+          "error",
+          "Fill mandatory fields",
+          "Please fill all mandatory fields to view user profiles"
+        );
+      }
       setIsLoading(false);
     } catch (err: any) {
       showToast(
@@ -134,7 +141,6 @@ const Profile = (props: Props) => {
         .filter(isImageFile)
         .map((obj: any) => ({ url: obj.url, fileId: obj.fileId }));
 
-      console.log(existingImages, allImgs, "existingImages");
       let uploadedImages: { url: string; fileId: string }[] = [];
 
       if (newFiles.length > 0) {
@@ -155,7 +161,6 @@ const Profile = (props: Props) => {
         }));
       }
 
-      console.log(existingImages, uploadedImages, "uploadedImages");
       const finalImages = [...existingImages, ...uploadedImages];
 
       const payload = {
@@ -167,7 +172,8 @@ const Profile = (props: Props) => {
         hasCompleteProfile: true,
       };
 
-      await api.post("/my-profile", payload);
+      const res = await api.post("/my-profile", payload);
+      setUserData(res.data.profile);
 
       showToast("success", "Success", "Profile updated successfully");
       setIsLoading(false);
@@ -209,7 +215,7 @@ const Profile = (props: Props) => {
               <Message
                 severity="warn"
                 text="Please complete all required fields to view user profiles. Fields marked with an asterisk (*) are mandatory."
-                className="info-msg"
+                className="info-msg warn"
               />
               <div className="mb-4" />
             </>

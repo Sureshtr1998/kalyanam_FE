@@ -21,7 +21,7 @@ export const arrayLabel = (value: string | string[] | undefined, options: { labe
 }
 export const getInitials = (name: string = "") => {
     return name
-        .split(" ")
+        .split("")
         .map((n) => n[0])
         .join("")
         .substring(0, 2)

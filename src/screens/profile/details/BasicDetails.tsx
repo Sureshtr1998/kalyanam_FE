@@ -172,6 +172,7 @@ const BasicDetails = (props: Props) => {
           name="note"
           disabled={isReadOnly}
           value={basicData.note}
+          onChange={handleChange}
           icon="pi pi-pen-to-square"
         />
       </div>

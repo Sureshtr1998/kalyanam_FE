@@ -16,6 +16,13 @@
   align-self: center;
 }
 
+.info-msg.warn {
+  color: vars.$error-color;
+  .p-icon {
+    color: vars.$error-color !important;
+  }
+}
+
 .p-inline-message-text {
   font-size: 10px;
 }

@@ -137,6 +137,7 @@ const PartnerPreferences = (props: Props) => {
             label="Additional Notes"
             name="note"
             value={partnerData.note}
+            onChange={handleChange}
             disabled={isReadOnly}
             icon="pi pi-pen-to-square"
           />
