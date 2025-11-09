@@ -45,8 +45,8 @@
     padding: 3rem 1rem;
     color: vars.$text-color;
     position: absolute;
-    height: 75vh;
-    overflow: hidden;
+    height: 30rem;
+    overflow-x: auto;
     border: 2px solid vars.$border-color;
     border-radius: 2rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
