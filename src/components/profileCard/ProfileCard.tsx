@@ -8,6 +8,7 @@ import api from "../../utils/api";
 import { useToast } from "../toastProvider/ToastProvider";
 import { qualificationOptions } from "../../utils/constants";
 import { Button } from "primereact/button";
+import Spinner from "../spinner/Spinner";
 
 interface ProfileCardProps {
   match: UserDetails;
@@ -18,20 +19,25 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
   const { fullName, age, subCaste, images, gothra, qualification } =
     match.basic;
   const userId = match._id;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [visible, setVisible] = useState(false);
   const { showToast } = useToast();
 
   const hideUser = async () => {
     try {
+      setIsLoading(true);
       const res = await api.post("/hide-profile", { userId });
       showToast(
         "success",
         "Success",
         res.data.msg || "Profile has been hidden successfully"
       );
+      setIsLoading(false);
       hideProfile(userId ?? "");
     } catch (err: any) {
+      setIsLoading(false);
+
       showToast(
         "error",
         "Error",
@@ -42,21 +48,29 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
 
   const sendInterest = async () => {
     try {
+      setIsLoading(true);
       await api.post("/send-interest", { receiverId: userId });
-      showToast("success", "Success", "Interest sent successfully");
+      showToast(
+        "success",
+        "Success",
+        "Interest sent successfully, now you can view the profile under Invitation Status"
+      );
       hideProfile(userId ?? "");
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response.data.msg || "Something went wrong"
       );
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="profile-card">
       {visible && <ViewCard user={match} hide={() => setVisible(false)} />}
+      <Spinner hideText isLoading={isLoading} />
 
       <div className="card-elegant">
         {/* Image Section */}

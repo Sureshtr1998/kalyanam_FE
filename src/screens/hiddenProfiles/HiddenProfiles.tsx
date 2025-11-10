@@ -84,17 +84,14 @@ const HiddenProfiles = () => {
     );
   };
 
-  const statusAndActionTemplate = (rowData: UserDetails) => {
-    return (
-      <div className="flex gap-2">
-        <Button
-          onClick={() => handleAction(rowData._id)}
-          className="primary-btn">
-          Unhide Profile
-        </Button>
-      </div>
-    );
-  };
+  const statusAndActionTemplate = (rowData: UserDetails) => (
+    <Button
+      label="Unhide Profile"
+      icon="pi pi-eye"
+      onClick={() => handleAction(rowData._id)}
+      className="p-button-sm p-button-accent"
+    />
+  );
 
   const viewProfileTemplate = (rowData: UserDetails) => (
     <Button

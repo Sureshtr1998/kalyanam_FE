@@ -68,7 +68,7 @@ const FormInput = (props: Props) => {
             value={value as Date}
             onChange={onChange}
             disabled={disabled}
-            placeholder="dd/mm/yyyy"
+            placeholder={placeholder ?? "dd/mm/yyyy"}
             dateFormat="dd/mm/yy"
           />
         </>

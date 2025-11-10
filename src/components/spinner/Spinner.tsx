@@ -2,10 +2,11 @@ import "./Spinner.scss";
 
 interface Props {
   isLoading: boolean;
+  hideText?: boolean;
 }
 
 const Spinner = (props: Props) => {
-  const { isLoading } = props;
+  const { isLoading, hideText } = props;
   if (!isLoading) return null;
 
   return (
@@ -14,7 +15,9 @@ const Spinner = (props: Props) => {
         <div className="om-chakra-spinner-fancy">
           <span className="om-symbol">ॐ</span>
         </div>
-        <div className="loading-text">One Step Closer to Your Match...</div>
+        {!hideText && (
+          <div className="loading-text">One Step Closer to Your Match...</div>
+        )}
       </div>
     </div>
   );
