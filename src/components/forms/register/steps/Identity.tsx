@@ -57,7 +57,7 @@ const Identity = (props: StepsType) => {
         <FormInput
           name="dob"
           type="date"
-          placeholder="Date of Birth"
+          placeholder="DOB"
           value={dob ?? ""}
           onChange={handleChange}
           icon="pi pi-envelope"

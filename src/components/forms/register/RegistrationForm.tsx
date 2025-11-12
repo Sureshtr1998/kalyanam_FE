@@ -11,6 +11,7 @@ import { useToast } from "../../toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
 import Verify from "./steps/Verify";
 import PaymentModal from "../../paymentModal/PaymentModal";
+import Spinner from "../../spinner/Spinner";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -20,6 +21,7 @@ const RegistrationForm = (props: Props) => {
   const { setCurrentForm } = props;
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [isPayment, setPayment] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [message, setMessage] = useState<{
     text: string;
@@ -118,6 +120,7 @@ const RegistrationForm = (props: Props) => {
 
   const registerUser = async () => {
     try {
+      setIsLoading(true);
       let imageUrls: string[] = [];
 
       // 1️⃣ Upload images first
@@ -149,6 +152,8 @@ const RegistrationForm = (props: Props) => {
         "Registration Successful",
         "Your details have been submitted successfully!"
       );
+      setIsLoading(false);
+
       navigate("/home");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -158,11 +163,14 @@ const RegistrationForm = (props: Props) => {
         "Registration Failed",
         err.response?.data?.msg || "Server error"
       );
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full">
+      <Spinner hideText isLoading={isLoading} />
+
       {isPayment && (
         <PaymentModal
           onSuccess={registerUser}

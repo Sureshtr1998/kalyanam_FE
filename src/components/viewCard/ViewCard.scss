@@ -18,6 +18,7 @@
 
 .info-msg.warn {
   color: vars.$error-color;
+  font-weight: 600 !important;
   .p-icon {
     color: vars.$error-color !important;
   }

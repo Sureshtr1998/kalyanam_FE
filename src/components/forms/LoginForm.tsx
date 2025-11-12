@@ -8,6 +8,7 @@ import { useToast } from "../toastProvider/ToastProvider";
 import api from "../../utils/api";
 import { setItem, user_login_token } from "../../utils/localStore";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../spinner/Spinner";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -16,6 +17,7 @@ const LoginForm = (props: Props) => {
   const { setCurrentForm } = props;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -27,6 +29,7 @@ const LoginForm = (props: Props) => {
     }
 
     try {
+      setIsLoading(true);
       const res = await api.post("/login", {
         email: email.toLowerCase(),
         password,
@@ -34,6 +37,8 @@ const LoginForm = (props: Props) => {
       setItem(user_login_token, res.data);
       showToast("success", "Success", "Logged in successfully");
       navigate("/home");
+      setIsLoading(false);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       showToast(
@@ -41,11 +46,14 @@ const LoginForm = (props: Props) => {
         "Login Failed",
         err.response?.data?.msg || "Server error"
       );
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="w-full max-w-sm">
+      <Spinner hideText isLoading={isLoading} />
+
       <h2 className="heading">Log In to Find Your Match</h2>
 
       <FormInput
