@@ -120,6 +120,10 @@
     visibility: visible;
     margin-top: 1.5rem;
   }
+  &.show-hint {
+    opacity: 1;
+    visibility: visible;
+  }
 
   p {
     &.title {
@@ -211,15 +215,21 @@
 @keyframes heartbeat {
   0%,
   100% {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
+  }
+  10% {
+    transform: scale(1) translateY(-3px);
   }
   25% {
-    transform: scale(1.15);
+    transform: scale(1.15) translateY(0); /* Max scale/Glow on a flat base */
   }
   50% {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
   75% {
-    transform: scale(1.1);
+    transform: scale(1.1) translateY(-2px);
+  }
+  90% {
+    transform: scale(1) translateY(2px);
   }
 }

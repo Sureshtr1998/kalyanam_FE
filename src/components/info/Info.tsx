@@ -4,11 +4,22 @@ import "./Info.scss";
 
 const Info = () => {
   const [showMail, setShowMail] = useState(true);
+  const [showTooltipHint, setShowTooltipHint] = useState(false);
+
+  useEffect(() => {
+    setShowTooltipHint(true);
+
+    const timer = setTimeout(() => {
+      setShowTooltipHint(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setShowMail((prev) => !prev);
-    }, 2000); // toggle every 2 seconds
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -55,7 +66,8 @@ const Info = () => {
           </div>
         </div>
 
-        <div className="tooltip-popover">
+        <div
+          className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
           <p className="title">Pricing Details:</p>
           <p className="body">₹ {PRICING_COST}/year</p>
 

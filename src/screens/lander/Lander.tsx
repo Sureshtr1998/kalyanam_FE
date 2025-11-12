@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import seethaRama from "../../assets/seetha_ram.png";
 import Logo from "../../components/misc/Logo";
 import { BG_COLOR } from "../../styles/variables";
@@ -11,6 +11,10 @@ import { Helmet } from "react-helmet-async";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentForm]);
 
   const renderForm = () => {
     if (currentForm === "login")
@@ -79,7 +83,7 @@ const Lander = () => {
               />
             </div>
 
-            <Logo />
+            <Logo key={currentForm} />
 
             {renderForm()}
           </div>
