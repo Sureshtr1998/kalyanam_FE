@@ -71,6 +71,7 @@ export interface PartnerDetailsIn {
 
 export interface InterestsIn {
     sent?: string[]
+    totalNoOfInterest?: number
     received?: string[]
     accepted?: string[]
     declined?: string[]
@@ -78,10 +79,10 @@ export interface InterestsIn {
 }
 
 export interface TransactionsIn {
-    transactionId: string
-    dateOfTrans: string
-    amountPaid: number
-    noOfInterest: number
+    orderId?: string,
+    dateOfTrans?: string,
+    amountPaid?: number,
+    noOfInterest?: number,
 }
 
 export interface UserDetails {
@@ -95,7 +96,7 @@ export interface UserDetails {
 
     interests?: InterestsIn
 
-    transactions?: TransactionsIn
+    transactions?: TransactionsIn[]
 
     _id?: string
     hasCompleteProfile?: boolean

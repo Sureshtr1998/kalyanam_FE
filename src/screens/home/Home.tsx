@@ -16,6 +16,7 @@ const Home = (props: Props) => {
   const { filterData } = props;
   const [matches, setMatches] = useState<UserDetails[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [pendingInterests, setPendingInterests] = useState<number>(0);
 
   const { showToast } = useToast();
 
@@ -24,6 +25,10 @@ const Home = (props: Props) => {
   const rowsPerPage = 10;
 
   useEffect(() => {
+    setPendingInterests(
+      (filterData.interests?.totalNoOfInterest ?? 0) -
+        (filterData.interests?.sent?.length ?? 0)
+    );
     if (filterData._id) fetchProfiles(page, filterData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterData, page]);
@@ -55,7 +60,10 @@ const Home = (props: Props) => {
     }
   };
 
-  const hideUser = (id: string) => {
+  const hideUser = (id: string, isInterest?: boolean) => {
+    if (isInterest) {
+      setPendingInterests((prev) => prev - 1);
+    }
     setMatches((prevMatches) =>
       prevMatches.filter((profile) => profile._id !== id)
     );
@@ -76,6 +84,7 @@ const Home = (props: Props) => {
                 hideProfile={hideUser}
                 match={match}
                 key={match._id}
+                remainingInterest={pendingInterests}
               />
             ))
           ) : (

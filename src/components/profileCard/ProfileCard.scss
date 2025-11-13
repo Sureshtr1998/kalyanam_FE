@@ -153,6 +153,27 @@
         background-color: vars.$accent-color-bg;
         color: #fff;
       }
+
+      &.p-disabled {
+        pointer-events: auto;
+        cursor: not-allowed;
+
+        border-color: #ccc;
+        background-color: #eee;
+        color: #999;
+        opacity: 0.8;
+
+        &:hover {
+          background-color: #eee;
+          color: #999;
+          cursor: not-allowed;
+        }
+      }
+
+      &:hover:not(.p-disabled) {
+        background-color: vars.$accent-color-bg;
+        color: #fff;
+      }
     }
   }
 }

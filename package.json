@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.5",
     "@tailwindcss/vite": "^4.1.14",
-    "axios": "^1.12.2",
+    "axios": "^1.13.2",
     "gulp": "^5.0.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.7",

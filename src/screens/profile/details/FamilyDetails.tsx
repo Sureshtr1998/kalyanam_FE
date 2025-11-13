@@ -106,7 +106,7 @@ const FamilyDetails = (props: Props) => {
       <div className="form-row">
         <FormInput
           required
-          label="Father's Name"
+          label="Father's Name / Guardian's Name"
           name="fatherName"
           value={familyData.fatherName}
           icon="pi pi-user"
@@ -116,7 +116,7 @@ const FamilyDetails = (props: Props) => {
 
         <FormInput
           required
-          label=" Mother's Name"
+          label=" Mother's Name / Guardian's Name"
           name="motherName"
           value={familyData.motherName}
           icon="pi pi-user"

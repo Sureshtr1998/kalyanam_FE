@@ -12,10 +12,15 @@ import Spinner from "../spinner/Spinner";
 
 interface ProfileCardProps {
   match: UserDetails;
-  hideProfile: (id: string) => void;
+  hideProfile: (id: string, isInterest?: boolean) => void;
+  remainingInterest: number;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({
+  match,
+  hideProfile,
+  remainingInterest,
+}) => {
   const { fullName, age, subCaste, images, gothra, qualification } =
     match.basic;
   const userId = match._id;
@@ -55,7 +60,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
         "Success",
         "Interest sent successfully, now you can view the profile under Invitation Status"
       );
-      hideProfile(userId ?? "");
+      hideProfile(userId ?? "", true);
       setIsLoading(false);
     } catch (err: any) {
       showToast(
@@ -108,11 +113,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ match, hideProfile }) => {
           <Button className="primary-btn" onClick={() => setVisible(true)}>
             View Profile
           </Button>
-
           <Button
             className="icon-btn"
             onClick={sendInterest}
-            title="Send Interest">
+            disabled={remainingInterest < 1}
+            title={
+              remainingInterest < 1
+                ? "Purchase interests under Account to send interest."
+                : "Send Interest"
+            }>
             <i className="pi pi-heart"></i>
           </Button>
         </div>

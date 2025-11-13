@@ -30,11 +30,11 @@ const Topbar = ({ applyFilter }: Props) => {
   const [userData, setUserData] = useState<UserDetails>(formDefaultVals);
 
   useEffect(() => {
-    if (location.pathname === "/home") {
+    if (location.pathname === "/home" || location.pathname === "/account") {
       fetchUserProfile();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname === "/home"]);
+  }, [location.pathname]);
 
   const fetchUserProfile = async () => {
     try {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { PRICING_COST, SUPPORT_EMAIL } from "../../utils/constants";
+import { REGISTRATION_FEE, SUPPORT_EMAIL } from "../../utils/constants";
 import "./Info.scss";
 
 const Info = () => {
@@ -69,7 +69,7 @@ const Info = () => {
         <div
           className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
           <p className="title">Pricing Details:</p>
-          <p className="body">₹ {PRICING_COST}/year</p>
+          <p className="body">₹ {REGISTRATION_FEE}/year</p>
 
           <hr className="border-gray-200 mb-4" />
 

@@ -1,6 +1,10 @@
 import { useState } from "react";
 import type { BasicDetailsIn, FormType } from "../../../utils/interfaces";
-import { formDefaultVals } from "../../../utils/constants";
+import {
+  formDefaultVals,
+  INITIAL_NO_INTEREST,
+  REGISTRATION_FEE,
+} from "../../../utils/constants";
 import Identity from "./steps/Identity";
 import Background from "./steps/Background";
 import Profile from "./steps/Profile";
@@ -118,12 +122,11 @@ const RegistrationForm = (props: Props) => {
     setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3 | 4);
   };
 
-  const registerUser = async () => {
+  const registerUser = async (orderId: string) => {
     try {
       setIsLoading(true);
       let imageUrls: string[] = [];
 
-      // 1️⃣ Upload images first
       if (images.length > 0) {
         const imgFormData = new FormData();
         images.forEach((file) => imgFormData.append("images", file));
@@ -141,6 +144,9 @@ const RegistrationForm = (props: Props) => {
 
       const payload = {
         ...formData,
+        orderId,
+        amountPaid: REGISTRATION_FEE,
+        totalNoOfInterest: INITIAL_NO_INTEREST,
         images: imageUrls,
       };
 
@@ -175,6 +181,10 @@ const RegistrationForm = (props: Props) => {
         <PaymentModal
           onSuccess={registerUser}
           onHide={() => setPayment(false)}
+          userName={formData.fullName}
+          userEmail={formData.email}
+          userPhone={formData.mobile}
+          amount={REGISTRATION_FEE}
         />
       )}
 

@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import "./RegisterNote.scss";
-import { PRICING_COST, SUPPORT_EMAIL } from "../../utils/constants";
+import { REGISTRATION_FEE, SUPPORT_EMAIL } from "../../utils/constants";
 
 interface Props {
   onHide: () => void;
@@ -39,8 +39,8 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
 
         <p>
           <strong>3)</strong> We’re currently charging a{" "}
-          <strong>minimal registration fee of ₹{PRICING_COST}</strong> per year
-          for our new users.
+          <strong>minimal registration fee of ₹{REGISTRATION_FEE}</strong> per
+          year for our new users.
         </p>
 
         <p>

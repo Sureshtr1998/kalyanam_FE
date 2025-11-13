@@ -64,8 +64,8 @@ const AppContent = () => {
               path="/account"
               element={
                 <ProtectedRoute>
-                  <Wrapper>
-                    <Accounts />
+                  <Wrapper applyFilter={setFilterData}>
+                    <Accounts key={filterData._id} data={filterData} />
                   </Wrapper>
                 </ProtectedRoute>
               }

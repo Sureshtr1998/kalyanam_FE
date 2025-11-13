@@ -3,12 +3,38 @@ import api from "../../utils/api";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
-import { removeItem, user_login_token } from "../../utils/localStore";
+import { getItem, removeItem, user_login_token } from "../../utils/localStore";
 import "./Accounts.scss";
+import { useEffect, useState } from "react";
+import PaymentModal from "../../components/paymentModal/PaymentModal";
+import {
+  PURCHASE_INTEREST_FEE,
+  PURCHASE_NO_INTEREST,
+} from "../../utils/constants";
+import type { UserDetails } from "../../utils/interfaces";
+import Spinner from "../../components/spinner/Spinner";
+import TransactionDashboard from "./transactions/Transactions";
 
-const Accounts = () => {
+interface Props {
+  data: UserDetails;
+}
+
+const Accounts = (props: Props) => {
+  const { data } = props;
+
+  const [userData, setUserData] = useState<UserDetails>(data);
   const { showToast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setUserData(data);
+  }, [data]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isPayment, setPayment] = useState<boolean>(false);
+
+  const { fullName, mobile, email } = getItem(user_login_token) ?? {};
 
   const logOff = () => {
     removeItem(user_login_token);
@@ -64,9 +90,50 @@ const Accounts = () => {
     }
   };
 
+  const handleSuccess = async (orderId: string) => {
+    try {
+      setIsLoading(true);
+
+      const payload = {
+        orderId,
+        amount: PURCHASE_INTEREST_FEE,
+        noOfInterest: PURCHASE_NO_INTEREST,
+      };
+
+      const res = await api.post("/buy-interest", payload);
+      setUserData(res.data.profile);
+      showToast(
+        "success",
+        "Purchased Successful",
+        "You have purchased interests successfully"
+      );
+      setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Purchase Failed",
+        err.response?.data?.msg || "Server error"
+      );
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="p-4">
       <ConfirmDialog />
+      <Spinner hideText isLoading={isLoading} />
+
+      {isPayment && (
+        <PaymentModal
+          onSuccess={handleSuccess}
+          onHide={() => setPayment(false)}
+          userName={fullName}
+          userEmail={email}
+          userPhone={mobile}
+          amount={PURCHASE_INTEREST_FEE}
+        />
+      )}
 
       <div className="profile-settings-card">
         <h2 className="card-title">Profile Visibility</h2>
@@ -89,8 +156,16 @@ const Accounts = () => {
 
       <div className="profile-settings-card">
         <h2 className="card-title">Transaction History</h2>
-        <div className="text-center">
-          <p> Payment Records</p>
+        <div className="text-center custom-dashboard">
+          <TransactionDashboard data={userData} />
+          <div className="mt-8">
+            <Button
+              label={`Buy ${PURCHASE_NO_INTEREST} Interests`}
+              icon="pi pi-lock-open"
+              className="p-button-sm p-button-accent"
+              onClick={() => setPayment(true)}
+            />
+          </div>
         </div>
       </div>
 

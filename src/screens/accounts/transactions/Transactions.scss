@@ -1,0 +1,38 @@
+@use "../../../styles/variables" as vars;
+
+.custom-dashboard {
+  background-color: vars.$bg-color;
+  padding: 2rem;
+  min-height: 100vh;
+
+  .custom-card-style {
+    border: 1px solid vars.$border-color;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: vars.$card-bg;
+  }
+
+  .p-card-title {
+    color: vars.$text-color;
+  }
+
+  .custom-card-stats {
+    background-color: vars.$card-bg;
+  }
+
+  .custom-datatable {
+    .p-datatable-thead > tr > th {
+      background-color: vars.$border-color !important;
+      color: vars.$text-color !important;
+      font-weight: bold;
+      border: none;
+    }
+
+    .p-datatable-tbody > tr:nth-child(even) {
+      background-color: vars.$bg-color;
+    }
+  }
+}
+
+.p-card-body .p-card-content {
+  padding: 0;
+}
