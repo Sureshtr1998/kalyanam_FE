@@ -98,6 +98,7 @@ const Accounts = (props: Props) => {
         orderId,
         amount: PURCHASE_INTEREST_FEE,
         noOfInterest: PURCHASE_NO_INTEREST,
+        note: "Interest Purchase",
       };
 
       const res = await api.post("/buy-interest", payload);

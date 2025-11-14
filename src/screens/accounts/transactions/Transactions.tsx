@@ -38,8 +38,6 @@ const TransactionDashboard = (props: Props) => {
       day: "numeric",
       month: "short",
       year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
     });
   };
 
@@ -112,7 +110,7 @@ const TransactionDashboard = (props: Props) => {
             field="orderId"
             header="Order ID"
             body={orderIdBodyTemplate}
-            style={{ minWidth: "250px" }}
+            style={{ width: "240px" }}
           />
           <Column
             field="amountPaid"
@@ -120,6 +118,7 @@ const TransactionDashboard = (props: Props) => {
             body={amountBodyTemplate}
           />
           <Column field="noOfInterest" header="Interests Added" />
+          <Column field="note" header="Note" style={{ width: "200px" }} />
           <Column
             field="dateOfTrans"
             header="Transaction Date"

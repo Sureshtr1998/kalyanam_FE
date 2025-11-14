@@ -81,6 +81,7 @@ export interface InterestsIn {
 export interface TransactionsIn {
     orderId?: string,
     dateOfTrans?: string,
+    note?: string,
     amountPaid?: number,
     noOfInterest?: number,
 }

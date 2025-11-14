@@ -54,11 +54,11 @@ const PaymentModal = (props: Props) => {
     const interval = setInterval(async () => {
       try {
         const { data } = await api.get(`/check-payment-status/${orderId}`);
-        if (data.status === "PAID") {
+        if (data.status === "SUCCESS") {
           clearInterval(interval);
           onSuccess(orderId);
           onHide();
-        } else if (data.status === "FAILED" || data.status === "EXPIRED") {
+        } else if (data.status === "FAILED") {
           clearInterval(interval);
           showToast(
             "error",

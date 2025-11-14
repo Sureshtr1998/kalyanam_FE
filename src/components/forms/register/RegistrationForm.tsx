@@ -147,6 +147,7 @@ const RegistrationForm = (props: Props) => {
         orderId,
         amountPaid: REGISTRATION_FEE,
         totalNoOfInterest: INITIAL_NO_INTEREST,
+        note: "Registration",
         images: imageUrls,
       };
 
