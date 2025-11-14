@@ -1,5 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import { load } from "@cashfreepayments/cashfree-js";
 import { useEffect, useState } from "react";
-import { Dialog } from "primereact/dialog";
 import api from "../../utils/api";
 import Spinner from "../spinner/Spinner";
 import "./PaymentModal.scss";
@@ -17,9 +19,10 @@ interface Props {
 const PaymentModal = (props: Props) => {
   const { onHide, onSuccess, userName, userEmail, userPhone, amount } = props;
   const [loading, setLoading] = useState(false);
-  const [orderId, setOrderId] = useState("");
-  const [link, setLink] = useState("");
   const { showToast } = useToast();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let cashfree: any;
 
   useEffect(() => {
     init();
@@ -27,6 +30,9 @@ const PaymentModal = (props: Props) => {
 
   const init = async () => {
     setLoading(true);
+    cashfree = await load({
+      mode: "sandbox",
+    });
     try {
       const { data } = await api.post("/create-order", {
         userName,
@@ -34,8 +40,8 @@ const PaymentModal = (props: Props) => {
         userPhone,
         amount,
       });
-      setLink(data.paymentLink);
-      setOrderId(data.orderId);
+
+      doPayment(data.orderId, data.cftoken);
     } catch (err) {
       console.error("Error creating order:", err);
       showToast(
@@ -48,52 +54,41 @@ const PaymentModal = (props: Props) => {
     }
   };
 
-  // 2️⃣ Poll payment status every 4s
-  useEffect(() => {
-    if (!orderId) return;
-    const interval = setInterval(async () => {
-      try {
-        const { data } = await api.get(`/check-payment-status/${orderId}`);
-        if (data.status === "SUCCESS") {
-          clearInterval(interval);
-          onSuccess(orderId);
-          onHide();
-        } else if (data.status === "FAILED") {
-          clearInterval(interval);
-          showToast(
-            "error",
-            "Payment Failed",
-            "Payment could not be completed. Please try again."
-          );
-          onHide();
-        }
-      } catch (err) {
-        console.error("Error checking payment status:", err);
-      }
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [orderId]);
+  const doPayment = async (orderId: string, cftoken: string) => {
+    const checkoutOptions = {
+      paymentSessionId: cftoken,
+      redirectTarget: "_modal",
+    };
 
-  return (
-    <>
-      <Dialog
-        header="Complete Your Payment"
-        visible
-        onHide={onHide}
-        style={{ width: "450px" }}
-        draggable={false}
-        resizable={false}>
-        {loading && <Spinner isLoading={loading} />}
-        {link && !loading && (
-          <iframe
-            src={link}
-            style={{ width: "100%", height: "25rem", border: "none" }}
-            title="Cashfree Payment"
-          />
-        )}
-      </Dialog>
-    </>
-  );
+    try {
+      const result = await cashfree.checkout(checkoutOptions);
+
+      if (result.error) {
+        showToast(
+          "error",
+          "Payment Failed",
+          "Payment could not be completed. Please try again."
+        );
+        onHide();
+        return;
+      }
+
+      if (result.paymentDetails) {
+        onSuccess(orderId);
+        onHide();
+      }
+    } catch (err) {
+      console.error("Payment Error:", err);
+      showToast(
+        "error",
+        "Payment Error",
+        "Something went wrong while processing the payment."
+      );
+      onHide();
+    }
+  };
+
+  return <>{loading && <Spinner isLoading={loading} />}</>;
 };
 
 export default PaymentModal;
