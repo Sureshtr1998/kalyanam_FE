@@ -7,6 +7,14 @@ import { Button } from "primereact/button";
 const Identity = (props: StepsType) => {
   const { handleChange, setCurrentForm, handleNext, formData } = props;
   const { fullName, email, password, confirmPassword, gender, dob } = formData;
+
+  const today = new Date();
+  const maxDOB = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+
   return (
     <div className="w-full max-w-sm">
       <h3 className="heading">Step 1: Account & Identity</h3>
@@ -61,6 +69,7 @@ const Identity = (props: StepsType) => {
           value={dob ?? ""}
           onChange={handleChange}
           icon="pi pi-envelope"
+          maxDOB={maxDOB}
         />
       </div>
 

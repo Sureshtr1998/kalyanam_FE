@@ -19,6 +19,7 @@ interface Props {
   label?: string;
   required?: boolean;
   maxLength?: number;
+  maxDOB?: Date;
 }
 
 const FormInput = (props: Props) => {
@@ -34,6 +35,7 @@ const FormInput = (props: Props) => {
     label,
     required,
     maxLength,
+    maxDOB,
   } = props;
 
   return (
@@ -70,6 +72,7 @@ const FormInput = (props: Props) => {
             disabled={disabled}
             placeholder={placeholder ?? "dd/mm/yyyy"}
             dateFormat="dd/mm/yy"
+            maxDate={maxDOB}
           />
         </>
       ) : (
