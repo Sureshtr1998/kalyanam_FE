@@ -14,6 +14,11 @@
   color: vars.$text-color;
   width: fit-content;
   align-self: center;
+  font-weight: 600 !important;
+  color: vars.$error-color;
+  .p-icon {
+    color: vars.$error-color !important;
+  }
 }
 
 .info-msg.warn {

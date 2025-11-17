@@ -13,6 +13,8 @@ import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
 import { HelmetProvider } from "react-helmet-async";
 import HiddenProfiles from "./screens/hiddenProfiles/HiddenProfiles";
+import AboutUs from "./screens/aboutUs/AboutUs";
+import PublicWrapper from "./components/publicWrapper/PublicWrapper";
 
 const AppContent = () => {
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
@@ -26,7 +28,19 @@ const AppContent = () => {
               path="/"
               element={
                 <HelmetProvider>
-                  <Lander />
+                  <PublicWrapper>
+                    <Lander />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/about-us"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <AboutUs />
+                  </PublicWrapper>
                 </HelmetProvider>
               }
             />
