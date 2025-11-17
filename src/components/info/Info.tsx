@@ -69,8 +69,9 @@ const Info = () => {
         <div
           className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
           <p className="title">Pricing Details:</p>
-          <p className="body">₹ {REGISTRATION_FEE}/year</p>
-
+          <p className="body">
+            ₹ {REGISTRATION_FEE}/year <span>(inclusive of 18% GST)</span>
+          </p>
           <hr className="border-gray-200 mb-4" />
 
           <p className="title">Email Support:</p>
