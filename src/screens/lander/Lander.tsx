@@ -7,7 +7,7 @@ import LoginForm from "../../components/forms/LoginForm";
 import type { FormType } from "../../utils/interfaces";
 import RegistrationForm from "../../components/forms/register/RegistrationForm";
 import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
-import { Helmet } from "react-helmet-async";
+import SEO from "../../components/misc/SEO";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
@@ -26,18 +26,11 @@ const Lander = () => {
   };
   return (
     <div>
-      <Helmet>
-        <title>Seetha Rama Kalyana | Brahmin Matrimony</title>
-        <meta
-          name="description"
-          content="Join our Kannada Brahmin matrimony platform to find your perfect match. Celebrate eternal union and Seetha Rama Kalyana traditions."
-        />
-        <meta
-          name="keywords"
-          content="brahmin matrimony, kannada brahmin matrimony, seetha rama kalyana"
-        />
-        <meta name="robots" content="index, follow" />
-      </Helmet>
+      <SEO
+        title="Seetha Rama Kalyana | Brahmin Matrimony"
+        description="Discover the one written for you in the stars of dharma and love. Join Seetha Rama Kalyana for your eternal union."
+        keywords="brahmin matrimony, kannada brahmin matrimony, seetha rama kalyana"
+      />
       <div
         className={`min-h-screen flex ${BG_COLOR} font-sans justify-center items-center`}>
         <div className="w-full max-w-7xl md:grid md:grid-cols-2 overflow-hidden shadow-2xl rounded-2xl m-4">

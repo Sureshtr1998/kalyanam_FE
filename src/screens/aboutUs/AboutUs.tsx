@@ -3,15 +3,32 @@ import MissionSection from "./sections/MissionSection";
 import CommitmentSection from "./sections/CommitmentSection";
 import ActionSection from "./sections/ActionSection";
 import DedicatedTeamSection from "./sections/DedicatedTeamSection";
+import SEO from "../../components/misc/SEO";
 
 const AboutUs = () => {
   return (
     <div>
-      <HeaderSection />
-      <MissionSection />
-      <DedicatedTeamSection />
-      <CommitmentSection />
-      <ActionSection />
+      <SEO
+        title="About Us | Seetha Rama Kalyana"
+        description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Brahmin community."
+        keywords="brahmin matrimony, kannada brahmin matrimony, about us, seetha rama kalyana"
+      />
+
+      <div className="header-section">
+        <HeaderSection />
+      </div>
+      <div className="mission-section">
+        <MissionSection />
+      </div>
+      <div className="team-section">
+        <DedicatedTeamSection />
+      </div>
+      <div className="commitment-section">
+        <CommitmentSection />
+      </div>
+      <div className="action-section">
+        <ActionSection />
+      </div>
     </div>
   );
 };
