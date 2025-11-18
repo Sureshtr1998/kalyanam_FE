@@ -19,7 +19,7 @@ const CommitmentSection = () => {
     },
     {
       id: 2,
-      title: `Minimal Pricing (₹${REGISTRATION_FEE})`,
+      title: `Minimal Pricing (₹${REGISTRATION_FEE} / year)`,
       description:
         "Our goal is to serve the community, not to make a profit. We keep our pricing minimal to ensure everyone can access our service.",
       Icon: IndianRupee,
@@ -68,8 +68,7 @@ const CommitmentSection = () => {
           {coreValues.map((value) => (
             <div
               key={value.id}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-amber-300
-             transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+              className="bg-white p-8 rounded-2xl shadow-lg border border-amber-300 transition-style">
               <div className="flex-shrink-0">
                 <value.Icon
                   className="h-10 w-10 text-amber-600"

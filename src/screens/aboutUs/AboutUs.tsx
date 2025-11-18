@@ -1,15 +1,15 @@
 import HeaderSection from "./sections/HeaderSection";
 import MissionSection from "./sections/MissionSection";
-import GuidingTeamSection from "./sections/GuidingTeamSection";
 import CommitmentSection from "./sections/CommitmentSection";
 import ActionSection from "./sections/ActionSection";
+import DedicatedTeamSection from "./sections/DedicatedTeamSection";
 
 const AboutUs = () => {
   return (
     <div>
       <HeaderSection />
       <MissionSection />
-      <GuidingTeamSection />
+      <DedicatedTeamSection />
       <CommitmentSection />
       <ActionSection />
     </div>

@@ -80,7 +80,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       <div className="card-elegant">
         {/* Image Section */}
         <div className="img-section">
-          <img src={images[0].url} alt={fullName} />
+          <img
+            className="transition-style"
+            src={images[0].url}
+            alt={fullName}
+          />
           <div className="profile-id">{match.basic.uniqueId || "SRM-ID"}</div>
 
           <button className="hide-btn" onClick={hideUser} title="Hide Profile">

@@ -1,20 +1,16 @@
+import hanuman from "../../../assets/hanuman.png";
+
 const MissionSection = () => {
   return (
     <div className="relative bg-amber-50 pb-6">
       <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-24 lg:items-start">
-        <div className="relative sm:py-16 lg:py-0">
+        <div className="relative py-8 sm:py-16 lg:py-0">
           <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20">
             <div className="relative pt-64 pb-10 rounded-2xl shadow-xl overflow-hidden border border-amber-300">
               <img
                 className="absolute inset-0 h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1184&q=80"
+                src={hanuman}
                 alt="Our team collaborating"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null; // Prevent infinite loop
-                  target.src =
-                    "https://placehold.co/600x400/fffbeb/78350f?text=Our+Team";
-                }}
               />
             </div>
           </div>
