@@ -45,11 +45,7 @@ const Filter = (props: Props) => {
           handleChange={handleChange}
         />
       )}
-
-      <Button onClick={onClick} className="update-btn" rounded>
-        Apply
-      </Button>
-      <p className="mt-4" style={{ fontSize: "0.9rem", color: "#555" }}>
+      <p className="mb-4" style={{ fontSize: "0.9rem", color: "#555" }}>
         <strong>Note:</strong> Data comes from{" "}
         <Link
           to="/profile"
@@ -58,6 +54,9 @@ const Filter = (props: Props) => {
         </Link>
         . Update there to change the default filter data.
       </p>
+      <Button onClick={onClick} className="update-btn" rounded>
+        Apply
+      </Button>
     </div>
   );
 };
