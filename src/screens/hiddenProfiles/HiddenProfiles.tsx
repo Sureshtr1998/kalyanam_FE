@@ -17,6 +17,7 @@ const HiddenProfiles = () => {
   const [user, setUser] = useState<UserDetails>();
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
+  const [currentUser, setCurrentUser] = useState<UserDetails>();
 
   useEffect(() => {
     init();
@@ -35,6 +36,7 @@ const HiddenProfiles = () => {
       const res = await api.get("/hidden-profiles");
       if (res.data?.hiddenProfiles) {
         setHiddenProfiles(res.data.hiddenProfiles);
+        setCurrentUser(res.data.currentUser);
       }
       setLoading(false);
     } catch (err: any) {
@@ -89,7 +91,7 @@ const HiddenProfiles = () => {
       label="Unhide Profile"
       icon="pi pi-eye"
       onClick={() => handleAction(rowData._id)}
-      className="p-button-sm p-button-accent"
+      className="normal-btn"
     />
   );
 
@@ -97,7 +99,7 @@ const HiddenProfiles = () => {
     <Button
       label="View Profile"
       icon="pi pi-user"
-      className="p-button-sm p-button-accent"
+      className="normal-btn"
       onClick={() => setUser(rowData)}
     />
   );
@@ -109,6 +111,7 @@ const HiddenProfiles = () => {
           user={user}
           hide={() => setUser(undefined)}
           isAccept={user.interests?.invitationStatus === "accept"}
+          currentUser={currentUser}
         />
       )}
       <div className="filter-field">
@@ -137,7 +140,7 @@ const HiddenProfiles = () => {
           paginator
           rows={7}
           loading={loading}
-          emptyMessage="No hiddenProfiles found"
+          emptyMessage="No Hidden Profiles found"
           dataKey="_id"
           className="p-datatable-srk">
           <Column
@@ -153,7 +156,7 @@ const HiddenProfiles = () => {
           />
 
           <Column
-            header="Status / Action"
+            header="Action"
             body={statusAndActionTemplate}
             style={{ width: "280px" }}
           />

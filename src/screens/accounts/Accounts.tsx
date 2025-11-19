@@ -9,11 +9,14 @@ import { useEffect, useState } from "react";
 import PaymentModal from "../../components/paymentModal/PaymentModal";
 import {
   PURCHASE_INTEREST_FEE,
+  PURCHASE_INTEREST_FEE_2,
   PURCHASE_NO_INTEREST,
+  PURCHASE_NO_INTEREST_2,
 } from "../../utils/constants";
 import type { UserDetails } from "../../utils/interfaces";
 import Spinner from "../../components/spinner/Spinner";
 import TransactionDashboard from "./transactions/Transactions";
+import { TEXT_COLOR } from "../../styles/variables";
 
 interface Props {
   data: UserDetails;
@@ -31,6 +34,8 @@ const Accounts = (props: Props) => {
   }, [data]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [fee, setFee] = useState(0);
+  const [noInterest, setNoInterest] = useState(0);
 
   const [isPayment, setPayment] = useState<boolean>(false);
 
@@ -96,8 +101,8 @@ const Accounts = (props: Props) => {
 
       const payload = {
         orderId,
-        amount: PURCHASE_INTEREST_FEE,
-        noOfInterest: PURCHASE_NO_INTEREST,
+        amount: fee,
+        noOfInterest: noInterest,
         note: "Interest Purchase",
       };
 
@@ -132,7 +137,7 @@ const Accounts = (props: Props) => {
           userName={fullName}
           userEmail={email}
           userPhone={mobile}
-          amount={PURCHASE_INTEREST_FEE}
+          amount={fee}
         />
       )}
 
@@ -159,13 +164,32 @@ const Accounts = (props: Props) => {
         <h2 className="card-title">Transaction History</h2>
         <div className="text-center custom-dashboard">
           <TransactionDashboard data={userData} />
-          <div className="mt-8">
-            <Button
-              label={`Buy ${PURCHASE_NO_INTEREST} Interests`}
-              icon="pi pi-lock-open"
-              className="p-button-sm p-button-accent"
-              onClick={() => setPayment(true)}
-            />
+          <div className=" mt-8">
+            <div className="mb-2">
+              <Button
+                label={`Buy ${PURCHASE_NO_INTEREST} Interests for  ₹${PURCHASE_INTEREST_FEE}`}
+                icon="pi pi-lock-open"
+                className="normal-btn"
+                onClick={() => {
+                  setFee(PURCHASE_INTEREST_FEE);
+                  setNoInterest(PURCHASE_NO_INTEREST);
+                  setPayment(true);
+                }}
+              />
+            </div>
+            <span className={`${TEXT_COLOR}`}> OR</span>
+            <div className="mt-2">
+              <Button
+                label={`Buy ${PURCHASE_NO_INTEREST_2} Interests for  ₹${PURCHASE_INTEREST_FEE_2}`}
+                icon="pi pi-lock-open"
+                className="normal-btn"
+                onClick={() => {
+                  setFee(PURCHASE_INTEREST_FEE_2);
+                  setNoInterest(PURCHASE_NO_INTEREST_2);
+                  setPayment(true);
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

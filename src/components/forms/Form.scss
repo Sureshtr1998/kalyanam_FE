@@ -88,6 +88,46 @@
   }
 }
 
+.normal-btn {
+  flex-shrink: 0;
+
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: vars.$card-bg;
+
+  background-color: vars.$accent-color-bg;
+  border-radius: 0.5rem;
+
+  transition: all 150ms ease-in-out;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: vars.$accent-color-bg-hover;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.5);
+  }
+
+  &.p-disabled {
+    pointer-events: auto;
+    cursor: not-allowed;
+
+    border-color: #ccc;
+    background-color: #eee;
+    color: #999;
+    opacity: 0.8;
+
+    &:hover {
+      background-color: #eee;
+      color: #999;
+      cursor: not-allowed;
+    }
+  }
+}
+
 .heading {
   font-size: 1.5rem; // text-2xl
   font-weight: 600; // font-semibold

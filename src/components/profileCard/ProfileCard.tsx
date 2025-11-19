@@ -14,12 +14,14 @@ interface ProfileCardProps {
   match: UserDetails;
   hideProfile: (id: string, isInterest?: boolean) => void;
   remainingInterest: number;
+  currentUser: UserDetails;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
   match,
   hideProfile,
   remainingInterest,
+  currentUser,
 }) => {
   const { fullName, age, subCaste, images, gothra, qualification } =
     match.basic;
@@ -74,7 +76,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
   return (
     <div className="profile-card">
-      {visible && <ViewCard user={match} hide={() => setVisible(false)} />}
+      {visible && (
+        <ViewCard
+          user={match}
+          hide={() => setVisible(false)}
+          currentUser={currentUser}
+        />
+      )}
       <Spinner hideText isLoading={isLoading} />
 
       <div className="card-elegant">

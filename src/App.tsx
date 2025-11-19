@@ -15,6 +15,7 @@ import { HelmetProvider } from "react-helmet-async";
 import HiddenProfiles from "./screens/hiddenProfiles/HiddenProfiles";
 import AboutUs from "./screens/aboutUs/AboutUs";
 import PublicWrapper from "./components/publicWrapper/PublicWrapper";
+import ViewedNumbers from "./screens/viewedNumber/ViewedNumber";
 
 const AppContent = () => {
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
@@ -70,6 +71,16 @@ const AppContent = () => {
                 <ProtectedRoute>
                   <Wrapper>
                     <HiddenProfiles />
+                  </Wrapper>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/viewed-numbers"
+              element={
+                <ProtectedRoute>
+                  <Wrapper>
+                    <ViewedNumbers />
                   </Wrapper>
                 </ProtectedRoute>
               }

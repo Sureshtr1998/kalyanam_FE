@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { UserDetails } from "./interfaces";
+
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
 
@@ -30,4 +32,8 @@ export const getInitials = (name: string = "") => {
 
 export const isImageFile = (item: any) => {
     return item && typeof item === "object" && "url" in item && "fileId" in item;
+}
+
+export const remainingInterest = (user: UserDetails) => {
+    return (user.interests?.totalNoOfInterest ?? 0) - ((user.interests?.sent?.length ?? 0) + ((user.interests?.viewed?.length ?? 0) * 5));
 }

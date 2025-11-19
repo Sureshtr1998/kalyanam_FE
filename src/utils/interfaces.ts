@@ -70,6 +70,7 @@ export interface PartnerDetailsIn {
 }
 
 export interface InterestsIn {
+    viewed?: string[]
     sent?: string[]
     totalNoOfInterest?: number
     received?: string[]

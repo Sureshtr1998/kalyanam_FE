@@ -6,6 +6,7 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import type { UserDetails } from "../../../utils/interfaces";
 import "./Transactions.scss";
+import { remainingInterest } from "../../../utils/utils";
 
 interface Props {
   data: UserDetails;
@@ -14,13 +15,13 @@ interface Props {
 const TransactionDashboard = (props: Props) => {
   const { data } = props;
   const interestStats = useMemo(() => {
-    const totalPurchased =
-      data.transactions?.reduce((sum, t) => sum + (t.noOfInterest ?? 0), 0) ??
-      0;
+    const totalPurchased = data.interests?.totalNoOfInterest ?? 0;
 
-    const used = data.interests?.sent?.length ?? 0;
+    const used =
+      (data.interests?.sent?.length ?? 0) +
+      (data.interests?.viewed?.length ?? 0) * 5;
 
-    const pending = totalPurchased - used;
+    const pending = remainingInterest(data);
 
     return {
       totalPurchased,

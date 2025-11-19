@@ -440,7 +440,9 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
-export const REGISTRATION_FEE = 251
+export const REGISTRATION_FEE = 301
 export const INITIAL_NO_INTEREST = 51
 export const PURCHASE_NO_INTEREST = 21
 export const PURCHASE_INTEREST_FEE = 101
+export const PURCHASE_NO_INTEREST_2 = 55
+export const PURCHASE_INTEREST_FEE_2 = 251 

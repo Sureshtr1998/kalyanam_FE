@@ -8,6 +8,7 @@ import { Image } from "primereact/image";
 import parashuram from "../../assets/parashuram.png";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import Spinner from "../../components/spinner/Spinner";
+import { remainingInterest } from "../../utils/utils";
 
 interface Props {
   filterData: UserDetails;
@@ -25,10 +26,7 @@ const Home = (props: Props) => {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    setPendingInterests(
-      (filterData.interests?.totalNoOfInterest ?? 0) -
-        (filterData.interests?.sent?.length ?? 0)
-    );
+    setPendingInterests(remainingInterest(filterData));
     if (filterData._id) fetchProfiles(page, filterData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterData, page]);
@@ -85,6 +83,7 @@ const Home = (props: Props) => {
                 match={match}
                 key={match._id}
                 remainingInterest={pendingInterests}
+                currentUser={filterData}
               />
             ))
           ) : (
