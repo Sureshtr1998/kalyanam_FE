@@ -62,7 +62,7 @@ const faqItems: FAQItem[] = [
     id: "faq-4",
     question: "Can I view a user's contact directly?",
     answer:
-      "Yes, you can view any user's contact directly. Viewing a contact costs 5 interests.",
+      "Yes, You can view a user’s contact for free if both accept each other’s interest or it'd cost 5 interests.",
     icon: "pi pi-phone",
   },
   {
