@@ -1,69 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
-import { BORDER_COLOR, TEXT_COLOR } from "../../styles/variables";
-import { useEffect, useState } from "react";
+import { ACCENT_COLOR, BORDER_COLOR, TEXT_COLOR } from "../../styles/variables";
 import { Button } from "primereact/button";
+import { usePWA } from "../misc/usePWA";
 
 const PublicHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detect Mobile
-    setIsMobile(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
-
-    // Detect PWA Installation (Standalone mode)
-    const checkInstalled = () => {
-      const standaloneMode =
-        window.matchMedia("(display-mode: standalone)").matches ||
-        (navigator as any).standalone === true;
-
-      setIsInstalled(standaloneMode);
-    };
-
-    checkInstalled();
-
-    // Listen for installation change
-    window.addEventListener("appinstalled", checkInstalled);
-    return () => window.removeEventListener("appinstalled", checkInstalled);
-  }, []);
-
-  useEffect(() => {
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
-
-  const showInstallButton = isMobile && !isInstalled && deferredPrompt !== null;
-
-  useEffect(() => {
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener("beforeinstallprompt", handler);
-
-    return () => window.removeEventListener("beforeinstallprompt", handler);
-  }, []);
-
-  const handleInstallClick = () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult: any) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the PWA install prompt");
-      }
-      setDeferredPrompt(null);
-    });
-  };
+  const { showInstallButton, handleInstallClick, updateAvailable, reloadApp } =
+    usePWA();
 
   return (
     <div className={`bg-white shadow-sm border-b ${BORDER_COLOR} w-full z-10`}>
@@ -92,6 +37,17 @@ const PublicHeader = () => {
                 onClick={handleInstallClick}
                 className="p-2 normal-btn"
               />
+            )}
+            {updateAvailable && (
+              <div
+                className={`fixed bottom-4 right-4 ${ACCENT_COLOR} text-white px-4 py-2 rounded shadow-lg flex items-center space-x-2 z-50`}>
+                <span>New version available!</span>
+                <button
+                  onClick={reloadApp}
+                  className="underline font-semibold hover:text-gray-200">
+                  Update
+                </button>
+              </div>
             )}
             {location.pathname === "/about-us" ? (
               <a
