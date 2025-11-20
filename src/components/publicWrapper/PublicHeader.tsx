@@ -1,9 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLocation, useNavigate } from "react-router-dom";
 import { BORDER_COLOR, TEXT_COLOR } from "../../styles/variables";
+import { useEffect, useState } from "react";
+import { Button } from "primereact/button";
 
 const PublicHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstallClick = () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult: any) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the PWA install prompt");
+      }
+      setDeferredPrompt(null);
+    });
+  };
 
   return (
     <div className={`bg-white shadow-sm border-b ${BORDER_COLOR} w-full z-10`}>
@@ -25,6 +51,11 @@ const PublicHeader = () => {
             </div>
           </div>
           <div className="ml-10 flex items-baseline space-x-4">
+            <Button
+              icon="pi pi-download"
+              label="Install App"
+              onClick={handleInstallClick}
+              className="p-2 normal-btn"></Button>
             {location.pathname === "/about-us" ? (
               <a
                 onClick={() => {

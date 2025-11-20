@@ -74,22 +74,24 @@ const TransactionDashboard = (props: Props) => {
   return (
     <div className="p-m-4">
       <Card>
-        <div className="flex justify-between w-full flex-wrap">
-          <div className="flex flex-col items-center flex-1">
+        <div className="flex flex-wrap w-full">
+          <div className="flex flex-col items-center w-full md:w-1/3">
             <StatsValue
               title="Total Purchased"
               value={interestStats.totalPurchased}
               color="#d97706"
             />
           </div>
-          <div className="flex flex-col items-cente flex-1r">
+
+          <div className="flex flex-col items-center w-full md:w-1/3">
             <StatsValue
               title="Used"
               value={interestStats.used}
               color="#78350f"
             />
           </div>
-          <div className="flex flex-col items-center flex-1">
+
+          <div className="flex flex-col items-center w-full md:w-1/3">
             <StatsValue
               title="Pending"
               value={interestStats.pending}
@@ -99,34 +101,38 @@ const TransactionDashboard = (props: Props) => {
         </div>
       </Card>
 
-      <Card className="custom-card-style">
-        <DataTable
-          value={data.transactions}
-          stripedRows
-          paginator
-          rows={5}
-          className="custom-datatable p-datatable-sm"
-          emptyMessage="No transactions found.">
-          <Column
-            field="orderId"
-            header="Order ID"
-            body={orderIdBodyTemplate}
-            style={{ width: "240px" }}
-          />
-          <Column
-            field="amountPaid"
-            header="Amount Paid"
-            body={amountBodyTemplate}
-          />
-          <Column field="noOfInterest" header="Interests Added" />
-          <Column field="note" header="Note" style={{ width: "200px" }} />
-          <Column
-            field="dateOfTrans"
-            header="Transaction Date"
-            body={dateBodyTemplate}
-          />
-        </DataTable>
-      </Card>
+      <DataTable
+        value={data.transactions}
+        stripedRows
+        paginator
+        rows={5}
+        className="custom-datatable p-datatable-sm"
+        emptyMessage="No transactions found.">
+        <Column
+          field="orderId"
+          header="Order ID"
+          body={orderIdBodyTemplate}
+          style={{ minWidth: "9rem" }}
+        />
+        <Column
+          field="amountPaid"
+          header="Amount Paid"
+          body={amountBodyTemplate}
+          style={{ minWidth: "9rem" }}
+        />
+        <Column
+          field="noOfInterest"
+          style={{ minWidth: "9rem" }}
+          header="Interests Added"
+        />
+        <Column field="note" header="Note" style={{ minWidth: "9rem" }} />
+        <Column
+          field="dateOfTrans"
+          header="Transaction Date"
+          body={dateBodyTemplate}
+          style={{ minWidth: "9rem" }}
+        />
+      </DataTable>
     </div>
   );
 };

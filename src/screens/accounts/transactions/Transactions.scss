@@ -4,6 +4,10 @@
   background-color: vars.$bg-color;
   padding: 2rem;
 
+  @media (max-width: 640px) {
+    padding: 4px;
+  }
+
   .custom-card-style {
     border: 1px solid vars.$border-color;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

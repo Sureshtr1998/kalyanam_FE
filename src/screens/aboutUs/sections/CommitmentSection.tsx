@@ -1,4 +1,11 @@
-import { Users, Heart, MapPin, Mail, Shield, IndianRupee } from "lucide-react";
+import {
+  Users,
+  Heart,
+  Mail,
+  Shield,
+  IndianRupee,
+  MonitorSmartphone,
+} from "lucide-react";
 import { REGISTRATION_FEE } from "../../../utils/constants";
 
 const CommitmentSection = () => {
@@ -40,10 +47,10 @@ const CommitmentSection = () => {
     },
     {
       id: 5,
-      title: "Growing Across South India",
+      title: "Seamless Across All Devices",
       description:
-        "Our network is rapidly expanding across Karnataka, Tamil Nadu, Andhra Pradesh, Telangana, and Kerala.",
-      Icon: MapPin,
+        "Our applications automatically adapt to any device it may be mobile, tablet, or desktop offering consistent design and effortless usability.",
+      Icon: MonitorSmartphone,
     },
     {
       id: 6,
