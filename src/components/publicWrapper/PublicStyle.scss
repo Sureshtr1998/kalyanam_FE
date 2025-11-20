@@ -1,0 +1,12 @@
+@use "../../styles/variables" as vars;
+
+.pub-link {
+  font-weight: 500;
+  color: vars.$text-color;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: vars.$accent-color-bg-hover;
+  }
+}

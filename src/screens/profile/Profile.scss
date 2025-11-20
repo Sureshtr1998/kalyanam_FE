@@ -32,7 +32,6 @@
     background-color: vars.$card-bg;
     border: 1px solid vars.$border-color;
     border-radius: 1rem;
-    margin-bottom: 0.5rem;
     margin-top: 1rem;
 
     font-weight: 600;
@@ -58,6 +57,7 @@
     border-radius: 10px;
     padding: 1.5rem;
     margin-top: 0.5rem;
+    color: vars.$text-color;
   }
 
   .p-accordion-header-link {

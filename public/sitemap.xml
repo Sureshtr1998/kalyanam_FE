@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
   <url>
     <loc>https://seetharamakalyana.in/</loc>
     <priority>1.0</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- About Us -->
   <url>
     <loc>https://seetharamakalyana.in/about-us</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- FAQ -->
+  <url>
+    <loc>https://seetharamakalyana.in/faq</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Terms & Conditions -->
+  <url>
+    <loc>https://seetharamakalyana.in/terms</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://seetharamakalyana.in/privacy</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://seetharamakalyana.in/blog</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
 </urlset>

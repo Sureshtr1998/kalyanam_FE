@@ -27,10 +27,11 @@ const Lander = () => {
   return (
     <div>
       <SEO
-        title="Seetha Rama Kalyana | Brahmin Matrimony"
-        description="Discover the one written for you in the stars of dharma and love. Join Seetha Rama Kalyana for your eternal union."
-        keywords="brahmin matrimony, kannada brahmin matrimony, seetha rama kalyana"
+        title="Brahmin Matrimony | Seetha Rama Kalyana"
+        description="Join Seetha Rama Kalyana, the trusted Kannada Brahmin matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
+        keywords="brahmin matrimony, kannada brahmin matrimony, seetha rama kalyana, matchmaking, marriage"
       />
+
       <div
         className={`min-h-screen flex ${BG_COLOR} font-sans justify-center items-center`}>
         <div className="w-full max-w-7xl md:grid md:grid-cols-2 overflow-hidden shadow-2xl rounded-2xl m-4">

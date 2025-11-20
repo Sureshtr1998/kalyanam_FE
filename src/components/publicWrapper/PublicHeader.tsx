@@ -11,7 +11,10 @@ const PublicHeader = () => {
     usePWA();
 
   return (
-    <div className={`bg-white shadow-sm border-b ${BORDER_COLOR} w-full z-10`}>
+    <div
+      className={`bg-white shadow-sm border-b ${BORDER_COLOR} w-full z-10 ${
+        location.pathname !== "/" ? "fixed" : ""
+      }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0  flex items-center">
@@ -49,21 +52,21 @@ const PublicHeader = () => {
                 </button>
               </div>
             )}
-            {location.pathname === "/about-us" ? (
-              <a
-                onClick={() => {
-                  navigate("/");
-                }}
-                className={`${TEXT_COLOR} cursor-pointer hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium`}>
-                Home
-              </a>
-            ) : (
+            {location.pathname === "/" ? (
               <a
                 onClick={() => {
                   navigate("/about-us");
                 }}
                 className={`${TEXT_COLOR} cursor-pointer hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium`}>
                 About Us
+              </a>
+            ) : (
+              <a
+                onClick={() => {
+                  navigate("/");
+                }}
+                className={`${TEXT_COLOR} cursor-pointer hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium`}>
+                Home
               </a>
             )}
           </div>

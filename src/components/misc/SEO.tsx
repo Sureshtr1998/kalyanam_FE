@@ -1,135 +1,95 @@
 import { Helmet } from "react-helmet-async";
 
-interface Props {
+interface SEOProps {
   title: string;
   description: string;
   keywords: string;
+  url?: string;
   robots?: string;
+  pageType?: "default" | "faq" | "blog" | "terms" | "privacy";
+  faqItems?: { question: string; answer: string }[]; // for FAQ
+  blogPosts?: { title: string; summary: string }[]; // for Blog
 }
-export default function SEO(props: Props) {
-  const { title, description, keywords, robots = "index, follow" } = props;
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      // Organization
-      {
+export default function SEO({
+  title,
+  description,
+  keywords,
+  url = "https://seetharamakalyana.in",
+  robots = "index, follow",
+  pageType = "default",
+  faqItems = [],
+  blogPosts = [],
+}: SEOProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const schema: any = [
+    {
+      "@type": "Organization",
+      "@id": `${url}/#organization`,
+      name: "Seetha Rama Kalyana",
+      url,
+      logo: `${url}/logo.png`,
+      description:
+        "A trusted Kannada Brahmin matrimony platform helping families find the perfect life partner based on tradition, values, and trust.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${url}/#website`,
+      url,
+      name: "Seetha Rama Kalyana Matrimony",
+      publisher: { "@id": `${url}/#organization` },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: title,
+      description,
+      isPartOf: { "@id": `${url}/#website` },
+    },
+  ];
+
+  // Add FAQ structured data if pageType is 'faq'
+  if (pageType === "faq" && faqItems.length > 0) {
+    schema.push({
+      "@type": "FAQPage",
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    });
+  }
+
+  // Add Blog structured data if pageType is 'blog'
+  if (pageType === "blog" && blogPosts.length > 0) {
+    schema.push({
+      "@type": "Blog",
+      "@id": `${url}/blog#blog`,
+      url: `${url}/blog`,
+      name: "Seetha Rama Kalyana Blog",
+      description: description,
+      publisher: {
         "@type": "Organization",
-        "@id": "https://seetharamakalyana.in/#organization",
         name: "Seetha Rama Kalyana",
-        url: "https://seetharamakalyana.in",
-        logo: "https://seetharamakalyana.in/logo.png",
-        description:
-          "A trusted Kannada Brahmin matrimony platform helping families find the perfect life partner based on tradition, values, and trust.",
-      },
-
-      // Website
-      {
-        "@type": "WebSite",
-        "@id": "https://seetharamakalyana.in/#website",
-        url: "https://seetharamakalyana.in",
-        name: "Seetha Rama Kalyana Matrimony",
-        publisher: {
-          "@id": "https://seetharamakalyana.in/#organization",
-        },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: "https://seetharamakalyana.in/search?q={query}",
-          "query-input": "required name=query",
+        logo: {
+          "@type": "ImageObject",
+          url: `${url}/logo.png`,
         },
       },
+      hasPart: blogPosts.map((post, index) => ({
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.summary,
+        position: index + 1,
+      })),
+    });
+  }
 
-      // WebPage
-      {
-        "@type": "WebPage",
-        "@id": "https://seetharamakalyana.in/about-us#webpage",
-        url: "https://seetharamakalyana.in/about-us",
-        name: title || "About Us | Seetha Rama Kalyana",
-        description:
-          description ||
-          "Learn about Seetha Rama Kalyana, our mission, core values, and dedicated team serving the Brahmin community.",
-        isPartOf: {
-          "@id": "https://seetharamakalyana.in/#website",
-        },
-        breadcrumb: {
-          "@id": "https://seetharamakalyana.in/about-us#breadcrumb",
-        },
-      },
-
-      // Breadcrumb
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://seetharamakalyana.in/about-us#breadcrumb",
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: "https://seetharamakalyana.in",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "About Us",
-            item: "https://seetharamakalyana.in/about-us",
-          },
-        ],
-      },
-
-      // Service
-      {
-        "@type": "Service",
-        "@id": "https://seetharamakalyana.in/#service",
-        serviceType: "Matrimony Service",
-        provider: {
-          "@id": "https://seetharamakalyana.in/#organization",
-        },
-        areaServed: "Worldwide",
-        description:
-          "Premium matrimony service focused on the Kannada Brahmin community, helping families connect for meaningful lifelong matches.",
-      },
-
-      // Page sections as WebPageElement
-      {
-        "@type": "WebPageElement",
-        "@id": "https://seetharamakalyana.in/about-us#header",
-        name: "Header Section",
-        cssSelector: ".header-section",
-        description:
-          "Top section introducing Seetha Rama Kalyana and its mission.",
-      },
-      {
-        "@type": "WebPageElement",
-        "@id": "https://seetharamakalyana.in/about-us#mission",
-        name: "Mission Section",
-        cssSelector: ".mission-section",
-        description: "Section describing the platform's mission and values.",
-      },
-      {
-        "@type": "WebPageElement",
-        "@id": "https://seetharamakalyana.in/about-us#team",
-        name: "Team Section",
-        cssSelector: ".team-section",
-        description:
-          "Section highlighting the dedicated team behind Seetha Rama Kalyana.",
-      },
-      {
-        "@type": "WebPageElement",
-        "@id": "https://seetharamakalyana.in/about-us#commitment",
-        name: "Commitment Section",
-        cssSelector: ".commitment-section",
-        description: "Section outlining core values and commitments to users.",
-      },
-      {
-        "@type": "WebPageElement",
-        "@id": "https://seetharamakalyana.in/about-us#action",
-        name: "Action Section",
-        cssSelector: ".action-section",
-        description:
-          "Call-to-action section inviting users to register and start their journey.",
-      },
-    ],
-  };
+  // Terms & Privacy Policy can remain default WebPage schema; no special LD needed
 
   return (
     <Helmet>
@@ -137,8 +97,6 @@ export default function SEO(props: Props) {
       {description && <meta name="description" content={description} />}
       {keywords && <meta name="keywords" content={keywords} />}
       <meta name="robots" content={robots} />
-
-      {/* JSON-LD Structured Data */}
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
   );

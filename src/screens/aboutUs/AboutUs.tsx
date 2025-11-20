@@ -7,7 +7,7 @@ import SEO from "../../components/misc/SEO";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className="about-us">
       <SEO
         title="About Us | Seetha Rama Kalyana"
         description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Brahmin community."

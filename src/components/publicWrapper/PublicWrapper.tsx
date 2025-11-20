@@ -1,6 +1,7 @@
 import React, { type ReactNode } from "react";
 import PublicHeader from "./PublicHeader";
 import PublicFooter from "./PublicFooter";
+import "./PublicStyle.scss";
 
 interface WrapperProps {
   children: ReactNode;

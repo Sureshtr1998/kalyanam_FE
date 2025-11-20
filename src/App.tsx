@@ -1,5 +1,10 @@
 import "./App.scss";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Home from "./screens/home/Home";
 import ProtectedRoute from "./components/misc/ProtectedRoute";
 import Invitations from "./screens/invitations/Invitations";
@@ -8,7 +13,7 @@ import Accounts from "./screens/accounts/Accounts";
 import { ToastProvider } from "./components/toastProvider/ToastProvider";
 import Lander from "./screens/lander/Lander";
 import Wrapper from "./components/wrapper/Wrapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
 import { HelmetProvider } from "react-helmet-async";
@@ -16,9 +21,19 @@ import HiddenProfiles from "./screens/hiddenProfiles/HiddenProfiles";
 import AboutUs from "./screens/aboutUs/AboutUs";
 import PublicWrapper from "./components/publicWrapper/PublicWrapper";
 import ViewedNumbers from "./screens/viewedNumber/ViewedNumber";
+import FaqPage from "./screens/faq/FAQPage";
+import TermsConditions from "./screens/terms/TermsConditions";
+import PrivacyPolicy from "./screens/privacy/PrivacyPolicy";
+import Blog from "./screens/blogs/Blog";
 
 const AppContent = () => {
+  const location = useLocation();
+
   const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
 
   return (
     <>
@@ -41,6 +56,46 @@ const AppContent = () => {
                 <HelmetProvider>
                   <PublicWrapper>
                     <AboutUs />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/faq"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <FaqPage />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/terms"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <TermsConditions />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/blog"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <Blog />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <PrivacyPolicy />
                   </PublicWrapper>
                 </HelmetProvider>
               }
