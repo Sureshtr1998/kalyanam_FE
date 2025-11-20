@@ -52,7 +52,7 @@ const PublicHeader = () => {
                 </button>
               </div>
             )}
-            {location.pathname === "/" ? (
+            {location.pathname !== "/about-us" && (
               <a
                 onClick={() => {
                   navigate("/about-us");
@@ -60,7 +60,8 @@ const PublicHeader = () => {
                 className={`${TEXT_COLOR} cursor-pointer hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium`}>
                 About Us
               </a>
-            ) : (
+            )}
+            {location.pathname !== "/" && (
               <a
                 onClick={() => {
                   navigate("/");

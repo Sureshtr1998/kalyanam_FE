@@ -2,7 +2,7 @@ import HeaderSection from "./sections/HeaderSection";
 import MissionSection from "./sections/MissionSection";
 import CommitmentSection from "./sections/CommitmentSection";
 import ActionSection from "./sections/ActionSection";
-import DedicatedTeamSection from "./sections/DedicatedTeamSection";
+import QuickLinks from "./sections/QuickLinks";
 import SEO from "../../components/misc/SEO";
 
 const AboutUs = () => {
@@ -21,7 +21,7 @@ const AboutUs = () => {
         <MissionSection />
       </div>
       <div className="team-section">
-        <DedicatedTeamSection />
+        <QuickLinks />
       </div>
       <div className="commitment-section">
         <CommitmentSection />
