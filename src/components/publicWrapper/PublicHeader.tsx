@@ -9,6 +9,40 @@ const PublicHeader = () => {
   const location = useLocation();
 
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect Mobile
+    setIsMobile(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
+
+    // Detect PWA Installation (Standalone mode)
+    const checkInstalled = () => {
+      const standaloneMode =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (navigator as any).standalone === true;
+
+      setIsInstalled(standaloneMode);
+    };
+
+    checkInstalled();
+
+    // Listen for installation change
+    window.addEventListener("appinstalled", checkInstalled);
+    return () => window.removeEventListener("appinstalled", checkInstalled);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const showInstallButton = isMobile && !isInstalled && deferredPrompt !== null;
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -51,11 +85,14 @@ const PublicHeader = () => {
             </div>
           </div>
           <div className="ml-10 flex items-baseline space-x-4">
-            <Button
-              icon="pi pi-download"
-              label="Install App"
-              onClick={handleInstallClick}
-              className="p-2 normal-btn"></Button>
+            {showInstallButton && (
+              <Button
+                icon="pi pi-download"
+                label="Install App"
+                onClick={handleInstallClick}
+                className="p-2 normal-btn"
+              />
+            )}
             {location.pathname === "/about-us" ? (
               <a
                 onClick={() => {

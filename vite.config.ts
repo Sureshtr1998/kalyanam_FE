@@ -11,9 +11,9 @@ export default defineConfig({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.svg', 'robots.txt', '*.png'],
     manifest: {
-      name: 'My React App',
-      short_name: 'MyApp',
-      description: 'My Vite + React PWA',
+      name: 'Seetha Rama Kalyana',
+      short_name: 'Seetha Rama',
+      description: 'Seetha Rama Kalyana Matrimony',
       theme_color: '#0d6efd',
       background_color: '#ffffff',
       display: 'standalone',
