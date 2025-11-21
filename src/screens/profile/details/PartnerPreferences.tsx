@@ -4,6 +4,7 @@ import {
   employedInOptions,
   heightOptions,
   maritalOptions,
+  motherTongueOptions,
   qualificationOptions,
   subCasteOptions,
 } from "../../../utils/constants";
@@ -130,7 +131,18 @@ const PartnerPreferences = (props: Props) => {
           icon="pi pi-heart"
           isMultiselect
         />
-
+        <SelectInput
+          name="motherTongue"
+          label="Mother Tongue"
+          value={partnerData.motherTongue}
+          onChange={handleChange}
+          options={motherTongueOptions}
+          disabled={isReadOnly}
+          icon="pi pi-language"
+          isMultiselect
+        />
+      </div>
+      <div className="form-row">
         {!isFilter && (
           <FormInput
             isTextArea

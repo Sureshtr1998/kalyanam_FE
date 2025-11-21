@@ -63,6 +63,7 @@ export interface PartnerDetailsIn {
     heightFrom?: string
     heightTo?: string
     subCaste?: string[]
+    motherTongue?: string[]
     employedIn?: string[]
     note?: string
     qualification?: string[]
