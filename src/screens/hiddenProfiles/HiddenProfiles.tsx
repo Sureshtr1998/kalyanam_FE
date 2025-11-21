@@ -114,6 +114,7 @@ const HiddenProfiles = () => {
           currentUser={currentUser}
         />
       )}
+
       <div className="filter-field">
         <FormInput
           name="search"
@@ -131,7 +132,11 @@ const HiddenProfiles = () => {
           icon="pi pi-search"
         />
       </div>
-      <div className="hiddenProfiles-container">
+      <div className="profiles-container">
+        <p className="mb-4" style={{ fontSize: "0.9rem", color: "#555" }}>
+          <strong>Note:</strong> All profiles listed here have been hidden by
+          you, they are also restricted from viewing your profile.
+        </p>
         <DataTable
           value={hiddenProfiles}
           filters={filters}

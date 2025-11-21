@@ -102,7 +102,7 @@ const ViewedNumbers = () => {
           icon="pi pi-search"
         />
       </div>
-      <div className="viewedNumbers-container">
+      <div className="profiles-container">
         <DataTable
           value={viewedNumbers}
           filters={filters}

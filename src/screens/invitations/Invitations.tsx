@@ -200,7 +200,7 @@ const Invitations = () => {
           icon="pi pi-search"
         />
       </div>
-      <div className="invitations-container">
+      <div className="profiles-container">
         <DataTable
           value={invitations}
           filters={filters}
