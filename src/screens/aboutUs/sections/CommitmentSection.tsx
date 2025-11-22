@@ -1,11 +1,3 @@
-import {
-  Users,
-  Heart,
-  Mail,
-  Shield,
-  IndianRupee,
-  MonitorSmartphone,
-} from "lucide-react";
 import { REGISTRATION_FEE } from "../../../utils/constants";
 
 const CommitmentSection = () => {
@@ -13,7 +5,7 @@ const CommitmentSection = () => {
     id: number;
     title: string;
     description: string;
-    Icon: React.ElementType;
+    icon: string;
   }
 
   const coreValues: CoreValue[] = [
@@ -22,42 +14,42 @@ const CommitmentSection = () => {
       title: "Security & Trust",
       description:
         "We are a GST registered company, and our platform is certified by McAfee Secure, ensuring your data is always safe.",
-      Icon: Shield,
+      icon: "pi pi-shield",
     },
     {
       id: 2,
       title: `Minimal Pricing (₹${REGISTRATION_FEE} / year)`,
       description:
         "Our goal is to serve the community, not to make a profit. We keep our pricing minimal to ensure everyone can access our service.",
-      Icon: IndianRupee,
+      icon: "pi pi-indian-rupee",
     },
     {
       id: 3,
       title: "Serving the Brahmin Community",
       description:
         "We are strictly focused on the Brahmin community, dedicating our resources to ensuring high-quality, relevant matches within our tradition.",
-      Icon: Users,
+      icon: "pi pi-users",
     },
     {
       id: 4,
       title: "Active & Engaged",
       description:
         "Stay updated with instant email notifications when someone sends you an interest or accepts your request.",
-      Icon: Mail,
+      icon: "pi pi-envelope",
     },
     {
       id: 5,
       title: "Seamless Across All Devices",
       description:
         "Our applications automatically adapt to any device it may be mobile, tablet, or desktop offering consistent design and effortless usability.",
-      Icon: MonitorSmartphone,
+      icon: "pi pi-globe",
     },
     {
       id: 6,
       title: "Sacred Vows, Modern Tech",
       description:
         "We blend traditional values with a modern, easy-to-use platform to help you find your ideal life partner.",
-      Icon: Heart,
+      icon: "pi pi-heart",
     },
   ];
   return (
@@ -77,10 +69,7 @@ const CommitmentSection = () => {
               key={value.id}
               className="bg-white p-8 rounded-2xl shadow-lg border border-amber-300 transition-style">
               <div className="flex-shrink-0">
-                <value.Icon
-                  className="h-10 w-10 text-amber-600"
-                  aria-hidden="true"
-                />
+                <i className={`icon-style ${value.icon}`} />
               </div>
               <div className="mt-4">
                 <h3 className="text-xl font-semibold text-amber-900">

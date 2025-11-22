@@ -2,7 +2,6 @@ import { Dialog } from "primereact/dialog";
 import type { UserDetails } from "../../utils/interfaces";
 import "./ViewCard.scss";
 import Profile from "../../screens/profile/Profile";
-import { Phone } from "lucide-react";
 import { Button } from "primereact/button";
 import { TEXT_COLOR } from "../../styles/variables";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
@@ -86,7 +85,10 @@ const ViewCard = (props: {
             <div className="p-4 bg-white border border-amber-400 rounded-xl shadow-sm hover:bg-amber-50 transition duration-150 flex flex-col md:flex-row md:items-center mb-4">
               <div className="flex items-center mb-3 md:mb-0">
                 <span className="flex items-center text-lg font-medium text-amber-900">
-                  <Phone className="w-5 h-5 mr-3 text-amber-600" />
+                  <i
+                    style={{ fontSize: "1.2rem" }}
+                    className="mr-4 icon-style pi pi-phone"
+                  />
                   View Contact Details
                 </span>
               </div>

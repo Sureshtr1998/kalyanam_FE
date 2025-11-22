@@ -1,12 +1,11 @@
-import { FileText, BookOpen, FileCheck, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface QuickLink {
   id: number;
   title: string;
   description: string;
-  Icon: React.ElementType;
-  path: string; // route to navigate
+  icon: string;
+  path: string;
 }
 
 const QuickLinks = () => {
@@ -17,7 +16,7 @@ const QuickLinks = () => {
       title: "FAQs",
       description:
         "Find answers to common questions about Seetha Rama Kalyana, our services, and platform usage.",
-      Icon: FileText,
+      icon: "pi pi-question-circle",
       path: "/faq",
     },
     {
@@ -25,7 +24,7 @@ const QuickLinks = () => {
       title: "Blog",
       description:
         "Read tips, success stories, and lifestyle articles to guide your matrimonial journey.",
-      Icon: BookOpen,
+      icon: "pi  pi-file-edit",
       path: "/blog",
     },
     {
@@ -33,7 +32,7 @@ const QuickLinks = () => {
       title: "Terms & Conditions",
       description:
         "Understand the rules, policies, and agreements for using Seetha Rama Kalyana safely.",
-      Icon: FileCheck,
+      icon: "pi pi-lock",
       path: "/terms",
     },
     {
@@ -41,7 +40,7 @@ const QuickLinks = () => {
       title: "Privacy Policy",
       description:
         "Learn how we handle your personal data and protect your privacy on our platform.",
-      Icon: Shield,
+      icon: "pi  pi-shield",
       path: "/privacy",
     },
   ];
@@ -66,7 +65,7 @@ const QuickLinks = () => {
               key={quick.id}
               className="group text-center cursor-pointer p-6 bg-amber-50 rounded-xl shadow-lg border border-amber-200 transition-style">
               <div className="flex justify-center mb-4">
-                <quick.Icon className="h-10 w-10 text-amber-600" />
+                <i className={`icon-style ${quick.icon}`} />
               </div>
               <h3 className="text-xl font-semibold text-amber-900 group-hover:underline transition-all">
                 {quick.title}

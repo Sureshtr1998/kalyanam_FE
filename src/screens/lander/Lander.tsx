@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import seethaRama from "../../assets/seetha_ram.png";
 import Logo from "../../components/misc/Logo";
 import { BG_COLOR } from "../../styles/variables";
 import LoginForm from "../../components/forms/LoginForm";
@@ -40,12 +38,8 @@ const Lander = () => {
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{
-                backgroundImage: `url('${seethaRama}')`,
+                backgroundImage: "url(/assets/seetha_ram.webp)",
                 backgroundColor: "#FDE68A",
-              }}
-              onError={(e: any) => {
-                e.currentTarget.style.backgroundImage = "none";
-                e.currentTarget.style.backgroundColor = "#FFD700";
               }}>
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
@@ -66,14 +60,11 @@ const Lander = () => {
           <div className="flex flex-col  items-center p-6 sm:p-8 lg:p-12 bg-white/95 backdrop-blur-sm min-h-[650px]">
             <div className="block md:hidden w-full mb-6">
               <img
-                src={seethaRama}
+                src="/assets/seetha_ram.webp"
                 alt="Lord Rama and Seetha - Kalyana Symbol"
                 className="w-full h-40 min-h-[14rem] object-cover object-top rounded-lg shadow-lg border-2 border-amber-300"
-                onError={(e: any) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src =
-                    "https://placehold.co/600x400/FFFBF5/D97706?text=Image+Missing";
-                }}
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import traditionalUrl from "../../assets/traditional.png";
 import tipsUrl from "../../assets/tips.png";
-import { ArrowLeft } from "lucide-react";
 import {
   CARD_BG,
   BORDER_COLOR,
@@ -205,14 +204,7 @@ const BlogPostDetail: React.FC<{ post: BlogPost; onBack: () => void }> = ({
   onBack,
 }) => {
   return (
-    <main className="max-w-4xl mx-auto">
-      <button
-        onClick={onBack}
-        className={`inline-flex items-center text-lg font-semibold mb-6 ${TEXT_COLOR} hover:text-amber-700 transition-colors duration-200 focus:outline-none`}>
-        <ArrowLeft className="w-5 h-5 mr-2" />
-        Back to All Articles
-      </button>
-
+    <main className="max-w-4xl py-20 mx-auto">
       <div
         className={`p-8 rounded-2xl shadow-2xl ${CARD_BG} border ${BORDER_COLOR}`}>
         <h1 className={`text-5xl font-extrabold mb-4 ${TEXT_COLOR}`}>
