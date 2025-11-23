@@ -12,6 +12,7 @@ const AboutUs = () => {
         title="About Us | Seetha Rama Kalyana"
         description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Brahmin community."
         keywords="brahmin matrimony, kannada brahmin matrimony, about us, seetha rama kalyana"
+        url="https://seetharamakalyana.in/about-us"
       />
 
       <div className="header-section">

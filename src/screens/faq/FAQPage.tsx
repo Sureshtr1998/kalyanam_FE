@@ -117,6 +117,7 @@ const FAQPage = () => {
         keywords="faq, brahmin matrimony, seetha rama kalyana"
         pageType="faq"
         faqItems={faqItems}
+        url="https://seetharamakalyana.in/faq"
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

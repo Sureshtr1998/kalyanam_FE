@@ -153,6 +153,7 @@ const TermsConditions = () => {
         description="Read the privacy policy of Seetha Rama Kalyana, protecting your data and trust."
         keywords="privacy policy, brahmin matrimony, seetha rama kalyana"
         pageType="privacy"
+        url="https://seetharamakalyana.in/terms"
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

@@ -89,14 +89,17 @@ export default function SEO({
     });
   }
 
-  // Terms & Privacy Policy can remain default WebPage schema; no special LD needed
-
   return (
     <Helmet>
       {title && <title>{title}</title>}
       {description && <meta name="description" content={description} />}
       {keywords && <meta name="keywords" content={keywords} />}
       <meta name="robots" content={robots} />
+
+      {/* Canonical link */}
+      <link rel="canonical" href={url} />
+
+      {/* JSON-LD structured data */}
       <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
   );
