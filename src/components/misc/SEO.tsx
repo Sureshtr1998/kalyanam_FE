@@ -15,7 +15,7 @@ export default function SEO({
   title,
   description,
   keywords,
-  url = "https://seetharamakalyana.in",
+  url = "https://www.seetharamakalyana.in",
   robots = "index, follow",
   pageType = "default",
   faqItems = [],
