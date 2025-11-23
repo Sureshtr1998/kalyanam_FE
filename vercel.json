@@ -1,7 +1,13 @@
 {
     "redirects": [
         {
-            "source": "https://www.seetharamakalyana.in/:path*",
+            "source": "/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "www.seetharamakalyana.in"
+                }
+            ],
             "destination": "https://seetharamakalyana.in/:path*",
             "permanent": true
         }
