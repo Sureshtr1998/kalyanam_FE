@@ -13,7 +13,7 @@ const CommitmentSection = () => {
       id: 1,
       title: "Security & Trust",
       description:
-        "We are a GST registered company, and our platform is certified by McAfee Secure, ensuring your data is always safe.",
+        "Our platform uses advanced encryption and is certified by McAfee Secure, ensuring your data remains fully protected.",
       icon: "pi pi-shield",
     },
     {

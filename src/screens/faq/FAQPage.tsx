@@ -41,7 +41,7 @@ const faqItems: FAQItem[] = [
     id: "faq-2",
     question: "How can I trust this matrimony application?",
     answer:
-      "Seetha Rama Kalyana is GST registered, uses Cashfree for secure payments, performs thorough background verification, and is a Meta-verified business, ensuring trust and reliability.",
+      "Seetha Rama Kalyana uses Cashfree for secure payments, advanced data encryption, performs thorough background verification, and is a Meta-verified business, ensuring trust and reliability.",
     icon: "pi pi-shield",
   },
   {
@@ -68,7 +68,7 @@ const faqItems: FAQItem[] = [
   {
     id: "faq-5",
     question: "What are the pricing plans for purchasing interests?",
-    answer: `We offer two plans: ${PURCHASE_NO_INTEREST} interests for ₹${PURCHASE_INTEREST_FEE} and ${PURCHASE_NO_INTEREST_2} interests for ₹${PURCHASE_INTEREST_FEE_2}. All prices include 18% GST.`,
+    answer: `We offer two plans: ${PURCHASE_NO_INTEREST} interests for ₹${PURCHASE_INTEREST_FEE} and ${PURCHASE_NO_INTEREST_2} interests for ₹${PURCHASE_INTEREST_FEE_2}.`,
     icon: "pi pi-wallet",
   },
   {
@@ -99,12 +99,6 @@ const faqItems: FAQItem[] = [
     answer:
       "We are focused on community service rather than profit. Pricing is kept minimal and transparent, ensuring fair access for all users.",
     icon: "pi pi-tags",
-  },
-  {
-    id: "faq-11",
-    question: "Does the price include GST?",
-    answer: "Yes, all charges include 18% GST. There are no hidden costs.",
-    icon: "pi pi-info-circle",
   },
 ];
 

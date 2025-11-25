@@ -97,10 +97,6 @@ const termsData: TermSection[] = [
         </p>
         <ul className="list-disc ml-6 space-y-2 text-gray-700">
           <li>
-            All pricing shown within the app includes applicable GST and may be
-            revised periodically.
-          </li>
-          <li>
             Purchases of interest packages are non-refundable unless required by
             governing law.
           </li>

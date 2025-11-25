@@ -40,8 +40,7 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
         <p>
           <strong>3)</strong> We’re currently charging a{" "}
           <strong>minimal registration fee of ₹{REGISTRATION_FEE}</strong> per
-          year
-          <strong> (inclusive of 18% GST)</strong> for our new users.
+          year for our new users.
         </p>
 
         <p>
