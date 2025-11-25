@@ -5,7 +5,7 @@ import ProfileCard from "../../components/profileCard/ProfileCard";
 import { Paginator } from "primereact/paginator";
 import "./Home.scss";
 import { Image } from "primereact/image";
-import parashuram from "../../assets/parashuram.png";
+import ganesh from "../../assets/ganesh.webp";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import Spinner from "../../components/spinner/Spinner";
 import { remainingInterest } from "../../utils/utils";
@@ -91,12 +91,12 @@ const Home = (props: Props) => {
               <h3>No Profiles Yet!</h3>
               <p>
                 We've very recently launched this application. Please be patient
-                many more profiles are coming soon by December end. We're
-                actively bringing in users, and we truly appreciate your
+                many more profiles are coming soon by <b> December end. </b>
+                We're actively bringing in users, and we truly appreciate your
                 support!
               </p>
               <div className="mt-8">
-                <Image className="parashuram" src={parashuram} />
+                <Image className="ganesh" src={ganesh} />
               </div>
             </div>
           )}
