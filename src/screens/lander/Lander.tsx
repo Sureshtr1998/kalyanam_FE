@@ -25,7 +25,7 @@ const Lander = () => {
   return (
     <div>
       <SEO
-        title="Brahmin Matrimony | Seetha Rama Kalyana"
+        title="Seetha Rama Kalyana | Brahmin Matrimony"
         description="Join Seetha Rama Kalyana, the trusted Kannada Brahmin matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
         keywords="brahmin matrimony, kannada brahmin matrimony, seetha rama kalyana, matchmaking, marriage"
         url="https://www.seetharamakalyana.in"

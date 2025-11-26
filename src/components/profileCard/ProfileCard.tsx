@@ -6,7 +6,7 @@ import ViewCard from "../viewCard/ViewCard";
 import { fetchLabel } from "../../utils/utils";
 import api from "../../utils/api";
 import { useToast } from "../toastProvider/ToastProvider";
-import { qualificationOptions } from "../../utils/constants";
+import { IMAGEKIT_PARAMS, qualificationOptions } from "../../utils/constants";
 import { Button } from "primereact/button";
 import Spinner from "../spinner/Spinner";
 
@@ -90,7 +90,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="img-section">
           <img
             className="transition-style"
-            src={images[0].url}
+            src={`${images[0].url}${IMAGEKIT_PARAMS}`}
             alt={fullName}
           />
           <div className="profile-id">{match.basic.uniqueId || "SRM-ID"}</div>

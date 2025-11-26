@@ -6,6 +6,7 @@ import "./ImageMedia.scss";
 
 import { Image } from "primereact/image";
 import type { ImageFile } from "../../utils/interfaces";
+import { IMAGEKIT_PARAMS } from "../../utils/constants";
 
 interface ImageUploadProps {
   onChange?: (files: File[]) => void;
@@ -24,7 +25,9 @@ const ImageSlot: React.FC<{
   isReadOnly?: boolean;
 }> = ({ content, index, onRemove, isReadOnly }) => {
   const imageUrl =
-    content instanceof File ? URL.createObjectURL(content) : content.url;
+    content instanceof File
+      ? URL.createObjectURL(content)
+      : content.url + IMAGEKIT_PARAMS;
 
   return (
     <div className="image-slot filled">
