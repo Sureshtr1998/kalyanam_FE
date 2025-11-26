@@ -229,7 +229,7 @@ const PrivacyPolicy = () => {
     <div className="privacy-policy">
       <SEO
         title="Privacy Policy | Seetha Rama Kalyana"
-        description="Read the Privacy Policy of Seetha Rama Kalyana, a trusted Brahmin matrimony platform committed to protecting your personal data, privacy, and security. Learn how we collect, use, and safeguard your information."
+        description="Read the Privacy Policy of Seetha Rama Kalyana, a trusted Brahmin matrimony platform committed to protecting your personal data, privacy, and security."
         keywords="privacy policy, data protection, seetha rama kalyana, brahmin matrimony privacy, kannada brahmin matrimony policy, matrimony data security"
         url="https://www.seetharamakalyana.in/privacy"
       />

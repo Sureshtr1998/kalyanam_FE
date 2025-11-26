@@ -72,6 +72,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
 
   useEffect(() => {
     if (initialImages.length > 0) {
+      setUploadedFiles([]);
       setExistingMedia(initialImages);
     }
   }, [initialImages]);
