@@ -11,11 +11,12 @@ import { useToast } from "../../components/toastProvider/ToastProvider";
 import { FilterMatchMode } from "primereact/api";
 import FormInput from "../../components/fields/FormInput";
 import { getInitials } from "../../utils/utils";
+import Spinner from "../../components/spinner/Spinner";
 
 const ViewedNumbers = () => {
   const [viewedNumbers, setViewedNumbers] = useState<UserDetails[]>([]);
   const [user, setUser] = useState<UserDetails>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showToast } = useToast();
   const [currentUser, setCurrentUser] = useState<UserDetails>();
 
@@ -32,20 +33,20 @@ const ViewedNumbers = () => {
 
   const init = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await api.get("/view-contact");
       if (res.data?.viewedNums) {
         setViewedNumbers(res.data.viewedNums);
         setCurrentUser(res.data.currentUser);
       }
-      setLoading(false);
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response?.data?.msg || "Unable to load profiles"
       );
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -77,6 +78,8 @@ const ViewedNumbers = () => {
 
   return (
     <div>
+      <Spinner isLoading={isLoading} />
+
       {user && (
         <ViewCard
           user={user}
@@ -110,7 +113,6 @@ const ViewedNumbers = () => {
           globalFilterFields={["basic.uniqueId", "basic.fullName"]}
           paginator
           rows={7}
-          loading={loading}
           emptyMessage="No Viewed Numbers found"
           dataKey="_id"
           className="p-datatable-srk">

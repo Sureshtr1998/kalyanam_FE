@@ -13,12 +13,14 @@ import { useToast } from "../../components/toastProvider/ToastProvider";
 import { FilterMatchMode } from "primereact/api";
 import FormInput from "../../components/fields/FormInput";
 import { getInitials } from "../../utils/utils";
+import Spinner from "../../components/spinner/Spinner";
 
 const Invitations = () => {
   const [invitations, setInvitations] = useState<UserDetails[]>([]);
   const [user, setUser] = useState<UserDetails>();
   const [currentUser, setCurrentUser] = useState<UserDetails>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -34,20 +36,20 @@ const Invitations = () => {
 
   const init = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await api.get("/fetch-invitation-status");
       if (res.data?.invitations) {
         setInvitations(res.data.invitations);
         setCurrentUser(res.data.currentUser);
       }
-      setLoading(false);
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response?.data?.msg || "Unable to load invitations"
       );
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -57,7 +59,7 @@ const Invitations = () => {
   ) => {
     if (!id) return;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await api.post("/interest-action", { userId: id, action });
 
       setInvitations((prev) =>
@@ -72,14 +74,14 @@ const Invitations = () => {
       );
 
       showToast("success", "Success", res.data.msg || "Action successful");
-      setLoading(false);
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response?.data?.msg || "Something went wrong"
       );
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -143,14 +145,14 @@ const Invitations = () => {
             icon="pi pi-check"
             className="p-button-success p-button-sm"
             onClick={() => handleAction(rowData._id, "accept")}
-            loading={loading}
+            loading={isLoading}
           />
           <Button
             label="Decline"
             icon="pi pi-times"
             className="p-button-danger p-button-sm mr-4"
             onClick={() => handleAction(rowData._id, "decline")}
-            loading={loading}
+            loading={isLoading}
           />
         </div>
       );
@@ -175,6 +177,7 @@ const Invitations = () => {
 
   return (
     <div>
+      <Spinner isLoading={isLoading} />
       {user && (
         <ViewCard
           user={user}
@@ -208,7 +211,6 @@ const Invitations = () => {
           globalFilterFields={["basic.uniqueId", "basic.fullName"]}
           paginator
           rows={7}
-          loading={loading}
           emptyMessage="No invitations found"
           dataKey="_id"
           className="p-datatable-srk">

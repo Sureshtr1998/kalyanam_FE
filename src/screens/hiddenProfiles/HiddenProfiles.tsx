@@ -11,11 +11,12 @@ import { useToast } from "../../components/toastProvider/ToastProvider";
 import { FilterMatchMode } from "primereact/api";
 import FormInput from "../../components/fields/FormInput";
 import { getInitials } from "../../utils/utils";
+import Spinner from "../../components/spinner/Spinner";
 
 const HiddenProfiles = () => {
   const [hiddenProfiles, setHiddenProfiles] = useState<UserDetails[]>([]);
   const [user, setUser] = useState<UserDetails>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showToast } = useToast();
   const [currentUser, setCurrentUser] = useState<UserDetails>();
 
@@ -32,40 +33,40 @@ const HiddenProfiles = () => {
 
   const init = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await api.get("/hidden-profiles");
       if (res.data?.hiddenProfiles) {
         setHiddenProfiles(res.data.hiddenProfiles);
         setCurrentUser(res.data.currentUser);
       }
-      setLoading(false);
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response?.data?.msg || "Unable to load profiles"
       );
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   const handleAction = async (id: string | undefined) => {
     if (!id) return;
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await api.post("/unhide-profile", { userId: id });
 
       setHiddenProfiles((prev) => prev.filter((user) => user._id !== id));
 
       showToast("success", "Success", res.data.msg || "Action successful");
-      setLoading(false);
+      setIsLoading(false);
     } catch (err: any) {
       showToast(
         "error",
         "Error",
         err.response?.data?.msg || "Something went wrong"
       );
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -106,6 +107,7 @@ const HiddenProfiles = () => {
 
   return (
     <div>
+      <Spinner isLoading={isLoading} />
       {user && (
         <ViewCard
           user={user}
@@ -144,7 +146,6 @@ const HiddenProfiles = () => {
           globalFilterFields={["basic.uniqueId", "basic.fullName"]}
           paginator
           rows={7}
-          loading={loading}
           emptyMessage="No Hidden Profiles found"
           dataKey="_id"
           className="p-datatable-srk">
