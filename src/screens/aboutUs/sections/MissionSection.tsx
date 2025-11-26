@@ -1,4 +1,4 @@
-import hanuman from "../../../assets/hanuman.png";
+import hanuman from "../../../assets/hanuman.webp";
 
 const MissionSection = () => {
   return (

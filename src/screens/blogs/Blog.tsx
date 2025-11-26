@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import traditionalUrl from "../../assets/traditional.png";
-import tipsUrl from "../../assets/tips.png";
+import traditionalUrl from "../../assets/traditional.webp";
+import tipsUrl from "../../assets/tips.webp";
 import {
   CARD_BG,
   BORDER_COLOR,
