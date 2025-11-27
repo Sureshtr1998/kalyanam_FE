@@ -49,3 +49,21 @@ input[type="number"] {
   color: rgb(217, 119, 6);
   font-size: 2rem;
 }
+.p-checkbox .p-checkbox-box {
+  border: 2px solid vars.$border-color;
+  background-color: #ffffff;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  color: vars.$text-color;
+  font-size: 14px;
+}
+
+.p-checkbox.p-disabled .p-checkbox-box {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
