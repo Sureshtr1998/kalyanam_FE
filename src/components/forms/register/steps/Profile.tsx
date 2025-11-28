@@ -13,7 +13,13 @@ const Profile = (props: StepsType) => {
   return (
     <div className="w-full max-w-sm">
       {isNote && handleNext && (
-        <RegisterNote onAccept={handleNext} onHide={() => SetNote(false)} />
+        <RegisterNote
+          onAccept={() => {
+            handleNext();
+            SetNote(false);
+          }}
+          onHide={() => SetNote(false)}
+        />
       )}
       <h3 className="heading">Step 3: Profile & Contact</h3>
 

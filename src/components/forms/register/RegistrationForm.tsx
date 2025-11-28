@@ -113,6 +113,7 @@ const RegistrationForm = (props: Props) => {
 
   const handleNext = () => {
     if (validateStep(step)) {
+      if (step === 2) setImages([]);
       if (step === 4) setPayment(true);
       setStep((prev) => Math.min(4, prev + 1) as 1 | 2 | 3 | 4);
     }
