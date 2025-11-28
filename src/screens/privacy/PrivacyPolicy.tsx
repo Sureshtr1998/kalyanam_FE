@@ -5,7 +5,7 @@ import {
   CARD_BG,
   BORDER_COLOR,
 } from "../../styles/variables";
-import { SUPPORT_EMAIL } from "../../utils/constants";
+import { SUPPORT_EMAIL, updatedDate } from "../../utils/constants";
 import SEO from "../../components/misc/SEO";
 
 interface PolicySection {
@@ -271,7 +271,7 @@ const PrivacyPolicy = () => {
             <div
               className={`p-8 rounded-2xl shadow-2xl ${CARD_BG} border ${BORDER_COLOR}`}>
               <p className="text-gray-600 mb-6 text-sm italic">
-                **Effective Date:** November 20, 2025
+                **Effective Date:** {updatedDate}
               </p>
               <div className="space-y-6">
                 {policyData.map((section) => (

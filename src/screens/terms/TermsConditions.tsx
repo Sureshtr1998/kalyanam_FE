@@ -6,6 +6,7 @@ import {
   BORDER_COLOR,
 } from "../../styles/variables";
 import SEO from "../../components/misc/SEO";
+import { updatedDate } from "../../utils/constants";
 
 interface TermSection {
   id: string;
@@ -28,7 +29,7 @@ const termsData: TermSection[] = [
           Terms, you must stop using the Service immediately.
         </p>
         <p className="text-sm italic text-gray-500">
-          Last Updated: November 20, 2025.
+          Last Updated: {updatedDate}.
         </p>
       </>
     ),

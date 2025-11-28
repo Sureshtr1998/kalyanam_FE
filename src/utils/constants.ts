@@ -440,6 +440,8 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
 
 export const IMAGEKIT_PARAMS = "?tr=w-3000,h-3000,q-80,fo-face"
 
+export const updatedDate = "Decmber 1, 2025"
+
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
 export const REGISTRATION_FEE = 351
