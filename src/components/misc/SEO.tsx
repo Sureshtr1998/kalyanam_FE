@@ -30,7 +30,7 @@ export default function SEO({
       url,
       logo: `${url}/logo.png`,
       description:
-        "A trusted Kannada Brahmin matrimony platform helping families find the perfect life partner based on tradition, values, and trust.",
+        "A trusted Brahmin matrimony platform helping families find the perfect life partner based on tradition, values, and trust.",
     },
     {
       "@type": "WebSite",

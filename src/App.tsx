@@ -25,6 +25,9 @@ import FaqPage from "./screens/faq/FAQPage";
 import TermsConditions from "./screens/terms/TermsConditions";
 import PrivacyPolicy from "./screens/privacy/PrivacyPolicy";
 import Blog from "./screens/blogs/Blog";
+import ContactUs from "./screens/contactUs/ContactUs";
+import Pricing from "./screens/pricing/Pricing";
+import RefundPolicy from "./screens/refund/Refund";
 
 const AppContent = () => {
   const location = useLocation();
@@ -86,6 +89,36 @@ const AppContent = () => {
                 <HelmetProvider>
                   <PublicWrapper>
                     <Blog />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/contact-us"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <ContactUs />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/pricing"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <Pricing />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/refund-policy"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <RefundPolicy />
                   </PublicWrapper>
                 </HelmetProvider>
               }

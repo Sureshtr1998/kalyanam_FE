@@ -21,11 +21,11 @@ const QuickLinks = () => {
     },
     {
       id: 2,
-      title: "Blog",
+      title: "Pricing",
       description:
-        "Read tips, success stories, and lifestyle articles to guide your matrimonial journey.",
-      icon: "pi  pi-file-edit",
-      path: "/blog",
+        "Learn about registration fees, interest plans, and other cost details to plan your matrimonial journey wisely.",
+      icon: "pi pi-indian-rupee",
+      path: "/pricing",
     },
     {
       id: 3,

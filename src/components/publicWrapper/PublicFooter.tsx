@@ -22,6 +22,19 @@ const PublicFooter = () => {
             Blog
           </button>
         </nav>
+        <nav className="flex justify-center space-x-6 text-sm">
+          <button onClick={() => navigate("/contact-us")} className="pub-link">
+            Contact US
+          </button>
+          <button onClick={() => navigate("/pricing")} className="pub-link">
+            Pricing
+          </button>
+          <button
+            onClick={() => navigate("/refund-policy")}
+            className="pub-link">
+            Refund Policy
+          </button>
+        </nav>
 
         {/* Contact Email Section */}
         <p className="text-base text-amber-800">
