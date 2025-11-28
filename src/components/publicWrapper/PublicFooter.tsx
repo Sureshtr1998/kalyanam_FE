@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { SUPPORT_EMAIL } from "../../utils/constants";
 
 const PublicFooter = () => {
   const navigate = useNavigate();
@@ -35,16 +34,6 @@ const PublicFooter = () => {
             Refund Policy
           </button>
         </nav>
-
-        {/* Contact Email Section */}
-        <p className="text-base text-amber-800">
-          Contact us:{" "}
-          <a
-            href={`mailto:${SUPPORT_EMAIL}`}
-            className="font-medium text-amber-900 hover:text-amber-700">
-            {SUPPORT_EMAIL}
-          </a>
-        </p>
 
         {/* Copyright Section */}
         <p className="text-center text-base text-amber-800">

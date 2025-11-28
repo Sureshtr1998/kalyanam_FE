@@ -42,11 +42,7 @@ const ContactUs: React.FC = () => {
 
           {/* Contact Details */}
           <div className="mt-10 mx-auto max-w-sm">
-            <ContactDetail
-              title="Email Us"
-              content={SUPPORT_EMAIL}
-              href={`mailto:${SUPPORT_EMAIL}`}
-            />
+            <ContactDetail title="Email Us" />
           </div>
         </main>
       </section>
@@ -56,15 +52,9 @@ const ContactUs: React.FC = () => {
 
 interface ContactDetailProps {
   title: string;
-  content: string;
-  href?: string;
 }
 
-const ContactDetail: React.FC<ContactDetailProps> = ({
-  title,
-  content,
-  href,
-}) => (
+const ContactDetail: React.FC<ContactDetailProps> = ({ title }) => (
   <div
     className={`flex items-start p-4 rounded-xl border ${BORDER_COLOR} bg-opacity-70`}>
     <div
@@ -74,15 +64,14 @@ const ContactDetail: React.FC<ContactDetailProps> = ({
 
     <div className="ml-4 text-left">
       <h3 className={`text-lg font-bold ${TEXT_COLOR} mb-0.5`}>{title}</h3>
-      {href ? (
+
+      <p className="text-base text-amber-800">
         <a
-          href={href}
-          className={`text-gray-700 hover:underline hover:${TEXT_COLOR} transition-colors duration-200 break-words`}>
-          {content}
+          href={`mailto:${SUPPORT_EMAIL}`}
+          className="font-medium text-amber-900 hover:text-amber-700">
+          {SUPPORT_EMAIL}
         </a>
-      ) : (
-        <p className="text-gray-700">{content}</p>
-      )}
+      </p>
     </div>
   </div>
 );
