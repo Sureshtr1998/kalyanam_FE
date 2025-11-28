@@ -3,44 +3,65 @@
 
   <!-- Home -->
   <url>
-    <loc>https://www.seetharamakalyana.in</loc>
-    <priority>1.0</priority>
+    <loc>https://www.seetharamakalyana.in/</loc>
     <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
   </url>
 
   <!-- About Us -->
   <url>
     <loc>https://www.seetharamakalyana.in/about-us</loc>
-    <priority>0.8</priority>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- FAQ -->
   <url>
     <loc>https://www.seetharamakalyana.in/faq</loc>
-    <priority>0.7</priority>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Terms & Conditions -->
   <url>
     <loc>https://www.seetharamakalyana.in/terms</loc>
-    <priority>0.7</priority>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Privacy Policy -->
   <url>
     <loc>https://www.seetharamakalyana.in/privacy</loc>
-    <priority>0.7</priority>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Blog -->
   <url>
     <loc>https://www.seetharamakalyana.in/blog</loc>
-    <priority>0.6</priority>
     <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Pricing -->
+  <url>
+    <loc>https://www.seetharamakalyana.in/pricing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Refund Policy -->
+  <url>
+    <loc>https://www.seetharamakalyana.in/refund-policy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact Us -->
+  <url>
+    <loc>https://www.seetharamakalyana.in/contact-us</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>
