@@ -40,7 +40,7 @@ const Pricing = () => {
               Registration & Interest Plans
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Start your journey with a one-time registration fee, then purchase
+              Start your journey with a yearly registration fee, then purchase
               interest credits to connect with other users on Seetha Rama
               Kalyana, the trusted Brahmin matrimony platform.
             </p>
@@ -90,11 +90,11 @@ const RegistrationFeeCard = () => {
         </div>
       </div>
       <h2 className={`text-3xl font-bold mb-2 ${TEXT_COLOR}`}>
-        Mandatory Registration Fee
+        Annual Registration Fee
       </h2>
       <p className="text-gray-600 mb-6">
-        A one-time fee is required to activate your account and access the
-        platform.
+        A yearly fee is required to activate your account and maintain continued
+        access to the platform.
       </p>
       <p className={`text-6xl font-extrabold ${TEXT_COLOR} mb-4`}>
         {REGISTRATION_FEE}
