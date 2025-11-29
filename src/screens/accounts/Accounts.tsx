@@ -95,12 +95,13 @@ const Accounts = (props: Props) => {
     }
   };
 
-  const handleSuccess = async (orderId: string) => {
+  const handleSuccess = async (orderId: string, paymentId: string) => {
     try {
       setIsLoading(true);
 
       const payload = {
         orderId,
+        paymentId,
         amount: fee,
         noOfInterest: noInterest,
         note: "Interest Purchase",

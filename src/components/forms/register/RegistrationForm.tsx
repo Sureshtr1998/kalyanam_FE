@@ -123,7 +123,7 @@ const RegistrationForm = (props: Props) => {
     setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3 | 4);
   };
 
-  const registerUser = async (orderId: string) => {
+  const registerUser = async (orderId: string, paymentId: string) => {
     try {
       setIsLoading(true);
       let imageUrls: string[] = [];
@@ -146,6 +146,7 @@ const RegistrationForm = (props: Props) => {
       const payload = {
         ...formData,
         orderId,
+        paymentId,
         amountPaid: REGISTRATION_FEE,
         totalNoOfInterest: INITIAL_NO_INTEREST,
         note: "Registration",

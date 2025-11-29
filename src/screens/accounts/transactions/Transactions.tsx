@@ -49,9 +49,10 @@ const TransactionDashboard = (props: Props) => {
     }).format(rowData.amountPaid);
   };
 
-  const orderIdBodyTemplate = (rowData: any) => {
-    const fullId = rowData.orderId;
+  const IdBodyTemplate = (rowData: any, isOrder: boolean) => {
+    const fullId = isOrder ? rowData.orderId : rowData.paymentId;
     const truncatedId = fullId ? fullId.substring(0, 15) + "..." : "";
+    const copyText = isOrder ? "Copy full Order ID" : "Copy full Payment ID";
 
     const handleCopy = async () => {
       await navigator.clipboard.writeText(fullId);
@@ -63,7 +64,7 @@ const TransactionDashboard = (props: Props) => {
         <Button
           icon="pi pi-copy"
           className="p-button-rounded mt-2 p-button-text p-button-sm"
-          tooltip="Copy full Order ID"
+          tooltip={copyText}
           onClick={handleCopy}
           style={{ color: "#d97706" }}
         />
@@ -111,7 +112,13 @@ const TransactionDashboard = (props: Props) => {
         <Column
           field="orderId"
           header="Order ID"
-          body={orderIdBodyTemplate}
+          body={(rowData) => IdBodyTemplate(rowData, true)}
+          style={{ minWidth: "9rem" }}
+        />
+        <Column
+          field="paymentId"
+          header="Payment ID"
+          body={(rowData) => IdBodyTemplate(rowData, false)}
           style={{ minWidth: "9rem" }}
         />
         <Column

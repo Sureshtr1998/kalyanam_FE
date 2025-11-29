@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { load } from "@cashfreepayments/cashfree-js";
 import { useEffect, useState } from "react";
+import { useRazorpay, type RazorpayOrderOptions } from "react-razorpay";
 import api from "../../utils/api";
 import Spinner from "../spinner/Spinner";
 import "./PaymentModal.scss";
@@ -9,82 +7,92 @@ import { useToast } from "../toastProvider/ToastProvider";
 
 interface Props {
   onHide: () => void;
-  onSuccess: (orderId: string) => void;
+  onSuccess: (orderId: string, paymentId: string) => void;
   userName: string;
   userEmail: string;
   userPhone: string;
   amount: number;
 }
 
-const PaymentModal = (props: Props) => {
-  const { onHide, onSuccess, userName, userEmail, userPhone, amount } = props;
+const PaymentModal = ({
+  onHide,
+  onSuccess,
+  userName,
+  userEmail,
+  userPhone,
+  amount,
+}: Props) => {
+  const { Razorpay, isLoading, error } = useRazorpay();
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let cashfree: any;
-
   useEffect(() => {
-    init();
-  }, []);
+    if (!isLoading && !error) {
+      initPayment();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, error]);
 
-  const init = async () => {
+  const enableBodyScroll = () => {
+    document.body.style.overflow = "";
+    document.body.style.paddingRight = "";
+  };
+
+  const initPayment = async () => {
     setLoading(true);
-    cashfree = await load({
-      mode: "sandbox",
-    });
+
     try {
       const { data } = await api.post("/create-order", {
         userName,
         userEmail,
-        userPhone,
+        userPhone: `+91${userPhone}`,
         amount,
       });
 
-      doPayment(data.orderId, data.cftoken);
-    } catch (err) {
-      console.error("Error creating order:", err);
-      showToast(
-        "error",
-        "Error",
-        "Unable to initiate payment. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+      const options: RazorpayOrderOptions = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Seetha Rama Kalyana",
+        description: "Matrimony subscription",
+        order_id: data.orderId,
+        image: "https://www.seetharamakalyana.in/logo.png",
+        handler: (response) => {
+          const { razorpay_payment_id, razorpay_order_id } = response;
+          onSuccess(razorpay_order_id, razorpay_payment_id);
+        },
+        modal: {
+          ondismiss: () => {
+            showToast(
+              "info",
+              "Payment Cancelled",
+              "You cancelled the payment."
+            );
+          },
+        },
+        prefill: {
+          name: userName,
+          email: userEmail,
+          contact: userPhone,
+        },
+        theme: {
+          color: "#f59e0b",
+        },
+      };
 
-  const doPayment = async (orderId: string, cftoken: string) => {
-    const checkoutOptions = {
-      paymentSessionId: cftoken,
-      redirectTarget: "_modal",
-    };
-
-    try {
-      const result = await cashfree.checkout(checkoutOptions);
-
-      if (result.error) {
-        showToast(
-          "error",
-          "Payment Failed",
-          "Payment could not be completed. Please try again."
-        );
-        onHide();
-        return;
-      }
-
-      if (result.paymentDetails) {
-        onSuccess(orderId);
-        onHide();
-      }
+      const rzp = new Razorpay(options);
+      rzp.open();
     } catch (err) {
       console.error("Payment Error:", err);
       showToast(
         "error",
         "Payment Error",
-        "Something went wrong while processing the payment."
+        "Unable to initiate payment. Please try again."
       );
+    } finally {
       onHide();
+      enableBodyScroll();
+      setLoading(false);
     }
   };
 
