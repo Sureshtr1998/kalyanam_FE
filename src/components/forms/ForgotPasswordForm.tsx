@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "../toastProvider/ToastProvider";
 import api from "../../utils/api";
 import FormInput from "../fields/FormInput";
@@ -20,15 +20,23 @@ const ForgotPasswordForm = (props: Props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [timer, setTimer] = useState(0);
   const { showToast } = useToast();
+
+  useEffect(() => {
+    if (timer <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const handleRequestOtp = async () => {
     if (!/\S+@\S+\.\S+/.test(email)) {
-      showToast(
-        "error",
-        "Invalid Email",
-        "Please enter a valid email address."
-      );
+      showToast("error", "Invalid Email", "Please enter a valid email.");
       return;
     }
 
@@ -39,6 +47,7 @@ const ForgotPasswordForm = (props: Props) => {
       });
       setStep("enterOtp");
       showToast("success", "OTP Sent", res.data.msg);
+      setTimer(60);
     } catch (err: any) {
       showToast("error", "Error", err.response?.data?.msg || "Server error");
     } finally {
@@ -134,7 +143,7 @@ const ForgotPasswordForm = (props: Props) => {
             name="otp"
             placeholder="Enter 6-Digit OTP"
             value={otp}
-            onChange={(e) => setOtp(e.target.value)}
+            onChange={(e) => setOtp(e.target.value.slice(0, 6))}
             icon="pi pi-key"
           />
 
@@ -144,13 +153,25 @@ const ForgotPasswordForm = (props: Props) => {
             className="update-btn">
             VERIFY OTP
           </Button>
+          <div className="text-center mt-4">
+            <p className="text-xs text-gray-500 mb-1">
+              Didn't receive the OTP? Please check your <b>Spam</b> folder.
+            </p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleRequestOtp}
+                disabled={timer > 0}
+                className={`text-sm flex items-center 
+                 ${
+                   timer > 0
+                     ? "cursor-not-allowed text-gray-400"
+                     : "cursor-pointer text-gray-600 hover:underline"
+                 }`}>
+                <i className="pi pi-sync mr-1" />
 
-          <div className="flex justify-center mt-4">
-            <button
-              onClick={() => setStep("sendEmail")}
-              className="text-sm cursor-pointer text-gray-600 hover:underline flex items-center">
-              <i className="pi pi-sync mr-1" /> Resend OTP
-            </button>
+                {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
+              </button>
+            </div>
           </div>
         </>
       )}

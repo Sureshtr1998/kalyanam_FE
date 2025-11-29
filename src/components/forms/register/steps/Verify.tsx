@@ -19,21 +19,36 @@ const Verify = (props: Props) => {
   const [mobileOtp, setMobileOtp] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [timer, setTimer] = useState(0);
   const { showToast } = useToast();
 
   useEffect(() => {
     sendOtp();
+    setTimer(60);
   }, []);
 
+  useEffect(() => {
+    if (timer <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((t) => t - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
   const sendOtp = async () => {
+    if (timer > 0) return; // prevent multiple clicks
+
     try {
       const res = await api.post("send-otp", { email, mobile });
-
       showToast(
         "success",
         "Sent",
-        res.data.msg || "OTP sent to email and phone!"
+        res.data.msg || "OTP sent to email & phone!"
       );
+
+      setTimer(60);
     } catch (err: any) {
       showToast(
         "error",
@@ -71,14 +86,14 @@ const Verify = (props: Props) => {
 
       <p className="text-gray-700 mb-4 mt-2 text-sm">
         Please enter the 6-digit verification codes sent to your email and
-        mobile number to proceed.
+        mobile number.
       </p>
 
       <div className="mb-4">
         <FormInput
           name="emailOtp"
           type="number"
-          placeholder="Email OTP (Demo: 123456)"
+          placeholder="Email OTP"
           value={emailOtp}
           onChange={(e) => setEmailOtp(e.target.value.slice(0, 6))}
           icon="pi pi-envelope"
@@ -89,10 +104,10 @@ const Verify = (props: Props) => {
         <FormInput
           name="mobileOtp"
           type="number"
-          placeholder="Mobile OTP (Demo: 123456)"
+          placeholder="WhatsApp OTP"
           value={mobileOtp}
           onChange={(e) => setMobileOtp(e.target.value.slice(0, 6))}
-          icon="pi pi-mobile"
+          icon="pi pi-whatsapp"
         />
       </div>
 
@@ -110,11 +125,21 @@ const Verify = (props: Props) => {
       </div>
 
       <div className="text-center mt-4">
+        <p className="text-xs text-gray-500 mb-4">
+          Didn't receive the OTP? Please check your <b>Spam</b> folder.
+        </p>
+
         <button
           onClick={sendOtp}
-          disabled={loading}
-          className="text-sm cursor-pointer text-gray-600 hover:underline flex items-center justify-center mx-auto">
-          <i className="w-4 h-4 mr-1 pi pi-sync" /> Resend OTPs
+          disabled={loading || timer > 0}
+          className={`text-sm  flex items-center justify-center mx-auto 
+            ${
+              timer > 0
+                ? "text-gray-400"
+                : "text-gray-600 cursor-pointer hover:underline"
+            }`}>
+          <i className="w-4 h-4 mr-1 pi pi-sync" />
+          {timer > 0 ? `Resend OTPs in ${timer}s` : "Resend OTPs"}
         </button>
       </div>
     </div>
