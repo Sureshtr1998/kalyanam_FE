@@ -73,6 +73,8 @@ const Invitations = () => {
         )
       );
 
+      if (action === "accept") await init();
+
       showToast("success", "Success", res.data.msg || "Action successful");
       setIsLoading(false);
     } catch (err: any) {

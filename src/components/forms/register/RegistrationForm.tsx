@@ -187,7 +187,8 @@ const RegistrationForm = (props: Props) => {
           userName={formData.fullName}
           userEmail={formData.email}
           userPhone={formData.mobile}
-          amount={REGISTRATION_FEE}
+          amount={21}
+          // amount={REGISTRATION_FEE}
         />
       )}
 
