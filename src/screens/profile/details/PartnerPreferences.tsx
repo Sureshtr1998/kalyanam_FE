@@ -51,6 +51,30 @@ const PartnerPreferences = (props: Props) => {
 
       <div className="form-row">
         <SelectInput
+          name="employedIn"
+          label="Employed In"
+          value={partnerData.employedIn}
+          onChange={handleChange}
+          options={employedInOptions}
+          disabled={isReadOnly}
+          icon="pi pi-briefcase"
+          isMultiselect
+          required={!isFilter}
+        />
+        <SelectInput
+          name="subCaste"
+          label="Sub Caste"
+          value={normalizeToArray(partnerData.subCaste)}
+          onChange={handleChange}
+          options={subCasteOptions}
+          disabled={isReadOnly}
+          icon="pi pi-book"
+          isMultiselect
+        />
+      </div>
+
+      <div className="form-row">
+        <SelectInput
           name="heightFrom"
           label="Height From"
           value={partnerData.heightFrom}
@@ -68,31 +92,6 @@ const PartnerPreferences = (props: Props) => {
           options={heightOptions}
           disabled={isReadOnly}
           icon="pi pi-chart-bar"
-        />
-      </div>
-
-      <div className="form-row">
-        <SelectInput
-          name="subCaste"
-          label="Sub Caste"
-          value={normalizeToArray(partnerData.subCaste)}
-          onChange={handleChange}
-          options={subCasteOptions}
-          disabled={isReadOnly}
-          icon="pi pi-book"
-          isMultiselect
-        />
-
-        <SelectInput
-          name="employedIn"
-          label="Employed In"
-          value={partnerData.employedIn}
-          onChange={handleChange}
-          options={employedInOptions}
-          disabled={isReadOnly}
-          icon="pi pi-briefcase"
-          isMultiselect
-          required={!isFilter}
         />
       </div>
 

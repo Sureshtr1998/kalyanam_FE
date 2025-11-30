@@ -21,6 +21,49 @@ const FamilyDetails = (props: Props) => {
     <div>
       <div className="form-row">
         <FormInput
+          required
+          label="Father's Name / Guardian's Name"
+          name="fatherName"
+          value={familyData.fatherName}
+          icon="pi pi-user"
+          disabled={isReadOnly}
+          onChange={handleChange}
+        />
+
+        <FormInput
+          required
+          label=" Mother's Name / Guardian's Name"
+          name="motherName"
+          value={familyData.motherName}
+          icon="pi pi-user"
+          disabled={isReadOnly}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-row">
+        <SelectInput
+          name="fatherStatus"
+          label="Father's Living Status"
+          value={familyData.fatherStatus}
+          disabled={isReadOnly}
+          onChange={handleChange}
+          options={parentStatus}
+          icon="pi pi-sun"
+        />
+
+        <SelectInput
+          name="motherStatus"
+          label="Mother's Living Status"
+          value={familyData.motherStatus}
+          disabled={isReadOnly}
+          onChange={handleChange}
+          options={parentStatus}
+          icon="pi pi-moon"
+        />
+      </div>
+      <div className="form-row">
+        <FormInput
           type="number"
           label="No. Elder Brothers"
           name="elderBro"
@@ -100,50 +143,6 @@ const FamilyDetails = (props: Props) => {
           icon="pi pi-link"
           disabled={isReadOnly}
           onChange={handleChange}
-        />
-      </div>
-
-      <div className="form-row">
-        <FormInput
-          required
-          label="Father's Name / Guardian's Name"
-          name="fatherName"
-          value={familyData.fatherName}
-          icon="pi pi-user"
-          disabled={isReadOnly}
-          onChange={handleChange}
-        />
-
-        <FormInput
-          required
-          label=" Mother's Name / Guardian's Name"
-          name="motherName"
-          value={familyData.motherName}
-          icon="pi pi-user"
-          disabled={isReadOnly}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="form-row">
-        <SelectInput
-          name="fatherStatus"
-          label="Father's Living Status"
-          value={familyData.fatherStatus}
-          disabled={isReadOnly}
-          onChange={handleChange}
-          options={parentStatus}
-          icon="pi pi-sun"
-        />
-
-        <SelectInput
-          name="motherStatus"
-          label="Mother's Living Status"
-          value={familyData.motherStatus}
-          disabled={isReadOnly}
-          onChange={handleChange}
-          options={parentStatus}
-          icon="pi pi-moon"
         />
       </div>
 
