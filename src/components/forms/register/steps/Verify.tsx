@@ -126,7 +126,15 @@ const Verify = (props: Props) => {
 
       <div className="text-center mt-4">
         <p className="text-xs text-gray-500 mb-4">
-          Didn't receive the OTP? Please check your <b>Spam</b> folder.
+          Didn't receive the OTP? Please check your{" "}
+          <b>
+            <i
+              style={{ fontSize: "0.7rem", color: "red" }}
+              className="pi pi-exclamation-circle"
+            />{" "}
+            Spam
+          </b>{" "}
+          folder.
         </p>
 
         <button
