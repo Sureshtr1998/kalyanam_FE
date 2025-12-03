@@ -41,7 +41,7 @@ const faqItems: FAQItem[] = [
     id: "faq-2",
     question: "How can I trust this matrimony application?",
     answer:
-      "Seetha Rama Kalyana uses Cashfree for secure payments, advanced data encryption, performs thorough background verification, and is a Meta-verified business, ensuring trust and reliability.",
+      "Seetha Rama Kalyana uses Razorpay for secure payments, advanced data encryption, performs thorough background verification, and is a Meta-verified business, ensuring trust and reliability.",
     icon: "pi pi-shield",
   },
   {

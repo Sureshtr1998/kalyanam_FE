@@ -49,7 +49,7 @@ const policyData: PolicySection[] = [
           </li>
           <li>
             <strong>Payment Data:</strong> While purchasing “Interests,” our
-            payment partners (Cashfree etc.) securely handle payment details. We
+            payment partners (Razorpay etc.) securely handle payment details. We
             do not store credit/debit card information.
           </li>
         </ul>
