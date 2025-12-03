@@ -105,7 +105,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <h2 className="name">{fullName}</h2>
           <div className="info">
             <div>
-              <span className="label">Age:</span> {calculateAge(dob)} Yrs
+              <span className="label">Age:</span> {calculateAge(dob ?? "")} Yrs
             </div>
             <div>
               <span className="label">Sub Caste:</span> {subCaste}
