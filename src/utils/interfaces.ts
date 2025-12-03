@@ -11,8 +11,7 @@ export interface BasicDetailsIn {
     alternateMob: string;
     gender: string;
     motherTongue: string;
-    dob: Date | null;
-    age?: number;
+    dob: string | null;
     profileCreatedBy: string;
     images: ImageFile[];
     qualification: string;
@@ -104,6 +103,7 @@ export interface UserDetails {
 
     _id?: string
     hasCompleteProfile?: boolean
+    isVerified?: boolean
     isHidden?: boolean
     hideProfiles?: string[]
 }

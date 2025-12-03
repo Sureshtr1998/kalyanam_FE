@@ -13,7 +13,6 @@ import api from "../../../utils/api";
 import { setItem, user_login_token } from "../../../utils/localStore";
 import { useToast } from "../../toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
-import Verify from "./steps/Verify";
 import PaymentModal from "../../paymentModal/PaymentModal";
 import Spinner from "../../spinner/Spinner";
 
@@ -23,7 +22,7 @@ interface Props {
 
 const RegistrationForm = (props: Props) => {
   const { setCurrentForm } = props;
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isPayment, setPayment] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -53,7 +52,7 @@ const RegistrationForm = (props: Props) => {
 
   const errorMsg = "Please fill in all the fields.";
 
-  const validateStep = (currentStep: 1 | 2 | 3 | 4): boolean => {
+  const validateStep = (currentStep: 1 | 2 | 3): boolean => {
     setMessage(null);
     if (currentStep === 1) {
       if (
@@ -111,16 +110,33 @@ const RegistrationForm = (props: Props) => {
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateStep(step)) {
       if (step === 2) setImages([]);
-      if (step === 4) setPayment(true);
-      setStep((prev) => Math.min(4, prev + 1) as 1 | 2 | 3 | 4);
+      if (step === 3) {
+        try {
+          setIsLoading(true);
+          await api.get("/user-validation", {
+            params: { email: formData.email, mobile: formData.mobile },
+          });
+          setIsLoading(false);
+          setPayment(true);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          showToast(
+            "error",
+            "Validation Failed",
+            err.response?.data?.msg || "Server error"
+          );
+          setIsLoading(false);
+        }
+      }
+      setStep((prev) => Math.min(3, prev + 1) as 1 | 2 | 3);
     }
   };
 
   const handleBack = () => {
-    setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3 | 4);
+    setStep((prev) => Math.max(1, prev - 1) as 1 | 2 | 3);
   };
 
   const registerUser = async (orderId: string, paymentId: string) => {
@@ -228,14 +244,6 @@ const RegistrationForm = (props: Props) => {
             setImages={setImages}
             handleBack={handleBack}
             formData={formData}
-          />
-        )}
-        {step === 4 && (
-          <Verify
-            handleBack={handleBack}
-            handleNext={handleNext}
-            email={formData.email}
-            mobile={formData.mobile}
           />
         )}
       </div>

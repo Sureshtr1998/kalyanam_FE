@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import type { UserDetails } from "../../utils/interfaces";
 import "./ProfileCard.scss";
 import ViewCard from "../viewCard/ViewCard";
-import { fetchLabel } from "../../utils/utils";
+import { calculateAge, fetchLabel } from "../../utils/utils";
 import api from "../../utils/api";
 import { useToast } from "../toastProvider/ToastProvider";
 import { IMAGEKIT_PARAMS, qualificationOptions } from "../../utils/constants";
@@ -23,7 +23,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   remainingInterest,
   currentUser,
 }) => {
-  const { fullName, age, subCaste, images, gothra, qualification } =
+  const { fullName, subCaste, dob, images, gothra, qualification } =
     match.basic;
   const userId = match._id;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -105,7 +105,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <h2 className="name">{fullName}</h2>
           <div className="info">
             <div>
-              <span className="label">Age:</span> {age} Yrs
+              <span className="label">Age:</span> {calculateAge(dob)} Yrs
             </div>
             <div>
               <span className="label">Sub Caste:</span> {subCaste}

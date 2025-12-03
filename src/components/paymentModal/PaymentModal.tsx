@@ -60,6 +60,7 @@ const PaymentModal = ({
         handler: (response) => {
           const { razorpay_payment_id, razorpay_order_id } = response;
           onSuccess(razorpay_order_id, razorpay_payment_id);
+          onHide();
         },
         modal: {
           ondismiss: () => {
@@ -90,7 +91,6 @@ const PaymentModal = ({
         "Unable to initiate payment. Please try again."
       );
     } finally {
-      onHide();
       enableBodyScroll();
       setLoading(false);
     }

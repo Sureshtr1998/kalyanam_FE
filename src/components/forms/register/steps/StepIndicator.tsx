@@ -10,7 +10,6 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ step }) => {
     { num: 1, label: "Identity" },
     { num: 2, label: "Background" },
     { num: 3, label: "Profile" },
-    { num: 4, label: "Verification" },
   ];
 
   const totalTransitions = stepLabels.length - 1;

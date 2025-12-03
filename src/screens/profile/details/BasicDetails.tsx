@@ -161,11 +161,7 @@ const BasicDetails = (props: Props) => {
           disabled
           label="Date of Birth"
           name="dob"
-          value={
-            basicData.dob
-              ? new Date((basicData.dob as unknown as string).split("T")[0])
-              : ""
-          }
+          value={basicData.dob ? new Date(basicData.dob.split("T")[0]) : ""}
           icon="pi pi-phone"
           type="date"
         />

@@ -49,7 +49,7 @@ const Profile = (props: StepsType) => {
           Back
         </Button>
         <Button onClick={() => SetNote(true)} className="update-btn">
-          Continue to Verification
+          Continue to Payment
         </Button>
       </div>
     </div>

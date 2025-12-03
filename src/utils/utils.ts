@@ -37,3 +37,11 @@ export const isImageFile = (item: any) => {
 export const remainingInterest = (user: UserDetails) => {
     return (user.interests?.totalNoOfInterest ?? 0) - ((user.interests?.sent?.length ?? 0) + ((user.interests?.viewed?.length ?? 0) * 5));
 }
+
+export const calculateAge = (dob: string) => {
+    if (!dob) return -1;
+    const birthDate = new Date(dob);
+    const diff = Date.now() - birthDate.getTime();
+    const ageDate = new Date(diff);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+};

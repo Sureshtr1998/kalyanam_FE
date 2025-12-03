@@ -25,6 +25,7 @@ import { Message } from "primereact/message";
 import Spinner from "../../components/spinner/Spinner";
 import Overview from "./details/Overview";
 import { isImageFile } from "../../utils/utils";
+import Verify from "../../components/forms/register/steps/Verify";
 
 interface Props {
   user?: UserDetails;
@@ -39,6 +40,7 @@ const Profile = (props: Props) => {
   const [allImgs, setAllImgs] = useState<(File | ImageFile)[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isVerify, setIsVerify] = useState<boolean>(false);
 
   useEffect(() => {
     if (user) setUserData(user);
@@ -132,6 +134,11 @@ const Profile = (props: Props) => {
       return;
     }
 
+    if (!userData.isVerified) setIsVerify(true);
+    else saveProfileData();
+  };
+
+  const saveProfileData = async () => {
     try {
       setIsLoading(true);
 
@@ -169,7 +176,6 @@ const Profile = (props: Props) => {
           ...userData.basic,
           images: finalImages,
         },
-        hasCompleteProfile: true,
       };
 
       const res = await api.post("/my-profile", payload);
@@ -207,7 +213,14 @@ const Profile = (props: Props) => {
   return (
     <div className="w-full">
       <Spinner isLoading={isLoading} />
-
+      {isVerify && (
+        <Verify
+          email={userData.basic.email}
+          mobile={userData.basic.mobile}
+          onHide={() => setIsVerify(false)}
+          success={saveProfileData}
+        />
+      )}
       <div className="profile-container">
         <form className="profile-form">
           {!userData?.hasCompleteProfile && !isReadOnly && (
