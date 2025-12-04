@@ -15,10 +15,11 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleChange: (event: any) => void;
   isReadOnly: boolean;
+  isVerified?: boolean;
 }
 
 const BasicDetails = (props: Props) => {
-  const { basicData, handleChange, isReadOnly } = props;
+  const { basicData, handleChange, isReadOnly, isVerified } = props;
 
   return (
     <div>
@@ -49,7 +50,7 @@ const BasicDetails = (props: Props) => {
           name="email"
           label="Email ID"
           value={basicData.email}
-          disabled
+          disabled={isReadOnly || isVerified}
           onChange={handleChange}
           icon="pi pi-envelope"
         />
@@ -66,10 +67,11 @@ const BasicDetails = (props: Props) => {
 
       <div className="form-row">
         <FormInput
-          disabled
+          disabled={isReadOnly || isVerified}
           label="WhatsApp Number"
           name="mobile"
           maxLength={10}
+          onChange={handleChange}
           value={basicData.mobile}
           icon="pi pi-whatsapp"
         />

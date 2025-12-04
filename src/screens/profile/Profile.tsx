@@ -255,6 +255,7 @@ const Profile = (props: Props) => {
               <BasicDetails
                 isReadOnly={isReadOnly}
                 basicData={userData.basic}
+                isVerified={userData.isVerified}
                 handleChange={(e) => handleChange(e, "basic")}
               />
             </AccordionTab>
