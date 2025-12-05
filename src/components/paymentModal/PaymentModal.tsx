@@ -12,6 +12,8 @@ interface Props {
   userEmail: string;
   userPhone: string;
   amount: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  newUserPayload?: any;
 }
 
 const PaymentModal = ({
@@ -21,6 +23,7 @@ const PaymentModal = ({
   userEmail,
   userPhone,
   amount,
+  newUserPayload,
 }: Props) => {
   const { Razorpay, isLoading, error } = useRazorpay();
   const [loading, setLoading] = useState(false);
@@ -47,6 +50,7 @@ const PaymentModal = ({
         userEmail,
         userPhone: `+91${userPhone}`,
         amount,
+        newUserPayload,
       });
 
       const options: RazorpayOrderOptions = {
