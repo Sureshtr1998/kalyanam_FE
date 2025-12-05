@@ -47,6 +47,7 @@ const BasicDetails = (props: Props) => {
 
       <div className="form-row">
         <FormInput
+          required
           name="email"
           label="Email ID"
           value={basicData.email}
@@ -67,6 +68,7 @@ const BasicDetails = (props: Props) => {
 
       <div className="form-row">
         <FormInput
+          required
           disabled={isReadOnly || isVerified}
           label="WhatsApp Number"
           name="mobile"

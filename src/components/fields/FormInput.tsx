@@ -4,6 +4,7 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
+import { dateFormat } from "../../utils/utils";
 
 type Type = "text" | "number" | "date" | "password" | "email" | "tel";
 interface Props {
@@ -67,8 +68,15 @@ const FormInput = (props: Props) => {
           <Calendar
             name={name}
             showIcon
-            value={value as Date}
-            onChange={onChange}
+            value={value ? new Date(value) : null}
+            onChange={(e) => {
+              onChange?.({
+                target: {
+                  name,
+                  value: dateFormat(e.target.value as Date),
+                },
+              });
+            }}
             disabled={disabled}
             placeholder={placeholder ?? "dd/mm/yyyy"}
             dateFormat="dd/mm/yy"

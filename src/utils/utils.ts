@@ -45,3 +45,10 @@ export const calculateAge = (dob: string) => {
     const ageDate = new Date(diff);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 };
+
+export const dateFormat = (date: Date) => {
+    return date.toLocaleDateString("en-GB")
+        .split("/")
+        .reverse()
+        .join("-")
+}
