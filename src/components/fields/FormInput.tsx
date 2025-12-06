@@ -94,8 +94,17 @@ const FormInput = (props: Props) => {
             name={name}
             disabled={disabled}
             onChange={(e) => {
-              if (!maxLength || e.target.value.length <= maxLength) {
-                onChange?.(e); // only call if within limit or no limit
+              let val = e.target.value;
+              if (type === "email") {
+                val = val.toLowerCase();
+              }
+              if (!maxLength || val.length <= maxLength) {
+                onChange?.({
+                  target: {
+                    name,
+                    value: val,
+                  },
+                });
               }
             }}
             maxLength={maxLength}

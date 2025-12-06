@@ -43,10 +43,7 @@ const RegistrationForm = (props: Props) => {
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
-      [e.target.name]:
-        e.target.name === "email"
-          ? e.target.value.toLowerCase()
-          : e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
 
