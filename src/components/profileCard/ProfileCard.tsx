@@ -90,7 +90,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="img-section">
           <img
             className="transition-style"
-            src={`${images[0].url}${IMAGEKIT_PARAMS}`}
+            src={
+              images?.[0]?.url ? images[0].url + IMAGEKIT_PARAMS : "/logo.png"
+            }
             alt={fullName}
           />
           <div className="profile-id">{match.basic.uniqueId || "SRM-ID"}</div>
