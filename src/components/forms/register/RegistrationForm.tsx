@@ -197,11 +197,12 @@ const RegistrationForm = (props: Props) => {
         <PaymentModal
           onSuccess={registerUser}
           onHide={() => setPayment(false)}
-          newUserPayload={{
+          payload={{
             ...formData,
             amountPaid: REGISTRATION_FEE,
             totalNoOfInterest: INITIAL_NO_INTEREST,
             note: "Registration",
+            endpoint: "user-register",
           }}
           userName={formData.fullName}
           userEmail={formData.email}

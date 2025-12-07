@@ -129,6 +129,7 @@ const PersonalDetails = (props: Props) => {
           name="salary"
           label="Salary"
           placeholder="In LPA"
+          suffix="LPA"
           value={personalData.salary}
           onChange={handleChange}
           disabled={isReadOnly}

@@ -13,7 +13,7 @@ interface Props {
   userPhone: string;
   amount: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  newUserPayload?: any;
+  payload?: any;
 }
 
 const PaymentModal = ({
@@ -23,7 +23,7 @@ const PaymentModal = ({
   userEmail,
   userPhone,
   amount,
-  newUserPayload,
+  payload,
 }: Props) => {
   const { Razorpay, isLoading, error } = useRazorpay();
   const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ const PaymentModal = ({
         userEmail,
         userPhone: `+91${userPhone}`,
         amount,
-        newUserPayload,
+        payload,
       });
 
       const options: RazorpayOrderOptions = {
@@ -68,6 +68,7 @@ const PaymentModal = ({
         },
         modal: {
           ondismiss: () => {
+            onHide();
             showToast(
               "info",
               "Payment Cancelled",
@@ -89,6 +90,7 @@ const PaymentModal = ({
       rzp.open();
     } catch (err) {
       console.error("Payment Error:", err);
+      onHide();
       showToast(
         "error",
         "Payment Error",

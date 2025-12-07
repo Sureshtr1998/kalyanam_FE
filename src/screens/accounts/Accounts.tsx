@@ -136,6 +136,12 @@ const Accounts = (props: Props) => {
           onSuccess={handleSuccess}
           onHide={() => setPayment(false)}
           userName={fullName}
+          payload={{
+            amount: fee,
+            noOfInterest: noInterest,
+            note: "Interest Purchase",
+            endpoint: "buy-interest",
+          }}
           userEmail={email}
           userPhone={mobile}
           amount={fee}

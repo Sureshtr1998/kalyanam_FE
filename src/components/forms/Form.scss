@@ -193,3 +193,13 @@
     color: red;
   }
 }
+
+.input-suffix {
+  position: absolute;
+  right: 10px;
+  top: 68%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 0.9rem;
+  pointer-events: none;
+}

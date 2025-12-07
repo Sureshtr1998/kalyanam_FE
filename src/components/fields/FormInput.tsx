@@ -21,6 +21,7 @@ interface Props {
   required?: boolean;
   maxLength?: number;
   maxDOB?: Date;
+  suffix?: string;
 }
 
 const FormInput = (props: Props) => {
@@ -37,6 +38,7 @@ const FormInput = (props: Props) => {
     required,
     maxLength,
     maxDOB,
+    suffix,
   } = props;
 
   return (
@@ -84,33 +86,36 @@ const FormInput = (props: Props) => {
           />
         </>
       ) : (
-        <IconField iconPosition="left">
-          <InputIcon className={`${icon} field-icon`}> </InputIcon>
-          <InputText
-            onWheel={(e) => e.currentTarget.blur()} // temporarily remove focus to prevent scroll change
-            type={type}
-            placeholder={placeholder}
-            value={value as string}
-            name={name}
-            disabled={disabled}
-            onChange={(e) => {
-              let val = e.target.value;
-              if (type === "email") {
-                val = val.toLowerCase();
-              }
-              if (!maxLength || val.length <= maxLength) {
-                onChange?.({
-                  target: {
-                    name,
-                    value: val,
-                  },
-                });
-              }
-            }}
-            maxLength={maxLength}
-            className="input-text"
-          />
-        </IconField>
+        <>
+          <IconField iconPosition="left">
+            <InputIcon className={`${icon} field-icon`}> </InputIcon>
+            <InputText
+              onWheel={(e) => e.currentTarget.blur()} // temporarily remove focus to prevent scroll change
+              type={type}
+              placeholder={placeholder}
+              value={value as string}
+              name={name}
+              disabled={disabled}
+              onChange={(e) => {
+                let val = e.target.value;
+                if (type === "email") {
+                  val = val.toLowerCase();
+                }
+                if (!maxLength || val.length <= maxLength) {
+                  onChange?.({
+                    target: {
+                      name,
+                      value: val,
+                    },
+                  });
+                }
+              }}
+              maxLength={maxLength}
+              className="input-text"
+            />
+          </IconField>
+          {suffix ? <span className="input-suffix">{suffix}</span> : <></>}
+        </>
       )}
     </div>
   );
