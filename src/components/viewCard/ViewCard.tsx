@@ -55,7 +55,7 @@ const ViewCard = (props: {
         "Request sent successfully, now you can view the profile under View Contact Section"
       );
       setIsLoading(false);
-      navigate("/viewed-numbers");
+      navigate("/activity", { state: { from: "card" } });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

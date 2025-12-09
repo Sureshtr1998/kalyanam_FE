@@ -1,6 +1,35 @@
 @use "../../styles/variables" as vars;
-$standard-success-green: #22c55e; // Tailwind Green 500
-$standard-success-green-hover: #16a34a; // Tailwind Green 600
+
+.activity-tab {
+  background: transparent;
+  margin-left: auto;
+  padding-top: 1rem;
+  padding-left: 2rem;
+  margin-right: 2rem;
+  max-width: 100%;
+  .p-tabview-panels {
+    background-color: transparent;
+  }
+  .p-tabview-nav-link {
+    background-color: vars.$bg-color;
+  }
+  .p-tabview-nav-next,
+  .p-tabview-nav-prev {
+    display: none;
+  }
+  .p-highlight {
+    span {
+      color: vars.$text-color;
+      text-decoration: none;
+    }
+    .p-tabview-nav-link {
+      border-color: vars.$border-color;
+    }
+  }
+}
+
+$standard-success-green: #22c55e;
+$standard-success-green-hover: #16a34a;
 
 .profiles-container {
   background-color: vars.$bg-color;

@@ -67,24 +67,14 @@ const Topbar = ({ applyFilter }: Props) => {
 
   const avatarMenuItems = [
     {
-      label: "Profile (Edit)",
+      label: "Profile",
       icon: "pi pi-user-edit",
       command: () => navigate("/profile"),
     },
     {
-      label: "Invitation Status",
-      icon: "pi pi-list",
-      command: () => navigate("/invitations"),
-    },
-    {
-      label: "Hidden Profiles",
-      icon: "pi pi-eye-slash",
-      command: () => navigate("/hidden"),
-    },
-    {
-      label: "Viewed Numbers",
-      icon: "pi pi-phone",
-      command: () => navigate("/viewed-numbers"),
+      label: "Activity",
+      icon: "pi pi-bolt",
+      command: () => navigate("/activity"),
     },
     {
       label: "Account",

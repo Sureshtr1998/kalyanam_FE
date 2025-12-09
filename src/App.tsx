@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import Home from "./screens/home/Home";
 import ProtectedRoute from "./components/misc/ProtectedRoute";
-import Invitations from "./screens/invitations/Invitations";
 import Profile from "./screens/profile/Profile";
 import Accounts from "./screens/accounts/Accounts";
 import { ToastProvider } from "./components/toastProvider/ToastProvider";
@@ -17,10 +16,8 @@ import { useEffect, useState } from "react";
 import { formDefaultVals } from "./utils/constants";
 import type { UserDetails } from "./utils/interfaces";
 import { HelmetProvider } from "react-helmet-async";
-import HiddenProfiles from "./screens/hiddenProfiles/HiddenProfiles";
 import AboutUs from "./screens/aboutUs/AboutUs";
 import PublicWrapper from "./components/publicWrapper/PublicWrapper";
-import ViewedNumbers from "./screens/viewedNumber/ViewedNumber";
 import FaqPage from "./screens/faq/FAQPage";
 import TermsConditions from "./screens/terms/TermsConditions";
 import PrivacyPolicy from "./screens/privacy/PrivacyPolicy";
@@ -28,6 +25,7 @@ import Blog from "./screens/blogs/Blog";
 import ContactUs from "./screens/contactUs/ContactUs";
 import Pricing from "./screens/pricing/Pricing";
 import RefundPolicy from "./screens/refund/Refund";
+import Activity from "./screens/activity/Activity";
 
 const AppContent = () => {
   const location = useLocation();
@@ -144,35 +142,16 @@ const AppContent = () => {
               }
             />
             <Route
-              path="/invitations"
+              path="/activity"
               element={
                 <ProtectedRoute>
                   <Wrapper>
-                    <Invitations />
+                    <Activity />
                   </Wrapper>
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/hidden"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <HiddenProfiles />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/viewed-numbers"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <ViewedNumbers />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
+
             <Route
               path="/account"
               element={
