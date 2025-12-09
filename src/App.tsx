@@ -26,6 +26,7 @@ import ContactUs from "./screens/contactUs/ContactUs";
 import Pricing from "./screens/pricing/Pricing";
 import RefundPolicy from "./screens/refund/Refund";
 import Activity from "./screens/activity/Activity";
+import Astrology from "./screens/astrology/Astrology";
 
 const AppContent = () => {
   const location = useLocation();
@@ -147,6 +148,16 @@ const AppContent = () => {
                 <ProtectedRoute>
                   <Wrapper>
                     <Activity />
+                  </Wrapper>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/astrology"
+              element={
+                <ProtectedRoute>
+                  <Wrapper>
+                    <Astrology />
                   </Wrapper>
                 </ProtectedRoute>
               }

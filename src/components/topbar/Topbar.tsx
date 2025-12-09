@@ -77,6 +77,11 @@ const Topbar = ({ applyFilter }: Props) => {
       command: () => navigate("/activity"),
     },
     {
+      label: "Vedic Astrology",
+      icon: "pi pi-sparkles",
+      command: () => navigate("/astrology"),
+    },
+    {
       label: "Account",
       icon: "pi pi-cog",
       command: () => navigate("/account"),
