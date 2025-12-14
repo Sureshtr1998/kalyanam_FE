@@ -128,7 +128,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             View Profile
           </Button>
           <Button
-            className="icon-btn"
+            className="ternary-btn"
             onClick={sendInterest}
             disabled={remainingInterest < 1}
             title={

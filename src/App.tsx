@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import Home from "./screens/home/Home";
 import ProtectedRoute from "./components/misc/ProtectedRoute";
@@ -183,6 +184,7 @@ const AppContent = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<Navigate to="/home" replace />} />
           </Routes>
         </div>
       </ToastProvider>

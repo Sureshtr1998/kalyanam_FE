@@ -47,8 +47,50 @@ export const calculateAge = (dob: string) => {
 };
 
 export const dateFormat = (date: Date) => {
-    return date.toLocaleDateString("en-GB")
+    if (!date) return "";
+
+    const formattedDate = date
+        .toLocaleDateString("en-GB")
         .split("/")
         .reverse()
-        .join("-")
-}
+        .join("-");
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const hasTime = !(hours === 0 && minutes === 0);
+
+    if (!hasTime) {
+        return formattedDate;
+    }
+
+    const hh = String(hours).padStart(2, "0");
+    const mm = String(minutes).padStart(2, "0");
+
+    return `${formattedDate} ${hh}:${mm}`;
+};
+
+
+export const parseGptResponse = (gptResponse: string) => {
+    if (!gptResponse) return {};
+
+    const cleaned = gptResponse
+        .replace(/```json|```/g, "")
+        .trim();
+
+    try {
+        return JSON.parse(cleaned);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err: any) {
+
+        const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+            try {
+                return JSON.parse(jsonMatch[0]);
+            } catch {
+                return gptResponse
+            }
+        }
+        return {};
+    }
+};
+

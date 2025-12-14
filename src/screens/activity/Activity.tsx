@@ -27,16 +27,13 @@ const Activity = () => {
   const [user, setUser] = useState<UserDetails>();
   const [currentUser, setCurrentUser] = useState<UserDetails>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const { showToast } = useToast();
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.state?.from === "card") {
-      setActiveIndex(1);
-    }
-  }, [location.state?.from]);
+  const [activeIndex, setActiveIndex] = useState(
+    location.state?.from === "card" ? 1 : 0
+  );
 
   useEffect(() => {
     init();

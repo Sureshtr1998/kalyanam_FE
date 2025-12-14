@@ -88,6 +88,27 @@ export interface TransactionsIn {
     noOfInterest?: number,
 }
 
+export type ConsultationMode = "Overview" | "Personalized" | "Kundli Matching";
+
+
+export interface AstrologyIn {
+    name?: string;
+    mName?: string;
+    uId: string;
+    dob?: Date;
+    mDob?: Date;
+    place?: string;
+    mPlace?: string;
+    gender?: string;
+    mGender?: string;
+    consultationMode?: ConsultationMode;
+    query?: string;
+    generatedAt?: Date;
+    status?: string;
+    aiResponse?: string;
+}
+
+
 export interface UserDetails {
     basic: BasicDetailsIn
 
@@ -100,6 +121,8 @@ export interface UserDetails {
     interests?: InterestsIn
 
     transactions?: TransactionsIn[]
+
+    astrology?: AstrologyIn[]
 
     _id?: string
     hasCompleteProfile?: boolean

@@ -449,4 +449,9 @@ export const INITIAL_NO_INTEREST = 51
 export const PURCHASE_NO_INTEREST = 21
 export const PURCHASE_INTEREST_FEE = 101
 export const PURCHASE_NO_INTEREST_2 = 56
-export const PURCHASE_INTEREST_FEE_2 = 251 
+export const PURCHASE_INTEREST_FEE_2 = 251
+
+//Astrology
+export const OVERVIEW_ASTRO_FEE = 51
+export const KUNDLI_MATCHING_ASTRO_FEE = 201
+export const PERSONALIZED_ASTRO_FEE = 251

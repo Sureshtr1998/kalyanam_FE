@@ -22,6 +22,7 @@ interface Props {
   maxLength?: number;
   maxDOB?: Date;
   suffix?: string;
+  showTime?: boolean;
 }
 
 const FormInput = (props: Props) => {
@@ -39,6 +40,7 @@ const FormInput = (props: Props) => {
     maxLength,
     maxDOB,
     suffix,
+    showTime = false,
   } = props;
 
   return (
@@ -51,7 +53,7 @@ const FormInput = (props: Props) => {
 
       {/* {Icon && <Icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-500 ${isTextArea ? 'top-4 -translate-y-0' : ''}`} />} */}
       {isTextArea ? (
-        <div className="relative mb-4 w-full max-w-sm">
+        <div className="relative mb-4 w-full">
           <span className="field-icon absolute left-3 top-1/8  pointer-events-none">
             <i className={icon}> </i>
           </span>
@@ -83,6 +85,8 @@ const FormInput = (props: Props) => {
             placeholder={placeholder ?? "dd/mm/yyyy"}
             dateFormat="dd/mm/yy"
             maxDate={maxDOB}
+            showTime={showTime}
+            hourFormat="12"
           />
         </>
       ) : (
