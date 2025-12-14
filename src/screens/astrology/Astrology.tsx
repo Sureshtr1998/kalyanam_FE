@@ -63,9 +63,8 @@ const Astrology = () => {
       const res = await api.get("/astro-data");
       if (res.data?.astrology) {
         setAstroData(res.data.astrology);
-        setCurrentUser(res.data.currentUser);
       }
-      console.log(res.data, "res.data.astrology");
+      setCurrentUser(res.data.currentUser);
       setIsLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
