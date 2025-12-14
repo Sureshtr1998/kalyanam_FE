@@ -77,21 +77,24 @@ const Astrology = () => {
     }
   };
 
+  const fetchPayload = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let payload: any = { consultationMode, name, dob, place, gender };
+
+    if (consultationMode === "Personalized") {
+      payload = { ...payload, query };
+    } else if (consultationMode === "Kundli Matching") {
+      payload = { ...payload, mName, mDob, mPlace, mGender };
+    }
+    return payload;
+  };
+
   const handleSuccess = async (orderId: string, paymentId: string) => {
     try {
       setIsLoading(true);
-
+      const payload = fetchPayload();
       const res = await api.post("/astro-data", {
-        consultationMode,
-        name,
-        dob,
-        place,
-        gender,
-        query,
-        mName,
-        mDob,
-        mPlace,
-        mGender,
+        ...payload,
         orderId,
         paymentId,
         amount: fetchPayment(),
@@ -137,16 +140,7 @@ const Astrology = () => {
           onHide={() => setPayment(false)}
           userName={currentUser?.basic.fullName ?? ""}
           payload={{
-            consultationMode,
-            name,
-            dob,
-            place,
-            gender,
-            query,
-            mName,
-            mDob,
-            mPlace,
-            mGender,
+            ...fetchPayload(),
             amount: fetchPayment(),
             note: `Astro_${consultationMode}`,
             endpoint: "astro-data",
