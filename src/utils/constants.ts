@@ -438,6 +438,10 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "employedIn",
 ]
 
+
+export const MAX_IMAGES = 3;
+export const MAX_FILE_SIZE_MB = 1;
+
 export const IMAGEKIT_PARAMS = "?tr=w-3000,h-3000,q-80,fo-face"
 
 export const updatedDate = "Decmber 1, 2025"

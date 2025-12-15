@@ -6,7 +6,11 @@ import "./ImageMedia.scss";
 
 import { Image } from "primereact/image";
 import type { ImageFile } from "../../utils/interfaces";
-import { IMAGEKIT_PARAMS } from "../../utils/constants";
+import {
+  IMAGEKIT_PARAMS,
+  MAX_FILE_SIZE_MB,
+  MAX_IMAGES,
+} from "../../utils/constants";
 
 interface ImageUploadProps {
   onChange?: (files: File[]) => void;
@@ -14,9 +18,6 @@ interface ImageUploadProps {
   initialImages?: ImageFile[];
   isReadOnly?: boolean;
 }
-
-const MAX_IMAGES = 3;
-const MAX_FILE_SIZE_MB = 1;
 
 const ImageSlot: React.FC<{
   content: ImageFile | File;
@@ -82,6 +83,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
   const slotsToFill = totalSlots - allMedia.length;
 
   const onSelect = (e: FileUploadHandlerEvent) => {
+    console.log("HI");
     setError(null);
     let selectedFiles = Array.from(e.files as File[]);
 
@@ -90,6 +92,7 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
     }
 
     const newFilesToAdd: File[] = [];
+    console.log(selectedFiles, "HELLO");
 
     for (const file of selectedFiles) {
       if (!["image/png", "image/jpeg", "image/jpg"].includes(file.type)) {
@@ -157,6 +160,9 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
               disabled={allMedia.length >= MAX_IMAGES}
               className="p-button-warning select-images-button"
               maxFileSize={MAX_FILE_SIZE_MB * 1024 * 1024}
+              onValidationFail={() => {
+                setError(`Each file must be under ${MAX_FILE_SIZE_MB} MB.`);
+              }}
             />
             <span className="file-info">
               Max {MAX_IMAGES} files | PNG, JPEG, JPG | Max {MAX_FILE_SIZE_MB}MB
@@ -165,7 +171,11 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
           </div>
 
           {error && (
-            <Message severity="error" text={error} className="error-message" />
+            <Message
+              severity="error"
+              text={error}
+              className="image-upload-error-message"
+            />
           )}
         </>
       )}
