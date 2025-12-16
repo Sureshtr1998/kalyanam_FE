@@ -26,6 +26,7 @@ import Spinner from "../../components/spinner/Spinner";
 import Overview from "./details/Overview";
 import { isImageFile } from "../../utils/utils";
 import Verify from "../../components/forms/register/steps/Verify";
+import { sendReport } from "../../utils/report";
 
 interface Props {
   user?: UserDetails;
@@ -190,16 +191,15 @@ const Profile = (props: Props) => {
         err.response?.data?.msg || "Something went wrong"
       );
       setIsLoading(false);
-      await api
-        .post("/report", {
-          error: JSON.stringify(err, Object.getOwnPropertyNames(err)),
-        })
-        .catch(() => {});
+      const errorPayload = JSON.stringify({
+        error: JSON.parse(JSON.stringify(err, Object.getOwnPropertyNames(err))),
+        userData,
+      });
+      await sendReport(errorPayload);
     }
   };
 
   const handleExisting = (file: ImageFile[]) => {
-    console.log(file, "file");
     setAllImgs((prev) => {
       const filesOnly = prev.filter((item) => item instanceof File);
       return [...file, ...filesOnly] as (File | ImageFile)[];
