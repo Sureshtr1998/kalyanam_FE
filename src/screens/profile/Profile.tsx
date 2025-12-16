@@ -190,6 +190,11 @@ const Profile = (props: Props) => {
         err.response?.data?.msg || "Something went wrong"
       );
       setIsLoading(false);
+      await api
+        .post("/report", {
+          error: JSON.stringify(err, Object.getOwnPropertyNames(err)),
+        })
+        .catch(() => {});
     }
   };
 
