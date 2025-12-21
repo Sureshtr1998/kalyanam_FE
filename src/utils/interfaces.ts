@@ -6,6 +6,7 @@ export interface BasicDetailsIn {
     password: string;
     confirmPassword: string;
     subCaste: string;
+    caste: string;
     gothra: string;
     mobile: string;
     alternateMob: string;
@@ -61,6 +62,7 @@ export interface PartnerDetailsIn {
     martialStatus?: string[];
     heightFrom?: string
     heightTo?: string
+    caste?: string[]
     subCaste?: string[]
     motherTongue?: string[]
     employedIn?: string[]

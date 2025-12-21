@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { UserDetails } from "./interfaces";
+import casteData from "./caste.json"
+import languageData from "./lang.json"
 
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
@@ -94,3 +96,30 @@ export const parseGptResponse = (gptResponse: string) => {
     }
 };
 
+
+export const motherTongueOptions = languageData.map(item => ({
+    label: item.key,
+    value: item.value
+}));
+
+export const casteOptions = casteData.map(item => ({
+    label: item.caste,
+    value: item.caste.toLowerCase()
+}));
+
+export const subCasteOptions = (caste: string) => {
+    if (!caste) return [];
+
+    const casteObj = casteData.find(
+        item => item.caste.toLowerCase() === caste
+    );
+
+    if (!casteObj || !casteObj.subCastes.length) {
+        return [];
+    }
+
+    return casteObj.subCastes.map(subCaste => ({
+        label: subCaste,
+        value: subCaste
+    }));
+};

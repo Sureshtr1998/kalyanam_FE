@@ -23,7 +23,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   remainingInterest,
   currentUser,
 }) => {
-  const { fullName, subCaste, dob, images, gothra, qualification } =
+  const { fullName, caste, subCaste, dob, images, gothra, qualification } =
     match.basic;
   const userId = match._id;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -110,7 +110,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               <span className="label">Age:</span> {calculateAge(dob ?? "")} Yrs
             </div>
             <div>
-              <span className="label">Sub Caste:</span> {subCaste}
+              <span className="label">Caste:</span>
+              {caste}
+              {subCaste ? `- ${subCaste}` : ""}
             </div>
             <div>
               <span className="label">Qualification:</span>{" "}

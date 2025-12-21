@@ -341,27 +341,6 @@ export const residingOptions = [
     { label: "NRI", value: "NRI" },
 ]
 
-export const subCasteOptions = [
-    { label: 'Smartha', value: 'Smartha' },
-    { label: 'Madhwa/Vaishnava', value: 'Madhwa/Vaishnava' },
-    { label: 'Iyer', value: 'Iyer' },
-    { label: 'Sri Vaishnava/Iyengar', value: 'Sri Vaishnava/Iyengar' },
-    { label: 'Other', value: 'Other' },
-];
-
-export const motherTongueOptions = [
-    { label: 'Kannada', value: 'Kannada' },
-    { label: 'Tulu', value: 'Tulu' },
-    { label: 'Hindi', value: 'Hindi' },
-    { label: 'Tamil', value: 'Tamil' },
-    { label: 'Telugu', value: 'Telugu' },
-    { label: 'Bengali', value: 'Bengali' },
-    { label: 'Konkani', value: 'Konkani' },
-    { label: 'Marathi', value: 'Marathi' },
-    { label: 'Malayalam', value: 'Malayalam' },
-    { label: 'Others', value: 'Others' },
-];
-
 export const createdByOptions = [
     { label: 'Self', value: 'Self' },
     { label: 'Parent', value: 'Parent' },
@@ -405,6 +384,7 @@ export const formDefaultVals = {
         password: '',
         confirmPassword: '',
         subCaste: '',
+        caste: '',
         gothra: '',
         mobile: '',
         alternateMob: '',
@@ -419,7 +399,7 @@ export const formDefaultVals = {
 }
 
 export const mandatoryBasicFields: (keyof BasicDetailsIn)[] = [
-    'qualification', 'gothra', 'martialStatus', 'motherTongue', 'subCaste'
+    'qualification', 'gothra', 'martialStatus', 'motherTongue', 'caste'
 ]
 
 export const mandatoryPersonalFields: (keyof PersonalDetailsIn)[] = [
@@ -437,6 +417,7 @@ export const mandatoryFamilyFields: (keyof FamilyDetailsIn)[] = [
 export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "ageFrom",
     "ageTo",
+    "caste",
     "employedIn",
 ]
 

@@ -75,6 +75,7 @@ const SelectInput = (props: Props) => {
             onChange={onChange}
             placeholder={placeholder}
             className="dropdown-field"
+            filter={filter}
           />
         )}
       </div>

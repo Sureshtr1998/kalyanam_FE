@@ -4,12 +4,14 @@ import {
   employedInOptions,
   heightOptions,
   maritalOptions,
-  motherTongueOptions,
   qualificationOptions,
-  subCasteOptions,
 } from "../../../utils/constants";
 import type { PartnerDetailsIn } from "../../../utils/interfaces";
-import { normalizeToArray } from "../../../utils/utils";
+import {
+  casteOptions,
+  motherTongueOptions,
+  normalizeToArray,
+} from "../../../utils/utils";
 import SelectInput from "../../../components/fields/SelectInput";
 import FormInput from "../../../components/fields/FormInput";
 
@@ -62,14 +64,16 @@ const PartnerPreferences = (props: Props) => {
           required={!isFilter}
         />
         <SelectInput
-          name="subCaste"
-          label="Sub Caste"
-          value={normalizeToArray(partnerData.subCaste)}
+          name="caste"
+          label="Caste"
+          value={normalizeToArray(partnerData.caste)}
           onChange={handleChange}
-          options={subCasteOptions}
+          options={casteOptions}
           disabled={isReadOnly}
           icon="pi pi-book"
           isMultiselect
+          filter
+          required
         />
       </div>
 
@@ -139,6 +143,7 @@ const PartnerPreferences = (props: Props) => {
           disabled={isReadOnly}
           icon="pi pi-language"
           isMultiselect
+          filter
         />
       </div>
       <div className="form-row">

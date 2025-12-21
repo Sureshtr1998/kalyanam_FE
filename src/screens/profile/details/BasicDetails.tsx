@@ -1,14 +1,17 @@
 import {
   maritalOptions,
-  motherTongueOptions,
   createdByOptions,
   genderOptions,
-  subCasteOptions,
   qualificationOptions,
 } from "../../../utils/constants";
 import type { BasicDetailsIn } from "../../../utils/interfaces";
 import FormInput from "../../../components/fields/FormInput";
 import SelectInput from "../../../components/fields/SelectInput";
+import {
+  casteOptions,
+  motherTongueOptions,
+  subCasteOptions,
+} from "../../../utils/utils";
 
 interface Props {
   basicData: BasicDetailsIn;
@@ -100,6 +103,7 @@ const BasicDetails = (props: Props) => {
           onChange={handleChange}
           options={motherTongueOptions}
           icon="pi pi-language"
+          filter
         />
 
         <SelectInput
@@ -138,6 +142,30 @@ const BasicDetails = (props: Props) => {
 
       <div className="form-row">
         <SelectInput
+          name="caste"
+          label="Caste"
+          required
+          value={basicData.caste}
+          onChange={handleChange}
+          options={casteOptions}
+          icon="pi pi-book"
+          filter
+          disabled
+        />
+        <SelectInput
+          name="subCaste"
+          label="Sub Caste"
+          value={basicData.subCaste}
+          onChange={handleChange}
+          options={subCasteOptions(basicData.caste)}
+          icon="pi pi-sitemap"
+          filter
+          disabled
+        />
+      </div>
+
+      <div className="form-row">
+        <SelectInput
           name="qualification"
           label="Qualification"
           disabled={isReadOnly}
@@ -147,20 +175,6 @@ const BasicDetails = (props: Props) => {
           icon="pi pi-graduation-cap"
           required
         />
-
-        <SelectInput
-          name="subCaste"
-          label="Sub Caste"
-          required
-          value={basicData.subCaste}
-          onChange={handleChange}
-          options={subCasteOptions}
-          icon="pi pi-book"
-          disabled
-        />
-      </div>
-
-      <div className="form-row">
         <FormInput
           disabled
           label="Date of Birth"
@@ -169,7 +183,9 @@ const BasicDetails = (props: Props) => {
           icon="pi pi-phone"
           type="date"
         />
+      </div>
 
+      <div className="form-row">
         <FormInput
           isTextArea
           label="Additional Notes"

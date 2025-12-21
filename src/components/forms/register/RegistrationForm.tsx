@@ -83,7 +83,7 @@ const RegistrationForm = (props: Props) => {
         !formData.motherTongue ||
         !formData.qualification ||
         !formData.gothra ||
-        !formData.subCaste ||
+        !formData.caste ||
         !formData.profileCreatedBy
       ) {
         setMessage({ text: errorMsg, type: "error" });
