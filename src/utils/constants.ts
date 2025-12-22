@@ -380,6 +380,7 @@ export const qualificationOptions = [
     { label: "B.Tech / B.E", value: "btech" },
     { label: "BBA", value: "bba" },
     { label: "BCA", value: "bca" },
+    { label: "LLB", value: "llb" },
 
     // Master Degrees
     { label: "M.Sc", value: "msc" },
@@ -389,6 +390,7 @@ export const qualificationOptions = [
     { label: "MBA", value: "mba" },
     { label: "MCA", value: "mca" },
     { label: "PhD", value: "phd" },
+    { label: "LLM", value: "llm" },
     { label: "Other", value: "other" }
 ]
 
