@@ -62,7 +62,7 @@ const FormInput = (props: Props) => {
             value={value as string}
             onChange={onChange}
             rows={3}
-            disabled={disabled}
+            readOnly={disabled}
             name={name}
             className="input-text"
           />

@@ -201,7 +201,9 @@ const Activity = () => {
         <ViewCard
           user={user}
           hide={() => setUser(undefined)}
-          isAccept={user.interests?.invitationStatus === "accept"}
+          isAccept={
+            user.interests?.invitationStatus === "accept" || activeIndex === 1
+          }
           currentUser={currentUser}
         />
       )}
