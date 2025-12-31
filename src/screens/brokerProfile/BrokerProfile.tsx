@@ -66,6 +66,7 @@ const BrokerProfile = () => {
               <FormInput
                 name="email"
                 label="Email ID"
+                type="email"
                 value={brokerData.email}
                 disabled
                 icon="pi pi-envelope"
@@ -75,12 +76,22 @@ const BrokerProfile = () => {
               <FormInput
                 required
                 disabled
+                label="Referral ID"
+                name="referralId"
+                value={brokerData.referralId}
+                icon="pi pi-share-alt"
+              />
+              <FormInput
+                required
+                disabled
                 label="Phone Number"
                 name="phone"
                 maxLength={10}
                 value={brokerData.phone}
                 icon="pi pi-whatsapp"
               />
+            </div>
+            <div className="form-row">
               <FormInput
                 name="companyName"
                 label="Company Name"
@@ -88,8 +99,6 @@ const BrokerProfile = () => {
                 value={brokerData.companyName}
                 icon="pi pi-building"
               />
-            </div>
-            <div className="form-row">
               <FormInput
                 name="address"
                 label="Address"
@@ -97,6 +106,8 @@ const BrokerProfile = () => {
                 value={brokerData.address}
                 icon="pi pi-map"
               />
+            </div>
+            <div className="form-row">
               <SelectInput
                 name="caste"
                 label="Caste"
@@ -106,8 +117,6 @@ const BrokerProfile = () => {
                 icon="pi pi-book"
                 isMultiselect
               />
-            </div>
-            <div className="form-row">
               <FormInput
                 label="Total Users Referred"
                 name="reffered"
@@ -115,6 +124,8 @@ const BrokerProfile = () => {
                 value={brokerData.usersReferred}
                 icon="pi pi-share-alt"
               />
+            </div>
+            <div className="form-row">
               <FormInput
                 isTextArea
                 label="Additional Notes"

@@ -413,7 +413,7 @@ export const formDefaultVals = {
 }
 
 export const mandatoryBasicFields: (keyof BasicDetailsIn)[] = [
-    'qualification', 'gothra', 'martialStatus', 'motherTongue', 'caste'
+    'qualification', 'martialStatus', 'motherTongue', 'caste'
 ]
 
 export const mandatoryPersonalFields: (keyof PersonalDetailsIn)[] = [

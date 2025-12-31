@@ -83,6 +83,11 @@ const Profile = (props: StepsType) => {
           maxLength={7}
         />
       </div>
+      {referralId && referralId?.length > 0 && isDisabled && (
+        <p className="mt-1 text-center text-sm text-red-500">
+          Invalid Referral ID
+        </p>
+      )}
 
       <div className="flex justify-between gap-4 mt-6">
         <Button onClick={handleBack} className="secondary-btn">

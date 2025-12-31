@@ -60,7 +60,7 @@ const FormInput = (props: Props) => {
     );
   };
 
-  if (disabled) {
+  if (disabled && !isTextArea) {
     return (
       <div className="relative mb-4 field-row">
         {label && <p className="field-label mr-4 mt-1">{label}</p>}
@@ -85,6 +85,7 @@ const FormInput = (props: Props) => {
             onChange={onChange}
             rows={3}
             name={name}
+            readOnly={disabled}
             className="input-text"
           />
         </div>

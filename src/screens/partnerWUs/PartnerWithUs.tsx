@@ -51,7 +51,7 @@ const PartnerWithUs = () => {
     return false;
   };
 
-  const submitData = async () => {
+  const submitData = async (orderId: string, paymentId: string) => {
     if (brokerData.password !== brokerData.confirmPassword) {
       showToast(
         "error",
@@ -73,13 +73,20 @@ const PartnerWithUs = () => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
       const idProofs = uploadRes.data.media; // [{ url, fileId }]
-      const payload = { ...brokerData, idProofs };
+      const payload = {
+        ...brokerData,
+        idProofs,
+        orderId,
+        amount: BROKERAGE_REGISTRATION_FEE,
+        paymentId,
+      };
       await api.post("/broker-register", payload);
       showToast(
         "success",
         "Registration successful",
         "Broker registered successfully."
       );
+
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -149,7 +156,7 @@ const PartnerWithUs = () => {
           onHide={() => setPayment(false)}
           payload={{
             ...brokerData,
-            amountPaid: BROKERAGE_REGISTRATION_FEE,
+            amount: BROKERAGE_REGISTRATION_FEE,
             note: "Broker Registration",
             endpoint: "broker-register",
           }}
@@ -337,7 +344,7 @@ const PartnerWithUs = () => {
             <SelectInput
               name="motherTongue"
               label={t("mother_tongues_serve")}
-              value={brokerData.caste}
+              value={brokerData.motherTongue}
               onChange={handleChange}
               options={motherTongueOptions}
               icon="pi pi-language"

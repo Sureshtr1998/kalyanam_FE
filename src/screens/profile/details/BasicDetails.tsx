@@ -97,6 +97,7 @@ const BasicDetails = (props: Props) => {
           required
           name="email"
           label="Email ID"
+          type="email"
           value={basicData.email}
           disabled={isReadOnly || isVerified}
           onChange={handleChange}

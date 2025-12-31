@@ -114,7 +114,7 @@ export const subCasteOptions = (caste: string) => {
     if (!caste) return [];
 
     const casteObj = casteData.find(
-        item => item.caste.toLowerCase() === caste
+        item => item.caste === caste
     );
 
     if (!casteObj || !casteObj.subCastes.length) {
