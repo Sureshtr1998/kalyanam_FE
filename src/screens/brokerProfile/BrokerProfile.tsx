@@ -5,7 +5,11 @@ import type { BrokerRegistrationForm } from "../../utils/brokerInterface";
 import { brokerFormDefaultVals } from "../../utils/constants";
 import Spinner from "../../components/spinner/Spinner";
 import FormInput from "../../components/fields/FormInput";
-import { casteOptions, normalizeToArray } from "../../utils/utils";
+import {
+  casteOptions,
+  motherTongueOptions,
+  normalizeToArray,
+} from "../../utils/utils";
 import SelectInput from "../../components/fields/SelectInput";
 import { TEXT_COLOR } from "../../styles/variables";
 
@@ -110,13 +114,24 @@ const BrokerProfile = () => {
             <div className="form-row">
               <SelectInput
                 name="caste"
-                label="Caste"
+                label="Communities You Serve"
                 value={normalizeToArray(brokerData.caste)}
                 options={casteOptions}
                 disabled
                 icon="pi pi-book"
                 isMultiselect
               />
+              <SelectInput
+                name="motherTongue"
+                label="Mother Tongues You Serve"
+                value={normalizeToArray(brokerData.motherTongue)}
+                options={motherTongueOptions}
+                disabled
+                icon="pi pi-book"
+                isMultiselect
+              />
+            </div>
+            <div className="form-row">
               <FormInput
                 label="Total Users Referred"
                 name="reffered"
@@ -124,8 +139,6 @@ const BrokerProfile = () => {
                 value={brokerData.usersReferred}
                 icon="pi pi-share-alt"
               />
-            </div>
-            <div className="form-row">
               <FormInput
                 isTextArea
                 label="Additional Notes"
