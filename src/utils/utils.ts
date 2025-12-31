@@ -18,11 +18,14 @@ export const fetchLabel = (options: { label: string, value: string }[], value: s
     return options.find(option => option.value === value)?.label || '-'
 }
 
+export const arrayLabel = (
+    value: string | string[] | undefined,
+    options: { label: string; value: string }[]
+): string[] => {
+    if (!value || !value.length) return [];
+    return normalizeToArray(value).map(val => fetchLabel(options, val));
+};
 
-export const arrayLabel = (value: string | string[] | undefined, options: { label: string, value: string }[]) => {
-    if (!value || !value.length) return '-'
-    return normalizeToArray(value).map(val => fetchLabel(options, val)).join(', ')
-}
 export const getInitials = (name: string = "") => {
     return name
         .split("")
@@ -104,7 +107,7 @@ export const motherTongueOptions = languageData.map(item => ({
 
 export const casteOptions = casteData.map(item => ({
     label: item.caste,
-    value: item.caste.toLowerCase()
+    value: item.caste
 }));
 
 export const subCasteOptions = (caste: string) => {

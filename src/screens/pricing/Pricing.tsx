@@ -27,7 +27,7 @@ const Pricing = () => {
       <SEO
         title="Pricing Plans | Seetha Rama Kalyana"
         description="Explore Seetha Rama Kalyana's registration and interest purchase plans. Start your journey with a one-time registration fee and buy interest credits to connect with your ideal match."
-        keywords="brahmin matrimony, matrimony, registration fee, interest pack, pricing plans, Seetha Rama Kalyana"
+        keywords="hindu matrimony, matrimony, registration fee, interest pack, pricing plans, Seetha Rama Kalyana"
         url={canonicalUrl}
       />
 
@@ -42,7 +42,7 @@ const Pricing = () => {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Start your journey with a yearly registration fee, then purchase
               interest credits to connect with other users on Seetha Rama
-              Kalyana, the trusted Brahmin matrimony platform.
+              Kalyana, the trusted Hindu matrimony platform.
             </p>
           </header>
 

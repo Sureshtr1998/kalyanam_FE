@@ -6,9 +6,17 @@ import type { FormType } from "../../utils/interfaces";
 import RegistrationForm from "../../components/forms/register/RegistrationForm";
 import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
 import SEO from "../../components/misc/SEO";
+import { getItem, user_login_token } from "../../utils/localStore";
+import { useNavigate } from "react-router-dom";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getItem(user_login_token)?.token;
+    if (token) navigate("/home");
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -25,9 +33,9 @@ const Lander = () => {
   return (
     <div>
       <SEO
-        title="Seetha Rama Kalyana | Brahmin Matrimony"
-        description="Join Seetha Rama Kalyana, the trusted Brahmin matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
-        keywords="brahmin matrimony, brahmin matrimony, seetha rama kalyana, matchmaking, marriage"
+        title="Seetha Rama Kalyana | Hindu Matrimony"
+        description="Join Seetha Rama Kalyana, the trusted Hindu matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
+        keywords="hindu matrimony, hindu matrimony, seetha rama kalyana, matchmaking, marriage"
         url="https://www.seetharamakalyana.in"
       />
 

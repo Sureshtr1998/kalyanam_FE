@@ -91,7 +91,7 @@ const Home = (props: Props) => {
               <h3>No Profiles Yet!</h3>
               <p>
                 We've very recently launched this application. Please be patient
-                many more profiles are coming soon by <b> December end. </b>
+                many more profiles are coming soon by <b> February end. </b>
                 We're actively bringing in users, and we truly appreciate your
                 support!
               </p>

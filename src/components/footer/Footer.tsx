@@ -2,7 +2,7 @@ import "./Footer.scss";
 const Footer = () => {
   return (
     <footer>
-      &copy; 2025 Seetha Raama Kalyana. Dedicated to finding your match.
+      &copy; 2026 Seetha Raama Kalyana. Dedicated to finding your match.
     </footer>
   );
 };

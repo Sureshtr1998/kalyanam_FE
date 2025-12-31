@@ -11,6 +11,7 @@ import { useToast } from "../toastProvider/ToastProvider";
 import Spinner from "../spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 import { remainingInterest } from "../../utils/utils";
+import { isBroker } from "../../utils/constants";
 
 const ViewCard = (props: {
   user: UserDetails;
@@ -81,7 +82,7 @@ const ViewCard = (props: {
         <Spinner isLoading={isLoading} />
 
         <div className="mb-4 mt-2 text-center">
-          {!isAccept && (
+          {!isAccept && !isBroker && (
             <div className="p-4 bg-white border border-amber-400 rounded-xl shadow-sm hover:bg-amber-50 transition duration-150 flex flex-col md:flex-row md:items-center mb-4">
               <div className="flex items-center mb-3 md:mb-0">
                 <span className="flex items-center text-lg font-medium text-amber-900">

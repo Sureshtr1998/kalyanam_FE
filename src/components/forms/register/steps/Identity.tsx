@@ -21,7 +21,7 @@ const Identity = (props: StepsType) => {
 
       <FormInput
         type="text"
-        placeholder="Full Name"
+        placeholder="Bride/Groom Name"
         name="fullName"
         value={fullName}
         onChange={handleChange}

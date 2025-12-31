@@ -25,9 +25,9 @@ const CommitmentSection = () => {
     },
     {
       id: 3,
-      title: "Serving the Brahmin Community",
+      title: "Serving the Hindu Community",
       description:
-        "We are strictly focused on the Brahmin community, dedicating our resources to ensuring high-quality, relevant matches within our tradition.",
+        "We are strictly focused on the Hindu community, dedicating our resources to ensuring high-quality, relevant matches within our tradition.",
       icon: "pi pi-users",
     },
     {

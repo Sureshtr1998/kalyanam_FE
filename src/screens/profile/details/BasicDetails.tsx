@@ -49,6 +49,50 @@ const BasicDetails = (props: Props) => {
       </div>
 
       <div className="form-row">
+        <SelectInput
+          name="gender"
+          label="Gender"
+          value={basicData.gender}
+          onChange={handleChange}
+          options={genderOptions}
+          icon="pi pi-mars"
+          disabled
+        />
+
+        <FormInput
+          disabled
+          label="Date of Birth"
+          name="dob"
+          value={basicData.dob ? new Date(basicData.dob.split("T")[0]) : ""}
+          icon="pi pi-phone"
+          type="date"
+        />
+      </div>
+      <div className="form-row">
+        <SelectInput
+          name="caste"
+          label="Caste"
+          required
+          value={basicData.caste}
+          onChange={handleChange}
+          options={casteOptions}
+          icon="pi pi-book"
+          filter
+          disabled
+        />
+        <SelectInput
+          name="subCaste"
+          label="Sub Caste"
+          value={basicData.subCaste}
+          onChange={handleChange}
+          options={subCasteOptions(basicData.caste)}
+          icon="pi pi-sitemap"
+          filter
+          disabled
+        />
+      </div>
+
+      <div className="form-row">
         <FormInput
           required
           name="email"
@@ -60,18 +104,6 @@ const BasicDetails = (props: Props) => {
         />
         <FormInput
           required
-          disabled={isReadOnly}
-          label="Gothra"
-          name="gothra"
-          value={basicData.gothra}
-          icon="pi pi-sitemap"
-          onChange={handleChange}
-        />
-      </div>
-
-      <div className="form-row">
-        <FormInput
-          required
           disabled={isReadOnly || isVerified}
           label="WhatsApp Number"
           name="mobile"
@@ -79,6 +111,16 @@ const BasicDetails = (props: Props) => {
           onChange={handleChange}
           value={basicData.mobile}
           icon="pi pi-whatsapp"
+        />
+      </div>
+      <div className="form-row">
+        <FormInput
+          disabled={isReadOnly}
+          label="Gothra"
+          name="gothra"
+          value={basicData.gothra}
+          icon="pi pi-sitemap"
+          onChange={handleChange}
         />
 
         <FormInput
@@ -128,43 +170,6 @@ const BasicDetails = (props: Props) => {
           options={createdByOptions}
           icon="pi pi-user-plus"
         />
-
-        <SelectInput
-          name="gender"
-          label="Gender"
-          value={basicData.gender}
-          onChange={handleChange}
-          options={genderOptions}
-          icon="pi pi-mars"
-          disabled
-        />
-      </div>
-
-      <div className="form-row">
-        <SelectInput
-          name="caste"
-          label="Caste"
-          required
-          value={basicData.caste}
-          onChange={handleChange}
-          options={casteOptions}
-          icon="pi pi-book"
-          filter
-          disabled
-        />
-        <SelectInput
-          name="subCaste"
-          label="Sub Caste"
-          value={basicData.subCaste}
-          onChange={handleChange}
-          options={subCasteOptions(basicData.caste)}
-          icon="pi pi-sitemap"
-          filter
-          disabled
-        />
-      </div>
-
-      <div className="form-row">
         <SelectInput
           name="qualification"
           label="Qualification"
@@ -174,14 +179,6 @@ const BasicDetails = (props: Props) => {
           options={qualificationOptions}
           icon="pi pi-graduation-cap"
           required
-        />
-        <FormInput
-          disabled
-          label="Date of Birth"
-          name="dob"
-          value={basicData.dob ? new Date(basicData.dob.split("T")[0]) : ""}
-          icon="pi pi-phone"
-          type="date"
         />
       </div>
 

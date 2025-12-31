@@ -8,7 +8,7 @@ import { getItem, removeItem, user_login_token } from "../../utils/localStore";
 import Filter from "../filter/Filter";
 import type { UserDetails } from "../../utils/interfaces";
 import "./Topbar.scss";
-import { formDefaultVals } from "../../utils/constants";
+import { formDefaultVals, isBroker } from "../../utils/constants";
 import api from "../../utils/api";
 import Spinner from "../spinner/Spinner";
 import { useToast } from "../toastProvider/ToastProvider";
@@ -40,7 +40,7 @@ const Topbar = ({ applyFilter }: Props) => {
     try {
       setIsLoading(true);
       const res = await api.get("/my-profile");
-      if (!res.data.profile?.hasCompleteProfile) {
+      if (!res.data.profile?.hasCompleteProfile && !isBroker) {
         navigate("/profile");
       }
       setUserData(res.data.profile);
@@ -65,7 +65,27 @@ const Topbar = ({ applyFilter }: Props) => {
     applyFilter?.(filterData);
   };
 
-  const avatarMenuItems = [
+  const brokerMenuItems = [
+    {
+      label: "Profile",
+      icon: "pi pi-user-edit",
+      command: () => navigate("/matchmaker-profile"),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: "Sign Out",
+      icon: "pi pi-sign-out",
+      className: "signout-item",
+      command: () => {
+        removeItem(user_login_token);
+        window.location.href = "/";
+      },
+    },
+  ];
+
+  const userMenuItems = [
     {
       label: "Profile",
       icon: "pi pi-user-edit",
@@ -146,7 +166,11 @@ const Topbar = ({ applyFilter }: Props) => {
 
         {/* Right: User Avatar & Menu */}
         <div className="right-section">
-          <Menu model={avatarMenuItems} popup ref={menu} />
+          <Menu
+            model={isBroker ? brokerMenuItems : userMenuItems}
+            popup
+            ref={menu}
+          />
           <Avatar
             label={
               getItem(user_login_token)?.fullName

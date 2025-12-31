@@ -1,4 +1,5 @@
 import type { BasicDetailsIn, FamilyDetailsIn, PartnerDetailsIn, PersonalDetailsIn } from "./interfaces";
+import { getItem, user_login_token } from "./localStore";
 
 export const maritalOptions = [
     { label: 'Unmarried', value: 'Unmarried' },
@@ -376,6 +377,19 @@ export const qualificationOptions = [
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export const brokerFormDefaultVals = {
+    name: "",
+    email: "",
+    phone: "",
+    companyName: "",
+    address: "",
+    caste: [],
+    motherTongue: [],
+    password: "",
+    confirmPassword: "",
+    idProof: [],
+    note: "",
+}
 
 export const formDefaultVals = {
     basic: {
@@ -431,8 +445,10 @@ export const updatedDate = "Decmber 1, 2025"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
-export const REGISTRATION_FEE = 351
+export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
+export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
+
 export const PURCHASE_NO_INTEREST = 21
 export const PURCHASE_INTEREST_FEE = 101
 export const PURCHASE_NO_INTEREST_2 = 56
@@ -442,3 +458,9 @@ export const PURCHASE_INTEREST_FEE_2 = 251
 export const OVERVIEW_ASTRO_FEE = 51
 export const KUNDLI_MATCHING_ASTRO_FEE = 201
 export const PERSONALIZED_ASTRO_FEE = 251
+
+export const BROKERAGE_REGISTRATION_FEE = 501
+
+export const isBroker = getItem(user_login_token)?.role === "BROKER";
+
+export const SUPPORT_NUMBER = "+918105710930"

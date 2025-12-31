@@ -32,9 +32,9 @@ interface FAQItem {
 const faqItems: FAQItem[] = [
   {
     id: "faq-1",
-    question: "Is Seetha Rama Kalyana exclusive to Brahmins?",
+    question: "Is Seetha Rama Kalyana exclusive to Hindus?",
     answer:
-      "Yes, our platform is dedicated exclusively to the Brahmin community, ensuring culturally relevant matches and meaningful connections.",
+      "Yes, our platform is dedicated exclusively to the Hindu community, ensuring culturally relevant matches and meaningful connections.",
     icon: "pi pi-users",
   },
   {
@@ -42,6 +42,27 @@ const faqItems: FAQItem[] = [
     question: "How can I trust this matrimony application?",
     answer:
       "Seetha Rama Kalyana uses Razorpay for secure payments, advanced data encryption, performs thorough background verification, and is a Meta-verified business, ensuring trust and reliability.",
+    icon: "pi pi-shield",
+  },
+  {
+    id: "faq-13",
+    question: "How does sending an interest work?",
+    answer:
+      "When you send an interest, 1 interest is deducted from your account. The other user is notified by email, and you’ll be notified if they accept. You can track the status under Activity.",
+    icon: "pi pi-shield",
+  },
+  {
+    id: "faq-14",
+    question: "Who can view my profile?",
+    answer:
+      "Only users whose caste and mother tongue match your partner preferences can view your profile.",
+    icon: "pi pi-shield",
+  },
+  {
+    id: "faq-15",
+    question: "Can users from other castes or mother tongues view my profile?",
+    answer:
+      "No. They can view your profile only if you explicitly mention that you are open to them in your Partner Preferences.",
     icon: "pi pi-shield",
   },
   {
@@ -108,7 +129,7 @@ const FAQPage = () => {
       <SEO
         title="FAQ | Seetha Rama Kalyana"
         description="Frequently Asked Questions about Seetha Rama Kalyana matrimony services."
-        keywords="faq, brahmin matrimony, seetha rama kalyana"
+        keywords="faq, hindu matrimony, seetha rama kalyana"
         pageType="faq"
         faqItems={faqItems}
         url="https://www.seetharamakalyana.in/faq"

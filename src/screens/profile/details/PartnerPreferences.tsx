@@ -2,7 +2,9 @@ import {
   ageOptions,
   countryOptions,
   employedInOptions,
+  genderOptions,
   heightOptions,
+  isBroker,
   maritalOptions,
   qualificationOptions,
 } from "../../../utils/constants";
@@ -156,6 +158,17 @@ const PartnerPreferences = (props: Props) => {
             onChange={handleChange}
             disabled={isReadOnly}
             icon="pi pi-pen-to-square"
+          />
+        )}
+        {isBroker && isFilter && (
+          <SelectInput
+            name="genderBrokerFilter"
+            label="Gender"
+            value={partnerData.genderBrokerFilter}
+            onChange={handleChange}
+            options={genderOptions}
+            icon="pi pi-mars"
+            isMultiselect
           />
         )}
       </div>

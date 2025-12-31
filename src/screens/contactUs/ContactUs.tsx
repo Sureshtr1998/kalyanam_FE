@@ -17,8 +17,8 @@ const ContactUs: React.FC = () => {
       {/* SEO */}
       <SEO
         title="Contact Us | Seetha Rama Kalyana"
-        description="Get in touch with Seetha Rama Kalyana, the trusted Brahmin matrimony platform. Reach us via email and we will get back to you promptly."
-        keywords="contact, support, brahmin matrimony, seetha rama kalyana"
+        description="Get in touch with Seetha Rama Kalyana, the trusted Hindu matrimony platform. Reach us via email and we will get back to you promptly."
+        keywords="contact, support, hindu matrimony, seetha rama kalyana"
         url={canonicalUrl}
       />
 
@@ -33,7 +33,7 @@ const ContactUs: React.FC = () => {
               Get In Touch
             </h1>
             <p className="text-lg text-gray-600">
-              We at <strong>Seetha Rama Kalyana</strong>, a trusted Brahmin
+              We at <strong>Seetha Rama Kalyana</strong>, a trusted Hindu
               matrimony platform, are happy to answer your questions. Please
               contact us via email, and we will get back to you as soon as
               possible.

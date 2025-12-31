@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { BasicDetailsIn, FormType } from "../../../utils/interfaces";
 import {
+  AFTER_DISCOUNT_REGISTRATION_FEE,
   formDefaultVals,
   INITIAL_NO_INTEREST,
   REGISTRATION_FEE,
@@ -25,6 +26,7 @@ const RegistrationForm = (props: Props) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isPayment, setPayment] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentAmount, setCurrentAmount] = useState<number>(REGISTRATION_FEE);
 
   const [message, setMessage] = useState<{
     text: string;
@@ -82,7 +84,6 @@ const RegistrationForm = (props: Props) => {
         !formData.martialStatus ||
         !formData.motherTongue ||
         !formData.qualification ||
-        !formData.gothra ||
         !formData.caste ||
         !formData.profileCreatedBy
       ) {
@@ -107,11 +108,16 @@ const RegistrationForm = (props: Props) => {
     return true;
   };
 
-  const handleNext = async () => {
+  const handleNext = async (isReffer?: boolean) => {
     if (validateStep(step)) {
       if (step === 2) setImages([]);
       if (step === 3) {
         try {
+          if (isReffer) {
+            setCurrentAmount(AFTER_DISCOUNT_REGISTRATION_FEE);
+          } else {
+            setCurrentAmount(REGISTRATION_FEE);
+          }
           setIsLoading(true);
           await api.get("/user-validation", {
             params: { email: formData.email, mobile: formData.mobile },
@@ -160,7 +166,7 @@ const RegistrationForm = (props: Props) => {
         ...formData,
         orderId,
         paymentId,
-        amountPaid: REGISTRATION_FEE,
+        amountPaid: currentAmount,
         totalNoOfInterest: INITIAL_NO_INTEREST,
         note: "Registration",
         images: imageUrls,
@@ -199,7 +205,7 @@ const RegistrationForm = (props: Props) => {
           onHide={() => setPayment(false)}
           payload={{
             ...formData,
-            amountPaid: REGISTRATION_FEE,
+            amountPaid: currentAmount,
             totalNoOfInterest: INITIAL_NO_INTEREST,
             note: "Registration",
             endpoint: "user-register",
@@ -207,7 +213,7 @@ const RegistrationForm = (props: Props) => {
           userName={formData.fullName}
           userEmail={formData.email}
           userPhone={formData.mobile}
-          amount={REGISTRATION_FEE}
+          amount={currentAmount}
         />
       )}
 
