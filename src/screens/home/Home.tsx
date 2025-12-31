@@ -9,6 +9,7 @@ import ganesh from "../../assets/ganesh.webp";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import Spinner from "../../components/spinner/Spinner";
 import { remainingInterest } from "../../utils/utils";
+import { isBroker } from "../../utils/constants";
 
 interface Props {
   filterData: UserDetails;
@@ -89,12 +90,23 @@ const Home = (props: Props) => {
           ) : (
             <div className="no-matches">
               <h3>No Profiles Yet!</h3>
-              <p>
-                We've very recently launched this application. Please be patient
-                many more profiles are coming soon by <b> February end. </b>
-                We're actively bringing in users, and we truly appreciate your
-                support!
-              </p>
+              {isBroker ? (
+                <p>
+                  This section displays only the profiles that have been
+                  referred by you. At the moment, there are no referred profiles
+                  available. Once you start referring users to the platform,
+                  their profiles will appear here, allowing you to manage them
+                  easily and track your earnings.
+                </p>
+              ) : (
+                <p>
+                  We've very recently launched this application. Please be
+                  patient many more profiles are coming soon by{" "}
+                  <b> February end. </b>
+                  We're actively bringing in users, and we truly appreciate your
+                  support!
+                </p>
+              )}
               <div className="mt-8">
                 <Image className="ganesh" src={ganesh} />
               </div>
