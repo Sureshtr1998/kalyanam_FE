@@ -6,6 +6,7 @@ export interface BasicDetailsIn {
     password: string;
     confirmPassword: string;
     subCaste: string;
+    caste: string;
     gothra: string;
     mobile: string;
     alternateMob: string;
@@ -17,6 +18,7 @@ export interface BasicDetailsIn {
     qualification: string;
     note?: string;
     uniqueId?: string
+    referralId?: string;
 
 }
 
@@ -61,12 +63,14 @@ export interface PartnerDetailsIn {
     martialStatus?: string[];
     heightFrom?: string
     heightTo?: string
+    caste?: string[]
     subCaste?: string[]
     motherTongue?: string[]
     employedIn?: string[]
     note?: string
     qualification?: string[]
     country?: string[]
+    genderBrokerFilter?: string[]
 }
 
 export interface InterestsIn {
@@ -140,7 +144,7 @@ export type SelectType = { label: string; value: string; }
 export type StepsType = {
     handleChange: (e: any) => void
     setCurrentForm?: (val: FormType) => void
-    handleNext?: () => void
+    handleNext?: (isReffer?: any) => void
     handleBack?: () => void
     setImages?: (val: File[]) => void
     formData: BasicDetailsIn

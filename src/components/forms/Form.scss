@@ -68,6 +68,60 @@
   color: vars.$text-color;
 }
 
+.pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pill {
+  background-color: vars.$card-bg;
+  color: vars.$text-color;
+  border: 1px solid vars.$border-color;
+  padding: 0.25rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 8rem;
+  text-align: center;
+  align-content: center;
+  height: fit-content;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 1rem;
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+  }
+}
+
+.field-label {
+  font-size: small;
+  color: vars.$text-color;
+  line-height: 1.4;
+  @media (max-width: 960px) {
+    text-align: left;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.broker-profile-form {
+  background-color: white;
+  border: 1px solid vars.$border-color;
+  border-radius: 1rem;
+  padding: 1rem;
+  align-self: center;
+  .background-style {
+    background-color: vars.$bg-color;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+}
+
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

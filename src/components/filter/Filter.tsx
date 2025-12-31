@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PartnerPreferences from "../../screens/profile/details/PartnerPreferences";
 import "./Filter.scss";
-import { formDefaultVals } from "../../utils/constants";
+import { formDefaultVals, isBroker } from "../../utils/constants";
 import type { UserDetails } from "../../utils/interfaces";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
@@ -38,22 +38,24 @@ const Filter = (props: Props) => {
 
   return (
     <div className="filter-preferences">
-      {filterData.partner && (
+      {(filterData.partner || isBroker) && (
         <PartnerPreferences
           isFilter
           partnerData={filterData.partner}
           handleChange={handleChange}
         />
       )}
-      <p className="mb-4" style={{ fontSize: "0.9rem", color: "#555" }}>
-        <strong>Note:</strong> Data comes from{" "}
-        <Link
-          to="/profile"
-          style={{ textDecoration: "underline", color: "#007bff" }}>
-          Partner Preferences
-        </Link>
-        . Update there to change the default filter data.
-      </p>
+      {!isBroker && (
+        <p className="mb-4" style={{ fontSize: "0.9rem", color: "#555" }}>
+          <strong>Note:</strong> Data comes from{" "}
+          <Link
+            to="/profile"
+            style={{ textDecoration: "underline", color: "#007bff" }}>
+            Partner Preferences
+          </Link>
+          . Update there to change the default filter data.
+        </p>
+      )}
       <Button onClick={onClick} className="update-btn" rounded>
         Apply
       </Button>

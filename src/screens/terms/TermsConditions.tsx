@@ -24,7 +24,7 @@ const termsData: TermSection[] = [
           By registering or using the Seetha Rama Kalyana Matrimony Platform
           (“Service”), you agree to comply with these Terms and Conditions
           (“Terms”). These Terms form a legally binding agreement between you
-          and Seetha Rama Kalyana, a dedicated Brahmin matrimonial service for
+          and Seetha Rama Kalyana, a dedicated Hindu matrimonial service for
           genuine marriage minded individuals. If you do not agree to these
           Terms, you must stop using the Service immediately.
         </p>
@@ -49,8 +49,8 @@ const termsData: TermSection[] = [
           dating, friendship-only intent, or commercial activity is not allowed.
         </li>
         <li>
-          As a Brahmin focused matrimony app, Seetha Rama Kalyana may verify
-          your community details to maintain platform authenticity.
+          As a Hindu focused matrimony app, Seetha Rama Kalyana may verify your
+          community details to maintain platform authenticity.
         </li>
         <li>
           We reserve the right to suspend or terminate accounts that contain
@@ -115,7 +115,7 @@ const termsData: TermSection[] = [
     content: (
       <p>
         Seetha Rama Kalyana provides the Service on an “as is” and “as
-        available” basis. While we aim to maintain a safe and verified Brahmin
+        available” basis. While we aim to maintain a safe and verified Hindu
         matrimony environment, we do not guarantee the accuracy of information
         shared by users, the success of matches, or uninterrupted platform
         availability. Users are advised to exercise discretion and verify
@@ -148,7 +148,7 @@ const TermsConditions = () => {
       <SEO
         title="Privacy Policy | Seetha Rama Kalyana"
         description="Read the privacy policy of Seetha Rama Kalyana, protecting your data and trust."
-        keywords="privacy policy, brahmin matrimony, seetha rama kalyana"
+        keywords="privacy policy, hindu matrimony, seetha rama kalyana"
         pageType="privacy"
         url="https://www.seetharamakalyana.in/terms"
       />

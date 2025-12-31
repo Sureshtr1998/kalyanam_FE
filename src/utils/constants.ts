@@ -1,4 +1,5 @@
 import type { BasicDetailsIn, FamilyDetailsIn, PartnerDetailsIn, PersonalDetailsIn } from "./interfaces";
+import { getItem, user_login_token } from "./localStore";
 
 export const maritalOptions = [
     { label: 'Unmarried', value: 'Unmarried' },
@@ -341,27 +342,6 @@ export const residingOptions = [
     { label: "NRI", value: "NRI" },
 ]
 
-export const subCasteOptions = [
-    { label: 'Smartha', value: 'Smartha' },
-    { label: 'Madhwa/Vaishnava', value: 'Madhwa/Vaishnava' },
-    { label: 'Iyer', value: 'Iyer' },
-    { label: 'Sri Vaishnava/Iyengar', value: 'Sri Vaishnava/Iyengar' },
-    { label: 'Other', value: 'Other' },
-];
-
-export const motherTongueOptions = [
-    { label: 'Kannada', value: 'Kannada' },
-    { label: 'Tulu', value: 'Tulu' },
-    { label: 'Hindi', value: 'Hindi' },
-    { label: 'Tamil', value: 'Tamil' },
-    { label: 'Telugu', value: 'Telugu' },
-    { label: 'Bengali', value: 'Bengali' },
-    { label: 'Konkani', value: 'Konkani' },
-    { label: 'Marathi', value: 'Marathi' },
-    { label: 'Malayalam', value: 'Malayalam' },
-    { label: 'Others', value: 'Others' },
-];
-
 export const createdByOptions = [
     { label: 'Self', value: 'Self' },
     { label: 'Parent', value: 'Parent' },
@@ -397,6 +377,19 @@ export const qualificationOptions = [
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export const brokerFormDefaultVals = {
+    name: "",
+    email: "",
+    phone: "",
+    companyName: "",
+    address: "",
+    caste: [],
+    motherTongue: [],
+    password: "",
+    confirmPassword: "",
+    idProof: [],
+    note: "",
+}
 
 export const formDefaultVals = {
     basic: {
@@ -405,6 +398,7 @@ export const formDefaultVals = {
         password: '',
         confirmPassword: '',
         subCaste: '',
+        caste: '',
         gothra: '',
         mobile: '',
         alternateMob: '',
@@ -419,7 +413,7 @@ export const formDefaultVals = {
 }
 
 export const mandatoryBasicFields: (keyof BasicDetailsIn)[] = [
-    'qualification', 'gothra', 'martialStatus', 'motherTongue', 'subCaste'
+    'qualification', 'martialStatus', 'motherTongue', 'caste'
 ]
 
 export const mandatoryPersonalFields: (keyof PersonalDetailsIn)[] = [
@@ -437,6 +431,7 @@ export const mandatoryFamilyFields: (keyof FamilyDetailsIn)[] = [
 export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
     "ageFrom",
     "ageTo",
+    "caste",
     "employedIn",
 ]
 
@@ -450,8 +445,10 @@ export const updatedDate = "Decmber 1, 2025"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
-export const REGISTRATION_FEE = 351
+export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
+export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
+
 export const PURCHASE_NO_INTEREST = 21
 export const PURCHASE_INTEREST_FEE = 101
 export const PURCHASE_NO_INTEREST_2 = 56
@@ -461,3 +458,9 @@ export const PURCHASE_INTEREST_FEE_2 = 251
 export const OVERVIEW_ASTRO_FEE = 51
 export const KUNDLI_MATCHING_ASTRO_FEE = 201
 export const PERSONALIZED_ASTRO_FEE = 251
+
+export const BROKERAGE_REGISTRATION_FEE = 501
+
+export const isBroker = getItem(user_login_token)?.role === "BROKER";
+
+export const SUPPORT_NUMBER = "+918105710930"

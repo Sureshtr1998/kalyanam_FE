@@ -6,7 +6,7 @@ import { arrayLabel, normalizeToArray } from "../../utils/utils";
 interface Props {
   value: string | string[] | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
   options: SelectType[];
   placeholder?: string;
   name: string;
@@ -33,48 +33,56 @@ const SelectInput = (props: Props) => {
     filter,
   } = props;
 
+  if (disabled) {
+    return (
+      <div className="relative field-row mb-4 w-full ">
+        {label && <p className={`field-label  mr-4 mt-1 `}>{label}</p>}
+        <div className="pill-container">
+          {arrayLabel(value, options).length ? (
+            arrayLabel(value, options).map((label, idx) => (
+              <span key={idx} className="pill">
+                {label}
+              </span>
+            ))
+          ) : (
+            <span className="pill">-</span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {label && (
-        <p className={`input-label ${required && !disabled ? "required" : ""}`}>
-          {label}
-        </p>
+        <p className={`input-label ${required ? "required" : ""}`}>{label}</p>
       )}
-
       <div className="relative mb-4 w-full max-w-sm">
-        {!(isMultiselect && disabled) && (
-          <span className="field-icon absolute left-3 top-1/5 pointer-events-none">
-            <i className={icon}></i>
-          </span>
-        )}
-
+        <span className="field-icon absolute left-3 top-1/5 pointer-events-none">
+          <i className={icon}></i>
+        </span>
         {isMultiselect ? (
-          disabled ? (
-            <div className="text-sm">{arrayLabel(value, options)}</div>
-          ) : (
-            <MultiSelect
-              id={name}
-              name={name}
-              disabled={disabled}
-              value={normalizeToArray(value)}
-              options={options}
-              onChange={onChange}
-              maxSelectedLabels={1}
-              placeholder={placeholder ?? "Any"}
-              className="dropdown-field"
-              filter={filter}
-            />
-          )
+          <MultiSelect
+            id={name}
+            name={name}
+            value={normalizeToArray(value)}
+            options={options}
+            onChange={onChange}
+            maxSelectedLabels={1}
+            placeholder={placeholder ?? "Any"}
+            className="dropdown-field"
+            filter={filter}
+          />
         ) : (
           <Dropdown
             id={name}
             name={name}
-            disabled={disabled}
             value={value as string}
             options={options}
             onChange={onChange}
             placeholder={placeholder}
             className="dropdown-field"
+            filter={filter}
           />
         )}
       </div>

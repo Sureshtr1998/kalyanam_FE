@@ -42,7 +42,7 @@ const blogPosts: BlogPost[] = [
       <>
         <strong>Highlight Your Education and Profession:</strong> Clearly
         explain your education, career, and what drives you. Stability and
-        ambition are attractive qualities in the Brahmin matrimony community.
+        ambition are attractive qualities in the Hindu matrimony community.
       </>,
       <>
         <strong>Define Your Partner Preferences Clearly:</strong> Mention the
@@ -96,7 +96,7 @@ const blogPosts: BlogPost[] = [
       </>,
       <>
         Following the <strong>Seetha Rama Kalyanam</strong> philosophy helps
-        Brahmin matrimony seekers find truly compatible partners, ensuring
+        Hindu matrimony seekers find truly compatible partners, ensuring
         respect, values, and spiritual alignment in the match.
       </>,
     ],
@@ -289,7 +289,7 @@ const Blog = () => {
       <SEO
         title="Blog | Seetha Rama Kalyana"
         description="Read the latest matrimony tips, success stories, and lifestyle advice on Seetha Rama Kalyana."
-        keywords="blog, brahmin matrimony, seetha rama kalyana"
+        keywords="blog, hindu matrimony, seetha rama kalyana"
         pageType="blog"
         blogPosts={blogPosts}
         url="https://www.seetharamakalyana.in/blog"

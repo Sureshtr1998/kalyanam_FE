@@ -43,74 +43,86 @@ const FormInput = (props: Props) => {
     showTime = false,
   } = props;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const renderDisabledPill = (value: any) => {
+    if (!value) {
+      return <span className="pill">-</span>;
+    }
+
+    return (
+      <span className="pill">
+        {type === "date"
+          ? new Date(value).toLocaleDateString("en-GB").replaceAll("/", "-")
+          : typeof value === "string"
+          ? value
+          : String(value)}
+      </span>
+    );
+  };
+
+  if (disabled && !isTextArea) {
+    return (
+      <div className="relative mb-4 field-row">
+        {label && <p className="field-label mr-4 mt-1">{label}</p>}
+        <div className="pill-container">{renderDisabledPill(value)}</div>
+      </div>
+    );
+  }
   return (
     <div className="relative mb-4">
       {label && (
-        <p className={`input-label ${required && !disabled ? "required" : ""}`}>
-          {label}
-        </p>
+        <p className={`input-label ${required ? "required" : ""}`}>{label}</p>
       )}
 
-      {/* {Icon && <Icon className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-500 ${isTextArea ? 'top-4 -translate-y-0' : ''}`} />} */}
       {isTextArea ? (
         <div className="relative mb-4 w-full">
-          <span className="field-icon absolute left-3 top-1/8  pointer-events-none">
-            <i className={icon}> </i>
+          <span className="field-icon absolute left-3 top-1/8 pointer-events-none">
+            <i className={icon}></i>
           </span>
           <InputTextarea
             placeholder={placeholder}
             value={value as string}
             onChange={onChange}
             rows={3}
-            readOnly={disabled}
             name={name}
+            readOnly={disabled}
             className="input-text"
           />
         </div>
       ) : type === "date" ? (
-        <>
-          <Calendar
-            name={name}
-            showIcon
-            value={value ? new Date(value) : null}
-            onChange={(e) => {
-              onChange?.({
-                target: {
-                  name,
-                  value: dateFormat(e.target.value as Date),
-                },
-              });
-            }}
-            disabled={disabled}
-            placeholder={placeholder ?? "dd/mm/yyyy"}
-            dateFormat="dd/mm/yy"
-            maxDate={maxDOB}
-            showTime={showTime}
-            hourFormat="12"
-          />
-        </>
+        <Calendar
+          name={name}
+          showIcon
+          value={value ? new Date(value) : null}
+          onChange={(e) => {
+            onChange?.({
+              target: {
+                name,
+                value: dateFormat(e.target.value as Date),
+              },
+            });
+          }}
+          placeholder={placeholder ?? "dd/mm/yyyy"}
+          dateFormat="dd/mm/yy"
+          maxDate={maxDOB}
+          showTime={showTime}
+          hourFormat="12"
+        />
       ) : (
         <>
           <IconField iconPosition="left">
-            <InputIcon className={`${icon} field-icon`}> </InputIcon>
+            <InputIcon className={`${icon} field-icon`} />
             <InputText
-              onWheel={(e) => e.currentTarget.blur()} // temporarily remove focus to prevent scroll change
               type={type}
               placeholder={placeholder}
               value={value as string}
               name={name}
-              disabled={disabled}
               onChange={(e) => {
                 let val = e.target.value;
-                if (type === "email") {
-                  val = val.toLowerCase();
-                }
+                if (type === "email") val = val.toLowerCase();
                 if (!maxLength || val.length <= maxLength) {
                   onChange?.({
-                    target: {
-                      name,
-                      value: val,
-                    },
+                    target: { name, value: val },
                   });
                 }
               }}
@@ -118,7 +130,7 @@ const FormInput = (props: Props) => {
               className="input-text"
             />
           </IconField>
-          {suffix ? <span className="input-suffix">{suffix}</span> : <></>}
+          {suffix && <span className="input-suffix">{suffix}</span>}
         </>
       )}
     </div>

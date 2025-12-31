@@ -37,7 +37,7 @@ const PublicFooter = () => {
 
         {/* Copyright Section */}
         <p className="text-center text-base text-amber-800">
-          &copy; 2025 Seetha Rama Kalyana. All rights reserved.
+          &copy; 2026 Seetha Rama Kalyana. All rights reserved.
         </p>
       </div>
     </div>

@@ -133,6 +133,7 @@ const Accounts = (props: Props) => {
 
       {isPayment && (
         <PaymentModal
+          role="USER"
           onSuccess={handleSuccess}
           onHide={() => setPayment(false)}
           userName={fullName}

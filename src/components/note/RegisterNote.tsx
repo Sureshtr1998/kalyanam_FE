@@ -28,7 +28,7 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
       <div className="space-y-3 text-sm leading-relaxed text-gray-800">
         <p>
           <strong>1)</strong> We’ve very recently launched the app, so you might
-          not find many profiles initially. By <strong>December end</strong>,
+          not find many profiles initially. By <strong>February end</strong>,
           we’ll be adding all active profiles here.
         </p>
 

@@ -48,7 +48,7 @@ const RefundPolicy: React.FC = () => {
       <SEO
         title="Refund Policy | Seetha Rama Kalyana"
         description="Seetha Rama Kalyana refund policy: Amount will be refunded only if user registration fails but payment is deducted. All other payments are non-refundable."
-        keywords="brahmin matrimony, kannada matrimony, refund policy, payment refund, Seetha Rama Kalyana"
+        keywords="hindu matrimony, kannada matrimony, refund policy, payment refund, Seetha Rama Kalyana"
         url={canonicalUrl}
       />
 

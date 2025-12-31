@@ -64,4 +64,11 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Partner With Us -->
+  <url>
+    <loc>https://www.seetharamakalyana.in/partner-with-us</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

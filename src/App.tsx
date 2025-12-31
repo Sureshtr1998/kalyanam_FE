@@ -28,6 +28,8 @@ import Pricing from "./screens/pricing/Pricing";
 import RefundPolicy from "./screens/refund/Refund";
 import Activity from "./screens/activity/Activity";
 import Astrology from "./screens/astrology/Astrology";
+import PartnerWithUs from "./screens/partnerWUs/PartnerWithUs";
+import BrokerProfile from "./screens/brokerProfile/BrokerProfile";
 
 const AppContent = () => {
   const location = useLocation();
@@ -59,6 +61,16 @@ const AppContent = () => {
                 <HelmetProvider>
                   <PublicWrapper>
                     <AboutUs />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/partner-with-us"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <PartnerWithUs />
                   </PublicWrapper>
                 </HelmetProvider>
               }
@@ -180,6 +192,16 @@ const AppContent = () => {
                 <ProtectedRoute>
                   <Wrapper>
                     <Profile />
+                  </Wrapper>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/matchmaker-profile"
+              element={
+                <ProtectedRoute>
+                  <Wrapper>
+                    <BrokerProfile />
                   </Wrapper>
                 </ProtectedRoute>
               }

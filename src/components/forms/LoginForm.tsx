@@ -7,8 +7,8 @@ import { Button } from "primereact/button";
 import { useToast } from "../toastProvider/ToastProvider";
 import api from "../../utils/api";
 import { setItem, user_login_token } from "../../utils/localStore";
-import { useNavigate } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
+import { Checkbox } from "primereact/checkbox";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -18,9 +18,9 @@ const LoginForm = (props: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPartner, setIsPartner] = useState<boolean>(false);
 
   const { showToast } = useToast();
-  const navigate = useNavigate();
 
   const loginUser = async () => {
     if (!email || !password) {
@@ -33,10 +33,11 @@ const LoginForm = (props: Props) => {
       const res = await api.post("/login", {
         email: email.toLowerCase(),
         password,
+        isPartner,
       });
       setItem(user_login_token, res.data);
       showToast("success", "Success", "Logged in successfully");
-      navigate("/home");
+      window.location.href = "/home";
       setIsLoading(false);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,9 +54,7 @@ const LoginForm = (props: Props) => {
   return (
     <div className="w-full max-w-sm">
       <Spinner hideText isLoading={isLoading} />
-
       <h2 className="heading">Log In to Find Your Match</h2>
-
       <FormInput
         name="email"
         type="email"
@@ -64,7 +63,6 @@ const LoginForm = (props: Props) => {
         onChange={(e) => setEmail(e.target.value)}
         icon="pi pi-envelope"
       />
-
       <FormInput
         name="password"
         type="password"
@@ -74,6 +72,16 @@ const LoginForm = (props: Props) => {
         icon="pi pi-lock"
       />
 
+      <Checkbox
+        inputId="partner"
+        name="partner"
+        onChange={() => setIsPartner(!isPartner)}
+        checked={isPartner}
+        value="partner"
+      />
+      <label htmlFor="partner" className={`${TEXT_COLOR} ml-2 `}>
+        I am a Registered Partner
+      </label>
       <div className="flex justify-end mb-8">
         <a
           href="#"
@@ -82,11 +90,9 @@ const LoginForm = (props: Props) => {
           Forgot Password?
         </a>
       </div>
-
       <Button onClick={loginUser} className="update-btn">
         Login
       </Button>
-
       <p className="text-center mt-8 text-gray-600">
         New to Seetha Rama Kalyana?{" "}
         <button

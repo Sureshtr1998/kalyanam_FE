@@ -24,9 +24,9 @@ const MissionSection = () => {
             <div className="mt-6 text-amber-800 space-y-6 text-lg">
               <p>
                 Seetha Rama Kalyana was born from a simple desire: to create a
-                trusted and accessible platform for Brahmin families to find
-                their perfect match. We understand the importance of community
-                and tradition.
+                trusted and accessible platform for Hindu families to find their
+                perfect match. We understand the importance of community and
+                tradition.
               </p>
               <p className="font-semibold text-amber-700">
                 **A Note on Growth:** As a newly developed platform, we are

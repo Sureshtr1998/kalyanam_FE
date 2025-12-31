@@ -136,6 +136,7 @@ const Astrology = () => {
     <div className="p-4">
       {isPayment && (
         <PaymentModal
+          role="USER"
           onSuccess={handleSuccess}
           onHide={() => setPayment(false)}
           userName={currentUser?.basic.fullName ?? ""}

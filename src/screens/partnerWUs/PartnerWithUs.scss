@@ -1,0 +1,187 @@
+@use "../../styles/variables" as vars;
+
+.onboarding-page {
+  min-height: 100vh;
+  background-color: vars.$bg-color;
+  padding: 1rem;
+  padding-top: 5rem;
+  font-family: sans-serif;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .lang-container {
+    width: 18rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+    margin-left: auto;
+  }
+
+  .lang-select {
+    appearance: none;
+    background-color: vars.$card-bg;
+    border: 2px solid vars.$border-color;
+    color: vars.$text-color;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(vars.$accent-ring, 0.5);
+    }
+  }
+
+  .title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: vars.$text-color;
+    @media (min-width: 640px) {
+      font-size: 3rem;
+    }
+  }
+
+  .subtitle {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+    color: vars.$text-color;
+    font-weight: 500;
+  }
+}
+
+.page-content {
+  max-width: 56rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.section-card {
+  background-color: vars.$card-bg;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  @media (min-width: 640px) {
+    padding: 2rem;
+  }
+
+  &.benefits {
+    border-top: 4px solid vars.$accent-color-bg;
+  }
+  &.registration {
+    border-bottom: 8px solid vars.$accent-color-bg;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: vars.$text-color;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.benefit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: vars.$text-color;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.support-bar {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: vars.$bg-color;
+  border: 2px solid vars.$border-color;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+
+  p {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: vars.$accent-color-bg;
+  }
+}
+
+.call-button {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  background-color: vars.$accent-color-bg;
+  color: white;
+  font-weight: 700;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: 0.3s;
+  &:hover {
+    background-color: vars.$accent-color-bg-hover;
+  }
+}
+
+.steps-grid {
+  display: grid;
+  gap: 1.5rem;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.step-box {
+  padding: 1rem;
+  border: 2px solid vars.$border-color;
+  border-radius: 0.5rem;
+  text-align: center;
+  background-color: rgba(vars.$bg-color, 0.5);
+
+  .step-num {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: vars.$accent-color-bg;
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: vars.$text-color;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 0.875rem;
+    color: vars.$text-color;
+  }
+}
+
+.form-group-title {
+  grid-column: 1 / -1;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: vars.$accent-color-bg;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid vars.$border-color;
+  padding-bottom: 0.5rem;
+  margin-top: 1rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+  p {
+    font-size: 0.875rem;
+    color: vars.$text-color;
+  }
+}

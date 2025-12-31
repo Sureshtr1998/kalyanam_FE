@@ -12,6 +12,7 @@ interface Props {
   userEmail: string;
   userPhone: string;
   amount: number;
+  role: "BROKER" | "USER";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
 }
@@ -24,6 +25,7 @@ const PaymentModal = ({
   userPhone,
   amount,
   payload,
+  role,
 }: Props) => {
   const { Razorpay, isLoading, error } = useRazorpay();
   const [loading, setLoading] = useState(false);
@@ -51,6 +53,7 @@ const PaymentModal = ({
         userPhone: `+91${userPhone}`,
         amount,
         payload,
+        role,
       });
 
       const options: RazorpayOrderOptions = {

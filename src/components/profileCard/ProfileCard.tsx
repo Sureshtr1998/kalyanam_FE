@@ -6,7 +6,11 @@ import ViewCard from "../viewCard/ViewCard";
 import { calculateAge, fetchLabel } from "../../utils/utils";
 import api from "../../utils/api";
 import { useToast } from "../toastProvider/ToastProvider";
-import { IMAGEKIT_PARAMS, qualificationOptions } from "../../utils/constants";
+import {
+  IMAGEKIT_PARAMS,
+  isBroker,
+  qualificationOptions,
+} from "../../utils/constants";
 import { Button } from "primereact/button";
 import Spinner from "../spinner/Spinner";
 
@@ -23,7 +27,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   remainingInterest,
   currentUser,
 }) => {
-  const { fullName, subCaste, dob, images, gothra, qualification } =
+  const { fullName, caste, subCaste, dob, images, gothra, qualification } =
     match.basic;
   const userId = match._id;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -97,9 +101,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           />
           <div className="profile-id">{match.basic.uniqueId || "SRM-ID"}</div>
 
-          <button className="hide-btn" onClick={hideUser} title="Hide Profile">
-            <i className="pi pi-eye-slash"></i>
-          </button>
+          {!isBroker && (
+            <button
+              className="hide-btn"
+              onClick={hideUser}
+              title="Hide Profile">
+              <i className="pi pi-eye-slash"></i>
+            </button>
+          )}
         </div>
 
         {/* Details Section */}
@@ -110,7 +119,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               <span className="label">Age:</span> {calculateAge(dob ?? "")} Yrs
             </div>
             <div>
-              <span className="label">Sub Caste:</span> {subCaste}
+              <span className="label">Caste:</span>
+              {caste}
+              {subCaste ? `- ${subCaste}` : ""}
             </div>
             <div>
               <span className="label">Qualification:</span>{" "}
@@ -127,17 +138,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <Button className="primary-btn" onClick={() => setVisible(true)}>
             View Profile
           </Button>
-          <Button
-            className="ternary-btn"
-            onClick={sendInterest}
-            disabled={remainingInterest < 1}
-            title={
-              remainingInterest < 1
-                ? "Purchase interests under Account to send interest."
-                : "Send Interest"
-            }>
-            <i className="pi pi-heart"></i>
-          </Button>
+          {!isBroker && (
+            <Button
+              className="ternary-btn"
+              onClick={sendInterest}
+              disabled={remainingInterest < 1}
+              title={
+                remainingInterest < 1
+                  ? "Purchase interests under Account to send interest."
+                  : "Send Interest"
+              }>
+              <i className="pi pi-heart"></i>
+            </Button>
+          )}
         </div>
       </div>
     </div>

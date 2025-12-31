@@ -4,11 +4,14 @@ import FormInput from "../../../fields/FormInput";
 import {
   createdByOptions,
   maritalOptions,
-  motherTongueOptions,
   qualificationOptions,
-  subCasteOptions,
 } from "../../../../utils/constants";
 import { Button } from "primereact/button";
+import {
+  casteOptions,
+  motherTongueOptions,
+  subCasteOptions,
+} from "../../../../utils/utils";
 
 const Background = (props: StepsType) => {
   const { handleChange, handleNext, handleBack, formData } = props;
@@ -19,6 +22,7 @@ const Background = (props: StepsType) => {
     qualification,
     gothra,
     subCaste,
+    caste,
   } = formData;
 
   return (
@@ -41,26 +45,18 @@ const Background = (props: StepsType) => {
         onChange={handleChange}
         options={motherTongueOptions}
         icon="pi pi-language"
-      />
-
-      <SelectInput
-        placeholder="Profile Created By"
-        value={profileCreatedBy}
-        name="profileCreatedBy"
-        onChange={handleChange}
-        options={createdByOptions}
-        icon="pi pi-users"
-      />
-      <FormInput
-        type="text"
-        name="gothra"
-        placeholder="Gothra"
-        value={gothra}
-        onChange={handleChange}
-        icon="pi pi-sitemap"
+        filter
       />
 
       <div className="grid grid-cols-2 gap-4">
+        <FormInput
+          type="text"
+          name="gothra"
+          placeholder="Gothra"
+          value={gothra}
+          onChange={handleChange}
+          icon="pi pi-sitemap"
+        />
         <SelectInput
           placeholder="Qualification"
           value={qualification}
@@ -69,13 +65,33 @@ const Background = (props: StepsType) => {
           options={qualificationOptions}
           icon="pi pi-graduation-cap"
         />
+      </div>
+      <SelectInput
+        placeholder="Profile Created By"
+        value={profileCreatedBy}
+        name="profileCreatedBy"
+        onChange={handleChange}
+        options={createdByOptions}
+        icon="pi pi-users"
+      />
+      <div className="grid grid-cols-2 gap-4">
+        <SelectInput
+          placeholder="Caste"
+          value={caste}
+          name="caste"
+          onChange={handleChange}
+          options={casteOptions}
+          icon="pi pi-book"
+          filter
+        />
         <SelectInput
           placeholder="Sub Caste"
           value={subCaste}
           name="subCaste"
           onChange={handleChange}
-          options={subCasteOptions}
-          icon="pi pi-book"
+          options={subCasteOptions(caste)}
+          icon="pi pi-sitemap"
+          filter
         />
       </div>
 

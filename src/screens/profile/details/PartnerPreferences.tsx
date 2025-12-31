@@ -2,14 +2,18 @@ import {
   ageOptions,
   countryOptions,
   employedInOptions,
+  genderOptions,
   heightOptions,
+  isBroker,
   maritalOptions,
-  motherTongueOptions,
   qualificationOptions,
-  subCasteOptions,
 } from "../../../utils/constants";
 import type { PartnerDetailsIn } from "../../../utils/interfaces";
-import { normalizeToArray } from "../../../utils/utils";
+import {
+  casteOptions,
+  motherTongueOptions,
+  normalizeToArray,
+} from "../../../utils/utils";
 import SelectInput from "../../../components/fields/SelectInput";
 import FormInput from "../../../components/fields/FormInput";
 
@@ -62,14 +66,16 @@ const PartnerPreferences = (props: Props) => {
           required={!isFilter}
         />
         <SelectInput
-          name="subCaste"
-          label="Sub Caste"
-          value={normalizeToArray(partnerData.subCaste)}
+          name="caste"
+          label="Caste"
+          value={normalizeToArray(partnerData.caste)}
           onChange={handleChange}
-          options={subCasteOptions}
+          options={casteOptions}
           disabled={isReadOnly}
           icon="pi pi-book"
           isMultiselect
+          filter
+          required
         />
       </div>
 
@@ -139,6 +145,7 @@ const PartnerPreferences = (props: Props) => {
           disabled={isReadOnly}
           icon="pi pi-language"
           isMultiselect
+          filter
         />
       </div>
       <div className="form-row">
@@ -151,6 +158,17 @@ const PartnerPreferences = (props: Props) => {
             onChange={handleChange}
             disabled={isReadOnly}
             icon="pi pi-pen-to-square"
+          />
+        )}
+        {isBroker && isFilter && (
+          <SelectInput
+            name="genderBrokerFilter"
+            label="Gender"
+            value={partnerData.genderBrokerFilter}
+            onChange={handleChange}
+            options={genderOptions}
+            icon="pi pi-mars"
+            isMultiselect
           />
         )}
       </div>

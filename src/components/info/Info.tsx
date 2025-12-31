@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { REGISTRATION_FEE, SUPPORT_EMAIL } from "../../utils/constants";
 import "./Info.scss";
+import { useNavigate } from "react-router-dom";
 
 const Info = () => {
   const [showMail, setShowMail] = useState(true);
   const [showTooltipHint, setShowTooltipHint] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setShowTooltipHint(true);
@@ -69,7 +71,12 @@ const Info = () => {
         <div
           className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
           <p className="title">Pricing Details:</p>
-          <p className="body">₹ {REGISTRATION_FEE}/year</p>
+          <div className="flex mb-4 ">
+            <p className="body mr-2">₹&nbsp;{REGISTRATION_FEE}/year</p>
+            <button onClick={() => navigate("/pricing")} className="pub-link">
+              Membership&nbsp;Details
+            </button>
+          </div>
           <hr className="border-gray-200 mb-4" />
 
           <p className="title">Email Support:</p>

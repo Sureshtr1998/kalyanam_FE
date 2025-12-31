@@ -6,6 +6,7 @@ import FormInput from "../fields/FormInput";
 import type { FormType } from "../../utils/interfaces";
 import { TEXT_COLOR } from "../../styles/variables";
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -20,6 +21,7 @@ const ForgotPasswordForm = (props: Props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isPartner, setIsPartner] = useState<boolean>(false);
 
   const [timer, setTimer] = useState(0);
   const { showToast } = useToast();
@@ -44,6 +46,7 @@ const ForgotPasswordForm = (props: Props) => {
     try {
       const res = await api.post("/request-reset", {
         email: email.toLowerCase(),
+        isPartner,
       });
       setStep("enterOtp");
       showToast("success", "OTP Sent", res.data.msg);
@@ -89,7 +92,11 @@ const ForgotPasswordForm = (props: Props) => {
 
     setLoading(true);
     try {
-      const res = await api.post("/reset-password", { email, newPassword });
+      const res = await api.post("/reset-password", {
+        email,
+        newPassword,
+        isPartner,
+      });
       window.location.href = "/";
       setTimeout(() => {
         showToast("success", "Password Reset", res.data.msg);
@@ -121,7 +128,18 @@ const ForgotPasswordForm = (props: Props) => {
             onChange={(e) => setEmail(e.target.value)}
             icon="pi pi-envelope"
           />
-
+          <div className="mb-4">
+            <Checkbox
+              inputId="partner"
+              name="partner"
+              onChange={() => setIsPartner(!isPartner)}
+              checked={isPartner}
+              value="partner"
+            />
+            <label htmlFor="partner" className={`${TEXT_COLOR} ml-2 `}>
+              I am a Registered Partner
+            </label>
+          </div>
           <Button
             onClick={handleRequestOtp}
             disabled={loading || !/\S+@\S+\.\S+/.test(email)}

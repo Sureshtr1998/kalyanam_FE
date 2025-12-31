@@ -10,8 +10,8 @@ const AboutUs = () => {
     <div className="about-us">
       <SEO
         title="About Us | Seetha Rama Kalyana"
-        description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Brahmin community."
-        keywords="brahmin matrimony, brahmin matrimony, about us, seetha rama kalyana"
+        description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Hindu community."
+        keywords="hindu matrimony, hindu matrimony, about us, seetha rama kalyana"
         url="https://www.seetharamakalyana.in/about-us"
       />
 
