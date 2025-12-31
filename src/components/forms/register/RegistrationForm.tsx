@@ -210,6 +210,7 @@ const RegistrationForm = (props: Props) => {
             note: "Registration",
             endpoint: "user-register",
           }}
+          role="USER"
           userName={formData.fullName}
           userEmail={formData.email}
           userPhone={formData.mobile}

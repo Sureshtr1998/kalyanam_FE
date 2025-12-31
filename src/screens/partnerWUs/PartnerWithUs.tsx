@@ -144,6 +144,7 @@ const PartnerWithUs = () => {
       />
       {isPayment && (
         <PaymentModal
+          role="BROKER"
           onSuccess={submitData}
           onHide={() => setPayment(false)}
           payload={{
