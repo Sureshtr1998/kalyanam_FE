@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { BasicDetailsIn, FormType } from "../../../utils/interfaces";
 import {
-  AFTER_DISCOUNT_REGISTRATION_FEE,
   formDefaultVals,
   INITIAL_NO_INTEREST,
   REGISTRATION_FEE,
@@ -16,6 +15,7 @@ import { useToast } from "../../toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
 import PaymentModal from "../../paymentModal/PaymentModal";
 import Spinner from "../../spinner/Spinner";
+import { getRefferalAmount } from "../../../utils/utils";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -108,16 +108,13 @@ const RegistrationForm = (props: Props) => {
     return true;
   };
 
-  const handleNext = async (isReffer?: boolean) => {
+  const handleNext = async (referralId?: string) => {
     if (validateStep(step)) {
       if (step === 2) setImages([]);
       if (step === 3) {
         try {
-          if (isReffer) {
-            setCurrentAmount(AFTER_DISCOUNT_REGISTRATION_FEE);
-          } else {
-            setCurrentAmount(REGISTRATION_FEE);
-          }
+          const referrAmnt = getRefferalAmount(referralId);
+          setCurrentAmount(referrAmnt);
           setIsLoading(true);
           await api.get("/user-validation", {
             params: { email: formData.email, mobile: formData.mobile },

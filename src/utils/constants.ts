@@ -447,7 +447,16 @@ export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
 export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
+
+//Referrals
 export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
+
+
+//Make sure it is exactly 7 characters
+export const DISCOUNT_NAMES = ["BRAHMIN", "SITARAM"]
+
+export const PERSONAL_DISCOUNT_PRICE = 401
+
 
 export const PURCHASE_NO_INTEREST = 21
 export const PURCHASE_INTEREST_FEE = 101

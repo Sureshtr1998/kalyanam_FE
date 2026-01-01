@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import RegisterNote from "../../../note/RegisterNote";
 import api from "../../../../utils/api";
 import Spinner from "../../../spinner/Spinner";
+import { DISCOUNT_NAMES } from "../../../../utils/constants";
 
 const Profile = (props: StepsType) => {
   const { handleChange, handleBack, formData, setImages, handleNext } = props;
@@ -24,8 +25,12 @@ const Profile = (props: StepsType) => {
       if (referralId.length === 7) {
         try {
           setIsLoading(true);
-          const res = await api.get(`/validate-referral/${referralId}`);
-          setIsDisabled(!res.data.valid);
+          if (DISCOUNT_NAMES.includes(referralId)) {
+            setIsDisabled(false);
+          } else {
+            const res = await api.get(`/validate-referral/${referralId}`);
+            setIsDisabled(!res.data.valid);
+          }
           setIsLoading(false);
         } catch {
           setIsDisabled(true);
@@ -44,7 +49,7 @@ const Profile = (props: StepsType) => {
       {isNote && handleNext && (
         <RegisterNote
           onAccept={() => {
-            handleNext(referralId ? true : false);
+            handleNext(referralId);
             SetNote(false);
           }}
           onHide={() => SetNote(false)}
