@@ -71,7 +71,7 @@ const Info = () => {
         <div
           className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
           <p className="title">Pricing Details:</p>
-          <div className="flex mb-4 ">
+          <div className="flex mb-4 justify-self-center ">
             <p className="body mr-2">₹&nbsp;{REGISTRATION_FEE}/year</p>
             <button onClick={() => navigate("/pricing")} className="pub-link">
               Membership&nbsp;Details
@@ -82,7 +82,7 @@ const Info = () => {
           <p className="title">Email Support:</p>
           <a
             href={`mailto:${SUPPORT_EMAIL}`}
-            className="text-[#e07b00] text-sm font-medium hover:underline">
+            className="text-[#e07b00] text-sm text-center justify-self-center flex font-medium hover:underline">
             {SUPPORT_EMAIL}
           </a>
 
