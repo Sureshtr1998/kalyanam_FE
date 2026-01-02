@@ -445,11 +445,12 @@ export const updatedDate = "Decmber 1, 2025"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
-export const REGISTRATION_FEE = 751
+export const REGISTRATION_FEE = 501
+// export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
 
 //Referrals
-export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
+export const AFTER_DISCOUNT_REGISTRATION_FEE = 401
 
 
 //Make sure it is exactly 7 characters

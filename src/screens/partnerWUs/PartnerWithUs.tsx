@@ -222,6 +222,7 @@ const PartnerWithUs = () => {
           <div className="support-bar">
             <p>{t("contact_support")}</p>
             <a href="tel:YOUR_CONTACT_NUMBER" className="call-button">
+              <i className="m-1 mr-2 pi pi-envelope" />
               {t("contact_button")}
             </a>
           </div>
