@@ -139,7 +139,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <h2 className="name">{fullName}</h2>
           <div className="info">
             <div>
-              <span className="label">Age:</span> {calculateAge(dob ?? "")} Yrs
+              <span className="label">Age:</span>
+              {calculateAge(dob ?? "")} Yrs
             </div>
             <div>
               <span className="label">Caste:</span>
@@ -159,18 +160,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               )
             )}
             <div>
-              <span className="label">Qualification:</span>{" "}
+              <span className="label">Qualification:</span>
               {fetchLabel(qualificationOptions, qualification)}
             </div>
             {gothra ? (
               <div>
-                <span className="label">Gothra:</span> {gothra}
+                <span className="label">Gothra:</span>
+                {gothra}
               </div>
             ) : (
               motherTongue && (
                 <div>
                   <span className="label">First Lang:</span>
-                  {"     "}
                   {motherTongue}
                 </div>
               )
