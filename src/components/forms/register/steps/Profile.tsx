@@ -81,7 +81,7 @@ const Profile = (props: StepsType) => {
         <FormInput
           type="text"
           name="referralId"
-          placeholder="Refferal ID (Optional)"
+          placeholder="Referral ID (Optional)"
           value={referralId}
           onChange={handleChange}
           icon="pi pi-share-alt"

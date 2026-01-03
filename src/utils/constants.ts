@@ -445,8 +445,7 @@ export const updatedDate = "Decmber 1, 2025"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 
-export const REGISTRATION_FEE = 301
-// export const REGISTRATION_FEE = 751
+export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
 
 // TODO Need to keep more margin at registration fee
@@ -454,10 +453,11 @@ export const INITIAL_NO_INTEREST = 51
 export const AFTER_DISCOUNT_REGISTRATION_FEE = 401
 
 
+export const REFERRAL_CODE_CURRENT = "SITARAM"
 //Make sure it is exactly 7 characters
 export const DISCOUNT_NAMES = ["BRAHMIN", "SITARAM"]
 
-export const PERSONAL_DISCOUNT_PRICE = 401
+export const PERSONAL_DISCOUNT_PRICE = 351
 
 
 export const PURCHASE_NO_INTEREST = 21

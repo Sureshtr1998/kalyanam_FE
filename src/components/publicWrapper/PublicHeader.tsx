@@ -32,7 +32,7 @@ const PublicHeader = () => {
               </span>
             </div>
           </div>
-          <div className="ml-10 flex items-center space-x-4">
+          <div className="ml-10 flex items-center">
             {showInstallButton && (
               <Button
                 icon="pi pi-download"

@@ -68,7 +68,7 @@ const ContactDetail: React.FC<ContactDetailProps> = ({ title }) => (
       <p className="text-base text-amber-800">
         <a
           href={`mailto:${SUPPORT_EMAIL}`}
-          className="font-medium text-amber-900 hover:text-amber-700">
+          className="font-medium text-amber-900 hover:text-amber-700 text-sm sm:text-base">
           {SUPPORT_EMAIL}
         </a>
       </p>
