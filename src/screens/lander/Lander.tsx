@@ -56,7 +56,10 @@ const Lander = () => {
         keywords="hindu matrimony, hindu matrimony, seetha rama kalyana, matchmaking, marriage"
         url="https://www.seetharamakalyana.in"
       />
-      {(currentForm === 1 || currentForm === 2 || currentForm === 3) && (
+      {(currentForm === 1 ||
+        currentForm === 2 ||
+        currentForm === 3 ||
+        currentForm === "login") && (
         <div className="referral-wrapper">
           <div className="referral-card">
             <div className="referral-left">
