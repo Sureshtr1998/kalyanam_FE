@@ -27,9 +27,8 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
       className="register-note-dialog">
       <div className="space-y-3 text-sm leading-relaxed text-gray-800">
         <p>
-          <strong>1)</strong> We’ve very recently launched the app, so you might
-          not find many profiles initially. By <strong>February end</strong>,
-          we’ll be adding all active profiles here.
+          <strong>1)</strong> We’re in an active growth phase right now. You’ll
+          see more profiles appearing on a regular basis.
         </p>
 
         <p>

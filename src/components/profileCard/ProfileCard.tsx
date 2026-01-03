@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { UserDetails } from "../../utils/interfaces";
 import "./ProfileCard.scss";
 import ViewCard from "../viewCard/ViewCard";
@@ -27,8 +27,17 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   remainingInterest,
   currentUser,
 }) => {
-  const { fullName, caste, subCaste, dob, images, gothra, qualification } =
-    match.basic;
+  const {
+    fullName,
+    caste,
+    subCaste,
+    dob,
+    images,
+    gothra,
+    qualification,
+    motherTongue,
+  } = match.basic;
+  const { diet } = match.personal || {};
   const userId = match._id;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -78,6 +87,20 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     }
   };
 
+  const viewProfile = () => {
+    setVisible(true);
+    window.history.pushState({ modal: true }, "");
+  };
+
+  useEffect(() => {
+    const onPopState = () => {
+      setVisible(false);
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   return (
     <div className="profile-card">
       {visible && (
@@ -121,21 +144,43 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             <div>
               <span className="label">Caste:</span>
               {caste}
-              {subCaste ? `- ${subCaste}` : ""}
             </div>
+            {subCaste ? (
+              <div>
+                <span className="label">Sub Caste:</span>
+                {subCaste}
+              </div>
+            ) : (
+              diet && (
+                <div>
+                  <span className="label">Diet:</span>
+                  {diet}
+                </div>
+              )
+            )}
             <div>
               <span className="label">Qualification:</span>{" "}
               {fetchLabel(qualificationOptions, qualification)}
             </div>
-            <div>
-              <span className="label">Gothra:</span> {gothra}
-            </div>
+            {gothra ? (
+              <div>
+                <span className="label">Gothra:</span> {gothra}
+              </div>
+            ) : (
+              motherTongue && (
+                <div>
+                  <span className="label">First Lang:</span>
+                  {"     "}
+                  {motherTongue}
+                </div>
+              )
+            )}
           </div>
         </div>
 
         {/* Actions Section */}
         <div className="actions">
-          <Button className="primary-btn" onClick={() => setVisible(true)}>
+          <Button className="primary-btn" onClick={viewProfile}>
             View Profile
           </Button>
           {!isBroker && (

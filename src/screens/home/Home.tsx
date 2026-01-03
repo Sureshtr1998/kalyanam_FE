@@ -29,6 +29,7 @@ const Home = (props: Props) => {
   useEffect(() => {
     setPendingInterests(remainingInterest(filterData));
     if (filterData._id) fetchProfiles(page, filterData);
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterData, page]);
 

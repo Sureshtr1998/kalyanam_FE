@@ -136,6 +136,14 @@ const ImageMedia: React.FC<ImageUploadProps> = ({
     }
   };
 
+  if (isReadOnly && !allMedia.length) {
+    return (
+      <div className="no-media">
+        <span>Images not available</span>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`${

@@ -128,3 +128,13 @@
     color: vars.$text-color;
   }
 }
+
+.no-media {
+  background-color: vars.$bg-color;
+  border: 1px dashed vars.$border-color;
+  color: vars.$text-color;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
