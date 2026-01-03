@@ -9,7 +9,10 @@ import SEO from "../../components/misc/SEO";
 import { getItem, user_login_token } from "../../utils/localStore";
 import { useNavigate } from "react-router-dom";
 import "./Lander.scss";
-import { REFERRAL_CODE_CURRENT } from "../../utils/constants";
+import {
+  PERSONAL_DISCOUNT_PRICE,
+  REFERRAL_CODE_CURRENT,
+} from "../../utils/constants";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
@@ -68,9 +71,12 @@ const Lander = () => {
               </div>
 
               <p className="referral-text">
-                Special Offer: Use{" "}
-                <span className="referral-discount">52% OFF</span> with referral
-                code
+                Special Offer: Apply the referral code and enjoy
+                <span className="referral-discount"> 52% OFF</span>, now just
+                <span className="referral-discount">
+                  {" "}
+                  ₹{PERSONAL_DISCOUNT_PRICE}/year!
+                </span>
               </p>
             </div>
 
