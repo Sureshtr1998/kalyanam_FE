@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { UserDetails } from "./interfaces";
 import casteData from "./caste.json"
 import languageData from "./lang.json"
-import { AFTER_DISCOUNT_REGISTRATION_FEE, DISCOUNT_NAMES, PERSONAL_DISCOUNT_PRICE, REGISTRATION_FEE } from "./constants";
+import { PERSONAL_DISCOUNT_PRICE } from "./constants";
 
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
@@ -87,6 +86,7 @@ export const parseGptResponse = (gptResponse: string) => {
     try {
         return JSON.parse(cleaned);
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err: any) {
 
         const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
@@ -129,6 +129,7 @@ export const subCasteOptions = (caste: string) => {
     }));
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getRefferalAmount = (referralId?: string) => {
     //TODO: Change in future if requred for now Personal Discount Price for everyone
     return PERSONAL_DISCOUNT_PRICE
