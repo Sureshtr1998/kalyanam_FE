@@ -8,30 +8,10 @@ import ForgotPasswordForm from "../../components/forms/ForgotPasswordForm";
 import SEO from "../../components/misc/SEO";
 import { getItem, user_login_token } from "../../utils/localStore";
 import { useNavigate } from "react-router-dom";
-import "./Lander.scss";
-import {
-  PERSONAL_DISCOUNT_PRICE,
-  REFERRAL_CODE_CURRENT,
-} from "../../utils/constants";
+import Offers from "./Offers";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    const textArea = document.createElement("textarea");
-    textArea.value = REFERRAL_CODE_CURRENT;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      document.execCommand("copy");
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Copy failed", err);
-    }
-    document.body.removeChild(textArea);
-  };
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -62,38 +42,7 @@ const Lander = () => {
       {(currentForm === 1 ||
         currentForm === 2 ||
         currentForm === 3 ||
-        currentForm === "login") && (
-        <div className="referral-wrapper">
-          <div className="referral-card">
-            <div className="referral-left">
-              <div className="referral-icon">
-                <i className="pi pi-tag" />
-              </div>
-
-              <p className="referral-text">
-                Special Offer: Apply the referral code and enjoy
-                <span className="referral-discount"> 52% OFF</span>, now just
-                <span className="referral-discount">
-                  {" "}
-                  ₹{PERSONAL_DISCOUNT_PRICE}/year!
-                </span>
-              </p>
-            </div>
-
-            <div className="referral-right">
-              <div
-                onClick={handleCopy}
-                className={`referral-code-box ${copied ? "copied" : ""}`}>
-                <span className="referral-code">{REFERRAL_CODE_CURRENT}</span>
-
-                <button className="copy-btn">
-                  <i className={`pi ${copied ? "pi-check" : "pi-copy"}`} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+        currentForm === "login") && <Offers />}
 
       <div
         className={`min-h-screen flex ${BG_COLOR} font-sans justify-center items-center`}>

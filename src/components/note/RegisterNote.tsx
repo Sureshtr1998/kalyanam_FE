@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import "./RegisterNote.scss";
-import { REGISTRATION_FEE, SUPPORT_EMAIL } from "../../utils/constants";
+import { SUPPORT_EMAIL } from "../../utils/constants";
 
 interface Props {
   onHide: () => void;
@@ -37,9 +37,9 @@ const RegisterNote = ({ onHide, onAccept }: Props) => {
         </p>
 
         <p>
-          <strong>3)</strong> We’re currently charging a{" "}
-          <strong>minimal registration fee of ₹{REGISTRATION_FEE}</strong> per
-          year for our new users.
+          <strong>3)</strong> After registration, you can view profiles and use
+          interests based on your plan. All memberships are one-time and fully
+          transparent.
         </p>
 
         <p>

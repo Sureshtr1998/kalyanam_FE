@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { REGISTRATION_FEE, SUPPORT_EMAIL } from "../../utils/constants";
+import {
+  PERSONAL_DISCOUNT_PRICE,
+  REGISTRATION_FEE,
+  SUPPORT_EMAIL,
+} from "../../utils/constants";
 import "./Info.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -70,22 +74,39 @@ const Info = () => {
 
         <div
           className={`tooltip-popover ${showTooltipHint ? "show-hint" : ""}`}>
-          <p className="title">Pricing Details:</p>
-          <div className="flex mb-4 justify-self-center ">
-            <p className="body mr-2">₹&nbsp;{REGISTRATION_FEE}/year</p>
-            <button onClick={() => navigate("/pricing")} className="pub-link">
-              Membership&nbsp;Details
-            </button>
+          <div className="price-wrapper">
+            <div className="price-card">
+              <div className="price-row">
+                <div className="price-old">
+                  <p>₹{REGISTRATION_FEE}/year</p>
+                  <div className="price-strike" />
+                </div>
+
+                <div className="price-new animate-heartbeat">
+                  <span className="price-label">Today's Price</span>
+                  <p className="price-amount">
+                    ₹{PERSONAL_DISCOUNT_PRICE}
+                    <span className="price-duration">/year</span>
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate("/pricing")}
+                className="price-btn">
+                <span>Membership Details</span>
+                <i className="ml-1 pi pi-arrow-right price-btn-icon" />
+              </button>
+            </div>
           </div>
-          <hr className="border-gray-200 mb-4" />
+          <div className="help-wrapper mt-2">
+            <p className="help-label ">Need help?</p>
 
-          <p className="title">Email Support:</p>
-          <a
-            href={`mailto:${SUPPORT_EMAIL}`}
-            className="text-[#e07b00] text-sm text-center justify-self-center flex font-medium hover:underline">
-            {SUPPORT_EMAIL}
-          </a>
-
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="help-link">
+              <i className="pi pi-envelope help-icon" />
+              <span className="help-email">{SUPPORT_EMAIL}</span>
+            </a>
+          </div>
           <div className="tooltip-arrow" aria-hidden="true"></div>
         </div>
       </div>

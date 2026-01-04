@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { UserDetails } from "./interfaces";
@@ -85,7 +86,7 @@ export const parseGptResponse = (gptResponse: string) => {
 
     try {
         return JSON.parse(cleaned);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     } catch (err: any) {
 
         const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
@@ -129,7 +130,9 @@ export const subCasteOptions = (caste: string) => {
 };
 
 export const getRefferalAmount = (referralId?: string) => {
-    if (!referralId || referralId.length < 6) return REGISTRATION_FEE
-    else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
-    else return AFTER_DISCOUNT_REGISTRATION_FEE
+    //TODO: Change in future if requred for now Personal Discount Price for everyone
+    return PERSONAL_DISCOUNT_PRICE
+    // if (!referralId || referralId.length < 6) return REGISTRATION_FEE
+    // else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
+    // else return AFTER_DISCOUNT_REGISTRATION_FEE
 }
