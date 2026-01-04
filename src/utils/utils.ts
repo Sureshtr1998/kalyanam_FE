@@ -129,9 +129,10 @@ export const subCasteOptions = (caste: string) => {
     }));
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export const getRefferalAmount = (referralId?: string) => {
     //TODO: Change in future if requred for now Personal Discount Price for everyone
+    console.log(referralId)
     return PERSONAL_DISCOUNT_PRICE
     // if (!referralId || referralId.length < 6) return REGISTRATION_FEE
     // else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
