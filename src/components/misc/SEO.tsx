@@ -9,6 +9,7 @@ interface SEOProps {
   pageType?: "default" | "faq" | "blog" | "terms" | "privacy";
   faqItems?: { question: string; answer: string }[]; // for FAQ
   blogPosts?: { title: string; summary: string }[]; // for Blog
+  additionalSchema?: object[];
 }
 
 export default function SEO({
@@ -20,6 +21,7 @@ export default function SEO({
   pageType = "default",
   faqItems = [],
   blogPosts = [],
+  additionalSchema = [],
 }: SEOProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const schema: any = [
@@ -47,6 +49,7 @@ export default function SEO({
       description,
       isPartOf: { "@id": `${url}/#website` },
     },
+    ...additionalSchema,
   ];
 
   // Add FAQ structured data if pageType is 'faq'

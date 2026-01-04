@@ -17,7 +17,7 @@ const Info = () => {
 
     const timer = setTimeout(() => {
       setShowTooltipHint(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);

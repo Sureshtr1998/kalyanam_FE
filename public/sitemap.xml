@@ -71,4 +71,12 @@
     <priority>0.7</priority>
   </url>
 
+    <!-- Communities -->
+  <url>
+    <loc>https://www.seetharamakalyana.in/communities</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+
 </urlset>

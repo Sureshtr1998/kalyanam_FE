@@ -28,6 +28,9 @@ const PublicFooter = () => {
           <button onClick={() => navigate("/pricing")} className="pub-link">
             Pricing
           </button>
+          <button onClick={() => navigate("/communities")} className="pub-link">
+            Our Communities
+          </button>
           <button
             onClick={() => navigate("/refund-policy")}
             className="pub-link">
