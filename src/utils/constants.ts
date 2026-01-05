@@ -475,3 +475,5 @@ export const BROKERAGE_REGISTRATION_FEE = 501
 export const isBroker = getItem(user_login_token)?.role === "BROKER";
 
 export const SUPPORT_NUMBER = "+918105710930"
+
+export const SEO_URL = "https://www.seetharamakalyana.in"

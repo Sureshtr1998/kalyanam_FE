@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import {
   BROKERAGE_REGISTRATION_FEE,
   brokerFormDefaultVals,
+  SEO_URL,
 } from "../../utils/constants";
 import SEO from "../../components/misc/SEO";
 import PaymentModal from "../../components/paymentModal/PaymentModal";
@@ -146,7 +147,7 @@ const PartnerWithUs = () => {
         title="Partner With Us | Matrimony Broker Partnership – Seetha Rama Kalyana"
         description="Partner with Seetha Rama Kalyana as a trusted matrimony broker. Earn referral commissions, track registrations, and grow your business digitally."
         keywords="matrimony broker partnership, matrimony referral program, marriage broker platform, seetha rama kalyana partner, matrimony agent registration"
-        url="https://www.seetharamakalyana.in/partner-with-us"
+        url={SEO_URL + "/partner-with-us"}
         pageType="default"
       />
       {isPayment && (

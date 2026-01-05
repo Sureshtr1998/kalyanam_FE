@@ -3,6 +3,7 @@ import { communities, generateCommunitiesSchema } from "./seoComm";
 import "./Communities.scss";
 import { useNavigate } from "react-router-dom";
 import SEO from "../../components/misc/SEO";
+import { SEO_URL } from "../../utils/constants";
 
 interface CommunityIn {
   id: number;
@@ -59,18 +60,14 @@ const CommunitiesServe = () => {
   return (
     <div>
       <SEO
-        title="Communities We Serve - Seetha Rama Kalyana"
-        description="Explore Hindu Matrimony communities across India. Find verified profiles for Agarwal, Brahmin, Reddy, Patel, Maratha, Naidu, and 500+ Hindu sub-castes."
-        keywords="Hindu Matrimony, Agarwal Matrimony, Brahmin Matrimony, Reddy Matrimony, Patel Matrimony, Maratha Matrimony, Naidu Matrimony, Indian Matrimony"
-        pageType="default"
-        additionalSchema={[generateCommunitiesSchema(communities)]}
-      />
-      <SEO
         title="Hindu Matrimony by Community | Brahmin, Reddy, Patel & More – Seetha Rama Kalyana"
         description="Seetha Rama Kalyana offers trusted Hindu matrimonial services for all communities including Brahmin, Reddy, Patel, Naidu, and 500+ sub-castes. Connect with verified profiles for a sacred and culturally aligned marriage."
         keywords="Hindu Matrimony, Brahmin Matrimony, Reddy Matrimony, Patel Matrimony, Naidu Matrimony, Hindu Marriage by Community, Verified Hindu Matrimony, Sacred Hindu Matrimony"
-        url="https://www.seetharamakalyana.in/communities-we-serve"
+        url={SEO_URL + "/communities-we-serve"}
+        pageType="default"
+        additionalSchema={[generateCommunitiesSchema(communities)]}
       />
+
       <div className="min-h-screen bg-[#fffbeb] text-[#78350f]">
         {/* Hero Section */}
         <header className="hero">

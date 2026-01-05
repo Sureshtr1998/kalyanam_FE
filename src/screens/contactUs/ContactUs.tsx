@@ -7,11 +7,9 @@ import {
   BORDER_COLOR,
   CARD_BG,
 } from "../../styles/variables";
-import { SUPPORT_EMAIL } from "../../utils/constants";
+import { SEO_URL, SUPPORT_EMAIL } from "../../utils/constants";
 
 const ContactUs: React.FC = () => {
-  const canonicalUrl = "https://www.seetharamakalyana.in/contact-us";
-
   return (
     <>
       {/* SEO */}
@@ -19,7 +17,7 @@ const ContactUs: React.FC = () => {
         title="Contact Us | Seetha Rama Kalyana"
         description="Get in touch with Seetha Rama Kalyana, the trusted Hindu matrimony platform. Reach us via email and we will get back to you promptly."
         keywords="contact, support, hindu matrimony, seetha rama kalyana"
-        url={canonicalUrl}
+        url={SEO_URL + "/contact-us"}
       />
 
       {/* Main Content */}

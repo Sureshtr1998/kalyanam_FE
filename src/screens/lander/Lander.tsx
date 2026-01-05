@@ -9,6 +9,7 @@ import SEO from "../../components/misc/SEO";
 import { getItem, user_login_token } from "../../utils/localStore";
 import { useNavigate } from "react-router-dom";
 import Offers from "./Offers";
+import { SEO_URL } from "../../utils/constants";
 
 const Lander = () => {
   const [currentForm, setCurrentForm] = useState<FormType>("login");
@@ -37,7 +38,7 @@ const Lander = () => {
         title="Seetha Rama Kalyana | Hindu Matrimony"
         description="Join Seetha Rama Kalyana, the trusted Hindu matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
         keywords="hindu matrimony, hindu matrimony, seetha rama kalyana, matchmaking, marriage"
-        url="https://www.seetharamakalyana.in"
+        url={SEO_URL}
       />
       {(currentForm === 1 ||
         currentForm === 2 ||

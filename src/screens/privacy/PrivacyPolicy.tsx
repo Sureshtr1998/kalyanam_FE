@@ -5,7 +5,7 @@ import {
   CARD_BG,
   BORDER_COLOR,
 } from "../../styles/variables";
-import { SUPPORT_EMAIL, updatedDate } from "../../utils/constants";
+import { SEO_URL, SUPPORT_EMAIL, updatedDate } from "../../utils/constants";
 import SEO from "../../components/misc/SEO";
 
 interface PolicySection {
@@ -231,7 +231,7 @@ const PrivacyPolicy = () => {
         title="Privacy Policy | Seetha Rama Kalyana"
         description="Read the Privacy Policy of Seetha Rama Kalyana, a trusted Hindu matrimony platform committed to protecting your personal data, privacy, and security."
         keywords="privacy policy, data protection, seetha rama kalyana, hindu matrimony privacy, hindu matrimony policy, matrimony data security"
-        url="https://www.seetharamakalyana.in/privacy"
+        url={SEO_URL + "/privacy"}
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

@@ -6,7 +6,7 @@ import {
   BORDER_COLOR,
 } from "../../styles/variables";
 import SEO from "../../components/misc/SEO";
-import { updatedDate } from "../../utils/constants";
+import { SEO_URL, updatedDate } from "../../utils/constants";
 
 interface TermSection {
   id: string;
@@ -150,7 +150,7 @@ const TermsConditions = () => {
         description="Read the privacy policy of Seetha Rama Kalyana, protecting your data and trust."
         keywords="privacy policy, hindu matrimony, seetha rama kalyana"
         pageType="privacy"
-        url="https://www.seetharamakalyana.in/terms"
+        url={SEO_URL + "/terms"}
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

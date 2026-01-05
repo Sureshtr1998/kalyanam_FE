@@ -4,6 +4,7 @@ import CommitmentSection from "./sections/CommitmentSection";
 import ActionSection from "./sections/ActionSection";
 import QuickLinks from "./sections/QuickLinks";
 import SEO from "../../components/misc/SEO";
+import { SEO_URL } from "../../utils/constants";
 
 const AboutUs = () => {
   return (
@@ -12,7 +13,7 @@ const AboutUs = () => {
         title="About Us | Seetha Rama Kalyana"
         description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Hindu community."
         keywords="hindu matrimony, hindu matrimony, about us, seetha rama kalyana"
-        url="https://www.seetharamakalyana.in/about-us"
+        url={SEO_URL + "/about-us"}
       />
 
       <div className="header-section">

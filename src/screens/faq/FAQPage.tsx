@@ -12,6 +12,7 @@ import {
   PURCHASE_INTEREST_FEE_2,
   PURCHASE_NO_INTEREST,
   PURCHASE_NO_INTEREST_2,
+  SEO_URL,
   SUPPORT_EMAIL,
 } from "../../utils/constants";
 
@@ -132,7 +133,7 @@ const FAQPage = () => {
         keywords="faq, hindu matrimony, seetha rama kalyana"
         pageType="faq"
         faqItems={faqItems}
-        url="https://www.seetharamakalyana.in/faq"
+        url={SEO_URL + "/faq"}
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

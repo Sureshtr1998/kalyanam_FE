@@ -7,7 +7,7 @@ import {
   BORDER_COLOR,
   CARD_BG,
 } from "../../styles/variables";
-import { updatedDate } from "../../utils/constants";
+import { SEO_URL, updatedDate } from "../../utils/constants";
 
 // Policy Section Component
 interface PolicySectionProps {
@@ -40,8 +40,6 @@ const PolicySection: React.FC<PolicySectionProps> = ({
 
 // Main Refund Policy Component
 const RefundPolicy: React.FC = () => {
-  const canonicalUrl = "https://www.seetharamakalyana.in/refund-policy";
-
   return (
     <>
       {/* SEO */}
@@ -49,7 +47,7 @@ const RefundPolicy: React.FC = () => {
         title="Refund Policy | Seetha Rama Kalyana"
         description="Seetha Rama Kalyana refund policy: Amount will be refunded only if user registration fails but payment is deducted. All other payments are non-refundable."
         keywords="hindu matrimony, kannada matrimony, refund policy, payment refund, Seetha Rama Kalyana"
-        url={canonicalUrl}
+        url={SEO_URL + "/refund-policy"}
       />
 
       {/* Main Content */}

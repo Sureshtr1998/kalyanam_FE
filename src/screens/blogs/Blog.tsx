@@ -10,6 +10,7 @@ import {
   BG_COLOR,
 } from "../../styles/variables";
 import SEO from "../../components/misc/SEO";
+import { SEO_URL } from "../../utils/constants";
 
 interface BlogPost {
   id: number;
@@ -292,7 +293,7 @@ const Blog = () => {
         keywords="blog, hindu matrimony, seetha rama kalyana"
         pageType="blog"
         blogPosts={blogPosts}
-        url="https://www.seetharamakalyana.in/blog"
+        url={SEO_URL + "/blog"}
       />
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>

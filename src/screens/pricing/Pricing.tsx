@@ -14,13 +14,12 @@ import {
   PURCHASE_NO_INTEREST,
   PURCHASE_NO_INTEREST_2,
   REGISTRATION_FEE,
+  SEO_URL,
 } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 
 // Main Pricing Component
 const Pricing = () => {
-  const canonicalUrl = "https://www.seetharamakalyana.in/pricing";
-
   return (
     <>
       {/* SEO */}
@@ -28,7 +27,7 @@ const Pricing = () => {
         title="Pricing Plans | Seetha Rama Kalyana"
         description="Explore Seetha Rama Kalyana's registration and interest purchase plans. Start your journey with a one-time registration fee and buy interest credits to connect with your ideal match."
         keywords="hindu matrimony, matrimony, registration fee, interest pack, pricing plans, Seetha Rama Kalyana"
-        url={canonicalUrl}
+        url={SEO_URL + "/pricing"}
       />
 
       {/* Main Content */}
