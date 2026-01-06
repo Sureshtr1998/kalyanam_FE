@@ -18,7 +18,7 @@ const PublicFooter = () => {
             Privacy Policy
           </button>
           <button onClick={() => navigate("/blog")} className="pub-link">
-            Blog
+            Blogs
           </button>
         </nav>
         <nav className="flex justify-center space-x-6 text-sm">
