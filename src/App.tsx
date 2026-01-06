@@ -31,6 +31,7 @@ import Astrology from "./screens/astrology/Astrology";
 import PartnerWithUs from "./screens/partnerWUs/PartnerWithUs";
 import BrokerProfile from "./screens/brokerProfile/BrokerProfile";
 import CommunitiesServe from "./screens/communities/Communities";
+import BlogPostDetail from "./screens/blogs/BlogPostDetail";
 
 const AppContent = () => {
   const location = useLocation();
@@ -112,6 +113,16 @@ const AppContent = () => {
                 <HelmetProvider>
                   <PublicWrapper>
                     <Blog />
+                  </PublicWrapper>
+                </HelmetProvider>
+              }
+            />
+            <Route
+              path="/blog/:slug"
+              element={
+                <HelmetProvider>
+                  <PublicWrapper>
+                    <BlogPostDetail />
                   </PublicWrapper>
                 </HelmetProvider>
               }

@@ -101,11 +101,14 @@ const Home = (props: Props) => {
                 </p>
               ) : (
                 <p>
-                  We've very recently launched this application. Please be
-                  patient many more profiles are coming soon by{" "}
-                  <b> February end. </b>
-                  We're actively bringing in users, and we truly appreciate your
-                  support!
+                  We've very recently launched this application, and many more
+                  profiles are coming soon by <b>February end</b>. We're
+                  actively onboarding users and truly appreciate your support.{" "}
+                  <b>
+                    Your 1-year membership will officially start from March 2026
+                  </b>
+                  , and until then you can continue using the platform normally
+                  without any limitations.
                 </p>
               )}
               <div className="mt-8">

@@ -1,113 +1,19 @@
-import React, { useEffect, useState } from "react";
-import traditionalUrl from "../../assets/traditional.webp";
-import tipsUrl from "../../assets/tips.webp";
+import React, { useState } from "react";
 import {
   CARD_BG,
   BORDER_COLOR,
   TEXT_COLOR,
   ACCENT_COLOR,
-  ACCENT_RING,
   BG_COLOR,
 } from "../../styles/variables";
 import SEO from "../../components/misc/SEO";
 import { SEO_URL } from "../../utils/constants";
-
-interface BlogPost {
-  id: number;
-  title: string;
-  summary: string;
-  category: "Tips" | "Success Stories" | "Lifestyle" | "Events";
-  readTime: string;
-  imageUrl: string;
-  isFeatured?: boolean;
-  fullContent: React.ReactNode[];
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "How to Create the Perfect Seetha Rama Kalyana Matrimony Profile",
-    summary:
-      "Learn how to make your Seetha Rama Kalyana matrimony profile stand out. Attract genuine matches with honesty, clarity, and a personal touch.",
-    category: "Tips",
-    readTime: "5 min read",
-    imageUrl: tipsUrl,
-    isFeatured: true,
-    fullContent: [
-      <>
-        Your <strong>Seetha Rama Kalyana</strong> matrimony profile is the first
-        impression for potential life partners. Ensure it is honest, engaging,
-        and reflective of your true self. Avoid vague statements and focus on
-        specifics regarding your lifestyle, values, and expectations.
-      </>,
-      <>
-        <strong>Highlight Your Education and Profession:</strong> Clearly
-        explain your education, career, and what drives you. Stability and
-        ambition are attractive qualities in the Hindu matrimony community.
-      </>,
-      <>
-        <strong>Define Your Partner Preferences Clearly:</strong> Mention the
-        qualities you seek realistically, including shared values, goals, or
-        lifestyle preferences. Avoid focusing solely on physical attributes.
-      </>,
-      <>
-        <strong>Use High-Quality Photos:</strong> Include 3-5 recent, clear
-        photos. A portrait plus pictures of hobbies or interests help potential
-        matches understand you better. Avoid heavily filtered images or group
-        photos.
-      </>,
-      <>
-        By following these tips, your profile on{" "}
-        <strong>Seetha Rama Kalyana</strong> can attract genuine, compatible
-        matches efficiently.
-      </>,
-    ],
-  },
-  {
-    id: 2,
-    title: "Discover the Seetha Rama Kalyanam Philosophy for a Divine Match",
-    summary:
-      "Explore the principles of Seetha Rama Kalyana, emphasizing dharma, mutual respect, and commitment in finding a compatible life partner.",
-    category: "Lifestyle",
-    readTime: "6 min read",
-    imageUrl: traditionalUrl,
-    fullContent: [
-      <>
-        The name <strong>Seetha Rama Kalyana</strong> represents a sacred union
-        built on commitment, respect, and shared dharma. In modern matrimony,
-        this philosophy guides users in finding partners aligned with their core
-        values and life purpose.
-      </>,
-      <>
-        <strong>Mutual Respect Matters:</strong> Successful matches focus on
-        empathy, maturity, and deep mutual consideration. Look beyond
-        superficial attributes when reviewing profiles.
-      </>,
-      <>
-        <strong>Commitment to Shared Dharma:</strong> Marriage is a partnership.
-        Define life goals clearly professional, spiritual, and familiar and seek
-        someone whose ambitions complement your own. A divine match supports
-        each other’s journey toward fulfillment.
-      </>,
-      <>
-        <strong>Patience and Integrity in Search:</strong> Just as the epic
-        union of Sita and Rama was virtuous, maintain honesty and patience in
-        your profile. Genuine connections built on these principles lead to
-        lasting relationships.
-      </>,
-      <>
-        Following the <strong>Seetha Rama Kalyanam</strong> philosophy helps
-        Hindu matrimony seekers find truly compatible partners, ensuring
-        respect, values, and spiritual alignment in the match.
-      </>,
-    ],
-  },
-];
+import { Link } from "react-router-dom";
+import { blogPosts, type BlogPost } from "./blogsContents";
 
 const BlogPostCard: React.FC<{
   post: BlogPost;
-  onReadMore: (id: number) => void;
-}> = ({ post, onReadMore }) => {
+}> = ({ post }) => {
   return (
     <div
       className={`rounded-xl shadow-lg ${CARD_BG} border ${BORDER_COLOR} overflow-hidden transform hover:shadow-2xl transition-all duration-300`}>
@@ -134,17 +40,9 @@ const BlogPostCard: React.FC<{
           {post.title}
         </h3>
         <p className="text-gray-600 mb-4 line-clamp-3">{post.summary}</p>
-
-        <button
-          onClick={() => onReadMore(post.id)}
-          className={`cursor-pointer font-semibold text-lg ${ACCENT_COLOR.split(
-            " "
-          )[0].replace(
-            "bg",
-            "text"
-          )} hover:text-amber-700 transition-colors duration-200 focus:outline-none`}>
+        <Link to={`/blog/${post.slug}`} className="text-amber-600 font-bold">
           Read More &rarr;
-        </button>
+        </Link>
       </div>
     </div>
   );
@@ -152,8 +50,7 @@ const BlogPostCard: React.FC<{
 
 const FeaturedPost: React.FC<{
   post: BlogPost;
-  onReadMore: (id: number) => void;
-}> = ({ post, onReadMore }) => {
+}> = ({ post }) => {
   return (
     <div
       className={`mb-12 p-6 rounded-2xl shadow-2xl ${
@@ -189,101 +86,28 @@ const FeaturedPost: React.FC<{
         </h2>
         <p className="text-gray-700 text-xl mb-6">{post.summary}</p>
 
-        {/* Updated Featured button to use onReadMore handler */}
-        <button
-          onClick={() => onReadMore(post.id)}
-          className={`w-fit px-6 py-3 text-lg cursor-pointer font-bold ${CARD_BG} rounded-full ${ACCENT_COLOR} transition-all duration-300 transform hover:scale-[1.05] focus:outline-none focus:ring-4 ${ACCENT_RING} shadow-lg shadow-amber-700/50`}>
+        <Link to={`/blog/${post.slug}`} className="text-amber-600 font-bold">
           Read Full Article &rarr;
-        </button>
+        </Link>
       </div>
     </div>
   );
 };
 
-const BlogPostDetail: React.FC<{ post: BlogPost; onBack: () => void }> = ({
-  post,
-  onBack,
-}) => {
-  return (
-    <main className="max-w-4xl py-20 mx-auto">
-      <div
-        className={`p-8 rounded-2xl shadow-2xl ${CARD_BG} border ${BORDER_COLOR}`}>
-        <h1 className={`text-5xl font-extrabold mb-4 ${TEXT_COLOR}`}>
-          {post.title}
-        </h1>
-        <div className="flex justify-between items-center text-gray-500 text-sm mb-6 pb-4 border-b border-amber-100">
-          <span
-            className={`uppercase tracking-wider font-semibold ${TEXT_COLOR}`}>
-            {post.category}
-          </span>
-          <span>{post.readTime}</span>
-        </div>
-
-        {/* Article Image */}
-        <img
-          src={post.imageUrl}
-          alt={post.title}
-          className="w-full h-auto rounded-xl object-cover mb-8 shadow-md"
-          onError={(e) => {
-            (e.target as HTMLImageElement).onerror = null;
-            (
-              e.target as HTMLImageElement
-            ).src = `https://placehold.co/800x400/${ACCENT_COLOR.split(
-              " "
-            )[0].replace("bg", "")}/78350f?text=Article+Image`;
-          }}
-        />
-
-        {/* Full Content */}
-        <div className="text-gray-700 space-y-6 text-lg leading-relaxed">
-          {post.fullContent && post.fullContent.length > 0 ? (
-            post.fullContent.map((paragraph, index) => (
-              <p key={index} className="indent-6">
-                {paragraph}
-              </p>
-            ))
-          ) : (
-            <p className="text-xl text-red-500 font-medium">
-              The full content for this article is not yet available. Please
-              check back later!
-            </p>
-          )}
-        </div>
-
-        <button
-          onClick={onBack}
-          className={`mt-10 cursor-pointer w-full px-6 py-3 text-lg font-bold ${CARD_BG} rounded-full ${ACCENT_COLOR} transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 ${ACCENT_RING} shadow-lg shadow-amber-700/50`}>
-          &larr; Return to Blog List
-        </button>
-      </div>
-    </main>
-  );
-};
-
 const Blog = () => {
-  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const featuredPost = blogPosts.find((p) => p.isFeatured) || blogPosts[0];
-  const recentPosts = blogPosts.filter(
-    (p) => !p.isFeatured && p.id !== featuredPost.id
-  );
 
-  const selectedPost = blogPosts.find((p) => p.id === selectedPostId);
+  // 2. Filter posts based on the search query
+  // We check if the title or keywords include the search string (case-insensitive)
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.keywords?.toLowerCase().includes(searchQuery.toLowerCase());
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [selectedPost]);
-
-  if (selectedPost) {
-    return (
-      <div className={`${BG_COLOR} min-h-screen  px-4 font-sans`}>
-        <BlogPostDetail
-          post={selectedPost}
-          onBack={() => setSelectedPostId(null)}
-        />
-      </div>
-    );
-  }
+    return matchesSearch && post.id !== featuredPost.id;
+  });
 
   return (
     <div className="blogs">
@@ -298,34 +122,53 @@ const Blog = () => {
 
       <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>
         <header className="text-center mb-12">
-          <h1 className={`text-6xl font-extrabold mb-3 ${TEXT_COLOR}`}>
+          <h1
+            className={`text-5xl md:text-6xl font-extrabold mb-3 ${TEXT_COLOR}`}>
             Matrimony Insights & Stories
           </h1>
-          <p className="text-xl text-gray-600">
-            Your source for tips, success stories, and expert advice on finding
-            your perfect partner.
+          <p className="text-xl text-gray-600 mb-8">
+            Your source for tips, success stories, and expert advice.
           </p>
+
+          <div className="max-w-md mx-auto relative">
+            <input
+              type="text"
+              placeholder="Search by title (e.g., Brahmin, Rituals...)"
+              className="w-full px-6 py-3 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <span className="absolute right-5 top-3.5 text-gray-400">🔍</span>
+          </div>
         </header>
 
         <main className="max-w-7xl mx-auto">
-          {featuredPost && (
-            <FeaturedPost post={featuredPost} onReadMore={setSelectedPostId} />
-          )}
+          {/* Only show featured post if there is no active search */}
+          {!searchQuery && featuredPost && <FeaturedPost post={featuredPost} />}
 
           <h2
             className={`text-4xl font-extrabold mb-8 mt-12 ${TEXT_COLOR} border-b-4 w-fit border-amber-400 pb-1`}>
-            Recent Articles
+            {searchQuery ? `Results for "${searchQuery}"` : "Recent Articles"}
           </h2>
 
           {/* Recent Articles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentPosts.map((post) => (
-              <BlogPostCard
-                key={post.id}
-                post={post}
-                onReadMore={setSelectedPostId}
-              />
-            ))}
+            {filteredPosts.length > 0 ? (
+              filteredPosts.map((post) => (
+                <BlogPostCard key={post.id} post={post} />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20">
+                <p className="text-2xl text-gray-500">
+                  No articles found matching your search.
+                </p>
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="mt-4 text-amber-600 font-bold underline">
+                  Clear search
+                </button>
+              </div>
+            )}
           </div>
         </main>
       </div>
