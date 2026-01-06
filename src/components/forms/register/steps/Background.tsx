@@ -52,7 +52,7 @@ const Background = (props: StepsType) => {
         <FormInput
           type="text"
           name="gothra"
-          placeholder="Gothra"
+          placeholder="Gothra(Optional)"
           value={gothra}
           onChange={handleChange}
           icon="pi pi-sitemap"
