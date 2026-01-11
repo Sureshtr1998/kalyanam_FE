@@ -102,7 +102,8 @@ const Profile = (props: StepsType) => {
           onClick={() => SetNote(true)}
           disabled={isDisabled}
           className="update-btn">
-          Continue to Payment
+          Submit
+          {/* Continue to Payment */}
         </Button>
       </div>
     </div>
