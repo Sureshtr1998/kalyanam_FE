@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { REGISTRATION_FEE } from "../../../utils/constants";
 
 const ActionSection = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const ActionSection = () => {
           <a
             onClick={() => navigate("/")}
             className="cursor-pointer inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-            Register Now (₹{REGISTRATION_FEE} / year)
+            Register Now
           </a>
         </div>
       </div>

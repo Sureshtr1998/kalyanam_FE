@@ -8,12 +8,10 @@ import {
   CARD_BG,
 } from "../../styles/variables";
 import {
-  INITIAL_NO_INTEREST,
   PURCHASE_INTEREST_FEE,
   PURCHASE_INTEREST_FEE_2,
   PURCHASE_NO_INTEREST,
   PURCHASE_NO_INTEREST_2,
-  REGISTRATION_FEE,
   SEO_URL,
 } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
@@ -89,17 +87,16 @@ const RegistrationFeeCard = () => {
         </div>
       </div>
       <h2 className={`text-3xl font-bold mb-2 ${TEXT_COLOR}`}>
-        Annual Registration Fee
+        Free to Join & Explore
       </h2>
-      <p className="text-gray-600 mb-6">
-        A yearly fee is required to activate your account and maintain continued
-        access to the platform.
+      <p className="text-gray-600 mb-6 max-w-md mx-auto">
+        Create your profile today and browse our entire community of verified
+        members at no cost. Start your journey without spending any money.
       </p>
-      <p className={`text-6xl font-extrabold ${TEXT_COLOR} mb-4`}>
-        {REGISTRATION_FEE}
-      </p>
+      <p className={`text-6xl font-extrabold ${TEXT_COLOR} mb-4`}>₹0</p>
       <p className="text-xl font-medium text-gray-600">
-        for <span className="font-bold">{INITIAL_NO_INTEREST}</span> Interests
+        For <span className="font-bold text-gray-800">Unlimited</span> Profile
+        Browsing
       </p>
       <button
         onClick={() => navigate("/")}

@@ -124,10 +124,10 @@
   position: relative;
   display: flex;
   align-items: center;
-  background: vars.$text-color;
+  background: vars.$accent-color-bg;
   color: white;
   padding: 4px 26px;
-  border-radius: 14px;
+  border-radius: 8px;
   font-weight: 800;
   cursor: pointer;
   margin-top: 1rem;
@@ -136,8 +136,7 @@
 }
 
 .price-btn:hover {
-  background: vars.$text-color;
-  box-shadow: 0 8px 18px rgba(120, 53, 15, 0.25);
+  background: vars.$accent-color-bg-hover;
 }
 
 .price-btn:active {

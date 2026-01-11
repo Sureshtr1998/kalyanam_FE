@@ -7,7 +7,6 @@ import {
   BG_COLOR,
 } from "../../styles/variables";
 import {
-  INITIAL_NO_INTEREST,
   PURCHASE_INTEREST_FEE,
   PURCHASE_INTEREST_FEE_2,
   PURCHASE_NO_INTEREST,
@@ -77,7 +76,7 @@ const faqItems: FAQItem[] = [
   {
     id: "faq-3",
     question: "How many interests can I send?",
-    answer: `Upon registration, you receive ${INITIAL_NO_INTEREST} interests by default. Additional interests can be purchased under your account as needed.`,
+    answer: `Upon free registration, you receive 0 interests by default. Additional interests can be purchased under your account as needed.`,
     icon: "pi pi-envelope",
   },
   {

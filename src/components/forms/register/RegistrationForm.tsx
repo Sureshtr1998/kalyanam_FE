@@ -15,7 +15,6 @@ import { useToast } from "../../toastProvider/ToastProvider";
 import { useNavigate } from "react-router-dom";
 import PaymentModal from "../../paymentModal/PaymentModal";
 import Spinner from "../../spinner/Spinner";
-import { getRefferalAmount } from "../../../utils/utils";
 
 interface Props {
   setCurrentForm: (val: FormType) => void;
@@ -113,14 +112,18 @@ const RegistrationForm = (props: Props) => {
       if (step === 2) setImages([]);
       if (step === 3) {
         try {
-          const referrAmnt = getRefferalAmount(referralId);
-          setCurrentAmount(referrAmnt);
+          console.log(referralId, "referralId");
+          // const referrAmnt = getRefferalAmount(referralId);
+          // setCurrentAmount(referrAmnt);
           setIsLoading(true);
           await api.get("/user-validation", {
             params: { email: formData.email, mobile: formData.mobile },
           });
           setIsLoading(false);
-          setPayment(true);
+          setCurrentAmount(0);
+          registerUser("", "");
+
+          // setPayment(true);
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
           showToast(
@@ -164,7 +167,8 @@ const RegistrationForm = (props: Props) => {
         orderId,
         paymentId,
         amountPaid: currentAmount,
-        totalNoOfInterest: INITIAL_NO_INTEREST,
+        totalNoOfInterest: 0,
+        // totalNoOfInterest: INITIAL_NO_INTEREST,
         note: "Registration",
         images: imageUrls,
       };

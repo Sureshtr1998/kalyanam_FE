@@ -1,4 +1,3 @@
-import { PERSONAL_DISCOUNT_PRICE } from "../../utils/constants";
 import "./Offers.scss";
 
 const Offers = () => {
@@ -17,20 +16,21 @@ const Offers = () => {
             <div className="icon-wrapper">
               <div className="icon-ping" />
               <div className="offer-icon">
-                <i className="pi pi-bolt" />
+                <i className="pi pi-gift" />
               </div>
             </div>
 
             <div className="offer-text animate-heartbeat">
               <p className="offer-title">
-                FLASH SALE:&nbsp;{" "}
-                <span className="discount-highlight">52% OFF</span>
+                LIMITED OFFER:&nbsp;{" "}
+                <span className="discount-highlight">100% OFF</span>
               </p>
 
               <p className="offer-subtitle">
-                <span className="mt-0.5"> Limited time only</span>
+                <span className="mt-0.5"> Register today for</span>
                 <span className="offer-price">
-                  ₹{PERSONAL_DISCOUNT_PRICE}/yr
+                  FREE
+                  {/* ₹{PERSONAL_DISCOUNT_PRICE}/yr */}
                 </span>
               </p>
             </div>

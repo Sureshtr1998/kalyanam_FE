@@ -1,5 +1,3 @@
-import { REGISTRATION_FEE } from "../../../utils/constants";
-
 const CommitmentSection = () => {
   interface CoreValue {
     id: number;
@@ -18,7 +16,7 @@ const CommitmentSection = () => {
     },
     {
       id: 2,
-      title: `Minimal Pricing (₹${REGISTRATION_FEE} / year)`,
+      title: `Minimal Pricing`,
       description:
         "Our goal is to serve the community, not to make a profit. We keep our pricing minimal to ensure everyone can access our service.",
       icon: "pi pi-indian-rupee",

@@ -132,6 +132,8 @@ export interface UserDetails {
     hasCompleteProfile?: boolean
     isVerified?: boolean
     isHidden?: boolean
+    isAdmin?: boolean
+    isCorrupted?: boolean
     hideProfiles?: string[]
 }
 

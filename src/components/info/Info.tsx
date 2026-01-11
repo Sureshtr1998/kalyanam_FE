@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  PERSONAL_DISCOUNT_PRICE,
-  REGISTRATION_FEE,
-  SUPPORT_EMAIL,
-} from "../../utils/constants";
+import { PERSONAL_DISCOUNT_PRICE, SUPPORT_EMAIL } from "../../utils/constants";
 import "./Info.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -78,15 +74,14 @@ const Info = () => {
             <div className="price-card">
               <div className="price-row">
                 <div className="price-old">
-                  <p>₹{REGISTRATION_FEE}/year</p>
+                  <p>₹{PERSONAL_DISCOUNT_PRICE}/year</p>
                   <div className="price-strike" />
                 </div>
 
                 <div className="price-new animate-heartbeat">
-                  <span className="price-label">Today's Price</span>
+                  <span className="price-label">LIMITED TIME</span>
                   <p className="price-amount">
-                    ₹{PERSONAL_DISCOUNT_PRICE}
-                    <span className="price-duration">/year</span>
+                    <i> FREE </i>
                   </p>
                 </div>
               </div>
