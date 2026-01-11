@@ -24,7 +24,7 @@ const Home = (props: Props) => {
 
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-  const rowsPerPage = 10;
+  const rowsPerPage = 12;
 
   useEffect(() => {
     setPendingInterests(remainingInterest(filterData));
