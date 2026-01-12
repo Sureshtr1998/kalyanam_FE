@@ -40,7 +40,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   } = match.basic;
   const { diet } = match.personal || {};
   const userId = match._id;
-  const { isCorrupted } = match;
+  const { isCorrupted, isVerified } = match;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [visible, setVisible] = useState(false);
@@ -92,6 +92,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     try {
       setIsLoading(true);
       await api.post("/corrupt-profile", { corruptedId: userId });
+      showToast("success", "Success", "Action Taken");
+      setIsLoading(false);
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response.data.msg || "Something went wrong"
+      );
+      setIsLoading(false);
+    }
+  };
+  const verifyUser = async () => {
+    try {
+      setIsLoading(true);
+      await api.post("/verify-profile", { verifyUserId: userId });
       showToast("success", "Success", "Action Taken");
       setIsLoading(false);
     } catch (err: any) {
@@ -206,13 +221,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               <Button
                 className="ternary-btn"
                 onClick={corruptedUser}
-                title={isCorrupted ? "Un block the user." : "Ban the user"}>
+                title={isCorrupted ? "Un block the user." : "Lock the user"}>
                 {isCorrupted ? (
-                  <i className="pi pi-check-circle text-green-500"></i>
+                  <i className="pi pi-lock-open text-green-500"></i>
                 ) : (
-                  <i className="pi pi-ban text-red-500"></i>
+                  <i className="pi pi-lock text-red-500"></i>
                 )}
               </Button>
+              {!isVerified && (
+                <Button
+                  className="ternary-btn"
+                  onClick={verifyUser}
+                  title="Verify the user">
+                  <i className="pi pi-check-circle text-green-500"></i>
+                </Button>
+              )}
             </>
           )}{" "}
           {!isBroker && (
