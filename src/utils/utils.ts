@@ -3,7 +3,7 @@
 import type { UserDetails } from "./interfaces";
 import casteData from "./caste.json"
 import languageData from "./lang.json"
-import { PERSONAL_DISCOUNT_PRICE } from "./constants";
+import { AFTER_DISCOUNT_REGISTRATION_FEE, DISCOUNT_NAMES, PERSONAL_DISCOUNT_PRICE, REGISTRATION_FEE } from "./constants";
 
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
@@ -131,10 +131,7 @@ export const subCasteOptions = (caste: string) => {
 
 
 export const getRefferalAmount = (referralId?: string) => {
-    //TODO: Change in future if requred for now Personal Discount Price for everyone
-    console.log(referralId)
-    return PERSONAL_DISCOUNT_PRICE
-    // if (!referralId || referralId.length < 6) return REGISTRATION_FEE
-    // else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
-    // else return AFTER_DISCOUNT_REGISTRATION_FEE
+    if (!referralId || referralId.length < 6) return REGISTRATION_FEE
+    else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
+    else return AFTER_DISCOUNT_REGISTRATION_FEE
 }

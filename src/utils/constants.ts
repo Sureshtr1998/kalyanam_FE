@@ -444,13 +444,14 @@ export const IMAGEKIT_PARAMS = "?tr=w-3000,h-3000,q-80,fo-face"
 export const updatedDate = "Decmber 1, 2025"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
+export const SUPPORT_PHONE = '+91 8105710930'
 
 export const REGISTRATION_FEE = 751
 export const INITIAL_NO_INTEREST = 51
 
 // TODO Need to keep more margin at registration fee
 //Referrals
-export const AFTER_DISCOUNT_REGISTRATION_FEE = 401
+export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
 
 
 export const REFERRAL_CODE_CURRENT = "SITARAM"

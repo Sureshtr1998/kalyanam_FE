@@ -1,4 +1,4 @@
-import { PERSONAL_DISCOUNT_PRICE } from "../../utils/constants";
+import { REGISTRATION_FEE } from "../../utils/constants";
 import "./Offers.scss";
 
 const Offers = () => {
@@ -29,9 +29,7 @@ const Offers = () => {
 
               <p className="offer-subtitle">
                 <span className="mt-0.5"> Limited time only</span>
-                <span className="offer-price">
-                  ₹{PERSONAL_DISCOUNT_PRICE}/yr
-                </span>
+                <span className="offer-price">₹{REGISTRATION_FEE}/yr</span>
               </p>
             </div>
           </div>
