@@ -8,6 +8,7 @@ import api from "../../utils/api";
 import { useToast } from "../toastProvider/ToastProvider";
 import {
   IMAGEKIT_PARAMS,
+  isAdmin,
   isBroker,
   qualificationOptions,
 } from "../../utils/constants";
@@ -39,6 +40,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   } = match.basic;
   const { diet } = match.personal || {};
   const userId = match._id;
+  const { isCorrupted, isVerified } = match;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [visible, setVisible] = useState(false);
@@ -76,6 +78,36 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         "Interest sent successfully, now you can view the profile under Invitation Status"
       );
       hideProfile(userId ?? "", true);
+      setIsLoading(false);
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response.data.msg || "Something went wrong"
+      );
+      setIsLoading(false);
+    }
+  };
+  const corruptedUser = async () => {
+    try {
+      setIsLoading(true);
+      await api.post("/corrupt-profile", { corruptedId: userId });
+      showToast("success", "Success", "Action Taken");
+      setIsLoading(false);
+    } catch (err: any) {
+      showToast(
+        "error",
+        "Error",
+        err.response.data.msg || "Something went wrong"
+      );
+      setIsLoading(false);
+    }
+  };
+  const verifyUser = async () => {
+    try {
+      setIsLoading(true);
+      await api.post("/verify-profile", { verifyUserId: userId });
+      showToast("success", "Success", "Action Taken");
       setIsLoading(false);
     } catch (err: any) {
       showToast(
@@ -184,6 +216,28 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <Button className="primary-btn" onClick={viewProfile}>
             View Profile
           </Button>
+          {isAdmin && (
+            <>
+              <Button
+                className="ternary-btn"
+                onClick={corruptedUser}
+                title={isCorrupted ? "Un block the user." : "Lock the user"}>
+                {isCorrupted ? (
+                  <i className="pi pi-lock-open text-green-500"></i>
+                ) : (
+                  <i className="pi pi-lock text-red-500"></i>
+                )}
+              </Button>
+              {!isVerified && (
+                <Button
+                  className="ternary-btn"
+                  onClick={verifyUser}
+                  title="Verify the user">
+                  <i className="pi pi-check-circle text-green-500"></i>
+                </Button>
+              )}
+            </>
+          )}{" "}
           {!isBroker && (
             <Button
               className="ternary-btn"

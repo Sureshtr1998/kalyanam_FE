@@ -474,6 +474,7 @@ export const PERSONALIZED_ASTRO_FEE = 251
 export const BROKERAGE_REGISTRATION_FEE = 501
 
 export const isBroker = getItem(user_login_token)?.role === "BROKER";
+export const isAdmin = getItem(user_login_token)?.isAdmin === true;
 
 export const SUPPORT_NUMBER = "+918105710930"
 
