@@ -74,7 +74,7 @@ const Info = () => {
             <div className="price-card">
               <div className="price-row">
                 <div className="price-old">
-                  <p>₹1600/year</p>
+                  <p>₹751/year</p>
                   <div className="price-strike" />
                 </div>
 

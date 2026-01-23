@@ -24,7 +24,7 @@ const Offers = () => {
             <div className="offer-text animate-heartbeat">
               <p className="offer-title">
                 FLASH SALE:&nbsp;{" "}
-                <span className="discount-highlight">52% OFF</span>
+                <span className="discount-highlight">73% OFF</span>
               </p>
 
               <p className="offer-subtitle">
