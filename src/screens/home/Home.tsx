@@ -55,7 +55,7 @@ const Home = (props: Props) => {
       showToast(
         "error",
         "Error",
-        err.response?.data?.msg || "Unable to fetch profiles"
+        err.response?.data?.msg || "Unable to fetch profiles",
       );
     }
   };
@@ -65,7 +65,7 @@ const Home = (props: Props) => {
       setPendingInterests((prev) => prev - 1);
     }
     setMatches((prevMatches) =>
-      prevMatches.filter((profile) => profile._id !== id)
+      prevMatches.filter((profile) => profile._id !== id),
     );
   };
 
@@ -105,7 +105,8 @@ const Home = (props: Props) => {
                   profiles are coming soon by <b>February end</b>. We're
                   actively onboarding users and truly appreciate your support.{" "}
                   <b>
-                    Your 1-year membership will officially start from March 2026
+                    Your 1-year membership will officially start from August
+                    2026
                   </b>
                   , and until then you can continue using the platform normally
                   without any limitations.
