@@ -9,7 +9,7 @@ import ganesh from "../../assets/ganesh.webp";
 import { useToast } from "../../components/toastProvider/ToastProvider";
 import Spinner from "../../components/spinner/Spinner";
 import { remainingInterest } from "../../utils/utils";
-import { isBroker } from "../../utils/constants";
+import { isAdmin, isBroker } from "../../utils/constants";
 
 interface Props {
   filterData: UserDetails;
@@ -24,7 +24,7 @@ const Home = (props: Props) => {
 
   const [page, setPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
-  const rowsPerPage = 10;
+  const rowsPerPage = 12;
 
   useEffect(() => {
     setPendingInterests(remainingInterest(filterData));
@@ -77,6 +77,13 @@ const Home = (props: Props) => {
     <div className="home-cards">
       <Spinner isLoading={isLoading} />
       <div>
+        {isAdmin && (
+          <p className="text-center text-2xl text-orange-400">
+            {" "}
+            {totalRecords}
+          </p>
+        )}
+
         <div className="profile-cards">
           {matches.length > 0 ? (
             matches.map((match) => (
