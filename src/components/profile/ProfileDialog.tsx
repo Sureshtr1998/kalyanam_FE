@@ -67,10 +67,8 @@ interface ActionButtonsProps {
   contactUnlocked?: boolean;
   remaining: number;
   busy: boolean;
-  saved: boolean;
   onInterest: () => void;
   onUnlock: () => void;
-  onShortlist: () => void;
 }
 
 const CostPill = ({ credits, inverted }: { credits: number; inverted?: boolean }) => (
@@ -174,61 +172,37 @@ const ConnectOptions = ({
   </div>
 );
 
-const ShortlistButton = ({
-  stacked,
-  saved,
-  busy,
-  onShortlist,
-}: {
-  stacked?: boolean;
-  saved: boolean;
-  busy: boolean;
-  onShortlist: () => void;
-}) => (
-  <Button
-    size={stacked ? "lg" : "icon"}
-    variant="outline"
-    className={cn("rounded-full", stacked && "w-full", saved && "border-gold bg-gold/15")}
-    aria-pressed={saved}
-    aria-label={saved ? "Remove from shortlist" : "Add to shortlist"}
-    disabled={busy}
-    onClick={onShortlist}>
-    <Bookmark className={cn(saved && "fill-gold text-gold-foreground")} />
-    {stacked && (saved ? "Shortlisted" : "Shortlist")}
-  </Button>
-);
-
 /** Mobile bottom bar: compact buttons, each showing its cost. */
 const ActionButtons = ({
   canSendInterest,
   contactUnlocked,
   remaining,
   busy,
-  saved,
   onInterest,
   onUnlock,
-  onShortlist,
 }: ActionButtonsProps) => (
   <div className="flex items-center gap-2">
     {canSendInterest && (
-      <Button className="flex-1 rounded-full px-3" disabled={busy || remaining < INTEREST_COST} onClick={onInterest}>
+      <Button
+        className="min-w-0 flex-1 gap-1.5 rounded-full px-2.5 has-[>svg]:px-2.5"
+        disabled={busy || remaining < INTEREST_COST}
+        onClick={onInterest}>
         <Heart className="fill-current" />
-        Interest
+        <span className="truncate">Interest</span>
         <CostPill credits={INTEREST_COST} inverted />
       </Button>
     )}
     {!contactUnlocked && (
       <Button
         variant="outline"
-        className="flex-1 rounded-full border-gold/60 bg-card px-3"
+        className="min-w-0 flex-1 gap-1.5 rounded-full border-gold/60 bg-card px-2.5 has-[>svg]:px-2.5"
         disabled={remaining < CONTACT_COST || busy}
         onClick={onUnlock}>
         <KeyRound />
-        Contact
+        <span className="truncate">Contact</span>
         <CostPill credits={CONTACT_COST} />
       </Button>
     )}
-    <ShortlistButton saved={saved} busy={busy} onShortlist={onShortlist} />
   </div>
 );
 
@@ -402,6 +376,25 @@ export const ProfileDialog = ({
     </Tooltip>
   );
 
+  const shortlistButton = (className?: string) =>
+    broker ? null : (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn("rounded-full", className, actions.saved && "bg-gold/20 hover:bg-gold/30")}
+            aria-pressed={actions.saved}
+            aria-label={actions.saved ? "Remove from shortlist" : "Add to shortlist"}
+            disabled={actions.busy}
+            onClick={actions.toggleShortlist}>
+            <Bookmark className={cn(actions.saved && "fill-gold text-gold-foreground")} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{actions.saved ? "Shortlisted" : "Shortlist"}</TooltipContent>
+      </Tooltip>
+    );
+
   const quickFacts = [
     age !== null ? `${age} yrs` : null,
     optionLabel(heightOptions, personal.height)?.split(" (")[0],
@@ -416,10 +409,8 @@ export const ProfileDialog = ({
     contactUnlocked,
     remaining,
     busy: actions.busy || unlocking,
-    saved: actions.saved,
     onInterest: actions.sendInterest,
     onUnlock: () => setConfirmOpen(true),
-    onShortlist: actions.toggleShortlist,
   };
 
   const moreMenu = (triggerClassName?: string) =>
@@ -444,7 +435,8 @@ export const ProfileDialog = ({
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
           {/* Photos only, kept at portrait size instead of stretching to the column height */}
           <aside className="relative shrink-0 bg-gradient-to-b from-accent to-background p-4 md:flex md:w-[18rem] md:flex-col md:gap-4 md:overflow-hidden md:border-r md:border-border md:p-5">
-            <div className="absolute right-3 top-3 z-10 flex gap-1 md:hidden">
+            <div className="-mt-1 mb-3 flex justify-end gap-1 md:hidden">
+              {shortlistButton("bg-card/90 shadow")}
               {downloadButton("bg-card/90 shadow")}
               {moreMenu("bg-card/90 shadow")}
               <DialogClose asChild>
@@ -497,6 +489,7 @@ export const ProfileDialog = ({
                   </p>
                 </div>
                 <div className="hidden items-center gap-1 md:flex">
+                  {shortlistButton()}
                   {downloadButton()}
                   {moreMenu()}
                   <DialogClose asChild>
@@ -603,7 +596,6 @@ export const ProfileDialog = ({
           {!broker && (
             <div className="hidden shrink-0 items-center gap-2 border-t border-border bg-card px-5 py-2.5 md:flex">
               <ConnectOptions horizontal {...actionProps} />
-              <ShortlistButton saved={actionProps.saved} busy={actionProps.busy} onShortlist={actionProps.onShortlist} />
             </div>
           )}
           </div>
