@@ -1,11 +1,7 @@
-import { Accordion, AccordionTab } from "primereact/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Mail } from "lucide-react";
+import { Lotus } from "@/components/common/Brand";
 import SEO from "../../components/misc/SEO";
-import {
-  BORDER_COLOR,
-  CARD_BG,
-  TEXT_COLOR,
-  BG_COLOR,
-} from "../../styles/variables";
 import {
   INITIAL_NO_INTEREST,
   PURCHASE_INTEREST_FEE,
@@ -15,13 +11,6 @@ import {
   SEO_URL,
   SUPPORT_EMAIL,
 } from "../../utils/constants";
-
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-  icon: string;
-}
 
 interface FAQItem {
   id: string;
@@ -56,14 +45,14 @@ const faqItems: FAQItem[] = [
     id: "faq-14",
     question: "Who can view my profile?",
     answer:
-      "Only users whose caste and mother tongue match your partner preferences can view your profile.",
+      "Members see profiles that fit their own partner-preference filters (age, caste, mother tongue and more). You can hide your profile from anyone at any time.",
     icon: "pi pi-shield",
   },
   {
     id: "faq-15",
     question: "Can users from other castes or mother tongues view my profile?",
     answer:
-      "No. They can view your profile only if you explicitly mention that you are open to them in your Partner Preferences.",
+      "Profiles are filtered by each member's partner preferences, so you mostly appear to families looking for someone like you. To block a specific member, use the hide option on their profile.",
     icon: "pi pi-shield",
   },
   {
@@ -77,20 +66,20 @@ const faqItems: FAQItem[] = [
   {
     id: "faq-3",
     question: "How many interests can I send?",
-    answer: `Upon registration, you receive ${INITIAL_NO_INTEREST} interests by default. Additional interests can be purchased under your account as needed.`,
+    answer: `Membership includes ${INITIAL_NO_INTEREST} credits. Each interest you send uses 1 credit, so you can send ${INITIAL_NO_INTEREST} interests. More credits can be bought under Account whenever you need them.`,
     icon: "pi pi-envelope",
   },
   {
     id: "faq-4",
     question: "Can I view a user's contact directly?",
     answer:
-      "Yes, You can view a user’s contact for free if both accept each other’s interest or it'd cost 5 interests.",
+      "Yes. When the other person accepts your interest, both of you see each other's phone and email at no extra cost. If you don't want to wait for a reply, you can see a contact straight away for 5 credits.",
     icon: "pi pi-phone",
   },
   {
     id: "faq-5",
-    question: "What are the pricing plans for purchasing interests?",
-    answer: `We offer two plans: ${PURCHASE_NO_INTEREST} interests for ₹${PURCHASE_INTEREST_FEE} and ${PURCHASE_NO_INTEREST_2} interests for ₹${PURCHASE_INTEREST_FEE_2}.`,
+    question: "What are the pricing plans for buying more credits?",
+    answer: `We offer two plans: ${PURCHASE_NO_INTEREST} credits for ₹${PURCHASE_INTEREST_FEE} and ${PURCHASE_NO_INTEREST_2} credits for ₹${PURCHASE_INTEREST_FEE_2}.`,
     icon: "pi pi-wallet",
   },
   {
@@ -124,67 +113,49 @@ const faqItems: FAQItem[] = [
   },
 ];
 
-const FAQPage = () => {
-  return (
-    <div className="faq">
-      <SEO
-        title="FAQ | Seetha Rama Kalyana"
-        description="Frequently Asked Questions about Seetha Rama Kalyana matrimony services."
-        keywords="faq, hindu matrimony, seetha rama kalyana"
-        pageType="faq"
-        faqItems={faqItems}
-        url={SEO_URL + "/faq"}
-      />
-
-      <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>
-        <div className="text-center mb-10">
-          <h1 className={`text-5xl font-extrabold mb-3 ${TEXT_COLOR}`}>
-            Frequently Asked Questions
-          </h1>
-          <p className="text-xl text-gray-600">
-            Find quick answers to the most common questions about our platform.
-          </p>
-        </div>
-        <div>
-          <Accordion className="accordion-data">
-            {faqItems.map((faq) => {
-              return (
-                <AccordionTab
-                  key={faq.id}
-                  header={
-                    <span className="flex align-items-center gap-2 w-full">
-                      <span className="my-custom-icon">
-                        <i className={`${faq.icon}`}></i>
-                      </span>
-                      <span className="ml-4 acc-header">{faq.question}</span>
-                    </span>
-                  }
-                  className="accordion-tab">
-                  {faq.answer}
-                </AccordionTab>
-              );
-            })}
-          </Accordion>
-        </div>
-        <div
-          className={`mt-12 text-center max-w-4xl mx-auto p-6 rounded-2xl shadow-2xl ${CARD_BG} border ${BORDER_COLOR}`}>
-          <h3 className={`text-3xl font-bold mb-3 ${TEXT_COLOR}`}>
-            Can't find your answer?
-          </h3>
-          <p className="text-lg text-gray-700 mb-6">
-            Our dedicated support team is available 24/7 to assist you with any
-            questions or concerns.
-          </p>
-          <p className="text-lg text-gray-700">Email Support:</p>
-          <a
-            href={`mailto:${SUPPORT_EMAIL}`}
-            className="text-[#e07b00] text-sm font-medium hover:underline">
+const FAQPage = () => (
+  <>
+    <SEO
+      title="FAQ | Seetha Rama Kalyana"
+      description="Frequently Asked Questions about Seetha Rama Kalyana matrimony services."
+      keywords="faq, hindu matrimony, seetha rama kalyana"
+      pageType="faq"
+      faqItems={faqItems}
+      url={SEO_URL + "/faq"}
+    />
+    <div className="bg-kolam">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+        <header className="mb-10 text-center">
+          <Lotus className="mx-auto h-6 w-10 text-gold" />
+          <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">Frequently asked questions</h1>
+          <p className="mt-3 text-muted-foreground">Quick answers to the most common questions about our platform.</p>
+        </header>
+        <Accordion type="single" collapsible className="space-y-3">
+          {faqItems.map((faq) => (
+            <AccordionItem
+              key={faq.id}
+              value={faq.id}
+              className="rounded-2xl border border-border bg-card px-4 shadow-sm last:border-b">
+              <AccordionTrigger className="gap-3 text-left text-base font-semibold hover:no-underline">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-[15px] leading-relaxed text-muted-foreground">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+        <div className="mt-10 rounded-3xl border border-gold/40 bg-accent p-6 text-center">
+          <h2 className="font-display text-2xl font-bold">Can't find your answer?</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Write to us. We reply within 24 hours.</p>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="mt-3 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+            <Mail className="size-4" />
             {SUPPORT_EMAIL}
           </a>
         </div>
       </div>
     </div>
-  );
-};
+  </>
+);
 
 export default FAQPage;

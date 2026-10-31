@@ -1,390 +1,243 @@
-import React, { useState, useCallback } from "react";
-import { languageNamesOptions, translations, type LanguageCode } from "./lang";
-import FormInput from "../../components/fields/FormInput";
-import type { BrokerRegistrationForm } from "../../utils/brokerInterface";
-import ImageUpload from "../../components/imageMedia/ImageUpload";
-import "./PartnerWithUs.scss";
-import SelectInput from "../../components/fields/SelectInput";
-import { Button } from "primereact/button";
-import { casteOptions, motherTongueOptions } from "../../utils/utils";
-import { useToast } from "../../components/toastProvider/ToastProvider";
-import api from "../../utils/api";
-import Spinner from "../../components/spinner/Spinner";
+import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BadgeIndianRupee, ChartLine, Languages, Megaphone, MessageCircle } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Field, FieldGrid } from "@/components/fields/Field";
+import { MultiSelectField, SelectField } from "@/components/fields/SelectField";
+import { PasswordInput } from "@/components/fields/PasswordInput";
+import { PhotoManager, type PhotoItem } from "@/components/profile/PhotoManager";
+import { BlockingLoader } from "@/components/common/Loaders";
+import { Lotus } from "@/components/common/Brand";
+import SEO from "@/components/misc/SEO";
+import { useCheckout, type PaidOrder } from "@/hooks/useCheckout";
+import api from "@/utils/api";
+import type { BrokerRegistrationForm } from "@/utils/brokerInterface";
+import type { ImageFile } from "@/utils/interfaces";
 import {
   BROKERAGE_REGISTRATION_FEE,
-  brokerFormDefaultVals,
+  MIN_PASSWORD_LENGTH,
   SEO_URL,
-} from "../../utils/constants";
-import SEO from "../../components/misc/SEO";
-import PaymentModal from "../../components/paymentModal/PaymentModal";
+  SUPPORT_NUMBER,
+  UPLOAD_REUSE_MS,
+  brokerFormDefaultVals,
+} from "@/utils/constants";
+import { casteOptions, motherTongueOptions } from "@/utils/utils";
+import { errorMessage } from "@/lib/errors";
+import { languageNamesOptions, translations, type LanguageCode } from "./lang";
 
 const PartnerWithUs = () => {
   const [language, setLanguage] = useState<LanguageCode>("en");
-  const [images, setImages] = useState<File[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isPayment, setPayment] = useState<boolean>(false);
-
-  const { showToast } = useToast();
+  const [data, setData] = useState<BrokerRegistrationForm>(brokerFormDefaultVals);
+  const [idProof, setIdProof] = useState<PhotoItem[]>([]);
+  const [busy, setBusy] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const [brokerData, setBrokerData] = useState<BrokerRegistrationForm>(
-    brokerFormDefaultVals
-  );
-
-  const isSubmit = () => {
-    const { name, email, password, phone, companyName, address, caste } =
-      brokerData;
-
-    if (
-      !name.length ||
-      !email.length ||
-      !password.length ||
-      !phone.length ||
-      !companyName.length ||
-      !address.length ||
-      !caste.length ||
-      !images.length
-    ) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const submitData = async (orderId: string, paymentId: string) => {
-    if (brokerData.password !== brokerData.confirmPassword) {
-      showToast(
-        "error",
-        "Password mismatch",
-        "The passwords you entered do not match."
-      );
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const formData = new FormData();
-      images.forEach((file) => {
-        formData.append("images", file);
-      });
-      const uploadRes = await api.post(
-        "/broker-register/upload-idproof",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      const idProofs = uploadRes.data.media; // [{ url, fileId }]
-      const payload = {
-        ...brokerData,
-        idProofs,
-        orderId,
-        amount: BROKERAGE_REGISTRATION_FEE,
-        paymentId,
-      };
-      await api.post("/broker-register", payload);
-      showToast(
-        "success",
-        "Registration successful",
-        "Broker registered successfully."
-      );
-
-      navigate("/");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      showToast(
-        "error",
-        "Error",
-        err.response?.data?.message || "Unable to save broker data"
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setBrokerData({
-      ...brokerData,
-      [name]: value,
-    });
-  };
-
-  const handlePayment = async () => {
-    try {
-      setIsLoading(true);
-      await api.get("/broker-validation", {
-        params: { email: brokerData.email, mobile: brokerData.phone },
-      });
-      setIsLoading(false);
-      setPayment(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      showToast(
-        "error",
-        "Validation Failed",
-        err.response?.data?.msg || "Server error"
-      );
-      setIsLoading(false);
-    }
-  };
   const t = useCallback(
-    (key: string): string => {
-      const lang_specific = translations[language]?.[key];
-      if (lang_specific) return lang_specific;
-
-      const english_default = translations.en[key];
-      if (english_default) return english_default;
-
-      return key;
-    },
+    (key: string): string => translations[language]?.[key] || translations.en[key] || key,
     [language]
   );
 
+  const set = <K extends keyof BrokerRegistrationForm>(k: K, v: BrokerRegistrationForm[K]) =>
+    setData((d) => ({ ...d, [k]: v }));
+
+  const files = idProof.filter((p): p is File => p instanceof File);
+  const incomplete =
+    !data.name || !data.email || !data.password || !/^\d{10}$/.test(data.phone) || !data.companyName ||
+    !data.address || !data.caste.length || !files.length;
+
+  // Uploaded before payment (so a failed upload never follows a charge) and
+  // reused if the partner retries checkout with the same files.
+  const uploaded = useRef<{ key: string; media: ImageFile[]; at: number } | null>(null);
+
+  const onPaid = useCallback(
+    async (order: PaidOrder) => {
+      setBusy("Completing your registration…");
+      try {
+        await api.post("/broker-register", { ...order, idProofs: uploaded.current?.media ?? [] });
+        toast.success("Application received", {
+          description: "We'll verify your details within 24–48 hours. Log in as a partner to see your referral ID once approved.",
+        });
+        navigate("/");
+      } catch (err) {
+        toast.error("Payment received, but registration didn't finish", {
+          description: `${errorMessage(err)} Payment ID: ${order.paymentId}`,
+          duration: 20000,
+        });
+      } finally {
+        setBusy(null);
+      }
+    },
+    [navigate]
+  );
+
+  const { start, isStarting } = useCheckout({ description: "Partner registration", onPaid });
+
+  const submit = async () => {
+    if (data.password.length < MIN_PASSWORD_LENGTH) {
+      return toast.error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+    }
+    if (data.password !== data.confirmPassword) return toast.error("Passwords don't match");
+    try {
+      setBusy("Checking your details…");
+      await api.get("/broker-validation", { params: { email: data.email, mobile: data.phone } });
+      const key = files.map((f) => `${f.name}:${f.size}`).join("|");
+      if (uploaded.current?.key !== key || Date.now() - uploaded.current.at > UPLOAD_REUSE_MS) {
+        setBusy("Uploading your ID proof…");
+        const form = new FormData();
+        files.forEach((f) => form.append("images", f));
+        const upload = await api.post("/broker-register/upload-idproof", form, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        uploaded.current = { key, media: upload.data.media, at: Date.now() };
+      }
+      setBusy(null);
+      const { name, email, phone, companyName, address, caste, motherTongue, note, password } = data;
+      await start({
+        purpose: "broker",
+        // Validated and priced on the server before payment, like member sign-ups.
+        broker: { name, email: email.trim().toLowerCase(), phone, companyName, address, caste, motherTongue, note, password },
+      });
+    } catch (err) {
+      setBusy(null);
+      toast.error("Partner registration is unavailable right now", { description: errorMessage(err) });
+    }
+  };
+
+  const benefits = [
+    { icon: <BadgeIndianRupee />, n: 1 },
+    { icon: <Megaphone />, n: 2 },
+    { icon: <ChartLine />, n: 3 },
+  ];
+
   return (
-    <div className="onboarding-page py-32">
+    <>
       <SEO
         title="Partner With Us | Matrimony Broker Partnership – Seetha Rama Kalyana"
         description="Partner with Seetha Rama Kalyana as a trusted matrimony broker. Earn referral commissions, track registrations, and grow your business digitally."
         keywords="matrimony broker partnership, matrimony referral program, marriage broker platform, seetha rama kalyana partner, matrimony agent registration"
         url={SEO_URL + "/partner-with-us"}
-        pageType="default"
       />
-      {isPayment && (
-        <PaymentModal
-          role="BROKER"
-          onSuccess={submitData}
-          onHide={() => setPayment(false)}
-          payload={{
-            ...brokerData,
-            amount: BROKERAGE_REGISTRATION_FEE,
-            note: "Broker Registration",
-            endpoint: "broker-register",
-          }}
-          userName={brokerData.name}
-          userEmail={brokerData.email}
-          userPhone={brokerData.phone}
-          amount={BROKERAGE_REGISTRATION_FEE}
-        />
-      )}
-      <Spinner isLoading={isLoading} />
-      <header className="page-header">
-        <div className="lang-container">
-          <SelectInput
-            name="language"
-            required
-            value={language}
-            onChange={(e) => setLanguage(e.target.value as LanguageCode)}
-            options={languageNamesOptions}
-            icon="pi pi-language"
-          />
+      <BlockingLoader show={!!busy} message={busy ?? undefined} />
+
+      <section className="bg-sunrise relative overflow-hidden">
+        <div className="bg-kolam pointer-events-none absolute inset-0 opacity-50" />
+        <div className="relative mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
+          <div className="mx-auto mb-6 flex w-full max-w-xs items-center gap-2">
+            <Languages className="size-4 shrink-0 text-muted-foreground" />
+            <SelectField
+              value={language}
+              onChange={(v) => setLanguage(v as LanguageCode)}
+              options={languageNamesOptions}
+            />
+          </div>
+          <Lotus className="mx-auto h-6 w-10 text-gold" />
+          <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">{t("title")}</h1>
+          <p className="mt-3 text-muted-foreground sm:text-lg">{t("subtitle")}</p>
         </div>
+      </section>
 
-        <h1 className="title">
-          <span>{t("title")}</span>
-        </h1>
-        <p className="subtitle">{t("subtitle")}</p>
-      </header>
-
-      <main className="page-content">
-        {/* Benefits Section */}
-        <section className="section-card benefits">
-          <h2>{t("benefits_title")}</h2>
-          <div className="benefit-list">
-            <div className="benefit-item">
-              <p>
-                <strong>{t("benefit_1_strong")}</strong> {t("benefit_1_text")}
-              </p>
-            </div>
-            <div className="benefit-item">
-              <p>
-                <strong>{t("benefit_2_strong")}</strong>{" "}
-                {t("benefit_2_text")
-                  .split("advertising your company...")
-                  .map((part, index) => (
-                    <React.Fragment key={index}>
-                      {part}
-                      {index === 0 && (
-                        <span style={{ color: "#b45309", fontWeight: 600 }}>
-                          {" "}
-                        </span>
-                      )}
-                    </React.Fragment>
-                  ))}
-              </p>
-            </div>
-            <div className="benefit-item">
-              <p>
-                <strong>{t("benefit_3_strong")}</strong> {t("benefit_3_text")}
-              </p>
-            </div>
-          </div>
-
-          <div className="support-bar">
-            <p>{t("contact_support")}</p>
-            <a href="tel:YOUR_CONTACT_NUMBER" className="call-button">
-              <i className="m-1 mr-2 pi pi-whatsapp" />
-              {t("contact_button")}
-            </a>
-          </div>
-        </section>
-
-        {/* Onboarding Steps */}
-        <section className="section-card">
-          <h2>{t("onboarding_title")}</h2>
-          <div className="steps-grid">
-            {[1, 2, 3].map((num) => (
-              <div key={num} className="step-box">
-                <div className="step-num">{num}</div>
-                <h3>{t(`step_${num}_title`)}</h3>
-                <p>{t(`step_${num}_desc`)}</p>
+      <div className="mx-auto max-w-5xl space-y-8 px-4 py-12 sm:px-6">
+        <section>
+          <h2 className="mb-5 text-center font-display text-3xl font-bold">{t("benefits_title")}</h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {benefits.map((b) => (
+              <div key={b.n} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                <div className="flex size-11 items-center justify-center rounded-xl bg-primary text-primary-foreground [&_svg]:size-5">
+                  {b.icon}
+                </div>
+                <h3 className="mt-3 font-semibold">{t(`benefit_${b.n}_strong`).replace(/:$/, "")}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{t(`benefit_${b.n}_text`)}</p>
               </div>
             ))}
           </div>
-        </section>
-
-        {/* Registration Form */}
-        <section className="section-card registration">
-          <h2>{t("form_title")}</h2>
-
-          <div className="form-group-title">{t("section_1_title")}</div>
-          <div className="form-row">
-            <FormInput
-              required
-              name="name"
-              label={t("label_name")}
-              onChange={handleChange}
-              value={brokerData.name}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_name")}
-            />
-
-            <FormInput
-              required
-              name="email"
-              type="email"
-              label={t("label_email")}
-              onChange={handleChange}
-              value={brokerData.email}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_email")}
-            />
-          </div>
-          <div className="form-row">
-            <FormInput
-              required
-              name="phone"
-              label={t("label_phone")}
-              onChange={handleChange}
-              value={brokerData.phone}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_phone")}
-              maxLength={10}
-            />
-          </div>
-          <div className="hidden md:block"></div>
-
-          <div className="form-group-title">{t("section_2_title")}</div>
-          <div className="form-row">
-            <FormInput
-              required
-              name="password"
-              label={t("label_password")}
-              type="password"
-              onChange={handleChange}
-              value={brokerData.password}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_password")}
-            />
-
-            <FormInput
-              required
-              name="confirmPassword"
-              label={t("label_confirm_password")}
-              type="password"
-              onChange={handleChange}
-              value={brokerData.confirmPassword}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_confirm_password")}
-            />
-          </div>
-          <div className="form-group-title">{t("section_3_title")}</div>
-          <div className="form-row">
-            <FormInput
-              required
-              name="companyName"
-              label={t("label_company_name")}
-              onChange={handleChange}
-              value={brokerData.companyName}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_company_name")}
-            />
-
-            <FormInput
-              required
-              name="address"
-              label={t("label_address")}
-              onChange={handleChange}
-              value={brokerData.address}
-              icon="pi pi-whatsapp"
-              placeholder={t("placeholder_address")}
-            />
-          </div>
-
-          <div className="form-row">
-            <SelectInput
-              name="caste"
-              label={t("label_community_serve")}
-              value={brokerData.caste}
-              onChange={handleChange}
-              options={casteOptions}
-              icon="pi pi-briefcase"
-              isMultiselect
-              filter
-              required
-            />
-            <SelectInput
-              name="motherTongue"
-              label={t("mother_tongues_serve")}
-              value={brokerData.motherTongue}
-              onChange={handleChange}
-              options={motherTongueOptions}
-              icon="pi pi-language"
-              isMultiselect
-              filter
-              required
-            />
-          </div>
-          <div className="form-row">
-            <FormInput
-              isTextArea
-              name="note"
-              label={t("label_note")}
-              onChange={handleChange}
-              value={brokerData.note}
-              icon="pi pi-whatsapp"
-              placeholder={t("label_note_placeholder")}
-              required
-            />
-          </div>
-
-          <div className="form-group-title">{t("section_4_title")}</div>
-          <div className="full-width">
-            <p> {t("label_id_proof")} *</p>
-            <ImageUpload onChange={setImages} />
-          </div>
-
-          <div className="full-width" style={{ paddingTop: "1rem" }}>
-            <Button
-              onClick={handlePayment}
-              disabled={isSubmit()}
-              className="update-btn">
-              {t("submit_button")}
+          <div className="mt-4 flex flex-col items-center justify-between gap-3 rounded-2xl border border-gold/40 bg-accent p-4 sm:flex-row">
+            <p className="text-sm font-medium">{t("contact_support")}</p>
+            <Button asChild className="bg-success text-success-foreground hover:bg-success/90">
+              <a href={`https://wa.me/${SUPPORT_NUMBER}`} target="_blank" rel="noreferrer">
+                <MessageCircle />
+                {t("contact_button")}
+              </a>
             </Button>
           </div>
         </section>
-      </main>
-    </div>
+
+        <section>
+          <h2 className="mb-5 text-center font-display text-3xl font-bold">{t("onboarding_title")}</h2>
+          <ol className="grid gap-4 md:grid-cols-3">
+            {[1, 2, 3].map((n) => (
+              <li key={n} className="relative rounded-2xl border border-border bg-card p-5">
+                <span className="flex size-9 items-center justify-center rounded-full bg-gold font-bold text-gold-foreground">{n}</span>
+                <h3 className="mt-3 font-semibold">{t(`step_${n}_title`)}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{t(`step_${n}_desc`)}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="rounded-3xl border border-gold/30 bg-card p-5 shadow-sm sm:p-8">
+          <h2 className="mb-6 font-display text-3xl font-bold">{t("form_title")}</h2>
+          <div className="space-y-8">
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-wide text-primary">{t("section_1_title")}</p>
+              <FieldGrid>
+                <Field label={t("label_name")} required>
+                  <Input value={data.name} placeholder={t("placeholder_name")} onChange={(e) => set("name", e.target.value)} className="h-10 bg-card" />
+                </Field>
+                <Field label={t("label_email")} required>
+                  <Input type="email" value={data.email} placeholder={t("placeholder_email")} onChange={(e) => set("email", e.target.value.trim().toLowerCase())} className="h-10 bg-card" />
+                </Field>
+                <Field label={t("label_phone")} required>
+                  <Input inputMode="numeric" value={data.phone} placeholder={t("placeholder_phone")} onChange={(e) => set("phone", e.target.value.replace(/\D/g, "").slice(0, 10))} className="h-10 bg-card" />
+                </Field>
+              </FieldGrid>
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-wide text-primary">{t("section_2_title")}</p>
+              <FieldGrid>
+                <Field label={t("label_password")} required>
+                  <PasswordInput value={data.password} placeholder={t("placeholder_password")} onChange={(e) => set("password", e.target.value)} autoComplete="new-password" />
+                </Field>
+                <Field label={t("label_confirm_password")} required>
+                  <PasswordInput value={data.confirmPassword} placeholder={t("placeholder_confirm_password")} onChange={(e) => set("confirmPassword", e.target.value)} autoComplete="new-password" />
+                </Field>
+              </FieldGrid>
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-wide text-primary">{t("section_3_title")}</p>
+              <FieldGrid>
+                <Field label={t("label_company_name")} required>
+                  <Input value={data.companyName} placeholder={t("placeholder_company_name")} onChange={(e) => set("companyName", e.target.value)} className="h-10 bg-card" />
+                </Field>
+                <Field label={t("label_address")} required>
+                  <Input value={data.address} placeholder={t("placeholder_address")} onChange={(e) => set("address", e.target.value)} className="h-10 bg-card" />
+                </Field>
+                <Field label={t("label_community_serve")} required>
+                  <MultiSelectField value={data.caste} onChange={(v) => set("caste", v)} options={casteOptions} />
+                </Field>
+                <Field label={t("mother_tongues_serve")}>
+                  <MultiSelectField value={data.motherTongue} onChange={(v) => set("motherTongue", v)} options={motherTongueOptions} />
+                </Field>
+                <Field label={t("label_note")} className="sm:col-span-2">
+                  <Textarea value={data.note} placeholder={t("label_note_placeholder")} onChange={(e) => set("note", e.target.value)} className="min-h-20 bg-card" />
+                </Field>
+              </FieldGrid>
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-bold uppercase tracking-wide text-primary">{t("section_4_title")}</p>
+              <Field label={t("label_id_proof")} required>
+                <PhotoManager value={idProof} onChange={setIdProof} />
+              </Field>
+            </div>
+            <Button size="lg" className="w-full" disabled={incomplete || isStarting || !!busy} onClick={submit}>
+              {isStarting ? "Opening checkout…" : t("submit_button") || `Pay ₹${BROKERAGE_REGISTRATION_FEE} & apply`}
+            </Button>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 

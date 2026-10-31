@@ -1,42 +1,40 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { registerSW } from "virtual:pwa-register";
 
+/** Chrome's install prompt event (not yet in the DOM typings). */
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+/** iOS Safari exposes `standalone` when launched from the home screen. */
+interface NavigatorWithStandalone extends Navigator {
+  standalone?: boolean;
+}
+
 export const usePWA = () => {
-  // Install prompt
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-
-  // Detect if app is installed
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
-
-  // Detect if device is mobile
   const [isMobile, setIsMobile] = useState(false);
-
-  // Detect update
   const [updateAvailable, setUpdateAvailable] = useState(false);
-  const [updateServiceWorker, setUpdateServiceWorker] = useState<
-    (() => void) | null
-  >(null);
+  const [updateServiceWorker, setUpdateServiceWorker] = useState<(() => void) | null>(null);
 
-  // Install prompt listener
   useEffect(() => {
-    const handler = (e: any) => {
+    const handler = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
     };
     window.addEventListener("beforeinstallprompt", handler);
-
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
-  // Detect mobile & PWA installed
   useEffect(() => {
     setIsMobile(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent));
 
     const checkInstalled = () => {
       const standaloneMode =
         window.matchMedia("(display-mode: standalone)").matches ||
-        (navigator as any).standalone === true;
+        (navigator as NavigatorWithStandalone).standalone === true;
       setIsInstalled(standaloneMode);
     };
 
@@ -45,44 +43,27 @@ export const usePWA = () => {
     return () => window.removeEventListener("appinstalled", checkInstalled);
   }, []);
 
-  // PWA update detection
   useEffect(() => {
     const updateSW = registerSW({
-      onRegistered(r) {
-        console.log("Service Worker registered", r);
-      },
       onNeedRefresh() {
         setUpdateAvailable(true);
       },
-      onOfflineReady() {
-        console.log("App ready for offline use");
-      },
     });
-
     setUpdateServiceWorker(() => updateSW);
   }, []);
 
-  // Show Install Button
   const showInstallButton = isMobile && !isInstalled && deferredPrompt !== null;
 
-  // Trigger install
-  const handleInstallClick = () => {
+  const handleInstallClick = async () => {
     if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult: any) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the PWA install prompt");
-      }
-      setDeferredPrompt(null);
-    });
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    setDeferredPrompt(null);
   };
 
-  // Reload app for update
   const reloadApp = () => {
-    if (updateServiceWorker) {
-      updateServiceWorker(); // fetch latest SW
-      window.location.reload();
-    }
+    if (updateServiceWorker) updateServiceWorker();
+    else window.location.reload();
   };
 
   return { showInstallButton, handleInstallClick, updateAvailable, reloadApp };

@@ -1,71 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <!-- Meta Pixel Code -->
-    <script>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod
-            ? n.callMethod.apply(n, arguments)
-            : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(
-        window,
-        document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js"
-      );
-      fbq("init", "1199725088340553");
-      fbq("track", "PageView");
-    </script>
-
-    <!-- End Meta Pixel Code -->
+    <!-- %META_PIXEL% -->
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
 
-    <!-- Preload fonts -->
+    <meta name="theme-color" content="#c2410c" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      href="/fonts/primeicons.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin />
-    <title>Seetha Rama Kalyana</title>
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <title>Seetha Rama Kalyana | Hindu Matrimony</title>
+    <!-- Defaults for crawlers that do not run JavaScript; pages replace them at runtime. -->
+    <meta data-default name="description" content="Seetha Rama Kalyana is a trusted Hindu matrimony platform. Find verified brides and grooms from your community with two-way privacy and honest pricing." />
+    <meta data-default property="og:type" content="website" />
+    <meta data-default property="og:site_name" content="Seetha Rama Kalyana" />
+    <meta data-default property="og:title" content="Seetha Rama Kalyana | Hindu Matrimony" />
+    <meta data-default property="og:description" content="Find verified Hindu brides and grooms from your community." />
+    <meta data-default property="og:image" content="%SITE_URL%/assets/hero.webp" />
+    <meta data-default property="og:url" content="%SITE_URL%/" />
+    <meta data-default name="twitter:card" content="summary_large_image" />
 
     <!-- Preload important images -->
-    <link rel="preload" as="image" href="/assets/seetha_ram.webp" />
+    <link rel="preload" as="image" href="/assets/hero.webp" />
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- Meta Pixel Code -->
-
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=1199725088340553&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- %META_PIXEL_NOSCRIPT% -->
 
     <script type="module" src="/src/main.tsx"></script>
   </body>

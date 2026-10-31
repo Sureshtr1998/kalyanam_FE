@@ -2,6 +2,8 @@ export const user_login_token = 'user_login_token';
 
 
 export const getItem = (item: string) => {
+    // No storage while pages are prerendered at build time.
+    if (typeof localStorage === "undefined") return null;
     const stored = localStorage.getItem(item);
     if (!stored) return null;
     try {
@@ -12,8 +14,7 @@ export const getItem = (item: string) => {
 };
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const setItem = (item: string, value: any) => {
+export const setItem = (item: string, value: unknown) => {
     localStorage.setItem(item, JSON.stringify(value));
 };
 

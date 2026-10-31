@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
+Disallow: /home
+Disallow: /activity
+Disallow: /account
+Disallow: /profile
+Disallow: /astrology
+Disallow: /matchmaker-profile
+Disallow: /partner$
+Disallow: /admin
+Disallow: /app-shell
 
 Sitemap: https://www.seetharamakalyana.in/sitemap.xml

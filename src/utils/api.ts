@@ -1,8 +1,11 @@
 import axios from "axios";
+import { env } from "@/config/env";
 import { getItem, removeItem, user_login_token } from "./localStore";
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: env.apiBaseUrl,
+    // Without a timeout a stalled request leaves the UI spinning forever.
+    timeout: 30000,
     headers: {
         "Content-Type": "application/json",
     },
@@ -22,7 +25,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response && [401, 403].includes(error.response.status)) {
+        // Only 401 means the session is gone; 403 is "not allowed" (e.g. a profile
+        // that's no longer available) and must not sign the member out.
+        if (error.response?.status === 401) {
             removeItem(user_login_token)
 
             // Redirect to login

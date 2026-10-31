@@ -1,107 +1,95 @@
-import { useState } from "react";
-import { TEXT_COLOR } from "../../styles/variables";
-import FormInput from "../fields/FormInput";
-import type { FormType } from "../../utils/interfaces";
-import "./Form.scss";
-import { Button } from "primereact/button";
-import { useToast } from "../toastProvider/ToastProvider";
-import api from "../../utils/api";
-import { setItem, user_login_token } from "../../utils/localStore";
-import Spinner from "../spinner/Spinner";
-import { Checkbox } from "primereact/checkbox";
+import { useState, type FormEvent } from "react";
+import { toast } from "sonner";
+import { LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Field } from "@/components/fields/Field";
+import { PasswordInput } from "@/components/fields/PasswordInput";
+import api from "@/utils/api";
+import { setItem, user_login_token } from "@/utils/localStore";
+import type { FormType } from "@/utils/interfaces";
+import { errorMessage } from "@/lib/errors";
 
-interface Props {
-  setCurrentForm: (val: FormType) => void;
-}
-const LoginForm = (props: Props) => {
-  const { setCurrentForm } = props;
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isPartner, setIsPartner] = useState<boolean>(false);
+const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isPartner, setIsPartner] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { showToast } = useToast();
-
-  const loginUser = async () => {
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
     if (!email || !password) {
-      showToast("error", "Error", "Please enter email and password");
+      toast.error("Please enter your email and password");
       return;
     }
-
+    setLoading(true);
     try {
-      setIsLoading(true);
-      const res = await api.post("/login", {
-        email: email.toLowerCase(),
-        password,
-        isPartner,
-      });
+      const res = await api.post("/login", { email: email.trim().toLowerCase(), password, isPartner });
       setItem(user_login_token, res.data);
-      showToast("success", "Success", "Logged in successfully");
-      window.location.href = "/home";
-      setIsLoading(false);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      showToast(
-        "error",
-        "Login Failed",
-        err.response?.data?.msg || "Server error"
-      );
-      setIsLoading(false);
+      window.location.href = res.data.role === "BROKER" ? "/partner" : "/home";
+    } catch (err) {
+      toast.error("Login failed", { description: errorMessage(err) });
+      setLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-sm">
-      <Spinner hideText isLoading={isLoading} />
-      <h2 className="heading">Log In to Find Your Match</h2>
-      <FormInput
-        name="email"
-        type="email"
-        placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        icon="pi pi-envelope"
-      />
-      <FormInput
-        name="password"
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        icon="pi pi-lock"
-      />
-
-      <Checkbox
-        inputId="partner"
-        name="partner"
-        onChange={() => setIsPartner(!isPartner)}
-        checked={isPartner}
-        value="partner"
-      />
-      <label htmlFor="partner" className={`${TEXT_COLOR} ml-2 `}>
-        I am a Registered Partner
-      </label>
-      <div className="flex justify-end mb-8">
-        <a
-          href="#"
-          className={`text-sm ${TEXT_COLOR} hover:underline font-medium`}
-          onClick={() => setCurrentForm("forgotPassword")}>
-          Forgot Password?
-        </a>
+    <form onSubmit={submit} className="flex flex-col gap-4">
+      <div className="mb-1 text-center">
+        <h2 className="font-display text-3xl font-bold">Welcome back</h2>
+        <p className="text-sm text-muted-foreground">Log in to continue your search</p>
       </div>
-      <Button onClick={loginUser} className="update-btn">
-        Login
+      <Field label="Email" htmlFor="login-email">
+        <Input
+          id="login-email"
+          type="email"
+          autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          className="h-11 bg-card"
+        />
+      </Field>
+      <Field
+        label={
+          <span className="flex w-full items-center justify-between">
+            Password
+            <button
+              type="button"
+              onClick={() => setCurrentForm("forgotPassword")}
+              className="text-xs font-semibold text-primary hover:underline">
+              Forgot password?
+            </button>
+          </span>
+        }
+        htmlFor="login-password">
+        <PasswordInput
+          id="login-password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="h-11"
+        />
+      </Field>
+      <div className="flex items-center gap-2">
+        <Checkbox id="partner" checked={isPartner} onCheckedChange={(v) => setIsPartner(v === true)} />
+        <Label htmlFor="partner" className="text-sm font-normal text-muted-foreground">
+          I am a registered matchmaker partner
+        </Label>
+      </div>
+      <Button type="submit" size="lg" className="h-11" disabled={loading}>
+        <LogIn />
+        {loading ? "Logging in…" : "Log in"}
       </Button>
-      <p className="text-center mt-8 text-gray-600">
+      <p className="text-center text-sm text-muted-foreground">
         New to Seetha Rama Kalyana?{" "}
-        <button
-          onClick={() => setCurrentForm(1)}
-          className={`font-semibold ${TEXT_COLOR} cursor-pointer hover:underline focus:outline-none`}>
-          Register Now
+        <button type="button" onClick={() => setCurrentForm(1)} className="font-semibold text-primary hover:underline">
+          Create a profile
         </button>
       </p>
-    </div>
+    </form>
   );
 };
 

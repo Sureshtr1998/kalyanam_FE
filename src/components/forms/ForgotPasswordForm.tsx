@@ -1,244 +1,154 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
-import { useToast } from "../toastProvider/ToastProvider";
-import api from "../../utils/api";
-import FormInput from "../fields/FormInput";
-import type { FormType } from "../../utils/interfaces";
-import { TEXT_COLOR } from "../../styles/variables";
-import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
+import { useEffect, useState, type FormEvent } from "react";
+import { ArrowLeft, KeyRound, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { Field } from "@/components/fields/Field";
+import { PasswordInput } from "@/components/fields/PasswordInput";
+import api from "@/utils/api";
+import type { FormType } from "@/utils/interfaces";
+import { MIN_PASSWORD_LENGTH } from "@/utils/constants";
+import { errorMessage } from "@/lib/errors";
 
-interface Props {
-  setCurrentForm: (val: FormType) => void;
-}
-const ForgotPasswordForm = (props: Props) => {
-  const { setCurrentForm } = props;
-  const [step, setStep] = useState<"sendEmail" | "enterOtp" | "setPassword">(
-    "sendEmail"
-  );
+type Step = "email" | "otp" | "password";
+
+const ForgotPasswordForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
+  const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
+  // Partners have separate accounts, so every step says which kind this is.
+  const [isPartner, setIsPartner] = useState(false);
   const [otp, setOtp] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isPartner, setIsPartner] = useState<boolean>(false);
-
   const [timer, setTimer] = useState(0);
-  const { showToast } = useToast();
 
   useEffect(() => {
     if (timer <= 0) return;
-
-    const interval = setInterval(() => {
-      setTimer((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
+    const t = setTimeout(() => setTimer((s) => s - 1), 1000);
+    return () => clearTimeout(t);
   }, [timer]);
 
-  const handleRequestOtp = async () => {
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      showToast("error", "Invalid Email", "Please enter a valid email.");
-      return;
-    }
-
+  const run = async (fn: () => Promise<void>) => {
     setLoading(true);
     try {
-      const res = await api.post("/request-reset", {
-        email: email.toLowerCase(),
-        isPartner,
-      });
-      setStep("enterOtp");
-      showToast("success", "OTP Sent", res.data.msg);
+      await fn();
+    } catch (err) {
+      toast.error("Something went wrong", { description: errorMessage(err) });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const requestOtp = () =>
+    run(async () => {
+      const res = await api.post("/request-reset", { email: email.trim().toLowerCase(), isPartner });
+      toast.success("Check your email", { description: res.data.msg });
+      setStep("otp");
       setTimer(60);
-    } catch (err: any) {
-      showToast("error", "Error", err.response?.data?.msg || "Server error");
-    } finally {
-      setLoading(false);
-    }
-  };
+    });
 
-  const handleVerifyOtp = async () => {
-    if (!otp || otp.length !== 6 || isNaN(Number(otp))) {
-      showToast("error", "Invalid OTP", "Please enter a valid 6-digit OTP.");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await api.post("/verify-otp", { email, otp });
-      setStep("setPassword");
-      showToast("success", "OTP Verified", res.data.msg);
-    } catch (err: any) {
-      showToast("error", "Error", err.response?.data?.msg || "Invalid OTP");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResetPassword = async () => {
-    if (newPassword.length < 6) {
-      showToast(
-        "error",
-        "Error",
-        "New password must be at least 6 characters."
-      );
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      showToast("error", "Error", "Passwords do not match.");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await api.post("/reset-password", {
-        email,
-        newPassword,
-        isPartner,
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    if (step === "email") {
+      if (!/\S+@\S+\.\S+/.test(email)) return toast.error("Please enter a valid email");
+      void requestOtp();
+    } else if (step === "otp") {
+      void run(async () => {
+        await api.post("/verify-otp", { email: email.trim().toLowerCase(), otp, isPartner });
+        setStep("password");
       });
-      window.location.href = "/";
-      setTimeout(() => {
-        showToast("success", "Password Reset", res.data.msg);
-      }, 500);
-    } catch (err: any) {
-      showToast("error", "Error", err.response?.data?.msg || "Server error");
-    } finally {
-      setLoading(false);
+    } else {
+      if (password.length < MIN_PASSWORD_LENGTH) {
+        return toast.error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
+      }
+      if (password !== confirm) return toast.error("Passwords don't match");
+      void run(async () => {
+        await api.post("/reset-password", { email: email.trim().toLowerCase(), newPassword: password, isPartner });
+        toast.success("Password updated", { description: "Please log in with your new password." });
+        setCurrentForm("login");
+      });
     }
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-semibold text-center text-amber-700 mb-6">
-        Reset Your Password
-      </h2>
+    <form onSubmit={submit} className="flex flex-col gap-4">
+      <div className="mb-1 text-center">
+        <div className="mx-auto mb-2 flex size-11 items-center justify-center rounded-full bg-accent text-primary">
+          <KeyRound className="size-5" />
+        </div>
+        <h2 className="font-display text-3xl font-bold">Reset password</h2>
+        <p className="text-sm text-muted-foreground">
+          {step === "email" && "We'll email you a 6-digit code."}
+          {step === "otp" && (
+            <>
+              If <b className="text-foreground">{email}</b> has an account, we've emailed it a code. Check your spam folder too.
+            </>
+          )}
+          {step === "password" && "Choose a new password."}
+        </p>
+      </div>
 
-      {step === "sendEmail" && (
-        <>
-          <p className="text-center text-gray-600 mb-6">
-            Enter your registered email to receive an OTP for password reset.
-          </p>
-
-          <FormInput
+      {step === "email" && (
+        <Field label="Registered email" htmlFor="fp-email">
+          <Input
+            id="fp-email"
             type="email"
-            name="email"
-            placeholder="Registered Email Address"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            icon="pi pi-envelope"
+            className="h-11 bg-card"
           />
-          <div className="mb-4">
-            <Checkbox
-              inputId="partner"
-              name="partner"
-              onChange={() => setIsPartner(!isPartner)}
-              checked={isPartner}
-              value="partner"
-            />
-            <label htmlFor="partner" className={`${TEXT_COLOR} ml-2 `}>
-              I am a Registered Partner
-            </label>
-          </div>
-          <Button
-            onClick={handleRequestOtp}
-            disabled={loading || !/\S+@\S+\.\S+/.test(email)}
-            className="update-btn">
-            SEND OTP
-          </Button>
-        </>
+        </Field>
+      )}
+      {step === "email" && (
+        <div className="flex items-center gap-2">
+          <Checkbox id="fp-partner" checked={isPartner} onCheckedChange={(v) => setIsPartner(v === true)} />
+          <Label htmlFor="fp-partner" className="text-sm font-normal text-muted-foreground">
+            I am a registered matchmaker partner
+          </Label>
+        </div>
       )}
 
-      {step === "enterOtp" && (
+      {step === "otp" && (
+        <div className="flex flex-col items-center gap-3">
+          <InputOTP maxLength={6} value={otp} onChange={setOtp} inputMode="numeric" pattern="^[0-9]*$">
+            <InputOTPGroup>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <InputOTPSlot key={i} index={i} className="size-11 bg-card text-base" />
+              ))}
+            </InputOTPGroup>
+          </InputOTP>
+          <p className="text-xs text-muted-foreground">Can't find it? Check your spam folder.</p>
+          <Button type="button" variant="link" size="sm" disabled={timer > 0 || loading} onClick={requestOtp}>
+            <RefreshCw />
+            {timer > 0 ? `Resend in ${timer}s` : "Resend code"}
+          </Button>
+        </div>
+      )}
+
+      {step === "password" && (
         <>
-          <p className="text-center text-gray-600 mb-6 font-medium">
-            OTP sent to{" "}
-            <span className="font-bold text-amber-700">{email}</span>.
-          </p>
-
-          <FormInput
-            type="tel"
-            name="otp"
-            placeholder="Enter 6-Digit OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value.slice(0, 6))}
-            icon="pi pi-key"
-          />
-
-          <Button
-            onClick={handleVerifyOtp}
-            disabled={loading}
-            className="update-btn">
-            VERIFY OTP
-          </Button>
-          <div className="text-center mt-4">
-            <p className="text-xs text-gray-500 mb-1">
-              Didn't receive the OTP? Please check your{" "}
-              <b>
-                <i
-                  style={{ fontSize: "0.7rem", color: "red" }}
-                  className="pi pi-exclamation-circle"
-                />{" "}
-                Spam
-              </b>{" "}
-              folder.
-            </p>
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={handleRequestOtp}
-                disabled={timer > 0}
-                className={`text-sm flex items-center 
-                 ${
-                   timer > 0
-                     ? "cursor-not-allowed text-gray-400"
-                     : "cursor-pointer text-gray-600 hover:underline"
-                 }`}>
-                <i className="pi pi-sync mr-1" />
-
-                {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
-              </button>
-            </div>
-          </div>
+          <Field label="New password" hint={`At least ${MIN_PASSWORD_LENGTH} characters`}>
+            <PasswordInput autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className="h-11" />
+          </Field>
+          <Field label="Confirm new password">
+            <PasswordInput autoComplete="new-password" value={confirm} onChange={(e) => setConfirm(e.target.value)} className="h-11" />
+          </Field>
         </>
       )}
 
-      {step === "setPassword" && (
-        <>
-          <FormInput
-            type="password"
-            name="password"
-            placeholder="New Password (Min 6 Chars)"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            icon="pi pi-lock"
-          />
-
-          <FormInput
-            type="password"
-            name="password"
-            placeholder="Confirm New Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            icon="pi pi-lock"
-          />
-
-          <Button
-            onClick={handleResetPassword}
-            disabled={loading}
-            className="update-btn">
-            RESET PASSWORD
-          </Button>
-        </>
-      )}
-
-      <p className="text-center mt-8 text-gray-600">
-        <button
-          onClick={() => setCurrentForm("login")}
-          className={`font-semibold ${TEXT_COLOR} cursor-pointer hover:underline focus:outline-none`}>
-          Back to Login
-        </button>
-      </p>
-    </div>
+      <Button type="submit" size="lg" className="h-11" disabled={loading || (step === "otp" && otp.length !== 6)}>
+        {loading ? "Please wait…" : step === "email" ? "Send code" : step === "otp" ? "Verify code" : "Update password"}
+      </Button>
+      <Button type="button" variant="ghost" onClick={() => setCurrentForm("login")}>
+        <ArrowLeft />
+        Back to login
+      </Button>
+    </form>
   );
 };
 

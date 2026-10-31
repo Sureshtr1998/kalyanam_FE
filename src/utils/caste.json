@@ -324,6 +324,8 @@
       "Anavil",
       "Anaviln Desai",
       "Audichya",
+      "Babbur Kamme",
+      "Badaganadu",
       "Bagra",
       "Baidhiki/Vaidhiki",
       "Baragaon",
@@ -355,6 +357,7 @@
       "Jangid",
       "Jhadua",
       "Jyotish",
+      "Kandavara",
       "Kanyakubj",
       "Karhade",
       "Khadayata",
@@ -371,11 +374,11 @@
       "Mevada",
       "Modh",
       "Mohyal",
+      "Mulukanadu",
       "Nagar",
       "Namboodiri",
       "Narmadiya",
       "Niyogi",
-      "Other",
       "Paliwal",
       "Panda",
       "Pandit",
@@ -406,12 +409,14 @@
       "Stanika",
       "Tapodhan",
       "Tyagi",
+      "Ulucha Kamme",
       "Vaidiki",
       "Vaikhanasa",
       "Valam",
       "Velanadu",
       "Vyas",
-      "Zalora"
+      "Zalora",
+      "Other"
     ]
   },
   {
@@ -700,6 +705,10 @@
   },
   {
     "caste": "Goan",
+    "subCastes": []
+  },
+  {
+    "caste": "Golla",
     "subCastes": []
   },
   {
@@ -1227,7 +1236,13 @@
   },
   {
     "caste": "Kuruba",
-    "subCastes": []
+    "subCastes": [
+      "Halumatha",
+      "Hande Kuruba",
+      "Jhande Kuruba",
+      "Kuruba Gowda",
+      "Other"
+    ]
   },
   {
     "caste": "Kuruhina Shetty",
@@ -1283,7 +1298,20 @@
   },
   {
     "caste": "Lingayath",
-    "subCastes": []
+    "subCastes": [
+      "Aradhya",
+      "Banajiga",
+      "Ganiga",
+      "Gowda Lingayath",
+      "Jangama",
+      "Kudu Vokkaliga",
+      "Nonaba",
+      "Panchamasali",
+      "Sadar",
+      "Shivachar",
+      "Other"
+    ],
+    "label": "Lingayath / Veerashaiva"
   },
   {
     "caste": "Lodhi Rajput",
@@ -1542,7 +1570,17 @@
   },
   {
     "caste": "Nair",
-    "subCastes": []
+    "subCastes": [
+      "Illathu",
+      "Kiryathil",
+      "Kurup",
+      "Menon",
+      "Nambiar",
+      "Pillai",
+      "Swaroopathil",
+      "Unnithan",
+      "Other"
+    ]
   },
   {
     "caste": "Namasudra / Namassej",
@@ -1882,7 +1920,14 @@
   },
   {
     "caste": "Reddy",
-    "subCastes": []
+    "subCastes": [
+      "Desur",
+      "Gone Kapu",
+      "Motati",
+      "Pakanati",
+      "Panta",
+      "Other"
+    ]
   },
   {
     "caste": "Relli",
@@ -1898,7 +1943,8 @@
   },
   {
     "caste": "SC",
-    "subCastes": []
+    "subCastes": [],
+    "label": "Scheduled Caste (SC)"
   },
   {
     "caste": "SKP",
@@ -1906,7 +1952,8 @@
   },
   {
     "caste": "ST",
-    "subCastes": []
+    "subCastes": [],
+    "label": "Scheduled Tribe (ST)"
   },
   {
     "caste": "Sadgope",
@@ -2431,7 +2478,15 @@
   },
   {
     "caste": "Vishwakarma",
-    "subCastes": []
+    "subCastes": [
+      "Achari (Carpenter)",
+      "Akkasaale / Goldsmith",
+      "Badiga",
+      "Kammara (Blacksmith)",
+      "Kanchugara",
+      "Shilpi (Sculptor)",
+      "Other"
+    ]
   },
   {
     "caste": "Viswabrahmin",
@@ -2439,7 +2494,20 @@
   },
   {
     "caste": "Vokkaliga",
-    "subCastes": []
+    "subCastes": [
+      "Dasa",
+      "Gangadikara",
+      "Hallikar",
+      "Hosadevara",
+      "Kunchitiga",
+      "Marasu",
+      "Morasu",
+      "Musuku",
+      "Namadhari",
+      "Reddy",
+      "Sarpa",
+      "Other"
+    ]
   },
   {
     "caste": "Vysya",

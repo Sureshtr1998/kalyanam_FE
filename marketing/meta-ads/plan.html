@@ -1,0 +1,511 @@
+<title>Seetha Rama Kalyana Meta Playbook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@500;700&display=swap">
+<style>
+  /* Layout: one reading column with wide bands for the creative gallery and tables. Brand colours from the app (src/index.css). */
+  :root {
+    --bg: #fffaf3;
+    --surface: #ffffff;
+    --tint: #fff1dc;
+    --fg: #2b1708;
+    --muted: #7a5c47;
+    --line: #f0dcc2;
+    --accent: #c2410c;
+    --accent-ink: #9a3412;
+    --gold: #b77806;
+    --ok: #15803d;
+    --warn: #b45309;
+    --warn-bg: #fff4e0;
+    --display: "Cormorant Garamond", Georgia, serif;
+    --body: "Manrope", system-ui, sans-serif;
+    --kn: "Noto Sans Kannada", "Manrope", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c0f07; --surface: #26150b; --tint: #2f1a0d; --fg: #fbeee0; --muted: #c9a98f;
+      --line: #452815; --accent: #fb8a4a; --accent-ink: #fdba74; --gold: #f5b544; --ok: #4ade80;
+      --warn: #fbbf24; --warn-bg: #3a2408; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c0f07; --surface: #26150b; --tint: #2f1a0d; --fg: #fbeee0; --muted: #c9a98f;
+    --line: #452815; --accent: #fb8a4a; --accent-ink: #fdba74; --gold: #f5b544; --ok: #4ade80;
+    --warn: #fbbf24; --warn-bg: #3a2408; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg); font: 400 16px/1.65 var(--body); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-block: 40px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .prose { max-width: 70ch; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-top: 72px; }
+  h3 { font-size: 1.45rem; }
+  p { margin: 0; }
+  .stack > * + * { margin-top: 14px; }
+  .eyebrow { font: 800 12px/1 var(--body); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+  .lede { font-size: 1.15rem; color: var(--muted); margin-top: 16px; }
+  a { color: var(--accent-ink); }
+  code { font-size: .9em; background: var(--tint); padding: 1px 6px; border-radius: 6px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-top: 28px; }
+  .facts div { background: var(--surface); padding: 16px 18px; }
+  .facts b { display: block; font: 700 1.6rem/1.1 var(--display); color: var(--accent-ink); font-variant-numeric: lining-nums; }
+  .facts span { font-size: .85rem; color: var(--muted); }
+
+  .note { border-left: 4px solid var(--warn); background: var(--warn-bg); padding: 14px 18px; border-radius: 0 12px 12px 0; }
+  .note b { color: var(--warn); }
+
+  ol.steps, ul.ticks { padding: 0; margin: 0; list-style: none; display: grid; gap: 10px; }
+  ol.steps { counter-reset: s; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+  ol.steps li::before { content: counter(s); font: 700 1.4rem/1.2 var(--display); color: var(--gold); }
+  ul.ticks li { padding-left: 26px; position: relative; }
+  ul.ticks li::before { content: "✓"; position: absolute; left: 0; color: var(--ok); font-weight: 800; }
+
+  .scroll { overflow-x: auto; margin-top: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: .92rem; }
+  th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  th { font: 800 11px/1.3 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: var(--tint); }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--tint); color: var(--accent-ink); white-space: nowrap; }
+
+  .aud { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
+  .aud article { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; min-width: 0; }
+  .aud dl { margin: 12px 0 0; display: grid; grid-template-columns: 92px 1fr; gap: 6px 12px; font-size: .9rem; }
+  .aud dt { color: var(--muted); font-weight: 700; }
+  .aud dd { margin: 0; min-width: 0; }
+
+  .ads { display: grid; gap: 28px; margin-top: 24px; }
+  .ad { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+  .ad figure { margin: 0; }
+  .ad img { width: 100%; height: auto; border-radius: 12px; display: block; box-shadow: 0 6px 24px rgba(67,20,7,.12); }
+  .ad figcaption { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+  .ad .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .copy { position: relative; margin-top: 14px; background: var(--tint); border-radius: 12px; padding: 14px 16px; white-space: pre-line; font-size: .93rem; }
+  .copy.kn { font-family: var(--kn); }
+  .copy button { position: absolute; top: 8px; right: 8px; font: 700 12px var(--body); border: 1px solid var(--line); background: var(--surface); color: var(--accent-ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+  .copy button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .fields { display: grid; grid-template-columns: 110px 1fr; gap: 4px 12px; margin-top: 12px; font-size: .9rem; }
+  .fields dt { color: var(--muted); font-weight: 700; }
+  .fields dd { margin: 0; }
+  @media (max-width: 720px) { .ad { grid-template-columns: 1fr; } .ad figure { max-width: 320px; } }
+
+  .reels { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 20px; }
+  .reels article { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; min-width: 0; }
+  .reels ol { margin: 10px 0 0; padding-left: 20px; font-size: .92rem; display: grid; gap: 6px; }
+  .small { font-size: .88rem; color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header class="prose">
+    <p class="eyebrow">Meta marketing playbook · Facebook &amp; Instagram</p>
+    <h1>Seetha Rama Kalyana on Meta</h1>
+    <p class="lede">Who to reach, what to post, how many pieces to make, and twelve ready-to-upload ad images built from the app's own brand, prices and features. Written 30 October 2026, for the first 30 days.</p>
+  </header>
+
+  <div class="facts">
+    <div><b>₹351</b><span>a year, struck from ₹751</span></div>
+    <div><b>36</b><span>interest credits included</span></div>
+    <div><b>March 2027</b><span>when early members' year starts</span></div>
+    <div><b>₹101</b><span>partner earns per referral</span></div>
+    <div><b>40+</b><span>community pages live</span></div>
+  </div>
+
+  <h2>The plan in one paragraph</h2>
+  <div class="prose stack" style="margin-top:16px">
+    <p>Lead with <b>parents in Karnataka</b>, because they create most profiles and respond to trust and privacy. Run three more audiences beside them: young professionals choosing for themselves, Kannada and South Indian NRIs, and marriage brokers for the partner program. Sell three things in every ad: <b>₹351 with no sales calls</b>, <b>your number stays private until both families agree</b>, and <b>your year only starts in March 2027</b>. That last point matters because the app is young and has few profiles. It turns the honest "we're growing" message into a reason to join early.</p>
+  </div>
+
+  <h2>Fix these before spending</h2>
+  <div class="prose stack" style="margin-top:16px">
+    <ol class="steps">
+      <li><span><b>Pixel events. Done in code, not deployed yet.</b> The site now sends <code>Lead</code> when a new email passes step 1 of registration, <code>CompleteRegistration</code> with the amount actually paid (₹351 or ₹301) after a paid sign-up, <code>Purchase</code> for credit packs and astrology, and <code>SubmitApplication</code> for partner sign-ups. After you deploy, check them in Events Manager → Test events.</span></li>
+      <li><span><b>Ad link that opens registration. Done in code, not deployed yet.</b> Use <code>https://www.seetharamakalyana.in/?join=1</code> in every sign-up ad. It opens the register form instead of login. Add UTMs after it, e.g. <code>/?join=1&amp;utm_source=meta&amp;utm_campaign=parents_kn</code>.</span></li>
+      <li><span><b>Set up the business side.</b> Facebook Page and Instagram profile with the round logo, a Meta Business account, domain verification for seetharamakalyana.in, and WhatsApp Business on +91 8105710930 so "Send WhatsApp message" ads work.</span></li>
+      <li><span><b>Fill the Page before ads run.</b> Post 6–9 items from the calendar below first. People check the profile before paying ₹351, and an empty Page loses them.</span></li>
+    </ol>
+    <div class="note"><b>Meta policy, read once.</b> (1) Meta removed targeting by religion and caste in 2022, so you can't target "Hindu" or "Brahmin". Target by place, age and language, and let the creative carry the community message. (2) Ad text must not claim to know the viewer's religion, caste or relationship status. "Are you a single Brahmin?" gets rejected; "Profiles from 40+ communities" is fine. (3) Meta may treat matrimony as a dating service. If ads are rejected under the dating policy, apply for dating-ad permission through Meta's form and target 18+ only.</div>
+  </div>
+
+  <h2>Target audiences</h2>
+  <p class="prose lede">Five ad sets. Start with location, age and Advantage+ audience, and let the creative and language do the narrowing. Language targeting follows the phone's language, and most Kannada speakers use English phones, so it shrinks reach too much.</p>
+  <div class="aud">
+    <article>
+      <span class="tag">A · Primary · 35% of budget</span>
+      <h3 style="margin-top:10px">Parents</h3>
+      <dl>
+        <dt>Who</dt><dd>Mothers and fathers searching for a son or daughter</dd>
+        <dt>Age</dt><dd>45–65, all genders</dd>
+        <dt>Where</dt><dd>Karnataka: Bengaluru, Mysuru, Mangaluru, Hubballi-Dharwad, Belagavi, Shivamogga, Udupi, Davanagere</dd>
+        <dt>Hooks</dt><dd>Privacy, verified families, biodata PDF, kundli matching, no sales calls</dd>
+        <dt>Ads</dt><dd>01, 03, 04, 06, 08</dd>
+      </dl>
+    </article>
+    <article>
+      <span class="tag">B · 25%</span>
+      <h3 style="margin-top:10px">Young professionals</h3>
+      <dl>
+        <dt>Who</dt><dd>Grooms and brides creating their own profile</dd>
+        <dt>Age</dt><dd>24–34</dd>
+        <dt>Where</dt><dd>Bengaluru first, then Hyderabad, Chennai, Pune, Mumbai</dd>
+        <dt>Hooks</dt><dd>Price, 3-minute sign-up, two-way matching, no spam calls</dd>
+        <dt>Ads</dt><dd>02, 05, 07, 11, 12</dd>
+      </dl>
+    </article>
+    <article>
+      <span class="tag">C · 20%</span>
+      <h3 style="margin-top:10px">NRIs</h3>
+      <dl>
+        <dt>Who</dt><dd>Indians abroad and their parents back home</dd>
+        <dt>Age</dt><dd>25–40</dd>
+        <dt>Where</dt><dd>USA, UK, UAE, Singapore, Australia, Canada</dd>
+        <dt>Narrow</dt><dd>Behaviour "Lived in India (formerly Expats – India)"</dd>
+        <dt>Ads</dt><dd>10, 01, 05</dd>
+      </dl>
+    </article>
+    <article>
+      <span class="tag">D · 10%</span>
+      <h3 style="margin-top:10px">Retargeting</h3>
+      <dl>
+        <dt>Who</dt><dd>Site visitors in the last 30 days who didn't register; Page and Instagram engagers</dd>
+        <dt>Needs</dt><dd>Pixel events from step 1 above</dd>
+        <dt>Hooks</dt><dd>March 2027 start date, price, privacy</dd>
+        <dt>Ads</dt><dd>05, 02, 04</dd>
+      </dl>
+    </article>
+    <article>
+      <span class="tag">E · 10%</span>
+      <h3 style="margin-top:10px">Marriage brokers</h3>
+      <dl>
+        <dt>Who</dt><dd>Brokers, temple and community organisers, wedding vendors</dd>
+        <dt>Age</dt><dd>30–60</dd>
+        <dt>Where</dt><dd>Karnataka; add Tamil Nadu and Andhra later (the partner page speaks 7 languages)</dd>
+        <dt>Narrow</dt><dd>Interests "Small business owners", "Entrepreneurship"</dd>
+        <dt>Ads</dt><dd>09, sent to <code>/partner-with-us</code></dd>
+      </dl>
+    </article>
+  </div>
+
+  <h2>Budget and campaign setup</h2>
+  <div class="prose stack" style="margin-top:16px">
+    <p>A starting budget, to adjust after week one. These numbers are my suggestion, not benchmarks.</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Phase</th><th>Days</th><th class="num">Per day</th><th class="num">Total</th><th>Objective</th><th>What you do</th></tr></thead>
+      <tbody>
+        <tr><td>Warm-up</td><td>1–7</td><td class="num">₹300</td><td class="num">₹2,100</td><td>Engagement</td><td>Boost reel R4 and post 01 to Karnataka 24–60. Builds Page proof and a retargeting pool while the Pixel events go in.</td></tr>
+        <tr><td>Test</td><td>8–21</td><td class="num">₹1,000</td><td class="num">₹14,000</td><td>Sales → CompleteRegistration</td><td>5 ad sets as above, 3–4 ads each. Don't touch anything for 3 days, then pause ads whose cost per registration is twice the average.</td></tr>
+        <tr><td>Scale</td><td>22–30</td><td class="num">₹1,500+</td><td class="num">₹13,500</td><td>Sales</td><td>Raise winning ad sets 20% every 3 days. Add 4–6 new images in the winning style.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose stack" style="margin-top:16px">
+    <p><b>The number that decides everything:</b> cost per paid registration. Below ₹351 the membership pays for the ad. Above it you lose money on day one and need credit packs (₹101 / ₹251) and astrology (₹51–₹251) to make it back. If the Sales objective doesn't get enough conversions in week one (under about 50 a week), switch the test to the Leads objective on <code>Lead</code> events.</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Check weekly</th><th>Healthy</th><th>If not</th></tr></thead>
+      <tbody>
+        <tr><td>Link click-through rate</td><td>1% or more</td><td>The image isn't stopping the scroll. Swap the creative.</td></tr>
+        <tr><td>Landing page → register form opened</td><td>25% or more</td><td>The landing page is the problem, not the ad. Check the deep link from step 2.</td></tr>
+        <tr><td>Form opened → paid</td><td>10% or more</td><td>Check where people drop in the 3 steps and at Razorpay.</td></tr>
+        <tr><td>Frequency (7 days)</td><td>Under 3</td><td>The audience is tired. Add new creatives or widen location.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How many pieces of content</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Type</th><th class="num">Month 1</th><th>Then</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Ad images</td><td class="num">12</td><td>4–6 new every 2–3 weeks</td><td>The 12 below. Replace the bottom third each refresh.</td></tr>
+        <tr><td>Reels (ads and organic)</td><td class="num">4–5</td><td>1 a week</td><td>Reels get the cheapest reach on Meta. Scripts below.</td></tr>
+        <tr><td>Feed posts and carousels</td><td class="num">12</td><td>3 a week</td><td>Reuse the 20 blog posts you already have.</td></tr>
+        <tr><td>Stories</td><td class="num">20</td><td>5 a week</td><td>Polls, Q&amp;A, festival greetings, reshared posts.</td></tr>
+        <tr><td><b>Total</b></td><td class="num"><b>~48</b></td><td></td><td>About 12 a week, most of it quick to make.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose small" style="margin-top:12px">Content mix: 30% trust and product (privacy, price, how it works), 30% tradition and culture (Saptapadi, gothra, kalyana), 15% festivals and muhurta season, 10% astrology, 15% community (partner program, and real member stories once you have them, with written consent).</p>
+
+  <h2>The 12 ad images</h2>
+  <p class="prose lede">1080 px wide, sized for Meta: 4:5 for feed, 1:1 for feed and carousels, 9:16 for Stories and Reels. Files are in <code>marketing/meta-ads/</code>; edit <code>src/creatives.html</code> and run <code>node marketing/meta-ads/src/render.cjs</code> to regenerate them.</p>
+
+  <div class="ads">
+    <section class="ad">
+      <figure><img src="creatives/01-brand-hero-4x5.png" alt="Ad 01: round Seetha Rama emblem with the line A sacred union, blessed like Seetha and Rama, and a ₹351 a year button" loading="lazy"><figcaption>01 · Brand hero · 4:5 feed</figcaption></figure>
+      <div>
+        <h3>A sacred union</h3>
+        <div class="meta"><span class="tag">Parents</span><span class="tag">NRIs</span><span class="tag">Sign up</span></div>
+        <div class="copy"><button type="button">Copy</button>Like the kalyana of Seetha and Rama, every marriage here begins with the blessing of both families.
+
+Seetha Rama Kalyana is a Hindu matrimony platform with OTP-verified profiles, contact details shared only when both sides accept, and one simple price: ₹351 a year.
+
+Create a profile in about 3 minutes.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Hindu matrimony · ₹351/year</dd><dt>Description</dt><dd>Verified profiles. No sales calls.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/02-honest-price-1x1.png" alt="Ad 02: large ₹351 price on saffron, struck ₹751, 36 credits and no sales calls" loading="lazy"><figcaption>02 · Honest price · 1:1</figcaption></figure>
+      <div>
+        <h3>Honest price</h3>
+        <div class="meta"><span class="tag">Young professionals</span><span class="tag">Retargeting</span><span class="tag">Sign up</span></div>
+        <div class="copy"><button type="button">Copy</button>Most matrimony sites start cheap, then the sales calls begin. We don't call you.
+
+₹351 for a full year (was ₹751)
+36 interest credits included
+No sales calls. No hidden fees.
+
+Early members' one-year clock starts only in March 2027.</div>
+        <dl class="fields"><dt>Headline</dt><dd>₹351 a year. That's the whole price.</dd><dt>Description</dt><dd>53% off launch offer</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/03-for-parents-4x5.png" alt="Ad 03: For Amma and Appa, four reasons in a card and a Register button" loading="lazy"><figcaption>03 · For parents · 4:5 feed</figcaption></figure>
+      <div>
+        <h3>For Amma &amp; Appa</h3>
+        <div class="meta"><span class="tag">Parents</span><span class="tag">Sign up</span></div>
+        <div class="copy"><button type="button">Copy</button>Amma, Appa: you can create the profile for your son or daughter yourself, in about 3 minutes.
+
+✔ Only Hindu families, across 40+ communities
+✔ Your phone number stays hidden until both families agree
+✔ Download any profile as a biodata PDF to share with family
+✔ Kundli matching by our jyotishi
+
+₹351 a year. No sales calls.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Find the right match, privately</dd><dt>Description</dt><dd>Made for families</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/04-privacy-1x1.png" alt="Ad 04: Your number stays hidden until both families say yes, with three steps" loading="lazy"><figcaption>04 · Privacy · 1:1</figcaption></figure>
+      <div>
+        <h3>Private by design</h3>
+        <div class="meta"><span class="tag">Parents</span><span class="tag">Retargeting</span><span class="tag">Learn more</span></div>
+        <div class="copy"><button type="button">Copy</button>Tired of your number being passed around? On Seetha Rama Kalyana, contact details are shared only after both families accept an interest.
+
+Every member verifies their email and WhatsApp number with a one-time code before the profile goes live.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Your number stays private</dd><dt>Description</dt><dd>Shared only on mutual acceptance</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/05-starts-march-2027-9x16.png" alt="Ad 05: Join today, your one-year membership starts in March 2027, with a calendar" loading="lazy"><figcaption>05 · March 2027 · 9:16 Stories/Reels</figcaption></figure>
+      <div>
+        <h3>Join early, lose nothing</h3>
+        <div class="meta"><span class="tag">Retargeting</span><span class="tag">Young professionals</span><span class="tag">NRIs</span></div>
+        <div class="copy"><button type="button">Copy</button>We're a young platform, inviting new families every day. To be fair to early members, your one-year membership starts in March 2027, not today.
+
+Until then, use everything without limits. ₹351.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Your year starts in March 2027</dd><dt>Expires</dt><dd>Stop this ad by February 2027, or change the date in <code>MEMBERSHIP_START</code> and the image together.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/06-kannada-4x5.png" alt="Ad 06: Kannada headline, trusted matrimony for Hindu families, only ₹351 a year" loading="lazy"><figcaption>06 · Kannada · 4:5 feed</figcaption></figure>
+      <div>
+        <h3>Kannada version</h3>
+        <div class="meta"><span class="tag">Parents</span><span class="tag">Karnataka</span><span class="tag">Sign up</span></div>
+        <div class="copy kn"><button type="button">Copy</button>ಸೀತಾ ರಾಮರ ಕಲ್ಯಾಣದಂತೆ, ಇಲ್ಲಿ ಪ್ರತಿಯೊಂದು ಮದುವೆಯೂ ಎರಡೂ ಕುಟುಂಬಗಳ ಆಶೀರ್ವಾದದಿಂದ ಆರಂಭವಾಗುತ್ತದೆ.
+
+✔ OTP ಮೂಲಕ ಪರಿಶೀಲಿಸಿದ ಪ್ರೊಫೈಲ್‌ಗಳು
+✔ ಎರಡೂ ಕಡೆ ಒಪ್ಪಿದ ನಂತರವೇ ಫೋನ್ ನಂಬರ್ ಹಂಚಿಕೆ
+✔ ವರ್ಷಕ್ಕೆ ಕೇವಲ ₹351, ಯಾವುದೇ ಸೇಲ್ಸ್ ಕರೆಗಳಿಲ್ಲ
+
+ಇಂದೇ ನೋಂದಾಯಿಸಿ.</div>
+        <dl class="fields"><dt>Headline</dt><dd style="font-family:var(--kn)">ನಂಬಿಕೆಯ ಹಿಂದೂ ಮ್ಯಾಟ್ರಿಮೋನಿ</dd><dt>Before use</dt><dd>Have a native Kannada speaker read the image and text once. Run a Telugu and Tamil version the same way when you expand.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/07-how-it-works-1x1.png" alt="Ad 07: Three steps to your kalyana: create profile, discover matches, connect with families" loading="lazy"><figcaption>07 · How it works · 1:1</figcaption></figure>
+      <div>
+        <h3>Three steps</h3>
+        <div class="meta"><span class="tag">Young professionals</span><span class="tag">Organic carousel</span></div>
+        <div class="copy"><button type="button">Copy</button>Three steps, no middlemen:
+
+1. Create your profile in about 3 minutes
+2. See verified matches that fit both ways
+3. Connect once both families accept
+
+₹351 a year. Register today.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Register in 3 minutes</dd><dt>Organic</dt><dd>Split into a 4-slide carousel: cover plus one slide per step.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/08-kundli-matching-1x1.png" alt="Ad 08: Kundli matching ₹201 with a gold chart wheel on deep maroon" loading="lazy"><figcaption>08 · Kundli matching · 1:1</figcaption></figure>
+      <div>
+        <h3>Kundli matching</h3>
+        <div class="meta"><span class="tag">Parents</span><span class="tag">Learn more</span></div>
+        <div class="copy"><button type="button">Copy</button>Found a profile you like? Have the kundlis matched by our jyotishi before you take the next step.
+
+Overview reading ₹51
+Kundli matching ₹201
+Personalised reading ₹251
+
+Available to members of Seetha Rama Kalyana.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Kundli matching for ₹201</dd><dt>Link</dt><dd><code>/pricing</code> (the astrology page needs a login)</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/09-partner-program-1x1.png" alt="Ad 09: Earn ₹101 for every family you bring, families pay ₹301" loading="lazy"><figcaption>09 · Partner program · 1:1</figcaption></figure>
+      <div>
+        <h3>Partner program</h3>
+        <div class="meta"><span class="tag">Brokers</span><span class="tag">Learn more</span></div>
+        <div class="copy"><button type="button">Copy</button>Do you help families find alliances? Partner with Seetha Rama Kalyana.
+
+Families who register with your referral ID pay ₹301 instead of ₹351, and you earn ₹101 for each one. Track every sign-up in your partner dashboard.
+
+One-time partner registration: ₹501. Page available in Kannada, Hindi, Tamil, Telugu, Malayalam and Bengali.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Earn ₹101 per family</dd><dt>Before use</dt><dd>The partner page doesn't state ₹101 publicly yet. Confirm you want to promise that amount in ads.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/10-nri-4x5.png" alt="Ad 10: Living abroad? Find a match from your community back home, with country chips" loading="lazy"><figcaption>10 · NRI · 4:5 feed</figcaption></figure>
+      <div>
+        <h3>Living abroad</h3>
+        <div class="meta"><span class="tag">NRIs</span><span class="tag">Sign up</span></div>
+        <div class="copy"><button type="button">Copy</button>Living in the US, UK, UAE or elsewhere and want a match from your own community? Seetha Rama Kalyana brings families in India and abroad together.
+
+₹351 a year. Contact details shared only when both families agree.</div>
+        <dl class="fields"><dt>Headline</dt><dd>A match from back home</dd><dt>Before use</dt><dd>The image says "card or UPI". Make sure international cards are switched on in Razorpay, or NRIs can't pay.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/11-brand-story-9x16.png" alt="Ad 11: full Seetha and Rama wedding illustration with a Register in 3 minutes button" loading="lazy"><figcaption>11 · Brand story · 9:16 Stories/Reels</figcaption></figure>
+      <div>
+        <h3>Brand story</h3>
+        <div class="meta"><span class="tag">All audiences</span><span class="tag">Stories</span></div>
+        <div class="copy"><button type="button">Copy</button>A sacred union, blessed like Seetha and Rama. Verified Hindu brides and grooms, private contacts, ₹351 a year.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Register in 3 minutes</dd><dt>Tip</dt><dd>Pair it with ad 01 in the same ad (placement asset customisation) so Stories get this one and feed gets 01.</dd></dl>
+      </div>
+    </section>
+
+    <section class="ad">
+      <figure><img src="creatives/12-communities-1x1.png" alt="Ad 12: Profiles from the community your family prefers, with community name chips" loading="lazy"><figcaption>12 · Communities · 1:1</figcaption></figure>
+      <div>
+        <h3>40+ communities</h3>
+        <div class="meta"><span class="tag">Young professionals</span><span class="tag">Parents</span></div>
+        <div class="copy"><button type="button">Copy</button>Brahmin, Vokkaliga, Lingayath, Reddy, Naidu, Nair and 40+ more communities.
+
+Set your partner preferences and see only families whose own preferences include you.</div>
+        <dl class="fields"><dt>Headline</dt><dd>Matches that fit both ways</dd><dt>Variants</dt><dd>Make one per big community and link each to its page, e.g. <code>/communities/brahmin-matrimony</code>. Name the communities; never say "your caste".</dd></dl>
+      </div>
+    </section>
+  </div>
+
+  <h2>Reel scripts</h2>
+  <p class="prose lede">Shoot on a phone, vertical, 15–30 seconds. Put text on screen because most people watch muted. End every reel on ad 11 for 2 seconds.</p>
+  <div class="reels">
+    <article>
+      <span class="tag">R1 · Parents · 20s</span>
+      <h3 style="margin-top:10px">Too many biodata forwards</h3>
+      <ol>
+        <li>Mother scrolling WhatsApp. Text: "47 biodata PDFs. None verified."</li>
+        <li>She sighs, puts the phone down.</li>
+        <li>Daughter shows her Seetha Rama Kalyana. Text: "Verified families. Number private until both agree."</li>
+        <li>Screen: "Interest accepted" email. Mother smiles.</li>
+        <li>End card: ₹351 a year.</li>
+      </ol>
+      <p class="small" style="margin-top:10px">Make a Kannada voice-over version too.</p>
+    </article>
+    <article>
+      <span class="tag">R2 · Self · 30s</span>
+      <h3 style="margin-top:10px">Registered in 3 minutes</h3>
+      <ol>
+        <li>Screen recording of registration with a stopwatch in the corner.</li>
+        <li>Pause on the "Write for me" button filling the About section.</li>
+        <li>Photo upload, OTP, done. Stopwatch stops under 3:00.</li>
+        <li>Text: "That's it. ₹351 a year. No sales calls."</li>
+      </ol>
+    </article>
+    <article>
+      <span class="tag">R3 · Culture · organic</span>
+      <h3 style="margin-top:10px">The seven steps of Saptapadi</h3>
+      <ol>
+        <li>One vow per shot, 3 seconds each, over wedding footage you own or licensed stock.</li>
+        <li>Text taken from your blog post "Sacred Steps: The Deep Meaning Behind the Saptapadi".</li>
+        <li>Caption links to the full article.</li>
+      </ol>
+      <p class="small" style="margin-top:10px">Most shareable post type. Boost it to Parents if it does well organically.</p>
+    </article>
+    <article>
+      <span class="tag">R4 · Founder · 30–45s</span>
+      <h3 style="margin-top:10px">Why only ₹351?</h3>
+      <ol>
+        <li>You, face to camera, at home or at a temple.</li>
+        <li>"We built Seetha Rama Kalyana because families were tired of sales calls and fake profiles."</li>
+        <li>"We're new and still growing, so your year only starts in March 2027."</li>
+        <li>"₹351, verified families, your number stays private. Link below."</li>
+      </ol>
+      <p class="small" style="margin-top:10px">A real face builds more trust than any graphic. Use it in the warm-up week.</p>
+    </article>
+  </div>
+
+  <h2>First four weeks of posts</h2>
+  <p class="prose lede">Three feed posts and one reel a week, plus stories. Check festival dates against your panchanga before posting.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Date</th><th>Format</th><th>Post</th><th>Asset</th></tr></thead>
+      <tbody>
+        <tr><td>Sun 1 Nov</td><td>Image</td><td>Kannada Rajyotsava greeting, then the Kannada ad</td><td>06</td></tr>
+        <tr><td>Tue 3 Nov</td><td>Reel</td><td>Why only ₹351? (founder)</td><td>R4</td></tr>
+        <tr><td>Thu 5 Nov</td><td>Carousel</td><td>Three steps to your kalyana</td><td>07</td></tr>
+        <tr><td>Sat 7 Nov</td><td>Image</td><td>Deepavali greeting from the Seetha Rama Kalyana family</td><td>01 style</td></tr>
+        <tr><td>Tue 10 Nov</td><td>Carousel</td><td>The meaning of Saptapadi (from the blog)</td><td>Blog</td></tr>
+        <tr><td>Thu 12 Nov</td><td>Reel</td><td>Too many biodata forwards</td><td>R1</td></tr>
+        <tr><td>Sat 14 Nov</td><td>Image</td><td>Your number stays private</td><td>04</td></tr>
+        <tr><td>Mon 16 Nov</td><td>Carousel</td><td>Why gothra matters in matchmaking (from the blog)</td><td>Blog</td></tr>
+        <tr><td>Wed 18 Nov</td><td>Reel</td><td>Registered in 3 minutes</td><td>R2</td></tr>
+        <tr><td>Fri 20 Nov</td><td>Image</td><td>Kundli matching ₹201</td><td>08</td></tr>
+        <tr><td>Around Tulasi Vivaha</td><td>Image</td><td>Wedding season begins: start your search now</td><td>05</td></tr>
+        <tr><td>Mon 23 Nov</td><td>Carousel</td><td>5 red flags when searching online (from the blog)</td><td>Blog</td></tr>
+        <tr><td>Wed 25 Nov</td><td>Image</td><td>Partner program for marriage brokers</td><td>09</td></tr>
+        <tr><td>Fri 27 Nov</td><td>Reel</td><td>The seven steps of Saptapadi</td><td>R3</td></tr>
+        <tr><td>Sat 28 Nov</td><td>Image</td><td>Profiles from 40+ communities</td><td>12</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose small" style="margin-top:12px">Stories, five a week: polls ("Who should create the profile, parents or the bride and groom?"), a weekly Q&amp;A sticker on kundli and gothra, reshares of every feed post, and festival greetings. Best posting times for Indian parents: 7–9 am and 8–10 pm.</p>
+
+  <h2>After month one</h2>
+  <div class="prose stack" style="margin-top:16px">
+    <ul class="ticks">
+      <li>Keep the two or three best ads running and replace the rest every 2–3 weeks.</li>
+      <li>Collect the first real success stories (with written consent) and turn them into reels. They will beat every graphic.</li>
+      <li>Add Telugu and Tamil versions of ads 03 and 06 if Bengaluru shows demand from those families.</li>
+      <li>Before March 2027, retire ad 05 and replace the message with your next offer.</li>
+      <li>Launch a Sankranti campaign in early January, when many families restart the search for the next wedding season.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll(".copy button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const box = btn.parentElement;
+      const text = box.innerText.replace(/^Copy\s*/, "").trim();
+      const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = "Copy"), 1500); };
+      try {
+        navigator.clipboard.writeText(text).then(done, () => select(box));
+      } catch (e) { select(box); }
+    });
+  });
+  function select(el) {
+    const r = document.createRange();
+    r.selectNodeContents(el);
+    const s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+  }
+</script>

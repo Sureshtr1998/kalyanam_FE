@@ -1,156 +1,72 @@
 import { useEffect, useState } from "react";
-import api from "../../utils/api";
-import { useToast } from "../../components/toastProvider/ToastProvider";
-import type { BrokerRegistrationForm } from "../../utils/brokerInterface";
-import { brokerFormDefaultVals } from "../../utils/constants";
-import Spinner from "../../components/spinner/Spinner";
-import FormInput from "../../components/fields/FormInput";
-import {
-  casteOptions,
-  motherTongueOptions,
-  normalizeToArray,
-} from "../../utils/utils";
-import SelectInput from "../../components/fields/SelectInput";
-import { TEXT_COLOR } from "../../styles/variables";
+import { Building2, Mail, MapPin, Phone, Share2, Users } from "lucide-react";
+import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { PageHeader } from "@/components/common/PageHeader";
+import api from "@/utils/api";
+import type { BrokerRegistrationForm } from "@/utils/brokerInterface";
+import { errorMessage } from "@/lib/errors";
+import { motherTongueOptions, normalizeToArray } from "@/utils/utils";
 
 const BrokerProfile = () => {
-  const { showToast } = useToast();
-
-  const [brokerData, setBrokerData] = useState<BrokerRegistrationForm>(
-    brokerFormDefaultVals
-  );
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [broker, setBroker] = useState<BrokerRegistrationForm | null>(null);
 
   useEffect(() => {
-    init();
+    api
+      .get("/broker/me")
+      .then((res) => setBroker(res.data.profile))
+      .catch((err) => toast.error("Couldn't load profile", { description: errorMessage(err) }));
   }, []);
 
-  const init = async () => {
-    try {
-      setIsLoading(true);
-      const res = await api.get("/my-profile");
-      setBrokerData(res.data.profile);
+  if (!broker) return <Skeleton className="mx-auto h-96 max-w-3xl rounded-3xl" />;
 
-      setIsLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      showToast(
-        "error",
-        "Error",
-        err.response?.data?.msg || "Unable to load user data"
-      );
-      setIsLoading(false);
-    }
-  };
+  const langs = normalizeToArray(broker.motherTongue).map(
+    (v) => motherTongueOptions.find((o) => o.value === v)?.label ?? v
+  );
+
   return (
-    <div className="profile-container">
-      <form className="profile-form">
-        <Spinner isLoading={isLoading} />
-        <div className="mb-8 text-center">
-          <h2 className={`text-2xl font-bold mb-3 ${TEXT_COLOR}`}>
-            Matchmaker Profile
-          </h2>
-
-          <p className={`${TEXT_COLOR}`}>
-            Track your referrals, manage your agency presence, and watch your
-            business grow with Seetha Rama Kalyana.
-          </p>
-        </div>
-        <div className="broker-profile-form">
-          <div className="background-style">
-            <div className="form-row">
-              <FormInput
-                name="fullName"
-                label="Full Name"
-                disabled
-                value={brokerData.name}
-                icon="pi pi-user"
-              />
-              <FormInput
-                name="email"
-                label="Email ID"
-                type="email"
-                value={brokerData.email}
-                disabled
-                icon="pi pi-envelope"
-              />
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        title="Matchmaker profile"
+        description="Track your referrals and manage your agency presence on Seetha Rama Kalyana."
+      />
+      <Card className="overflow-hidden border-gold/30">
+        <div className="bg-kolam bg-gradient-to-r from-primary/10 via-accent to-gold/20 p-6">
+          <p className="font-display text-3xl font-bold">{broker.name}</p>
+          <p className="text-sm text-muted-foreground">{broker.companyName}</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <div className="rounded-xl bg-card px-4 py-2 shadow-sm">
+              <p className="text-xs font-semibold uppercase text-muted-foreground">Referral ID</p>
+              <p className="flex items-center gap-1.5 font-mono text-lg font-bold text-primary">
+                <Share2 className="size-4" />
+                {broker.referralId ?? "Awaiting approval"}
+              </p>
             </div>
-            <div className="form-row">
-              <FormInput
-                required
-                disabled
-                label="Referral ID"
-                name="referralId"
-                value={brokerData.referralId}
-                icon="pi pi-share-alt"
-              />
-              <FormInput
-                required
-                disabled
-                label="Phone Number"
-                name="phone"
-                maxLength={10}
-                value={brokerData.phone}
-                icon="pi pi-whatsapp"
-              />
-            </div>
-            <div className="form-row">
-              <FormInput
-                name="companyName"
-                label="Company Name"
-                disabled
-                value={brokerData.companyName}
-                icon="pi pi-building"
-              />
-              <FormInput
-                name="address"
-                label="Address"
-                disabled
-                value={brokerData.address}
-                icon="pi pi-map"
-              />
-            </div>
-            <div className="form-row">
-              <SelectInput
-                name="caste"
-                label="Communities You Serve"
-                value={normalizeToArray(brokerData.caste)}
-                options={casteOptions}
-                disabled
-                icon="pi pi-book"
-                isMultiselect
-              />
-              <SelectInput
-                name="motherTongue"
-                label="Mother Tongues You Serve"
-                value={normalizeToArray(brokerData.motherTongue)}
-                options={motherTongueOptions}
-                disabled
-                icon="pi pi-book"
-                isMultiselect
-              />
-            </div>
-            <div className="form-row">
-              <FormInput
-                label="Total Users Referred"
-                name="reffered"
-                disabled
-                value={brokerData.usersReferred}
-                icon="pi pi-share-alt"
-              />
-              <FormInput
-                isTextArea
-                label="Additional Notes"
-                name="note"
-                disabled
-                value={brokerData.note}
-                icon="pi pi-pen-to-square"
-              />
+            <div className="rounded-xl bg-card px-4 py-2 shadow-sm">
+              <p className="text-xs font-semibold uppercase text-muted-foreground">Members referred</p>
+              <p className="flex items-center gap-1.5 text-lg font-bold">
+                <Users className="size-4 text-gold" />
+                {broker.usersReferred ?? 0}
+              </p>
             </div>
           </div>
         </div>
-      </form>
+        <CardContent className="grid gap-4 p-6 sm:grid-cols-2">
+          <p className="flex items-center gap-2 text-sm"><Mail className="size-4 text-gold" />{broker.email}</p>
+          <p className="flex items-center gap-2 text-sm"><Phone className="size-4 text-gold" />{broker.phone}</p>
+          <p className="flex items-center gap-2 text-sm sm:col-span-2"><MapPin className="size-4 text-gold" />{broker.address || "-"}</p>
+          <div className="sm:col-span-2">
+            <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase text-muted-foreground"><Building2 className="size-4" />Communities served</p>
+            <div className="flex flex-wrap gap-1.5">
+              {normalizeToArray(broker.caste).map((c) => <Badge key={c} variant="secondary">{c}</Badge>)}
+              {langs.map((l) => <Badge key={l} variant="outline">{l}</Badge>)}
+            </div>
+          </div>
+          {broker.note && <p className="rounded-xl bg-muted p-3 text-sm italic sm:col-span-2">“{broker.note}”</p>}
+        </CardContent>
+      </Card>
     </div>
   );
 };

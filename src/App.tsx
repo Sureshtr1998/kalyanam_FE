@@ -1,246 +1,115 @@
-import "./App.scss";
+import { Suspense, lazy, useEffect } from "react";
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Routes,
+  StaticRouter,
   useLocation,
-  Navigate,
 } from "react-router-dom";
-import Home from "./screens/home/Home";
-import ProtectedRoute from "./components/misc/ProtectedRoute";
-import Profile from "./screens/profile/Profile";
-import Accounts from "./screens/accounts/Accounts";
-import { ToastProvider } from "./components/toastProvider/ToastProvider";
-import Lander from "./screens/lander/Lander";
-import Wrapper from "./components/wrapper/Wrapper";
-import { useEffect, useState } from "react";
-import { formDefaultVals } from "./utils/constants";
-import type { UserDetails } from "./utils/interfaces";
-import { HelmetProvider } from "react-helmet-async";
-import AboutUs from "./screens/aboutUs/AboutUs";
-import PublicWrapper from "./components/publicWrapper/PublicWrapper";
-import FaqPage from "./screens/faq/FAQPage";
-import TermsConditions from "./screens/terms/TermsConditions";
-import PrivacyPolicy from "./screens/privacy/PrivacyPolicy";
-import Blog from "./screens/blogs/Blog";
-import ContactUs from "./screens/contactUs/ContactUs";
-import Pricing from "./screens/pricing/Pricing";
-import RefundPolicy from "./screens/refund/Refund";
-import Activity from "./screens/activity/Activity";
-import Astrology from "./screens/astrology/Astrology";
-import PartnerWithUs from "./screens/partnerWUs/PartnerWithUs";
-import BrokerProfile from "./screens/brokerProfile/BrokerProfile";
-import CommunitiesServe from "./screens/communities/Communities";
-import BlogPostDetail from "./screens/blogs/BlogPostDetail";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import ProtectedRoute from "@/components/misc/ProtectedRoute";
+import PublicLayout from "@/components/layout/PublicLayout";
+import { OmSpinner } from "@/components/common/Loaders";
+import Lander from "@/screens/lander/Lander";
 
-const AppContent = () => {
-  const location = useLocation();
+// Everything except the landing page is split into its own chunk.
+const AppLayout = lazy(() => import("@/components/layout/AppLayout"));
+const Home = lazy(() => import("@/screens/home/Home"));
+const Profile = lazy(() => import("@/screens/profile/Profile"));
+const Accounts = lazy(() => import("@/screens/accounts/Accounts"));
+const Activity = lazy(() => import("@/screens/activity/Activity"));
+const Astrology = lazy(() => import("@/screens/astrology/Astrology"));
+const BrokerProfile = lazy(
+  () => import("@/screens/brokerProfile/BrokerProfile"),
+);
+const AdminPanel = lazy(() => import("@/screens/admin/AdminPanel"));
+const PartnerDashboard = lazy(() => import("@/screens/partner/PartnerDashboard"));
+const AboutUs = lazy(() => import("@/screens/aboutUs/AboutUs"));
+const FaqPage = lazy(() => import("@/screens/faq/FAQPage"));
+const TermsConditions = lazy(() => import("@/screens/terms/TermsConditions"));
+const PrivacyPolicy = lazy(() => import("@/screens/privacy/PrivacyPolicy"));
+const Blog = lazy(() => import("@/screens/blogs/Blog"));
+const BlogPostDetail = lazy(() => import("@/screens/blogs/BlogPostDetail"));
+const ContactUs = lazy(() => import("@/screens/contactUs/ContactUs"));
+const Pricing = lazy(() => import("@/screens/pricing/Pricing"));
+const RefundPolicy = lazy(() => import("@/screens/refund/Refund"));
+const PartnerWithUs = lazy(() => import("@/screens/partnerWUs/PartnerWithUs"));
+const CommunitiesServe = lazy(() => import("@/screens/communities/Communities"));
+const CommunityPage = lazy(() => import("@/screens/communities/CommunityPage"));
+const NotFound = lazy(() => import("@/screens/notFound/NotFound"));
 
-  const [filterData, setFilterData] = useState<UserDetails>(formDefaultVals);
-
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [location.pathname]);
-
-  return (
-    <>
-      <ToastProvider>
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <Lander />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/about-us"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <AboutUs />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/partner-with-us"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <PartnerWithUs />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/faq"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <FaqPage />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/terms"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <TermsConditions />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/communities"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <CommunitiesServe />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/blog"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <Blog />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/blog/:slug"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <BlogPostDetail />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/contact-us"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <ContactUs />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/pricing"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <Pricing />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/refund-policy"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <RefundPolicy />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/privacy"
-              element={
-                <HelmetProvider>
-                  <PublicWrapper>
-                    <PrivacyPolicy />
-                  </PublicWrapper>
-                </HelmetProvider>
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute>
-                  <Wrapper applyFilter={setFilterData}>
-                    <Home filterData={filterData} />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/activity"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <Activity />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/astrology"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <Astrology />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/account"
-              element={
-                <ProtectedRoute>
-                  <Wrapper applyFilter={setFilterData}>
-                    <Accounts key={filterData._id} data={filterData} />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <Profile />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/matchmaker-profile"
-              element={
-                <ProtectedRoute>
-                  <Wrapper>
-                    <BrokerProfile />
-                  </Wrapper>
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/home" replace />} />
-          </Routes>
-        </div>
-      </ToastProvider>
-    </>
-  );
+    window.scrollTo({ top: 0 });
+  }, [pathname]);
+  return null;
 };
 
-function App() {
+const AppRoutes = () => (
+  <>
+    <ScrollToTop />
+    <Routes>
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Lander />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/partner-with-us" element={<PartnerWithUs />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/communities" element={<CommunitiesServe />} />
+        <Route path="/communities/:slug" element={<CommunityPage />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPostDetail />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      <Route
+        element={
+          <ProtectedRoute>
+            <Suspense
+              fallback={
+                <div className="flex min-h-dvh items-center justify-center">
+                  <OmSpinner />
+                </div>
+              }>
+              <AppLayout />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/home" element={<Home />} />
+        <Route path="/activity" element={<Activity />} />
+        <Route path="/astrology" element={<Astrology />} />
+        <Route path="/account" element={<Accounts />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/matchmaker-profile" element={<BrokerProfile />} />
+        <Route path="/partner" element={<PartnerDashboard />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Route>
+    </Routes>
+  </>
+);
+
+/** `location` is set only when prerendering a page at build time (src/prerender.tsx). */
+function App({ location }: { location?: string }) {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <TooltipProvider delayDuration={200}>
+      {location ? (
+        <StaticRouter location={location}>
+          <AppRoutes />
+        </StaticRouter>
+      ) : (
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      )}
+      <Toaster position="top-center" />
+    </TooltipProvider>
   );
 }
 
