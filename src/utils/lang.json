@@ -16,6 +16,18 @@
     "value": "Awadhi"
   },
   {
+    "key": "Badaga",
+    "value": "Badaga"
+  },
+  {
+    "key": "Bagri Rajasthani",
+    "value": "Bagri Rajasthani"
+  },
+  {
+    "key": "Beary",
+    "value": "Beary"
+  },
+  {
     "key": "Bengali",
     "value": "Bengali"
   },
@@ -24,20 +36,20 @@
     "value": "Bhojpuri"
   },
   {
-    "key": "Brij",
-    "value": "Brij"
-  },
-  {
     "key": "Bihari",
     "value": "Bihari"
   },
   {
-    "key": "Badaga",
-    "value": "Badaga"
+    "key": "Brij",
+    "value": "Brij"
   },
   {
     "key": "Chatisgarhi",
     "value": "Chatisgarhi"
+  },
+  {
+    "key": "Dhundhari/Jaipuri",
+    "value": "Dhundhari/Jaipuri"
   },
   {
     "key": "Dogri",
@@ -60,8 +72,20 @@
     "value": "Gujarati"
   },
   {
+    "key": "Gujari/Gojari",
+    "value": "Gujari/Gojari"
+  },
+  {
+    "key": "Harauti",
+    "value": "Harauti"
+  },
+  {
     "key": "Haryanvi",
     "value": "Haryanvi"
+  },
+  {
+    "key": "Havyaka Kannada",
+    "value": "Havyaka Kannada"
   },
   {
     "key": "Himachali/Pahari",
@@ -92,6 +116,10 @@
     "value": "Khasi"
   },
   {
+    "key": "Kodava",
+    "value": "Kodava"
+  },
+  {
     "key": "Konkani",
     "value": "Konkani"
   },
@@ -108,12 +136,16 @@
     "value": "Kutchi"
   },
   {
-    "key": "Lepcha",
-    "value": "Lepcha"
-  },
-  {
     "key": "Ladacki",
     "value": "Ladacki"
+  },
+  {
+    "key": "Lambadi",
+    "value": "Lambadi"
+  },
+  {
+    "key": "Lepcha",
+    "value": "Lepcha"
   },
   {
     "key": "Magahi",
@@ -128,6 +160,10 @@
     "value": "Malayalam"
   },
   {
+    "key": "Malvi",
+    "value": "Malvi"
+  },
+  {
     "key": "Manipuri",
     "value": "Manipuri"
   },
@@ -138,6 +174,14 @@
   {
     "key": "Marwari",
     "value": "Marwari"
+  },
+  {
+    "key": "Mewari",
+    "value": "Mewari"
+  },
+  {
+    "key": "Mewati/Ahirwati",
+    "value": "Mewati/Ahirwati"
   },
   {
     "key": "Miji",
@@ -152,12 +196,16 @@
     "value": "Monpa"
   },
   {
+    "key": "Nepali",
+    "value": "Nepali"
+  },
+  {
     "key": "Nicobarese",
     "value": "Nicobarese"
   },
   {
-    "key": "Nepali",
-    "value": "Nepali"
+    "key": "Nimadi",
+    "value": "Nimadi"
   },
   {
     "key": "Oriya",
@@ -172,12 +220,20 @@
     "value": "Rajasthani"
   },
   {
+    "key": "Sankethi",
+    "value": "Sankethi"
+  },
+  {
     "key": "Sanskrit",
     "value": "Sanskrit"
   },
   {
     "key": "Santhali",
     "value": "Santhali"
+  },
+  {
+    "key": "Shekhawati",
+    "value": "Shekhawati"
   },
   {
     "key": "Sindhi",
@@ -204,44 +260,8 @@
     "value": "Tulu"
   },
   {
-    "key": "Bagri Rajasthani",
-    "value": "Bagri Rajasthani"
-  },
-  {
-    "key": "Dhundhari/Jaipuri",
-    "value": "Dhundhari/Jaipuri"
-  },
-  {
-    "key": "Gujari/Gojari",
-    "value": "Gujari/Gojari"
-  },
-  {
-    "key": "Harauti",
-    "value": "Harauti"
-  },
-  {
-    "key": "Lambadi",
-    "value": "Lambadi"
-  },
-  {
-    "key": "Malvi",
-    "value": "Malvi"
-  },
-  {
-    "key": "Mewari",
-    "value": "Mewari"
-  },
-  {
-    "key": "Mewati/Ahirwati",
-    "value": "Mewati/Ahirwati"
-  },
-  {
-    "key": "Nimadi",
-    "value": "Nimadi"
-  },
-  {
-    "key": "Shekhawati",
-    "value": "Shekhawati"
+    "key": "Urdu",
+    "value": "Urdu"
   },
   {
     "key": "Wagdi",

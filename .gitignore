@@ -9,6 +9,11 @@ lerna-debug.log*
 
 .env
 
+# Playwright
+test-results
+playwright-report
+blob-report
+
 node_modules
 dist
 dist-ssr

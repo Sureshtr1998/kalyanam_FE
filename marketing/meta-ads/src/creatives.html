@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8" />
+<title>Meta ad creatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@500;700;800&family=Noto+Sans+Telugu:wght@500;700;800&family=Noto+Sans+Tamil:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ivory: #fffaf3;
+    --paper: #fff1dc;
+    --ink: #2b1708;
+    --muted: #7a5c47;
+    --saffron: #c2410c;
+    --saffron-dark: #9a3412;
+    --maroon: #6b1414;
+    --deep: #431407;
+    --gold: #f59e0b;
+    --gold-soft: #fcd9a0;
+    --line: #ecd3ae;
+    --green: #15803d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ddd; font-family: Manrope, sans-serif; color: var(--ink); padding: 40px; display: flex; flex-wrap: wrap; gap: 40px; }
+  .ad { position: relative; overflow: hidden; flex: none; background: var(--ivory); }
+  .sq { width: 1080px; height: 1080px; }
+  .pt { width: 1080px; height: 1350px; }
+  .st { width: 1080px; height: 1920px; }
+
+  .display { font-feature-settings: "lnum" 1; font-variant-numeric: lining-nums; font-family: "Cormorant Garamond", serif; font-weight: 700; line-height: 1.02; letter-spacing: -0.5px; }
+  .kn { font-family: "Noto Sans Kannada", sans-serif; }
+  .te { font-family: "Noto Sans Telugu", sans-serif; }
+  .ta { font-family: "Noto Sans Tamil", sans-serif; }
+  .te .eyebrow, .ta .eyebrow { letter-spacing: 0; text-transform: none; font-size: 32px; }
+  .eyebrow { font-weight: 800; letter-spacing: 6px; text-transform: uppercase; font-size: 26px; color: var(--saffron); }
+  .gold-text { background: linear-gradient(90deg, var(--saffron), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Kolam dot grid and soft sunrise glow, echoing the site. */
+  .kolam::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(circle, rgba(194,65,12,.13) 2.4px, transparent 2.8px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse at top, #000 0%, transparent 75%);
+    mask-image: radial-gradient(ellipse at top, #000 0%, transparent 75%);
+  }
+  .sunrise { background: radial-gradient(120% 70% at 50% 0%, #ffe3bf 0%, var(--ivory) 60%); }
+  .frame::after {
+    content: ""; position: absolute; inset: 28px; border: 3px solid rgba(245,158,11,.55); border-radius: 36px; pointer-events: none;
+  }
+  .frame.dark::after { border-color: rgba(252,217,160,.45); }
+
+  .footer { position: absolute; left: 0; right: 0; bottom: 64px; display: flex; align-items: center; justify-content: center; gap: 18px; font-weight: 700; font-size: 30px; }
+  .footer img { width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(245,158,11,.5); }
+  .cta { display: inline-flex; align-items: center; gap: 14px; background: var(--saffron); color: #fff; font-weight: 800; font-size: 34px; padding: 26px 48px; border-radius: 999px; box-shadow: 0 14px 30px rgba(194,65,12,.3); }
+  .cta.light { background: #fff; color: var(--saffron-dark); box-shadow: 0 14px 30px rgba(0,0,0,.2); }
+  .pill { display: inline-block; padding: 12px 26px; border-radius: 999px; font-weight: 800; font-size: 26px; letter-spacing: 1px; }
+  .card { background: #fff; border-radius: 32px; box-shadow: 0 18px 50px rgba(67,20,7,.12); border: 2px solid var(--line); }
+  .check { flex: none; width: 52px; height: 52px; border-radius: 50%; background: #dcfce7; color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; }
+  .center { text-align: center; }
+  .abs { position: absolute; }
+  svg { display: block; }
+  .num { font-family: Manrope, sans-serif; font-weight: 800; letter-spacing: -4px; }
+</style>
+</head>
+<body>
+
+<!-- 01 Brand hero, 4:5 feed -->
+<section class="ad pt sunrise kolam frame" data-name="01-brand-hero-4x5">
+  <div class="abs center" style="top:96px;left:0;right:0">
+    <p class="eyebrow">Hindu matrimony</p>
+  </div>
+  <img src="logo.png" class="abs" style="top:170px;left:290px;width:500px;height:500px;border-radius:50%;box-shadow:0 30px 70px rgba(194,65,12,.25),0 0 0 8px rgba(245,158,11,.35)" />
+  <div class="abs center" style="top:720px;left:80px;right:80px">
+    <h1 class="display" style="font-size:84px">A sacred union,<br><span class="gold-text">blessed like Seetha &amp; Rama</span></h1>
+    <p style="margin-top:26px;font-size:34px;color:var(--muted);font-weight:500">Verified brides &amp; grooms from your community</p>
+  </div>
+  <div class="abs center" style="bottom:150px;left:0;right:0">
+    <span class="cta">Create your profile · ₹351/year</span>
+  </div>
+  <div class="footer" style="bottom:70px;font-size:28px;color:var(--muted)">seetharamakalyana.in</div>
+</section>
+
+<!-- 02 Honest price, 1:1 -->
+<section class="ad sq frame dark" data-name="02-honest-price-1x1" style="background:radial-gradient(90% 90% at 30% 10%, #d9531a 0%, var(--saffron) 35%, var(--deep) 100%);color:#fff">
+  <div class="abs" style="top:110px;left:110px;right:110px">
+    <span class="pill" style="background:var(--gold);color:#4a2a04">53% OFF · LAUNCH OFFER</span>
+    <p style="margin-top:46px;font-size:36px;font-weight:600;opacity:.85">One year of membership</p>
+    <p class="num" style="font-size:250px;line-height:1;margin-top:10px">₹351</p>
+    <p style="font-size:40px;opacity:.7;margin-top:6px"><s>₹751</s> per year</p>
+  </div>
+  <div class="abs" style="left:110px;right:110px;top:700px;display:grid;gap:26px;font-size:36px;font-weight:600">
+    <div style="display:flex;gap:20px;align-items:center"><span class="check" style="background:rgba(255,255,255,.15);color:var(--gold-soft)">✓</span>36 interest credits included</div>
+    <div style="display:flex;gap:20px;align-items:center"><span class="check" style="background:rgba(255,255,255,.15);color:var(--gold-soft)">✓</span>No sales calls. No hidden fees.</div>
+  </div>
+  <div class="abs" style="right:110px;top:120px;text-align:right">
+    <img src="logo.png" style="width:150px;height:150px;border-radius:50%;box-shadow:0 0 0 5px rgba(252,217,160,.5)" />
+  </div>
+  <p class="abs" style="left:110px;bottom:84px;font-size:28px;font-weight:700;opacity:.8">seetharamakalyana.in</p>
+</section>
+
+<!-- 03 For parents, 4:5 -->
+<section class="ad pt sunrise kolam frame" data-name="03-for-parents-4x5">
+  <div class="abs" style="top:110px;left:100px;right:100px">
+    <p class="eyebrow">For Amma &amp; Appa</p>
+    <h1 class="display" style="font-size:96px;margin-top:22px">Looking for the right match for your son or daughter?</h1>
+  </div>
+  <div class="abs card" style="top:560px;left:100px;right:100px;padding:46px 50px;display:grid;gap:34px;font-size:36px;font-weight:600">
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>Create their profile yourself, in 3 minutes</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>Only Hindu families, across 40+ communities</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>Numbers shared only when both families agree</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>Kundli matching by our jyotishi</div>
+  </div>
+  <div class="abs center" style="bottom:170px;left:0;right:0"><span class="cta">Register for ₹351 a year</span></div>
+  <div class="footer" style="bottom:70px"><img src="logo.png" />Seetha Rama Kalyana</div>
+</section>
+
+<!-- 04 Privacy, 1:1 -->
+<section class="ad sq sunrise kolam frame" data-name="04-privacy-1x1">
+  <div class="abs center" style="top:100px;left:90px;right:90px">
+    <p class="eyebrow">Private by design</p>
+    <h1 class="display" style="font-size:84px;margin-top:20px">Your number stays hidden until <span class="gold-text">both families say yes</span></h1>
+  </div>
+  <div class="abs" style="top:540px;left:90px;right:90px;display:flex;align-items:center;justify-content:space-between">
+    <div class="card center" style="width:250px;padding:34px 18px">
+      <div style="font-size:64px">💌</div>
+      <p style="font-weight:800;font-size:30px;margin-top:10px">Send interest</p>
+    </div>
+    <span style="font-size:56px;color:var(--gold);font-weight:800">→</span>
+    <div class="card center" style="width:250px;padding:34px 18px">
+      <div style="font-size:64px">🤝</div>
+      <p style="font-weight:800;font-size:30px;margin-top:10px">They accept</p>
+    </div>
+    <span style="font-size:56px;color:var(--gold);font-weight:800">→</span>
+    <div class="card center" style="width:250px;padding:34px 18px;border-color:var(--saffron)">
+      <div style="font-size:64px">📞</div>
+      <p style="font-weight:800;font-size:30px;margin-top:10px">Contacts shared</p>
+    </div>
+  </div>
+  <p class="abs center" style="top:850px;left:0;right:0;font-size:32px;color:var(--muted);font-weight:600">OTP-verified members · No sales calls · ₹351/year</p>
+  <div class="footer" style="bottom:66px"><img src="logo.png" />seetharamakalyana.in</div>
+</section>
+
+<!-- 05 Membership starts March 2027, 9:16 story -->
+<section class="ad st frame dark" data-name="05-starts-march-2027-9x16" style="background:linear-gradient(180deg, var(--deep) 0%, #7c2d12 55%, var(--saffron) 100%);color:#fff">
+  <div class="abs center" style="top:250px;left:90px;right:90px">
+    <p class="eyebrow" style="color:var(--gold-soft)">Join early, lose nothing</p>
+    <h1 class="display" style="font-size:118px;margin-top:30px">Join today.<br>Your one-year membership starts in <span style="color:var(--gold)">March&nbsp;2027</span></h1>
+  </div>
+  <div class="abs" style="top:1000px;left:270px;width:540px;border-radius:40px;overflow:hidden;background:#fff;color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.35)">
+    <div style="background:var(--saffron);color:#fff;text-align:center;padding:24px;font-weight:800;font-size:36px;letter-spacing:6px">MARCH</div>
+    <div class="num center" style="font-size:170px;color:var(--maroon);padding:30px 0 10px;line-height:1">2027</div>
+    <p class="center" style="font-size:28px;font-weight:700;color:var(--muted);padding:0 30px 34px">Your 12 months begin here</p>
+  </div>
+  <p class="abs center" style="top:1520px;left:90px;right:90px;font-size:40px;font-weight:600;opacity:.9">Until then, use everything with no limits</p>
+  <div class="abs center" style="top:1630px;left:0;right:0"><span class="cta light">Register for ₹351 →</span></div>
+</section>
+
+<!-- 06 Kannada, 4:5 -->
+<section class="ad pt sunrise kolam frame" data-name="06-kannada-4x5">
+  <img src="logo.png" class="abs" style="top:110px;left:340px;width:400px;height:400px;border-radius:50%;box-shadow:0 24px 60px rgba(194,65,12,.25),0 0 0 7px rgba(245,158,11,.35)" />
+  <div class="abs center kn" style="top:570px;left:80px;right:80px">
+    <h1 style="font-size:70px;font-weight:800;line-height:1.35;color:var(--maroon)">ಹಿಂದೂ ಕುಟುಂಬಗಳಿಗಾಗಿ<br>ನಂಬಿಕೆಯ ಮ್ಯಾಟ್ರಿಮೋನಿ</h1>
+    <p style="margin-top:34px;font-size:54px;font-weight:800;color:var(--saffron)">ವರ್ಷಕ್ಕೆ ಕೇವಲ ₹351</p>
+    <p style="margin-top:26px;font-size:34px;font-weight:500;color:var(--muted);line-height:1.6">ಪರಿಶೀಲಿಸಿದ ಪ್ರೊಫೈಲ್‌ಗಳು · ಖಾಸಗಿತನ ಸುರಕ್ಷಿತ<br>ಯಾವುದೇ ಸೇಲ್ಸ್ ಕರೆಗಳಿಲ್ಲ</p>
+  </div>
+  <div class="abs center kn" style="bottom:160px;left:0;right:0"><span class="cta" style="font-size:38px">ಇಂದೇ ನೋಂದಾಯಿಸಿ</span></div>
+  <div class="footer" style="bottom:70px;font-size:28px;color:var(--muted)">seetharamakalyana.in</div>
+</section>
+
+<!-- 07 How it works, 1:1 -->
+<section class="ad sq frame" data-name="07-how-it-works-1x1" style="background:var(--paper)">
+  <div class="abs center" style="top:96px;left:80px;right:80px">
+    <p class="eyebrow">How it works</p>
+    <h1 class="display" style="font-size:86px;margin-top:16px">Three steps to your kalyana</h1>
+  </div>
+  <div class="abs" style="top:370px;left:90px;right:90px;display:grid;gap:26px">
+    <div class="card" style="display:flex;gap:30px;align-items:center;padding:30px 40px">
+      <span class="display" style="font-size:96px;color:var(--gold);width:70px">1</span>
+      <div><p style="font-size:38px;font-weight:800">Create your profile</p><p style="font-size:28px;color:var(--muted);margin-top:4px">Family, education, preferences · 3 minutes</p></div>
+    </div>
+    <div class="card" style="display:flex;gap:30px;align-items:center;padding:30px 40px">
+      <span class="display" style="font-size:96px;color:var(--gold);width:70px">2</span>
+      <div><p style="font-size:38px;font-weight:800">Discover matches</p><p style="font-size:28px;color:var(--muted);margin-top:4px">Verified profiles that fit both ways</p></div>
+    </div>
+    <div class="card" style="display:flex;gap:30px;align-items:center;padding:30px 40px">
+      <span class="display" style="font-size:96px;color:var(--gold);width:70px">3</span>
+      <div><p style="font-size:38px;font-weight:800">Connect with families</p><p style="font-size:28px;color:var(--muted);margin-top:4px">Contacts shared once both accept</p></div>
+    </div>
+  </div>
+  <div class="footer" style="bottom:70px"><img src="logo.png" />₹351/year · seetharamakalyana.in</div>
+</section>
+
+<!-- 08 Astrology, 1:1 -->
+<section class="ad sq frame dark" data-name="08-kundli-matching-1x1" style="background:radial-gradient(80% 80% at 50% 40%, #3b0d0d 0%, #1f0805 100%);color:#fff">
+  <svg class="abs" style="top:140px;left:290px" width="500" height="500" viewBox="0 0 500 500">
+    <g fill="none" stroke="#f59e0b" stroke-opacity=".7">
+      <circle cx="250" cy="250" r="240" stroke-width="3"/>
+      <circle cx="250" cy="250" r="190" stroke-width="2"/>
+      <circle cx="250" cy="250" r="110" stroke-width="2"/>
+      <g stroke-width="2">
+        <line x1="250" y1="10" x2="250" y2="140"/><line x1="250" y1="360" x2="250" y2="490"/>
+        <line x1="10" y1="250" x2="140" y2="250"/><line x1="360" y1="250" x2="490" y2="250"/>
+        <line x1="80" y1="80" x2="172" y2="172"/><line x1="328" y1="328" x2="420" y2="420"/>
+        <line x1="420" y1="80" x2="328" y2="172"/><line x1="172" y1="328" x2="80" y2="420"/>
+      </g>
+    </g>
+    <g fill="#fcd9a0"><circle cx="449" cy="332" r="7"/><circle cx="332" cy="449" r="7"/><circle cx="168" cy="449" r="7"/><circle cx="51" cy="332" r="7"/><circle cx="51" cy="168" r="7"/><circle cx="168" cy="51" r="7"/><circle cx="332" cy="51" r="7"/><circle cx="449" cy="168" r="7"/></g>
+    <text x="250" y="270" text-anchor="middle" fill="#f59e0b" font-size="64" font-family="Cormorant Garamond" font-weight="700">ॐ</text>
+  </svg>
+  <div class="abs center" style="top:680px;left:80px;right:80px">
+    <h1 class="display" style="font-size:86px">Kundli matching <span style="color:var(--gold)">₹201</span></h1>
+    <p style="font-size:32px;margin-top:20px;opacity:.85;font-weight:500">Guna milan by our jyotishi · Overview from ₹51</p>
+  </div>
+  <div class="footer" style="bottom:70px;color:var(--gold-soft)"><img src="logo.png" />seetharamakalyana.in</div>
+</section>
+
+<!-- 09 Partner program, 1:1 -->
+<section class="ad sq sunrise kolam frame" data-name="09-partner-program-1x1">
+  <div class="abs" style="top:110px;left:100px;right:100px">
+    <p class="eyebrow">For marriage brokers &amp; community organisers</p>
+    <h1 class="display" style="font-size:96px;margin-top:22px">Earn <span class="gold-text">₹101</span> for every family you bring</h1>
+  </div>
+  <div class="abs" style="top:520px;left:100px;right:100px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div class="card" style="padding:36px">
+      <p style="font-size:26px;font-weight:700;color:var(--muted)">Your families pay</p>
+      <p class="display" style="font-size:96px;color:var(--saffron)">₹301</p>
+      <p style="font-size:26px;color:var(--muted)">instead of ₹351</p>
+    </div>
+    <div class="card" style="padding:36px">
+      <p style="font-size:26px;font-weight:700;color:var(--muted)">You earn per sign-up</p>
+      <p class="display" style="font-size:96px;color:var(--green)">₹101</p>
+      <p style="font-size:26px;color:var(--muted)">tracked in your dashboard</p>
+    </div>
+  </div>
+  <p class="abs center" style="top:850px;left:0;right:0;font-size:30px;font-weight:600;color:var(--muted)">In Kannada, Hindi, Tamil, Telugu, Malayalam &amp; Bengali</p>
+  <div class="footer" style="bottom:66px"><img src="logo.png" />seetharamakalyana.in/partner-with-us</div>
+</section>
+
+<!-- 10 NRI, 4:5 -->
+<section class="ad pt frame dark" data-name="10-nri-4x5" style="background:linear-gradient(160deg, var(--deep), #7c2d12);color:#fff">
+  <div class="abs" style="top:120px;left:100px;right:100px">
+    <p class="eyebrow" style="color:var(--gold-soft)">Living abroad?</p>
+    <h1 class="display" style="font-size:104px;margin-top:22px">Find a match from your community, <span style="color:var(--gold)">back home</span></h1>
+  </div>
+  <div class="abs" style="top:640px;left:100px;right:100px;display:flex;flex-wrap:wrap;gap:16px">
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">USA</span>
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">UK</span>
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">UAE</span>
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">Singapore</span>
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">Australia</span>
+    <span class="pill" style="background:rgba(255,255,255,.12);border:2px solid rgba(252,217,160,.4)">Canada</span>
+  </div>
+  <div class="abs" style="top:860px;left:100px;right:100px;display:grid;gap:22px;font-size:34px;font-weight:600">
+    <div style="display:flex;gap:20px;align-items:center"><span class="check" style="background:rgba(255,255,255,.15);color:var(--gold-soft)">✓</span>Families in India and abroad, one place</div>
+    <div style="display:flex;gap:20px;align-items:center"><span class="check" style="background:rgba(255,255,255,.15);color:var(--gold-soft)">✓</span>₹351 a year. Pay securely by card or UPI</div>
+  </div>
+  <div class="abs center" style="bottom:160px;left:0;right:0"><span class="cta light">Create your profile</span></div>
+  <div class="footer" style="bottom:70px;color:var(--gold-soft)"><img src="logo.png" />seetharamakalyana.in</div>
+</section>
+
+<!-- 11 Brand story, 9:16 -->
+<section class="ad st" data-name="11-brand-story-9x16" style="background:#fbf6ee">
+  <img src="hero.webp" class="abs" style="top:60px;left:127px;width:826px;height:1480px" />
+  <div class="abs center" style="left:0;right:0;bottom:230px">
+    <p style="font-size:42px;font-weight:700;color:var(--maroon)">Hindu matrimony · ₹351/year</p>
+  </div>
+  <div class="abs center" style="left:0;right:0;bottom:120px"><span class="cta">Register in 3 minutes →</span></div>
+</section>
+
+<!-- 12 Communities, 1:1 -->
+<section class="ad sq sunrise kolam frame" data-name="12-communities-1x1">
+  <div class="abs center" style="top:100px;left:80px;right:80px">
+    <p class="eyebrow">40+ communities · many mother tongues</p>
+    <h1 class="display" style="font-size:84px;margin-top:18px">Profiles from the community <span class="gold-text">your family prefers</span></h1>
+  </div>
+  <div class="abs" style="top:470px;left:90px;right:90px;display:flex;flex-wrap:wrap;justify-content:center;gap:16px">
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Brahmin</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Vokkaliga</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Lingayath</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Reddy</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Naidu</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Kamma</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Vysya</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Nair</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Gounder</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Maratha</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Rajput</span>
+    <span class="pill" style="background:#fff;border:2px solid var(--line)">Agarwal</span>
+    <span class="pill" style="background:var(--saffron);color:#fff">+ many more</span>
+  </div>
+  <p class="abs center" style="top:790px;left:110px;right:110px;font-size:32px;font-weight:600;color:var(--muted)">Two-way matching: you only see families whose preferences include you</p>
+  <div class="footer" style="bottom:66px"><img src="logo.png" />₹351/year · seetharamakalyana.in</div>
+</section>
+
+<!-- 13-telugu-4x5 -->
+<section class="ad pt sunrise kolam frame" data-name="13-telugu-4x5">
+  <img src="logo.png" class="abs" style="top:110px;left:340px;width:400px;height:400px;border-radius:50%;box-shadow:0 24px 60px rgba(194,65,12,.25),0 0 0 7px rgba(245,158,11,.35)" />
+  <div class="abs center te" style="top:570px;left:70px;right:70px">
+    <h1 style="font-size:68px;font-weight:800;line-height:1.4;color:var(--maroon)">హిందూ కుటుంబాల కోసం<br>నమ్మకమైన మ్యాట్రిమోనీ</h1>
+    <p style="margin-top:30px;font-size:52px;font-weight:800;color:var(--saffron)">సంవత్సరానికి కేవలం ₹351</p>
+    <p style="margin-top:24px;font-size:32px;font-weight:500;color:var(--muted);line-height:1.6">ధృవీకరించిన ప్రొఫైల్స్ · మీ గోప్యత సురక్షితం<br>సేల్స్ కాల్స్ ఉండవు</p>
+  </div>
+  <div class="abs center te" style="bottom:160px;left:0;right:0"><span class="cta" style="font-size:36px">ఈరోజే నమోదు చేసుకోండి</span></div>
+  <div class="footer" style="bottom:70px;font-size:28px;color:var(--muted)">seetharamakalyana.in</div>
+</section>
+
+<!-- 14-telugu-parents-4x5 -->
+<section class="ad pt sunrise kolam frame te" data-name="14-telugu-parents-4x5">
+  <div class="abs" style="top:110px;left:100px;right:100px">
+    <p class="eyebrow">అమ్మా నాన్నల కోసం</p>
+    <h1 style="font-size:64px;font-weight:800;line-height:1.35;margin-top:22px;color:var(--ink)">మీ అబ్బాయికి లేదా అమ్మాయికి సరైన సంబంధం వెతుకుతున్నారా?</h1>
+  </div>
+  <div class="abs card" style="top:560px;left:100px;right:100px;padding:42px 46px;display:grid;gap:30px;font-size:36px;font-weight:600;line-height:1.4">
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>3 నిమిషాల్లో మీరే ప్రొఫైల్ సృష్టించండి</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>హిందూ కుటుంబాలు మాత్రమే, 40+ కమ్యూనిటీలు</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>ఇరు కుటుంబాలు అంగీకరించాకే ఫోన్ నంబర్లు</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>మా జ్యోతిష్కులచే జాతక పొంతన</div>
+  </div>
+  <div class="abs center" style="bottom:170px;left:0;right:0"><span class="cta" style="font-size:32px">సంవత్సరానికి ₹351 కే నమోదు చేసుకోండి</span></div>
+  <div class="footer" style="bottom:70px;font-family:Manrope,sans-serif"><img src="logo.png" />Seetha Rama Kalyana</div>
+</section>
+
+<!-- 15-tamil-4x5 -->
+<section class="ad pt sunrise kolam frame" data-name="15-tamil-4x5">
+  <img src="logo.png" class="abs" style="top:110px;left:340px;width:400px;height:400px;border-radius:50%;box-shadow:0 24px 60px rgba(194,65,12,.25),0 0 0 7px rgba(245,158,11,.35)" />
+  <div class="abs center ta" style="top:550px;left:70px;right:70px">
+    <h1 style="font-size:50px;font-weight:800;line-height:1.4;color:var(--maroon)">இந்து குடும்பங்களுக்கான<br>நம்பகமான திருமண தளம்</h1>
+    <p style="margin-top:24px;font-size:46px;font-weight:800;color:var(--saffron)">ஆண்டுக்கு வெறும் ₹351</p>
+    <p style="margin-top:24px;font-size:32px;font-weight:500;color:var(--muted);line-height:1.6">சரிபார்க்கப்பட்ட சுயவிவரங்கள் · தனியுரிமை பாதுகாப்பு<br>விற்பனை அழைப்புகள் இல்லை</p>
+  </div>
+  <div class="abs center ta" style="bottom:160px;left:0;right:0"><span class="cta" style="font-size:36px">இன்றே பதிவு செய்யுங்கள்</span></div>
+  <div class="footer" style="bottom:70px;font-size:28px;color:var(--muted)">seetharamakalyana.in</div>
+</section>
+
+<!-- 16-tamil-parents-4x5 -->
+<section class="ad pt sunrise kolam frame ta" data-name="16-tamil-parents-4x5">
+  <div class="abs" style="top:110px;left:100px;right:100px">
+    <p class="eyebrow">அம்மா அப்பாவுக்காக</p>
+    <h1 style="font-size:58px;font-weight:800;line-height:1.35;margin-top:22px;color:var(--ink)">உங்கள் மகன் அல்லது மகளுக்கு சரியான வரன் தேடுகிறீர்களா?</h1>
+  </div>
+  <div class="abs card" style="top:560px;left:100px;right:100px;padding:42px 46px;display:grid;gap:30px;font-size:30px;font-weight:600;line-height:1.4">
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>3 நிமிடங்களில் நீங்களே சுயவிவரம் உருவாக்கலாம்</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>இந்து குடும்பங்கள் மட்டும், 40+ சமூகங்கள்</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>இரு குடும்பங்களும் சம்மதித்த பிறகே தொலைபேசி எண்</div>
+    <div style="display:flex;gap:24px;align-items:center"><span class="check">✓</span>எங்கள் ஜோதிடரின் ஜாதகப் பொருத்தம்</div>
+  </div>
+  <div class="abs center" style="bottom:170px;left:0;right:0"><span class="cta" style="font-size:32px">ஆண்டுக்கு ₹351 – இன்றே பதிவு செய்யுங்கள்</span></div>
+  <div class="footer" style="bottom:70px;font-family:Manrope,sans-serif"><img src="logo.png" />Seetha Rama Kalyana</div>
+</section>
+
+</body>
+</html>

@@ -1,178 +1,99 @@
-import React, { useState } from "react";
-import {
-  CARD_BG,
-  BORDER_COLOR,
-  TEXT_COLOR,
-  ACCENT_COLOR,
-  BG_COLOR,
-} from "../../styles/variables";
-import SEO from "../../components/misc/SEO";
-import { SEO_URL } from "../../utils/constants";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Lotus } from "@/components/common/Brand";
+import SEO from "@/components/misc/SEO";
+import { SEO_URL } from "@/utils/constants";
 import { blogPosts, type BlogPost } from "./blogsContents";
 
-const BlogPostCard: React.FC<{
-  post: BlogPost;
-}> = ({ post }) => {
-  return (
-    <div
-      className={`rounded-xl shadow-lg ${CARD_BG} border ${BORDER_COLOR} overflow-hidden transform hover:shadow-2xl transition-all duration-300`}>
-      <img
-        src={post.imageUrl}
-        alt={post.title}
-        className="w-full h-48 object-cover"
-        onError={(e) => {
-          (e.target as HTMLImageElement).onerror = null;
-          (e.target as HTMLImageElement).src = `https://placehold.co/400x250/${
-            BORDER_COLOR.split("-")[1]
-          }/78350f?text=No+Image`;
-        }}
-      />
-
-      <div className="p-5">
-        <div className="flex justify-between items-center text-sm font-semibold mb-2">
-          <span className={`${TEXT_COLOR} uppercase tracking-wider`}>
-            {post.category}
-          </span>
-          <span className="text-gray-500">{post.readTime}</span>
-        </div>
-        <h3 className={`text-2xl font-bold mb-3 ${TEXT_COLOR}`}>
-          {post.title}
-        </h3>
-        <p className="text-gray-600 mb-4 line-clamp-3">{post.summary}</p>
-        <Link to={`/blog/${post.slug}`} className="text-amber-600 font-bold">
-          Read More &rarr;
-        </Link>
-      </div>
-    </div>
-  );
-};
-
-const FeaturedPost: React.FC<{
-  post: BlogPost;
-}> = ({ post }) => {
-  return (
-    <div
-      className={`mb-12 p-6 rounded-2xl shadow-2xl ${
-        ACCENT_COLOR.split(" ")[0]
-      }/10 border-4 ${BORDER_COLOR} grid grid-cols-1 lg:grid-cols-2 gap-8`}>
-      {/* Image */}
-      <div className="order-1 lg:order-2">
-        <img
-          src={post.imageUrl}
-          alt={post.title}
-          className="w-full h-auto rounded-xl object-cover shadow-lg"
-          onError={(e) => {
-            (e.target as HTMLImageElement).onerror = null;
-            (
-              e.target as HTMLImageElement
-            ).src = `https://placehold.co/800x400/${ACCENT_COLOR.split(
-              " "
-            )[0].replace("bg", "")}/78350f?text=Featured+Article`;
-          }}
-        />
-      </div>
-
-      <div className="order-2 lg:order-1 flex flex-col justify-center">
-        <span
-          className={`text-sm font-bold uppercase tracking-widest px-3 py-1 rounded-full ${
-            ACCENT_COLOR.split(" ")[0]
-          } ${CARD_BG} w-fit mb-3`}>
-          Featured {post.category}
-        </span>
-        <h2
-          className={`text-4xl md:text-5xl font-extrabold mb-4 ${TEXT_COLOR}`}>
-          {post.title}
-        </h2>
-        <p className="text-gray-700 text-xl mb-6">{post.summary}</p>
-
-        <Link to={`/blog/${post.slug}`} className="text-amber-600 font-bold">
-          Read Full Article &rarr;
-        </Link>
-      </div>
-    </div>
-  );
-};
+const Meta = ({ post }: { post: BlogPost }) => (
+  <p className="text-xs font-bold uppercase tracking-wide text-gold-foreground">
+    {post.category} · {post.readTime}
+  </p>
+);
 
 const Blog = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const featuredPost = blogPosts.find((p) => p.isFeatured) || blogPosts[0];
-
-  // 2. Filter posts based on the search query
-  // We check if the title or keywords include the search string (case-insensitive)
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.keywords?.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchesSearch && post.id !== featuredPost.id;
-  });
+  const [q, setQ] = useState("");
+  const featured = blogPosts.find((p) => p.isFeatured) || blogPosts[0];
+  const needle = q.toLowerCase();
+  const posts = blogPosts.filter(
+    (p) =>
+      (p.title.toLowerCase().includes(needle) || p.keywords?.toLowerCase().includes(needle)) &&
+      (q || p.id !== featured.id)
+  );
 
   return (
-    <div className="blogs">
+    <>
       <SEO
         title="Blog | Seetha Rama Kalyana"
         description="Read the latest matrimony tips, success stories, and lifestyle advice on Seetha Rama Kalyana."
         keywords="blog, hindu matrimony, seetha rama kalyana"
         pageType="blog"
-        blogPosts={blogPosts}
+        blogPosts={blogPosts.map((p) => ({ title: p.title, summary: p.summary, slug: p.slug }))}
         url={SEO_URL + "/blog"}
       />
-
-      <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>
-        <header className="text-center mb-12">
-          <h1
-            className={`text-5xl md:text-6xl font-extrabold mb-3 ${TEXT_COLOR}`}>
-            Matrimony Insights & Stories
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Your source for tips, success stories, and expert advice.
-          </p>
-
-          <div className="max-w-md mx-auto relative">
-            <input
-              type="text"
-              placeholder="Search by title (e.g., Brahmin, Rituals...)"
-              className="w-full px-6 py-3 rounded-full border-2 border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+        <header className="mb-10 text-center">
+          <Lotus className="mx-auto h-6 w-10 text-gold" />
+          <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">Matrimony insights &amp; stories</h1>
+          <p className="mt-3 text-muted-foreground">Tips, traditions and guidance for your journey.</p>
+          <div className="relative mx-auto mt-6 max-w-md">
+            <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search articles: Brahmin, rituals, kundli…"
+              className="h-12 rounded-full bg-card pl-11"
             />
-            <span className="absolute right-5 top-3.5 text-gray-400">🔍</span>
           </div>
         </header>
 
-        <main className="max-w-7xl mx-auto">
-          {/* Only show featured post if there is no active search */}
-          {!searchQuery && featuredPost && <FeaturedPost post={featuredPost} />}
+        {!q && featured && (
+          <Link
+            to={`/blog/${featured.slug}`}
+            className="group mb-12 grid overflow-hidden rounded-[2rem] border border-gold/40 bg-card shadow-lg lg:grid-cols-2">
+            <img src={featured.imageUrl} alt="" className="aspect-[16/10] size-full object-cover lg:aspect-auto" />
+            <div className="flex flex-col justify-center gap-3 p-6 sm:p-10">
+              <span className="w-fit rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground">
+                Featured
+              </span>
+              <Meta post={featured} />
+              <h2 className="font-display text-3xl font-bold leading-tight group-hover:text-primary sm:text-4xl">{featured.title}</h2>
+              <p className="text-muted-foreground">{featured.summary}</p>
+              <span className="flex items-center gap-1 font-semibold text-primary">
+                Read article <ArrowRight className="size-4 transition group-hover:translate-x-1" />
+              </span>
+            </div>
+          </Link>
+        )}
 
-          <h2
-            className={`text-4xl font-extrabold mb-8 mt-12 ${TEXT_COLOR} border-b-4 w-fit border-amber-400 pb-1`}>
-            {searchQuery ? `Results for "${searchQuery}"` : "Recent Articles"}
-          </h2>
-
-          {/* Recent Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post) => (
-                <BlogPostCard key={post.id} post={post} />
-              ))
-            ) : (
-              <div className="col-span-full text-center py-20">
-                <p className="text-2xl text-gray-500">
-                  No articles found matching your search.
-                </p>
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="mt-4 text-amber-600 font-bold underline">
-                  Clear search
-                </button>
-              </div>
-            )}
+        <h2 className="mb-6 font-display text-3xl font-bold">{q ? `Results for “${q}”` : "Recent articles"}</h2>
+        {posts.length ? (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((p) => (
+              <Link
+                key={p.id}
+                to={`/blog/${p.slug}`}
+                className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+                <img src={p.imageUrl} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
+                <div className="flex flex-1 flex-col gap-2 p-5">
+                  <Meta post={p} />
+                  <h3 className="font-display text-xl font-bold leading-snug group-hover:text-primary">{p.title}</h3>
+                  <p className="line-clamp-3 text-sm text-muted-foreground">{p.summary}</p>
+                </div>
+              </Link>
+            ))}
           </div>
-        </main>
+        ) : (
+          <div className="py-16 text-center">
+            <p className="text-lg text-muted-foreground">No articles match your search.</p>
+            <Button variant="link" onClick={() => setQ("")}>Clear search</Button>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

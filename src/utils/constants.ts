@@ -1,5 +1,5 @@
+import { env } from "@/config/env";
 import type { BasicDetailsIn, FamilyDetailsIn, PartnerDetailsIn, PersonalDetailsIn } from "./interfaces";
-import { getItem, user_login_token } from "./localStore";
 
 export const maritalOptions = [
     { label: 'Unmarried', value: 'Unmarried' },
@@ -322,9 +322,12 @@ export const genderOptions = [
 export const employedInOptions = [
     { label: "Private", value: "Private" },
     { label: "Government", value: "Government" },
-    { label: 'Business', value: 'Business' },
+    { label: "Public Sector (PSU)", value: "PSU" },
     { label: 'Defence', value: 'Defence' },
+    { label: 'Business', value: 'Business' },
     { label: "Self Employed", value: "Self Employed" },
+    { label: "Student", value: "Student" },
+    { label: "Homemaker", value: "Homemaker" },
     { label: "Retired", value: "Retired" },
     { label: "Not Working", value: "Not Working" },
 ];
@@ -342,6 +345,51 @@ export const residingOptions = [
     { label: "NRI", value: "NRI" },
 ]
 
+// Common gothras; members can also type one that is not listed.
+export const gothraOptions = [
+    ...[
+        "Agastya",
+        "Angirasa",
+        "Atreya",
+        "Aupamanyava",
+        "Bharadwaja",
+        "Bhargava",
+        "Chandratreya",
+        "Dhananjaya",
+        "Garga",
+        "Gautama",
+        "Harita",
+        "Jamadagni",
+        "Kanva",
+        "Kapi",
+        "Kashyapa",
+        "Katyayana",
+        "Kaundinya",
+        "Kaushika",
+        "Kausalya",
+        "Kutsa",
+        "Lohita",
+        "Maudgalya",
+        "Naidhruva Kashyapa",
+        "Parashara",
+        "Sankhyayana",
+        "Sankriti",
+        "Shandilya",
+        "Shatamarshana",
+        "Shaunaka",
+        "Shiva",
+        "Shrivatsa",
+        "Upamanyu",
+        "Vadhula",
+        "Vashishta",
+        "Vatsa",
+        "Vishnu",
+        "Vishnuvardhana",
+        "Vishwamitra",
+    ].map((g) => ({ label: g, value: g })),
+    { label: "Don't know", value: "Don't know" },
+];
+
 export const createdByOptions = [
     { label: 'Self', value: 'Self' },
     { label: 'Parent', value: 'Parent' },
@@ -349,33 +397,79 @@ export const createdByOptions = [
     { label: 'Relative/Friend', value: 'Friend' },
 ];
 
+// Values are stored on profiles: never change an existing value, only add new ones.
 export const qualificationOptions = [
-    { label: "10th", value: "10th" },
-    { label: "12th", value: "12th" },
-    { label: "Diploma", value: "diploma" },
-    // Bachelor Degrees
-    { label: "B.Sc", value: "bsc" },
-    { label: "B.A", value: "ba" },
-    { label: "B.Com", value: "bcom" },
-    { label: "B.Tech / B.E", value: "btech" },
-    { label: "BBA", value: "bba" },
-    { label: "BCA", value: "bca" },
-    { label: "LLB", value: "llb" },
+    { group: "School & diploma", label: "10th", value: "10th" },
+    { group: "School & diploma", label: "12th / PUC", value: "12th" },
+    { group: "School & diploma", label: "Diploma", value: "diploma" },
+    { group: "School & diploma", label: "ITI", value: "iti" },
 
-    // Master Degrees
-    { label: "M.Sc", value: "msc" },
-    { label: "M.A", value: "ma" },
-    { label: "M.Com", value: "mcom" },
-    { label: "M.Tech / M.E", value: "mtech" },
-    { label: "MBA", value: "mba" },
-    { label: "MCA", value: "mca" },
-    { label: "PhD", value: "phd" },
-    { label: "LLM", value: "llm" },
-    { label: "Other", value: "other" }
+    { group: "Engineering & technology", label: "B.Tech / B.E", value: "btech" },
+    { group: "Engineering & technology", label: "M.Tech / M.E", value: "mtech" },
+    { group: "Engineering & technology", label: "B.Arch", value: "barch" },
+    { group: "Engineering & technology", label: "M.Arch", value: "march" },
+
+    { group: "Computers", label: "BCA", value: "bca" },
+    { group: "Computers", label: "MCA", value: "mca" },
+
+    { group: "Medicine & health", label: "MBBS", value: "mbbs" },
+    { group: "Medicine & health", label: "MD / MS (Medicine)", value: "md" },
+    { group: "Medicine & health", label: "BDS", value: "bds" },
+    { group: "Medicine & health", label: "MDS", value: "mds" },
+    { group: "Medicine & health", label: "BAMS / BHMS / BUMS", value: "ayush" },
+    { group: "Medicine & health", label: "B.Pharm / Pharm.D", value: "bpharm" },
+    { group: "Medicine & health", label: "M.Pharm", value: "mpharm" },
+    { group: "Medicine & health", label: "B.Sc / M.Sc Nursing", value: "nursing" },
+    { group: "Medicine & health", label: "BPT / MPT (Physiotherapy)", value: "physio" },
+    { group: "Medicine & health", label: "BVSc (Veterinary)", value: "bvsc" },
+
+    { group: "Commerce & management", label: "B.Com", value: "bcom" },
+    { group: "Commerce & management", label: "M.Com", value: "mcom" },
+    { group: "Commerce & management", label: "BBA / BBM", value: "bba" },
+    { group: "Commerce & management", label: "MBA / PGDM", value: "mba" },
+    { group: "Commerce & management", label: "CA", value: "ca" },
+    { group: "Commerce & management", label: "CS (Company Secretary)", value: "cs" },
+    { group: "Commerce & management", label: "CMA / ICWA", value: "cma" },
+
+    { group: "Law", label: "LLB / BA LLB", value: "llb" },
+    { group: "Law", label: "LLM", value: "llm" },
+
+    { group: "Arts & science", label: "B.A", value: "ba" },
+    { group: "Arts & science", label: "M.A", value: "ma" },
+    { group: "Arts & science", label: "B.Sc", value: "bsc" },
+    { group: "Arts & science", label: "M.Sc", value: "msc" },
+    { group: "Arts & science", label: "B.Sc Agriculture", value: "bscagri" },
+    { group: "Arts & science", label: "B.Ed / M.Ed", value: "bed" },
+    { group: "Arts & science", label: "BFA / MFA", value: "bfa" },
+    { group: "Arts & science", label: "Sanskrit / Vedic studies", value: "vedic" },
+
+    { group: "Doctorate & other", label: "PhD", value: "phd" },
+    { group: "Doctorate & other", label: "Other", value: "other" },
+]
+
+/** One-click selections over qualificationOptions, used in partner preferences and match filters. */
+export const qualificationPresets = [
+    {
+        label: "Any Graduate",
+        values: ["btech", "barch", "bca", "mbbs", "bds", "ayush", "bpharm", "nursing", "physio", "bvsc",
+            "bcom", "bba", "llb", "ba", "bsc", "bscagri", "bed", "bfa"],
+    },
+    {
+        label: "Any Post Graduate",
+        values: ["mtech", "march", "mca", "md", "mds", "mpharm", "mcom", "mba", "ca", "cs", "cma", "llm", "ma", "msc"],
+    },
+    { label: "Any Doctorate", values: ["phd"] },
+    { label: "Any School / Diploma", values: ["10th", "12th", "diploma", "iti"] },
 ]
 
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Keep in sync with MIN_PASSWORD_LENGTH in kalyanam_BE/src/utils/constants.js.
+export const MIN_PASSWORD_LENGTH = 8;
+
+// The server accepts pre-sign-up photos for 3 days; re-upload well before that.
+export const UPLOAD_REUSE_MS = 2 * 24 * 60 * 60 * 1000;
 
 export const brokerFormDefaultVals = {
     name: "",
@@ -439,22 +533,37 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
 export const MAX_IMAGES = 3;
 export const MAX_FILE_SIZE_MB = 1;
 
-export const IMAGEKIT_PARAMS = "?tr=w-3000,h-3000,q-80,fo-face"
+export const updatedDate = "December 1, 2025"
 
-export const updatedDate = "Decmber 1, 2025"
+export const SITE_NAME = "Seetha Rama Kalyana"
+/** Brand primary (matches --primary and the PWA theme colour). */
+export const BRAND_COLOR = "#c2410c"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
 export const SUPPORT_PHONE = '+91 8105710930'
+/** SUPPORT_PHONE as digits only, for wa.me / tel: links. */
+export const SUPPORT_NUMBER = SUPPORT_PHONE.replace(/\D/g, "")
+
+// Display prices only. The server (kalyanam_BE/src/utils/constants.js) decides
+// what is charged; keep these in sync with it.
 
 export const REGISTRATION_FEE = 351
+/** Struck-through "was" price shown next to REGISTRATION_FEE. */
+export const REGISTRATION_FEE_ORIGINAL = 751
 export const INITIAL_NO_INTEREST = 36
 
-// TODO Need to keep more margin at registration fee
+// Credits: sending an interest uses 1, seeing a contact straight away uses 5.
+export const INTEREST_COST = 1
+export const CONTACT_COST = 5
+
+/** When the 1-year membership clock starts for early members. */
+export const MEMBERSHIP_START = "March 2027"
+
 //Referrals
-export const AFTER_DISCOUNT_REGISTRATION_FEE = 651
+// Registering with a partner's referral ID (server: REFERRAL_REGISTRATION_FEE).
+export const REFERRAL_REGISTRATION_FEE = 301
 
 
-export const REFERRAL_CODE_CURRENT = "SITARAM"
 //Make sure it is exactly 7 characters
 export const DISCOUNT_NAMES = ["BRAHMIN", "SITARAM"]
 
@@ -473,9 +582,26 @@ export const PERSONALIZED_ASTRO_FEE = 251
 
 export const BROKERAGE_REGISTRATION_FEE = 501
 
-export const isBroker = getItem(user_login_token)?.role === "BROKER";
-export const isAdmin = getItem(user_login_token)?.isAdmin === true;
 
-export const SUPPORT_NUMBER = "+918105710930"
+/** Canonical site origin (VITE_SITE_URL). */
+export const SEO_URL = env.siteUrl
 
-export const SEO_URL = "https://www.seetharamakalyana.in"
+/** Photon (OpenStreetMap) place search, used by PlaceField. */
+export const PLACE_SEARCH_URL = "https://photon.komoot.io/api/"
+export const INTEREST_PACKS = {
+    basic: { amount: PURCHASE_INTEREST_FEE, interests: PURCHASE_NO_INTEREST, title: "Basic Pack" },
+    premium: { amount: PURCHASE_INTEREST_FEE_2, interests: PURCHASE_NO_INTEREST_2, title: "Premium Pack" },
+} as const
+
+export const ASTRO_FEES = {
+    "Overview": OVERVIEW_ASTRO_FEE,
+    "Personalized": PERSONALIZED_ASTRO_FEE,
+    "Kundli Matching": KUNDLI_MATCHING_ASTRO_FEE,
+} as const
+
+/** ImageKit transform for a profile photo at the given display size. */
+export const imageUrl = (url: string | undefined, size: "thumb" | "card" | "full" = "card") => {
+    if (!url) return "/logo.png"
+    const tr = size === "thumb" ? "w-160,h-160,fo-face,q-80" : size === "card" ? "w-640,h-800,fo-face,q-80" : "w-1400,q-85"
+    return `${url}?tr=${tr}`
+}

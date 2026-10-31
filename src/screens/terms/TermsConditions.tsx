@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  TEXT_COLOR,
-  BG_COLOR,
-  CARD_BG,
-  BORDER_COLOR,
-} from "../../styles/variables";
 import SEO from "../../components/misc/SEO";
+import { LegalPage } from "../../components/common/LegalPage";
 import { SEO_URL, updatedDate } from "../../utils/constants";
 
 interface TermSection {
@@ -28,7 +23,7 @@ const termsData: TermSection[] = [
           genuine marriage minded individuals. If you do not agree to these
           Terms, you must stop using the Service immediately.
         </p>
-        <p className="text-sm italic text-gray-500">
+        <p className="text-sm italic text-muted-foreground">
           Last Updated: {updatedDate}.
         </p>
       </>
@@ -38,7 +33,7 @@ const termsData: TermSection[] = [
     id: "eligibility",
     title: "2. Eligibility and Membership",
     content: (
-      <ul className="list-disc ml-6 space-y-2 text-gray-700">
+      <ul className="list-disc ml-6 space-y-2 text-foreground/85">
         <li>
           You must be legally eligible for marriage as per the laws of your
           country or state.
@@ -69,7 +64,7 @@ const termsData: TermSection[] = [
           must be truthful, respectful, and relevant for finding a suitable life
           partner.
         </p>
-        <ul className="list-disc ml-6 space-y-2 text-gray-700">
+        <ul className="list-disc ml-6 space-y-2 text-foreground/85">
           <li>Only genuine photos and details should be uploaded.</li>
           <li>
             You must not post or share abusive, offensive, misleading, or
@@ -96,7 +91,7 @@ const termsData: TermSection[] = [
           Some features such as viewing direct contact details require the use
           of “interests” or a paid upgrade.
         </p>
-        <ul className="list-disc ml-6 space-y-2 text-gray-700">
+        <ul className="list-disc ml-6 space-y-2 text-foreground/85">
           <li>
             Purchases of interest packages are non-refundable unless required by
             governing law.
@@ -125,81 +120,22 @@ const termsData: TermSection[] = [
   },
 ];
 
-const TermSectionComponent: React.FC<{ section: TermSection }> = ({
-  section,
-}) => {
-  return (
-    <div
-      id={section.id}
-      className="pt-2 pb-4 border-b border-amber-100 last:border-b-0 scroll-mt-20">
-      <h2 className={`text-3xl font-bold mb-4 ${TEXT_COLOR}`}>
-        {section.title}
-      </h2>
-      <div className="text-gray-700 text-lg leading-relaxed">
-        {section.content}
-      </div>
-    </div>
-  );
-};
-
-const TermsConditions = () => {
-  return (
-    <div className="terms-conditions">
-      <SEO
-        title="Privacy Policy | Seetha Rama Kalyana"
-        description="Read the privacy policy of Seetha Rama Kalyana, protecting your data and trust."
-        keywords="privacy policy, hindu matrimony, seetha rama kalyana"
-        pageType="privacy"
-        url={SEO_URL + "/terms"}
-      />
-
-      <div className={`${BG_COLOR} min-h-screen py-24 px-4 font-sans`}>
-        <header className="text-center mb-10">
-          <h1 className={`text-5xl font-extrabold mb-3 ${TEXT_COLOR}`}>
-            Terms and Conditions
-          </h1>
-          <p className="text-xl text-gray-600">
-            Please read these terms carefully before using our Matrimony
-            service.
-          </p>
-        </header>
-
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4  gap-8">
-          <nav className="lg:col-span-1">
-            <div
-              className={`p-6 rounded-2xl shadow-xl ${CARD_BG} border ${BORDER_COLOR} sticky top-4`}>
-              <h3
-                className={`text-2xl font-bold mb-4 border-b pb-2 ${TEXT_COLOR} border-amber-200`}>
-                Table of Contents
-              </h3>
-              <ul className="space-y-2">
-                {termsData.map((section) => (
-                  <li key={section.id}>
-                    <a
-                      href={`#${section.id}`}
-                      className={`block p-2 rounded-lg text-lg ${TEXT_COLOR} hover:bg-amber-100 transition-colors duration-200`}>
-                      {section.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </nav>
-
-          <main className="lg:col-span-3">
-            <div
-              className={`p-8 rounded-2xl shadow-2xl ${CARD_BG} border ${BORDER_COLOR}`}>
-              <div className="space-y-6">
-                {termsData.map((section) => (
-                  <TermSectionComponent key={section.id} section={section} />
-                ))}
-              </div>
-            </div>
-          </main>
-        </div>
-      </div>
-    </div>
-  );
-};
+const TermsConditions = () => (
+  <>
+    <SEO
+      title="Terms & Conditions | Seetha Rama Kalyana"
+      description="Read the terms and conditions for using Seetha Rama Kalyana, a trusted Hindu matrimony platform."
+      keywords="terms and conditions, hindu matrimony, seetha rama kalyana"
+      pageType="terms"
+      url={SEO_URL + "/terms"}
+    />
+    <LegalPage
+      title="Terms & Conditions"
+      description="Please read these terms carefully before using our matrimony service."
+      effective={updatedDate}
+      sections={termsData}
+    />
+  </>
+);
 
 export default TermsConditions;

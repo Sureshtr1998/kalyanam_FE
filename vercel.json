@@ -1,8 +1,9 @@
 {
+    "cleanUrls": true,
     "rewrites": [
         {
-            "source": "/(.*)",
-            "destination": "/"
+            "source": "/:page(home|activity|astrology|account|profile|matchmaker-profile|partner|admin)",
+            "destination": "/app-shell.html"
         }
     ]
 }

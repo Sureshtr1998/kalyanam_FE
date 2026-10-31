@@ -1,3 +1,5 @@
+import { SEO_URL } from "@/utils/constants";
+
 export const communities = [
   {
     id: 3,
@@ -196,7 +198,7 @@ export const generateCommunitiesSchema = (communities: { id: number; name: strin
       name: `${community.name} Matrimony`,
       serviceType: "Hindu Matrimony",
       description: `Verified profiles for ${community.name} community (${community.sub}).`,
-      url: `https://www.seetharamakalyana.in/communities/${community.slug}`,
+      url: `${SEO_URL}/communities/${community.slug}`,
     },
   })),
 });

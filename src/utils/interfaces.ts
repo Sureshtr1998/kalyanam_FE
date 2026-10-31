@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BasicDetailsIn {
     fullName: string;
     martialStatus: string;
@@ -133,24 +132,33 @@ export interface UserDetails {
     isVerified?: boolean
     isHidden?: boolean
     isAdmin?: boolean
-    isCorrupted?: boolean
+    brokerUnlinked?: boolean
+    /** The partner behind `basic.referralId`; null for discount codes. */
+    referredBy?: { name: string; companyName?: string; referralId: string } | null
+    commissionPaidAt?: string
+    staffNote?: string
     hideProfiles?: string[]
+    shortlisted?: string[]
+    lastActiveAt?: string
+    createdAt?: string
+    /** Only on "viewed you" lists. */
+    viewedAt?: string
+}
+
+/** What the Matches page sends to /fetch-profiles. */
+export interface MatchFilters {
+    partner: PartnerDetailsIn
+    diet?: string[]
+    sort?: "best" | "newest" | "active"
 }
 
 export type UserDataType = "basic" | "personal" | "partner" | "family"
 
 export type FormType = 'login' | 1 | 2 | 3 | 'success' | 'forgotPassword';
 
-export type SelectType = { label: string; value: string; }
+/** `group` puts the option under a heading in dropdowns (options of a group must be adjacent). */
+export type SelectType = { label: string; value: string; group?: string; }
 
-export type StepsType = {
-    handleChange: (e: any) => void
-    setCurrentForm?: (val: FormType) => void
-    handleNext?: (isReffer?: any) => void
-    handleBack?: () => void
-    setImages?: (val: File[]) => void
-    formData: BasicDetailsIn
-}
 
 export interface ImageFile {
     fileId: string

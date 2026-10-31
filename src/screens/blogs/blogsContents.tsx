@@ -445,7 +445,7 @@ export const blogPosts: BlogPost[] = [
       </>,
       <>
         <strong>Defining Financial Goals:</strong> Aligning your investment
-        strategies early—whether it is buying a home or traveling—ensures you
+        strategies early, whether it is buying a home or traveling, ensures you
         are moving in the same direction.
       </>,
       <>
@@ -1454,7 +1454,7 @@ export const blogPosts: BlogPost[] = [
       </>,
       <>
         At <strong>Seetha Rama Kalyana</strong>, we charge a{" "}
-        <strong>nominal commitment fee</strong>—less than the price of a movie
+        <strong>nominal commitment fee</strong>, less than the price of a movie
         ticket. This acts as a 'Seriousness Filter,' ensuring that every user
         you talk to is genuinely looking for a life partner.
       </>,
@@ -1649,7 +1649,7 @@ export const blogPosts: BlogPost[] = [
       </>,
       <>
         The <strong>best profile pictures for marriage</strong> are those that
-        show your personality—whether you're in traditional wear or professional
+        show your personality, whether you're in traditional wear or professional
         attire.
       </>,
     ],
