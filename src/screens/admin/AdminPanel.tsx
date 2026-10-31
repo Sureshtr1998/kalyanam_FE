@@ -151,9 +151,21 @@ const Partners = ({ onShowMembers, onChanged }: { onShowMembers: (code: string) 
             </div>
           )}
           <div className="mt-auto flex flex-wrap gap-2">
-            {b.status !== "approved" && (
+            {b.status === "pending" && (
+              <ConfirmButton
+                icon={<CircleCheck />}
+                label="Approve"
+                disabled={!!busy}
+                className="border-primary bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                title={`Approve ${b.name} as a partner?`}
+                description="Check their ID proof first. Approving creates their referral ID and emails it to them right away."
+                confirm="Approve & email"
+                onConfirm={() => act(b._id, "status", { status: "approved" })}
+              />
+            )}
+            {b.status === "suspended" && (
               <Button size="sm" disabled={!!busy} onClick={() => act(b._id, "status", { status: "approved" })}>
-                <CircleCheck /> {b.status === "suspended" ? "Reactivate" : "Approve"}
+                <CircleCheck /> Reactivate
               </Button>
             )}
             {b.referralId && (

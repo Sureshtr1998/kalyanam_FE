@@ -32,10 +32,10 @@ const ENDPOINT: Record<TabId, string> = {
   hidden: "/hidden-profiles",
 };
 
-const TABS: { id: TabId; label: string; icon: React.ReactNode; empty: string; emptyText: string }[] = [
+const TABS: { id: TabId; label: string; short?: string; icon: React.ReactNode; empty: string; emptyText: string }[] = [
   { id: "interests", label: "Interests", icon: <Heart />, empty: "No interests yet", emptyText: "Send an interest from your Matches page. Replies will show up here." },
-  { id: "shortlist", label: "Shortlisted", icon: <Bookmark />, empty: "Your shortlist is empty", emptyText: "Tap the bookmark on any profile to save it here and decide later." },
-  { id: "visitors", label: "Viewed you", icon: <Footprints />, empty: "No visitors yet", emptyText: "Members who open your profile appear here. A complete profile with clear photos gets more visits." },
+  { id: "shortlist", label: "Shortlisted", short: "Shortlist", icon: <Bookmark />, empty: "Your shortlist is empty", emptyText: "Tap the bookmark on any profile to save it here and decide later." },
+  { id: "visitors", label: "Viewed you", short: "Visitors", icon: <Footprints />, empty: "No visitors yet", emptyText: "Members who open your profile appear here. A complete profile with clear photos gets more visits." },
   { id: "viewed", label: "Contacts", icon: <Phone />, empty: "No contacts unlocked", emptyText: "Unlocked contact details are saved here so you can find them again." },
   { id: "hidden", label: "Blocked", icon: <Ban />, empty: "No one is blocked", emptyText: "Members you block can't see your profile, and you won't see theirs." },
 ];
@@ -133,24 +133,24 @@ const Activity = () => {
 
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <Tabs value={tab} onValueChange={(v) => setTab(v as TabId)} className="min-w-0">
-          <div className="-mx-4 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0">
-            <TabsList className="h-auto w-max bg-card p-1 shadow-sm ring-1 ring-border">
-              {TABS.map((t) => (
-                <TabsTrigger
-                  key={t.id}
-                  value={t.id}
-                  className="gap-1.5 rounded-md px-3 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground [&_svg]:size-4">
-                  {t.icon}
-                  {t.label}
-                  {t.id === "interests" && pendingCount > 0 && (
-                    <span className="ml-1 rounded-full bg-gold px-1.5 text-[10px] font-bold text-gold-foreground">
-                      {pendingCount}
-                    </span>
-                  )}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
+          {/* Phones: all five tabs fit in one grid row (icon over label) so none hide off-screen. */}
+          <TabsList className="grid h-auto w-full grid-cols-5 gap-0.5 bg-card p-1 shadow-sm ring-1 ring-border sm:inline-flex sm:w-max sm:gap-0">
+            {TABS.map((t) => (
+              <TabsTrigger
+                key={t.id}
+                value={t.id}
+                className="min-w-0 flex-col gap-1 rounded-md px-1 py-2 text-[11px] leading-tight data-[state=active]:bg-primary data-[state=active]:text-primary-foreground sm:flex-row sm:gap-1.5 sm:px-3 sm:text-sm [&_svg]:size-4">
+                {t.icon}
+                <span className="max-w-full truncate sm:hidden">{t.short ?? t.label}</span>
+                <span className="hidden sm:inline">{t.label}</span>
+                {t.id === "interests" && pendingCount > 0 && (
+                  <span className="absolute right-1 top-1 rounded-full bg-gold px-1.5 text-[10px] font-bold text-gold-foreground sm:static sm:ml-1">
+                    {pendingCount}
+                  </span>
+                )}
+              </TabsTrigger>
+            ))}
+          </TabsList>
         </Tabs>
         <div className="relative lg:w-72">
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />

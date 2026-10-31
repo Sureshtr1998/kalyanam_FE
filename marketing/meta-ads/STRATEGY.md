@@ -17,7 +17,7 @@ Budget: ₹1,000/day to start. Reinvest only when the numbers below say so.
 
 1. Deploy the current `feature/ai-v1` build. The live site is still the old design, without the new Pixel events or the `/?join=1` link.
 2. Do one real registration and check **Events Manager → Test events** for Lead, then CompleteRegistration (value 351).
-3. Billing: the account spending limit (₹51,781) is used up. Reset or raise it, and add about ₹19,000 prepaid (₹16,100 + 18% GST) for two weeks.
+3. Billing: this business account has no spending limit to reset. Add ₹9,000 by UPI before publishing on Mon 2 Nov. After week 1's numbers, add ₹9–10k.
 4. Verify the business for Singapore, or remove Singapore from ad set C.
 5. Link Instagram, and have a native speaker check the Kannada, Telugu and Tamil text.
 6. Publish **only** the Registrations campaign.
@@ -33,7 +33,29 @@ Budget: ₹1,000/day to start. Reinvest only when the numbers below say so.
 
 The old campaigns' "369 registrations" were mostly clicks on "Okay, I understand" **before** payment, so they don't show how many people paid.
 
-The biggest lever if payments stay low: make sign-up free and charge when members send interests. This could bring 5–10× more sign-ups and fills the site with profiles.
+**Decision (2026-10-31): sign-up stays paid at ₹351.** Free sign-up is ruled out. It's a long game with no income for months, and the goal is quality members and at least break-even.
+
+### November 2026 scenarios (start Mon 2 Nov, ₹1,000/day × 30 = ₹30,000 + GST = ₹35,400)
+
+| | Worst | Likely | Best |
+|---|---|---|---|
+| CPC | ₹10 | ₹6 | ₹4 |
+| Clicks | ~3,000 | ~5,000 | ~7,500 |
+| Opened register form (Lead) | 15% → ~450 | 25% → ~1,250 | 30% → ~2,250 |
+| Paid ₹351 | 4% → **~18** | 5% → **~60** | 7% → **~150** |
+| Ad cost per paid member | ~₹1,950 | ~₹590 | ~₹235 |
+| Revenue (₹351 + ₹101 interest packs + astrology) | ~₹7,500 | ~₹23,000 | ~₹58,000 |
+| Result | **−₹28,000** | **−₹12,000** | **+₹22,000** |
+
+- Break-even is about **100 paid members** (₹35,400 ÷ ₹351), or about 93 counting extra purchases.
+- If you're GST-registered, the ₹5,400 GST on ads may be claimable, and ₹351 may include output GST. Ask your accountant.
+
+### Levers that keep sign-up paid
+1. Cut to the best ad set and creatives.
+2. Make the landing page show real profile counts and success stories.
+3. Push the ₹301 referral price to paid members.
+4. Add a short "why pay" note (verified profiles, no fake accounts) next to the pay button.
+5. Retarget form-openers who didn't pay. This needs about 100+ Leads first.
 
 ## Weekly tracking (Ads Manager + admin panel + Razorpay)
 
@@ -63,7 +85,8 @@ The biggest lever if payments stay low: make sign-up free and charge when member
 **Day 14:**
 - CPR under ₹351 → raise budget 20% every 3 days.
 - CPR ₹351–700 → keep running; pause the worst ads and add 4–6 new creatives in the style of the winners.
-- CPR over ₹1,500 → rethink the offer (free sign-up).
+- CPR ₹700–1,500 → use the levers above (no free sign-up).
+- CPR over ₹1,500 → drop to ₹500/day on the single best ad set, fix the landing page, then retest.
 
 **Reinvestment ladder** (only while CPR ≤ about ₹351 and new members get matches):
 ₹1,000 → ₹1,500 → ₹2,000/day → switch on Telugu + Tamil (₹300/day) → partner/broker ads (image 09) → North India / Hindi, one city cluster first (e.g. Delhi NCR), only once there are a few hundred active profiles.

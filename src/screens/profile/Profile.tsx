@@ -41,7 +41,6 @@ import type { ImageFile, UserDataType, UserDetails } from "@/utils/interfaces";
 import { motherTongueOptions, normalizeToArray, subCasteOptions } from "@/utils/utils";
 import { formatFloating } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
-import { sendReport } from "@/utils/report";
 import { cn } from "@/lib/utils";
 import { writeAboutMe, writePartnerNote } from "@/lib/bioWriter";
 import { WriteForMe } from "@/components/fields/WriteForMe";
@@ -164,7 +163,6 @@ const Profile = () => {
         setVerifyOpen(true);
       } else {
         toast.error("Couldn't save profile", { description: errorMessage(e) });
-        void sendReport(JSON.stringify({ msg: errorMessage(e), userId: data._id }));
       }
     } finally {
       setSaving(false);
