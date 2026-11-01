@@ -8,14 +8,29 @@ export type PhotoItem = ImageFile | File;
 
 const ACCEPTED = ["image/png", "image/jpeg", "image/jpg"];
 
+export interface PhotoText {
+  add: string;
+  type: string;
+  size: (mb: number) => string;
+  max: (n: number) => string;
+}
+
+const defaultText: PhotoText = {
+  add: "Add photo",
+  type: "Only JPG or PNG photos are allowed.",
+  size: (mb) => `Each photo must be under ${mb} MB. Try a screenshot or a compressed copy.`,
+  max: (n) => `You can add up to ${n} photos.`,
+};
+
 interface Props {
   value: PhotoItem[];
   onChange: (items: PhotoItem[]) => void;
   className?: string;
+  text?: PhotoText;
 }
 
 /** Up to three photos: existing uploads and newly picked files, first one is the cover. */
-export const PhotoManager = ({ value, onChange, className }: Props) => {
+export const PhotoManager = ({ value, onChange, className, text = defaultText }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,17 +50,17 @@ export const PhotoManager = ({ value, onChange, className }: Props) => {
     const picked: File[] = [];
     for (const file of Array.from(files)) {
       if (!ACCEPTED.includes(file.type)) {
-        setError("Only JPG or PNG photos are allowed.");
+        setError(text.type);
         continue;
       }
       if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-        setError(`Each photo must be under ${MAX_FILE_SIZE_MB} MB. Try a screenshot or a compressed copy.`);
+        setError(text.size(MAX_FILE_SIZE_MB));
         continue;
       }
       const dup = value.some((v) => v instanceof File && v.name === file.name && v.size === file.size);
       if (!dup) picked.push(file);
     }
-    if (picked.length > room) setError(`You can add up to ${MAX_IMAGES} photos.`);
+    if (picked.length > room) setError(text.max(MAX_IMAGES));
     if (picked.length) onChange([...value, ...picked.slice(0, room)]);
   };
 
@@ -89,7 +104,7 @@ export const PhotoManager = ({ value, onChange, className }: Props) => {
               "flex aspect-[4/5] flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-gold/50 bg-accent/40 p-2 text-center text-accent-foreground transition hover:border-primary hover:bg-accent"
             )}>
             <ImagePlus className="size-6" />
-            <span className="text-xs font-semibold">Add photo</span>
+            <span className="text-xs font-semibold">{text.add}</span>
             <span className="text-[10px] text-muted-foreground">
               {value.length}/{MAX_IMAGES}
             </span>

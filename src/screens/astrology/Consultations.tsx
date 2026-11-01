@@ -12,8 +12,9 @@ import { parseGptResponse } from "@/utils/utils";
 import { formatFloating, formatInstant } from "@/lib/dates";
 import { SUPPORT_EMAIL } from "@/utils/constants";
 import { cn } from "@/lib/utils";
+import type { AstroText } from "./lang";
 
-const StatusBadge = ({ status }: { status?: string }) => {
+const StatusBadge = ({ status, t }: { status?: string; t: AstroText }) => {
   const s = (status ?? "pending").toLowerCase();
   return (
     <Badge
@@ -24,7 +25,7 @@ const StatusBadge = ({ status }: { status?: string }) => {
         s === "pending" && "border-gold/40 bg-gold/15 text-accent-foreground",
         s === "failed" && "border-destructive/30 bg-destructive/10 text-destructive"
       )}>
-      {s === "pending" ? "In review" : s}
+      {t.status[s] ?? s}
     </Badge>
   );
 };
@@ -60,18 +61,17 @@ const List = ({ items, icon, tone }: { items?: string[]; icon: React.ReactNode; 
     </ul>
   ) : null;
 
-const Reading = ({ astro }: { astro: AstrologyIn }) => {
+const Reading = ({ astro, t }: { astro: AstrologyIn; t: AstroText }) => {
   const status = astro.status?.toLowerCase();
   if (status === "failed") {
     return (
       <div className="flex gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm">
         <AlertTriangle className="size-5 shrink-0 text-destructive" />
         <div>
-          <p className="font-semibold">We couldn't prepare this reading.</p>
+          <p className="font-semibold">{t.failedTitle}</p>
           <p className="text-muted-foreground">
-            {astro.aiResponse} Our team has been notified. Please email{" "}
-            <a className="font-semibold text-primary" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> and we'll
-            sort it out.
+            {astro.aiResponse} {t.failedBefore}{" "}
+            <a className="font-semibold text-primary" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> {t.failedAfter}
           </p>
         </div>
       </div>
@@ -82,8 +82,8 @@ const Reading = ({ astro }: { astro: AstrologyIn }) => {
       <div className="flex gap-3 rounded-xl border border-gold/40 bg-accent p-4 text-sm">
         <Clock className="size-5 shrink-0 text-accent-foreground" />
         <div>
-          <p className="font-semibold">Our astrologer is reviewing your chart</p>
-          <p className="text-muted-foreground">We'll email you as soon as the reading is ready, and it will appear right here.</p>
+          <p className="font-semibold">{t.reviewingTitle}</p>
+          <p className="text-muted-foreground">{t.reviewingText}</p>
         </div>
       </div>
     );
@@ -103,7 +103,7 @@ const Reading = ({ astro }: { astro: AstrologyIn }) => {
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              {r.out_of === 36 ? "Guna Milan verdict" : "Verdict"}
+              {r.out_of === 36 ? t.gunaVerdict : t.verdict}
             </p>
             <p className="font-display text-2xl font-bold">{r.verdict}</p>
           </div>
@@ -132,13 +132,13 @@ const Reading = ({ astro }: { astro: AstrologyIn }) => {
         <div className="grid gap-3 sm:grid-cols-2">
           {r.easy_remedy && (
             <div className="rounded-xl border border-success/30 bg-success/5 p-3 text-sm">
-              <p className="mb-1 flex items-center gap-1.5 font-semibold text-success"><Gift className="size-4" /> Simple remedy</p>
+              <p className="mb-1 flex items-center gap-1.5 font-semibold text-success"><Gift className="size-4" /> {t.simpleRemedy}</p>
               {r.easy_remedy}
             </div>
           )}
           {r.costly_remedy && (
             <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-sm">
-              <p className="mb-1 flex items-center gap-1.5 font-semibold text-primary"><Gift className="size-4" /> Elaborate remedy</p>
+              <p className="mb-1 flex items-center gap-1.5 font-semibold text-primary"><Gift className="size-4" /> {t.elaborateRemedy}</p>
               {r.costly_remedy}
             </div>
           )}
@@ -152,11 +152,11 @@ const Reading = ({ astro }: { astro: AstrologyIn }) => {
       {r.personality_summary && <p className="text-sm leading-relaxed">{r.personality_summary}</p>}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-success">Strengths</p>
+          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-success">{t.strengths}</p>
           <List items={r.positive_traits} icon={<Plus />} tone="good" />
         </div>
         <div>
-          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-destructive">Watch-outs</p>
+          <p className="mb-2 text-xs font-bold uppercase tracking-wide text-destructive">{t.watchOuts}</p>
           <List items={r.negative_traits} icon={<Minus />} tone="bad" />
         </div>
       </div>
@@ -164,13 +164,13 @@ const Reading = ({ astro }: { astro: AstrologyIn }) => {
   );
 };
 
-const Consultations = ({ items }: { items: AstrologyIn[] }) => {
+const Consultations = ({ items, t }: { items: AstrologyIn[]; t: AstroText }) => {
   if (!items.length) {
     return (
       <EmptyState
         icon={<ScrollText />}
-        title="No readings yet"
-        description="Your consultations will appear here. We recommend starting with an Overview."
+        title={t.noReadings}
+        description={t.noReadingsText}
       />
     );
   }
@@ -183,22 +183,22 @@ const Consultations = ({ items }: { items: AstrologyIn[] }) => {
           className="overflow-hidden rounded-2xl border border-border bg-card px-4 last:border-b">
           <AccordionTrigger className="gap-3 py-4 hover:no-underline">
             <div className="flex min-w-0 flex-1 flex-col gap-1 text-left sm:flex-row sm:items-center sm:gap-3">
-              <span className="font-display text-lg font-bold">{a.consultationMode}</span>
+              <span className="font-display text-lg font-bold">{(a.consultationMode && t.modes[a.consultationMode]?.title) ?? a.consultationMode}</span>
               <span className="truncate text-xs text-muted-foreground">
                 {a.mName ? `${a.name} & ${a.mName}` : a.name} · {formatInstant(a.generatedAt)}
               </span>
             </div>
-            <StatusBadge status={a.status} />
+            <StatusBadge status={a.status} t={t} />
           </AccordionTrigger>
           <AccordionContent className="space-y-4 pb-5">
             <div className={cn("grid gap-3", a.mName && "sm:grid-cols-2")}>
-              <Person title="Birth details" name={a.name} dob={a.dob} place={a.place} gender={a.gender} />
-              {a.mName && <Person title="Match profile" name={a.mName} dob={a.mDob} place={a.mPlace} gender={a.mGender} />}
+              <Person title={t.birthDetails} name={a.name} dob={a.dob} place={a.place} gender={a.gender} />
+              {a.mName && <Person title={t.matchProfile} name={a.mName} dob={a.mDob} place={a.mPlace} gender={a.mGender} />}
             </div>
             {a.query && (
               <div className="rounded-xl border-l-4 border-gold bg-accent/60 px-4 py-3 text-sm italic">“{a.query}”</div>
             )}
-            <Reading astro={a} />
+            <Reading astro={a} t={t} />
           </AccordionContent>
         </AccordionItem>
       ))}

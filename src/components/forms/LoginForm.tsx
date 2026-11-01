@@ -11,17 +11,20 @@ import api from "@/utils/api";
 import { setItem, user_login_token } from "@/utils/localStore";
 import type { FormType } from "@/utils/interfaces";
 import { errorMessage } from "@/lib/errors";
+import { usePublicLang } from "@/lib/i18n";
+import { landerText } from "@/screens/lander/lang";
 
 const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPartner, setIsPartner] = useState(false);
   const [loading, setLoading] = useState(false);
+  const t = landerText[usePublicLang()[0]];
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      toast.error("Please enter your email and password");
+      toast.error(t.enterBoth);
       return;
     }
     setLoading(true);
@@ -30,7 +33,7 @@ const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }
       setItem(user_login_token, res.data);
       window.location.href = res.data.role === "BROKER" ? "/partner" : "/home";
     } catch (err) {
-      toast.error("Login failed", { description: errorMessage(err) });
+      toast.error(t.loginFailed, { description: errorMessage(err) });
       setLoading(false);
     }
   };
@@ -38,10 +41,10 @@ const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }
   return (
     <form onSubmit={submit} className="flex flex-col gap-4">
       <div className="mb-1 text-center">
-        <h2 className="font-display text-3xl font-bold">Welcome back</h2>
-        <p className="text-sm text-muted-foreground">Log in to continue your search</p>
+        <h2 className="font-display text-3xl font-bold">{t.welcome}</h2>
+        <p className="text-sm text-muted-foreground">{t.welcomeSub}</p>
       </div>
-      <Field label="Email" htmlFor="login-email">
+      <Field label={t.email} htmlFor="login-email">
         <Input
           id="login-email"
           type="email"
@@ -55,12 +58,12 @@ const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }
       <Field
         label={
           <span className="flex w-full items-center justify-between">
-            Password
+            {t.password}
             <button
               type="button"
               onClick={() => setCurrentForm("forgotPassword")}
               className="text-xs font-semibold text-primary hover:underline">
-              Forgot password?
+              {t.forgot}
             </button>
           </span>
         }
@@ -76,17 +79,17 @@ const LoginForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }
       <div className="flex items-center gap-2">
         <Checkbox id="partner" checked={isPartner} onCheckedChange={(v) => setIsPartner(v === true)} />
         <Label htmlFor="partner" className="text-sm font-normal text-muted-foreground">
-          I am a registered matchmaker partner
+          {t.isPartner}
         </Label>
       </div>
       <Button type="submit" size="lg" className="h-11" disabled={loading}>
         <LogIn />
-        {loading ? "Logging in…" : "Log in"}
+        {loading ? t.loggingIn : t.login}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
-        New to Seetha Rama Kalyana?{" "}
+        {t.newHere}{" "}
         <button type="button" onClick={() => setCurrentForm(1)} className="font-semibold text-primary hover:underline">
-          Create a profile
+          {t.createProfile}
         </button>
       </p>
     </form>

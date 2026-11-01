@@ -50,7 +50,10 @@ import { isBroker } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { normalizeToArray } from "@/utils/utils";
 import { MEMBERSHIP_START } from "@/utils/constants";
+import { localeOf, useMemberLang, type Lang } from "@/lib/i18n";
+import { LanguageSelect } from "@/components/common/LanguageSelect";
 import ganesh from "@/assets/ganesh.webp";
+import { homeText } from "./lang";
 
 const PAGE_SIZE = 10;
 
@@ -93,45 +96,43 @@ const activeFilterCount = (f: MatchFilters | null) => {
   ].filter(Boolean).length;
 };
 
-const CURRENT_MONTH = new Date().toLocaleString("en-IN", { month: "long" });
+const membershipStart = new Date(`1 ${MEMBERSHIP_START}`);
 
 /** Shown when there are no matches (with or without filters): sets expectations for an early-stage platform. */
-const LaunchNote = ({ filtered }: { filtered?: boolean }) => (
-  <div className="space-y-4">
-    <p>
-      {filtered
-        ? "Try widening the age range or adding more communities. Matching works both ways, so you only see families whose own preferences include you. "
-        : ""}
-      Seetha Rama Kalyana is new, and we're personally inviting families every
-      day.{" "}
-      <span className="font-semibold text-primary">
-        Please give us a little time
-      </span>
-      , it can take a while before profiles that match you both ways appear
-      here.
-    </p>
-    <ul className="mx-auto grid max-w-2xl gap-2 text-left sm:grid-cols-2">
-      <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
-        <CalendarHeart className="mt-0.5 size-5 shrink-0 text-primary" />
-        <span>
-          <b>Your 1-year membership starts in {MEMBERSHIP_START}</b>, not today
-          ({CURRENT_MONTH}). This is the same for every member, so the waiting
-          time is on us. Until then you can use everything without limits.
-        </span>
-      </li>
-      <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
-        <MailCheck className="mt-0.5 size-5 shrink-0 text-primary" />
-        <span>
-          <b>No need to keep checking.</b> As soon as someone sends you an
-          interest, we'll email you.
-        </span>
-      </li>
-    </ul>
-    <p>
-      A complete profile with photos gets noticed first when new families join.
-    </p>
-  </div>
-);
+const LaunchNote = ({ filtered, lang }: { filtered?: boolean; lang: Lang }) => {
+  const t = homeText[lang];
+  const locale = localeOf(lang);
+  const start = Number.isNaN(membershipStart.getTime())
+    ? MEMBERSHIP_START
+    : membershipStart.toLocaleString(locale, { month: "long", year: "numeric" });
+  const now = new Date().toLocaleString(locale, { month: "long" });
+  return (
+    <div className="space-y-4">
+      <p>
+        {filtered ? `${t.filteredTip} ` : ""}
+        {t.newLead}{" "}
+        <span className="font-semibold text-primary">{t.patience}</span>
+        {t.patienceRest}
+      </p>
+      <ul className="mx-auto grid max-w-2xl gap-2 text-left sm:grid-cols-2">
+        <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
+          <CalendarHeart className="mt-0.5 size-5 shrink-0 text-primary" />
+          <span>
+            <b>{t.membershipBold(start)}</b>
+            {t.membershipRest(now)}
+          </span>
+        </li>
+        <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
+          <MailCheck className="mt-0.5 size-5 shrink-0 text-primary" />
+          <span>
+            <b>{t.noCheckBold}</b> {t.noCheckRest}
+          </span>
+        </li>
+      </ul>
+      <p>{t.completeTip}</p>
+    </div>
+  );
+};
 
 const fetchProfiles = (filters: MatchFilters, page: number, limit: number) =>
   api.post<ProfilesResponse>("/fetch-profiles", { page, limit, filters });
@@ -146,6 +147,10 @@ const Home = () => {
   const [draft, setDraft] = useState<MatchFilters>({ partner: {} });
   const [draftCount, setDraftCount] = useState<number | null>(null);
   const broker = isBroker();
+  // Members see the empty state in their mother tongue; partners stay in English.
+  const [memberLang, setMemberLang] = useMemberLang(user.basic?.motherTongue);
+  const lang = broker ? "en" : memberLang;
+  const t = homeText[lang];
 
   useEffect(() => {
     if (!loaded || !user._id || !filters) return;
@@ -332,40 +337,47 @@ const Home = () => {
           ))}
         </div>
       ) : (
-        <EmptyState
-          image={ganesh}
-          title={
-            broker
-              ? "No referred profiles yet"
-              : filterCount
-                ? "No one matches these filters yet"
-                : "We're just getting started, thank you for joining early"
-          }
-          description={
-            broker ? (
-              "Profiles you refer appear here. Share your referral ID with families to get started."
-            ) : (
-              <LaunchNote filtered={!!filterCount} />
-            )
-          }
-          action={
-            filterCount ? (
-              <Button variant="outline" onClick={openFilters}>
-                <SlidersHorizontal />
-                Adjust filters
-              </Button>
-            ) : broker ? null : (
-              <div className="flex flex-wrap justify-center gap-2">
-                <Button asChild>
-                  <Link to="/profile">Complete your profile</Link>
+        <div>
+          {!broker && (
+            <div className="mb-2 flex justify-end">
+              <LanguageSelect value={memberLang} onChange={setMemberLang} />
+            </div>
+          )}
+          <EmptyState
+            image={ganesh}
+            title={
+              broker
+                ? "No referred profiles yet"
+                : filterCount
+                  ? t.noMatches
+                  : t.justStarted
+            }
+            description={
+              broker ? (
+                "Profiles you refer appear here. Share your referral ID with families to get started."
+              ) : (
+                <LaunchNote filtered={!!filterCount} lang={lang} />
+              )
+            }
+            action={
+              filterCount ? (
+                <Button variant="outline" onClick={openFilters}>
+                  <SlidersHorizontal />
+                  {t.adjustFilters}
                 </Button>
-                <Button asChild variant="outline">
-                  <Link to="/astrology">Explore Vedic astrology</Link>
-                </Button>
-              </div>
-            )
-          }
-        />
+              ) : broker ? null : (
+                <div className="flex flex-wrap justify-center gap-2">
+                  <Button asChild>
+                    <Link to="/profile">{t.completeProfile}</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link to="/astrology">{t.exploreAstro}</Link>
+                  </Button>
+                </div>
+              )
+            }
+          />
+        </div>
       )}
 
       {!loading && totalPages > 1 && (

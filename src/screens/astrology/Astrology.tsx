@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HeartHandshake, Info, MessageCircleQuestion, Sparkles, SunMoon } from "lucide-react";
 import SEO from "@/components/misc/SEO";
 import { toast } from "sonner";
@@ -23,26 +23,15 @@ import type { AstrologyIn, ConsultationMode } from "@/utils/interfaces";
 import { toFloatingString } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
 import { cn } from "@/lib/utils";
+import { useMemberLang } from "@/lib/i18n";
+import { LanguageSelect } from "@/components/common/LanguageSelect";
+import { useUser } from "@/context/UserContext";
+import { astroText, type AstroText } from "./lang";
 
-const MODES: { value: ConsultationMode; title: string; blurb: string; icon: React.ReactNode }[] = [
-  {
-    value: "Overview",
-    title: "Overview",
-    blurb: "7 key traits of your personality from your birth chart. A great place to start.",
-    icon: <SunMoon />,
-  },
-  {
-    value: "Personalized",
-    title: "Personal question",
-    blurb: "Ask one question about marriage, career or children, with timing and remedies.",
-    icon: <MessageCircleQuestion />,
-  },
-  {
-    value: "Kundli Matching",
-    title: "Kundli matching",
-    blurb: "Guna Milan compatibility for two charts, with a score and verdict.",
-    icon: <HeartHandshake />,
-  },
+const MODES: { value: ConsultationMode; icon: React.ReactNode }[] = [
+  { value: "Overview", icon: <SunMoon /> },
+  { value: "Personalized", icon: <MessageCircleQuestion /> },
+  { value: "Kundli Matching", icon: <HeartHandshake /> },
 ];
 
 interface Birth {
@@ -71,34 +60,40 @@ const BirthForm = ({
   value,
   onChange,
   idPrefix,
+  t,
 }: {
   title: string;
   value: Birth;
   onChange: (b: Birth) => void;
   idPrefix: string;
+  t: AstroText;
 }) => {
   const set = (k: keyof Birth, v: string) => onChange({ ...value, [k]: v });
   return (
     <fieldset className="rounded-2xl border border-border bg-background/60 p-4">
       <legend className="px-1 font-display text-lg font-bold text-primary">{title}</legend>
       <FieldGrid>
-        <Field label="Full name" htmlFor={`${idPrefix}-name`} required>
+        <Field label={t.fullName} htmlFor={`${idPrefix}-name`} required>
           <Input id={`${idPrefix}-name`} value={value.name} onChange={(e) => set("name", e.target.value)} className="h-10 bg-card" />
         </Field>
-        <Field label="Gender" required>
-          <SelectField value={value.gender} onChange={(v) => set("gender", v)} options={genderOptions} />
+        <Field label={t.genderLabel} required>
+          <SelectField
+            value={value.gender}
+            onChange={(v) => set("gender", v)}
+            options={genderOptions.map((o) => ({ ...o, label: t.gender[o.value] ?? o.label }))}
+          />
         </Field>
-        <Field label="Date of birth" required>
+        <Field label={t.dob} required>
           <DateField value={value.date} onChange={(v) => set("date", v)} />
         </Field>
-        <Field label="Time of birth" required hint="As on the birth certificate / horoscope (local time at birthplace).">
+        <Field label={t.tob} required hint={t.tobHint}>
           <TimeField value={value.time} onChange={(v) => set("time", v)} />
         </Field>
         <Field
-          label="Place of birth"
+          label={t.pob}
           htmlFor={`${idPrefix}-place`}
           required
-          hint="Anywhere in the world. Pick from the list; if your village isn't listed, choose the nearest town."
+          hint={t.pobHint}
           className="sm:col-span-2">
           <PlaceField
             id={`${idPrefix}-place`}
@@ -124,13 +119,18 @@ const Astrology = () => {
   const [history, setHistory] = useState<AstrologyIn[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [lang, setLang] = useMemberLang(useUser().user.basic?.motherTongue);
+  const t = astroText[lang];
+  // Toasts fire from callbacks created before a language change.
+  const tRef = useRef(t);
+  tRef.current = t;
 
   const load = async () => {
     try {
       const res = await api.get("/astro-data");
       setHistory(res.data?.astrology ?? []);
     } catch (err) {
-      toast.error("Couldn't load your readings", { description: errorMessage(err) });
+      toast.error(tRef.current.loadFailed, { description: errorMessage(err) });
     } finally {
       setLoading(false);
     }
@@ -156,12 +156,12 @@ const Astrology = () => {
     try {
       const res = await api.post("/astro-data", order);
       setHistory(res.data?.data?.astrology ?? []);
-      toast.success("Request received", { description: res.data.msg });
+      toast.success(tRef.current.received, { description: res.data.msg });
       setQuery("");
       document.getElementById("readings")?.scrollIntoView({ behavior: "smooth" });
     } catch (err) {
-      toast.error("Payment received, request still processing", {
-        description: `${errorMessage(err)} It will appear here within a few minutes. Payment ID: ${order.paymentId}`,
+      toast.error(tRef.current.stillProcessing, {
+        description: `${errorMessage(err)} ${tRef.current.appearSoon} Payment ID: ${order.paymentId}`,
         duration: 15000,
       });
     } finally {
@@ -200,20 +200,21 @@ const Astrology = () => {
   return (
     <div className="mx-auto max-w-5xl">
       <SEO title="Vedic astrology | Seetha Rama Kalyana" description="Vedic astrology" noindex />
-      <BlockingLoader show={submitting} message="Sending your chart to our astrologer…" />
+      <BlockingLoader show={submitting} message={t.sending} />
       <PageHeader
         title={
           <span className="flex items-center gap-2">
-            Vedic astrology <Sparkles className="size-7 text-gold" />
+            {t.title} <Sparkles className="size-7 text-gold" />
           </span>
         }
-        description="Readings prepared by our Karnataka-based jyotishi, translated from Kannada to English."
+        description={t.description}
+        actions={<LanguageSelect value={lang} onChange={setLang} />}
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
         <Card className="border-gold/30">
           <CardHeader>
-            <CardTitle className="font-display text-2xl">Request a reading</CardTitle>
+            <CardTitle className="font-display text-2xl">{t.requestTitle}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <RadioGroup
@@ -232,24 +233,24 @@ const Astrology = () => {
                     {m.icon}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-semibold">{m.title}</span>
-                    <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{m.blurb}</span>
+                    <span className="block font-semibold">{t.modes[m.value].title}</span>
+                    <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{t.modes[m.value].blurb}</span>
                   </span>
                   <span className="shrink-0 font-display text-xl font-bold text-primary sm:mt-auto sm:text-2xl">₹{ASTRO_FEES[m.value]}</span>
                 </label>
               ))}
             </RadioGroup>
 
-            <BirthForm title={mode === "Kundli Matching" ? "First person" : "Your birth details"} value={me} onChange={setMe} idPrefix="p1" />
+            <BirthForm title={mode === "Kundli Matching" ? t.firstPerson : t.yourBirth} value={me} onChange={setMe} idPrefix="p1" t={t} />
             {mode === "Kundli Matching" && (
-              <BirthForm title="Match profile" value={match} onChange={setMatch} idPrefix="p2" />
+              <BirthForm title={t.matchProfile} value={match} onChange={setMatch} idPrefix="p2" t={t} />
             )}
             {mode === "Personalized" && (
-              <Field label="Your question" required hint={`${query.length}/108 characters`}>
+              <Field label={t.question} required hint={t.questionHint(query.length)}>
                 <Textarea
                   value={query}
                   onChange={(e) => setQuery(e.target.value.slice(0, 108))}
-                  placeholder="e.g. Is 2027 an auspicious year for my marriage?"
+                  placeholder={t.questionPlaceholder}
                   className="min-h-20 bg-card"
                 />
               </Field>
@@ -257,7 +258,7 @@ const Astrology = () => {
 
             <Button size="lg" className="w-full" disabled={!ready || isStarting} onClick={submit}>
               <Sparkles />
-              {isStarting ? "Opening checkout…" : `Pay ₹${ASTRO_FEES[mode]} & submit`}
+              {isStarting ? t.opening : t.pay(ASTRO_FEES[mode])}
             </Button>
           </CardContent>
         </Card>
@@ -265,20 +266,21 @@ const Astrology = () => {
         <aside className="space-y-4">
           <Alert className="border-gold/40 bg-accent">
             <Info />
-            <AlertTitle>How it works</AlertTitle>
+            <AlertTitle>{t.howTitle}</AlertTitle>
             <AlertDescription className="space-y-2 text-sm">
               <p>
-                Our astrologer is available <b>9 AM – 9 PM</b>. Requests outside these hours are answered the next
-                morning. We'll email you once your reading is ready.
+                {t.hoursBefore} <b>{t.hours}</b>
+                {t.hoursAfter}
               </p>
               <p>
-                Start with the <b>Overview</b>: if 5 or more of the 7 traits feel accurate, a personal question will
-                give you a deeper reading.
+                {t.startBefore && `${t.startBefore} `}
+                <b>{t.startBold}</b>
+                {t.startAfter}
               </p>
             </AlertDescription>
           </Alert>
           <div className="rounded-2xl border border-border bg-card p-4 text-sm text-muted-foreground">
-            Astrology offers guidance, not certainty. For follow-up questions write to{" "}
+            {t.disclaimer}{" "}
             <a href={`mailto:${SUPPORT_EMAIL}`} className="font-semibold text-primary hover:underline">
               {SUPPORT_EMAIL}
             </a>
@@ -288,14 +290,14 @@ const Astrology = () => {
       </div>
 
       <section id="readings" className="mt-10 scroll-mt-24">
-        <h2 className="mb-4 font-display text-2xl font-bold sm:text-3xl">Your readings</h2>
+        <h2 className="mb-4 font-display text-2xl font-bold sm:text-3xl">{t.readings}</h2>
         {loading ? (
           <div className="space-y-3">
             <Skeleton className="h-16 rounded-2xl" />
             <Skeleton className="h-16 rounded-2xl" />
           </div>
         ) : (
-          <Consultations items={history} />
+          <Consultations items={history} t={t} />
         )}
       </section>
     </div>
