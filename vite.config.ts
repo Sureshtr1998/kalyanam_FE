@@ -80,10 +80,12 @@ export default defineConfig(({ mode }) => {
           theme_color: "#c2410c",
           background_color: "#fffaf3",
           display: "standalone",
+          id: "/",
+          scope: "/",
           start_url: "/",
           icons: [
             {
-              src: "logo.png",
+              src: "pwa-192.png",
               sizes: "192x192",
               type: "image/png",
             },

@@ -1,6 +1,9 @@
 import { createRoot, hydrateRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
+import { initPWA } from "./lib/pwa";
+
+initPWA();
 
 // Static meta tags in index.html (defaults, or the prerendered page's own) give way to the
 // ones <SEO> renders, so they are not duplicated.
