@@ -1,11 +1,12 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { Download, Mail, Menu, RefreshCw, Sparkles } from "lucide-react";
+import { Mail, Menu, RefreshCw, Sparkles } from "lucide-react";
 import { Brand, BrandMark, Lotus } from "@/components/common/Brand";
 import { OmSpinner } from "@/components/common/Loaders";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { usePWA } from "@/components/misc/usePWA";
+import { InstallButton } from "@/components/misc/InstallButton";
 import { isLoggedIn } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { REGISTRATION_FEE, REGISTRATION_FEE_ORIGINAL, SUPPORT_EMAIL } from "@/utils/constants";
@@ -71,7 +72,7 @@ const PublicLayout = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const loggedIn = isLoggedIn();
-  const { showInstallButton, handleInstallClick, updateAvailable, reloadApp } = usePWA();
+  const { updateAvailable, reloadApp } = usePWA();
   const [lang, setLang] = usePublicLang();
   const t = layoutText[lang];
   const links = navLinks(t);
@@ -103,7 +104,7 @@ const PublicLayout = () => {
     <div className="flex min-h-dvh flex-col">
       {location.pathname === "/" && <OfferBar t={t} />}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Brand />
           <nav className="ml-auto hidden items-center gap-1 lg:flex">
             {links.map((l) => (
@@ -120,14 +121,10 @@ const PublicLayout = () => {
               </NavLink>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2 lg:ml-2">
-            {showInstallButton && (
-              <Button variant="outline" size="sm" onClick={handleInstallClick}>
-                <Download />
-                {t.install}
-              </Button>
-            )}
-            <LanguageSelect value={lang} onChange={setLang} />
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2 lg:ml-2">
+            <InstallButton lang={lang} className="size-8 sm:size-9" />
+            {/* Phones: no room for the translate glyph next to the logo and install icon. */}
+            <LanguageSelect value={lang} onChange={setLang} className="max-sm:px-2.5 max-sm:[&>svg:first-child]:hidden" />
             <div className="hidden sm:block">{cta}</div>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>

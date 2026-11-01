@@ -12,6 +12,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { Brand } from "@/components/common/Brand";
+import { InstallButton } from "@/components/misc/InstallButton";
 import { OmSpinner } from "@/components/common/Loaders";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -103,6 +104,7 @@ const Shell = ({ children }: { children: ReactNode }) => {
           </nav>
 
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
+            <InstallButton />
             {!broker && (
               <Tooltip>
                 <TooltipTrigger asChild>
