@@ -38,14 +38,17 @@ import {
 import type { BasicDetailsIn, FormType, ImageFile } from "@/utils/interfaces";
 import { casteOptions, getRefferalAmount, motherTongueOptions, subCasteOptions } from "@/utils/utils";
 import { errorMessage } from "@/lib/errors";
+import { usePublicLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import type { SelectType } from "@/utils/interfaces";
+import { registerText } from "./lang";
 
 type Step = 1 | 2 | 3;
-const STEPS = ["Account", "Background", "Photos & contact"];
+type Busy = keyof (typeof registerText)["en"]["busy"];
 
-const StepDots = ({ step }: { step: Step }) => (
+const StepDots = ({ step, steps }: { step: Step; steps: string[] }) => (
   <ol className="mb-6 flex items-center gap-2">
-    {STEPS.map((label, i) => {
+    {steps.map((label, i) => {
       const n = (i + 1) as Step;
       const done = n < step;
       const active = n === step;
@@ -63,7 +66,7 @@ const StepDots = ({ step }: { step: Step }) => (
           <span className={cn("hidden text-xs font-semibold sm:block", active ? "text-foreground" : "text-muted-foreground")}>
             {label}
           </span>
-          {i < STEPS.length - 1 && <span className={cn("h-px flex-1", done ? "bg-success" : "bg-border")} />}
+          {i < steps.length - 1 && <span className={cn("h-px flex-1", done ? "bg-success" : "bg-border")} />}
         </li>
       );
     })}
@@ -81,10 +84,20 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [noteOpen, setNoteOpen] = useState(false);
-  const [busy, setBusy] = useState<string | null>(null);
+  const [busy, setBusy] = useState<Busy | null>(null);
   const [referralOk, setReferralOk] = useState(true);
   const leadTracked = useRef(false);
   const uploaded = useRef<{ key: string; media: ImageFile[]; at: number } | null>(null);
+  const t = registerText[usePublicLang()[0]];
+  // Payment callbacks outlive a language change.
+  const tRef = useRef(t);
+  tRef.current = t;
+  const translate = (options: SelectType[]) =>
+    options.map((o) => ({
+      ...o,
+      label: t.options[o.value] ?? o.label,
+      ...(o.group ? { group: t.qualificationGroups[o.group] ?? o.group } : {}),
+    }));
 
   const set = (name: keyof BasicDetailsIn, value: string) => {
     setForm((f) => ({ ...f, [name]: value, ...(name === "caste" ? { subCaste: "" } : {}) }));
@@ -112,16 +125,16 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
 
   const validate = (s: Step) => {
     const e: Record<string, string> = {};
-    const need = (k: keyof BasicDetailsIn, msg = "Required") => {
+    const need = (k: keyof BasicDetailsIn, msg = t.required) => {
       if (!String(form[k] ?? "").trim()) e[k] = msg;
     };
     if (s === 1) {
       need("fullName");
       need("gender");
       need("dob");
-      if (!emailRegex.test(form.email)) e.email = "Enter a valid email";
-      if ((form.password ?? "").length < MIN_PASSWORD_LENGTH) e.password = `At least ${MIN_PASSWORD_LENGTH} characters`;
-      if (form.password !== form.confirmPassword) e.confirmPassword = "Passwords don't match";
+      if (!emailRegex.test(form.email)) e.email = t.invalidEmail;
+      if ((form.password ?? "").length < MIN_PASSWORD_LENGTH) e.password = t.minChars(MIN_PASSWORD_LENGTH);
+      if (form.password !== form.confirmPassword) e.confirmPassword = t.mismatch;
     }
     if (s === 2) {
       need("martialStatus");
@@ -131,20 +144,20 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       need("profileCreatedBy");
     }
     if (s === 3) {
-      if (!/^\d{10}$/.test(form.mobile)) e.mobile = "Enter a 10-digit WhatsApp number";
-      if (form.alternateMob && !/^\d{10}$/.test(form.alternateMob)) e.alternateMob = "Must be 10 digits";
-      if (!photos.length) e.photos = "Add at least one photo";
-      if (!referralOk) e.referralId = "Invalid referral ID";
+      if (!/^\d{10}$/.test(form.mobile)) e.mobile = t.invalidWhatsapp;
+      if (form.alternateMob && !/^\d{10}$/.test(form.alternateMob)) e.alternateMob = t.tenDigits;
+      if (!photos.length) e.photos = t.addPhoto;
+      if (!referralOk) e.referralId = t.invalidReferral;
     }
     setErrors(e);
-    if (Object.keys(e).length) toast.error("Please check the highlighted fields");
+    if (Object.keys(e).length) toast.error(t.checkFields);
     return !Object.keys(e).length;
   };
 
   const next = async () => {
     if (!validate(step)) return;
     if (step === 1) {
-      setBusy("Checking…");
+      setBusy("checking");
       try {
         await api.get("/user-validation", { params: { email: form.email.trim().toLowerCase() } });
       } catch (err) {
@@ -165,18 +178,16 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   };
 
   const onPaid = useCallback(async (order: PaidOrder) => {
-    setBusy("Creating your profile…");
+    setBusy("creating");
     try {
       const res = await api.post("/user-register", order);
       setItem(user_login_token, res.data);
-      toast.success("Welcome to Seetha Rama Kalyana!", {
-        description: "Your payment is confirmed. Let's complete your profile.",
-      });
+      toast.success(tRef.current.welcome, { description: tRef.current.welcomeDesc });
       window.location.href = "/profile";
     } catch (err) {
       setBusy(null);
-      toast.error("Payment received, but registration didn't finish", {
-        description: `${errorMessage(err)} Payment ID: ${order.paymentId}. Write to ${SUPPORT_EMAIL} and we'll fix it quickly.`,
+      toast.error(tRef.current.paidFailed, {
+        description: tRef.current.paidFailedDesc(errorMessage(err), order.paymentId, SUPPORT_EMAIL),
         duration: 20000,
       });
     }
@@ -187,7 +198,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const pay = async () => {
     setNoteOpen(false);
     try {
-      setBusy("Checking your details…");
+      setBusy("verifying");
       await api.get("/user-validation", {
         params: { email: form.email.trim().toLowerCase(), mobile: form.mobile },
       });
@@ -196,7 +207,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       const files = photos.filter((p): p is File => p instanceof File);
       const key = files.map((f) => `${f.name}:${f.size}`).join("|");
       if (uploaded.current?.key !== key || Date.now() - uploaded.current.at > UPLOAD_REUSE_MS) {
-        setBusy("Uploading your photos…");
+        setBusy("uploading");
         const data = new FormData();
         files.forEach((f) => data.append("images", f));
         const res = await api.post("/user-register/upload-images", data, {
@@ -217,7 +228,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       });
     } catch (err) {
       setBusy(null);
-      toast.error("Couldn't continue", { description: errorMessage(err) });
+      toast.error(t.cantContinue, { description: errorMessage(err) });
     }
   };
 
@@ -225,96 +236,96 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
 
   return (
     <div>
-      <BlockingLoader show={!!busy && busy !== "Checking…"} message={busy ?? undefined} />
+      <BlockingLoader show={!!busy && busy !== "checking"} message={busy ? t.busy[busy] : undefined} />
       <div className="mb-4 text-center">
-        <h2 className="font-display text-3xl font-bold">Create your profile</h2>
-        <p className="text-sm text-muted-foreground">Takes about 3 minutes</p>
+        <h2 className="font-display text-3xl font-bold">{t.title}</h2>
+        <p className="text-sm text-muted-foreground">{t.subtitle}</p>
       </div>
-      <StepDots step={step} />
+      <StepDots step={step} steps={t.steps} />
 
       {step === 1 && (
         <FieldGrid>
-          <Field label="Bride / groom's full name" required error={errors.fullName} className="sm:col-span-2">
+          <Field label={t.fullName} required error={errors.fullName} className="sm:col-span-2">
             <Input value={form.fullName} onChange={(e) => set("fullName", e.target.value)} aria-invalid={!!errors.fullName || undefined} className="h-10 bg-card" autoComplete="name" />
           </Field>
-          <Field label="Email" required error={errors.email} className="sm:col-span-2">
+          <Field label={t.email} required error={errors.email} className="sm:col-span-2">
             <Input type="email" value={form.email} onChange={(e) => set("email", e.target.value.trim())} aria-invalid={!!errors.email || undefined} className="h-10 bg-card" autoComplete="email" />
           </Field>
-          <Field label="Password" required error={errors.password} hint={`At least ${MIN_PASSWORD_LENGTH} characters`}>
+          <Field label={t.password} required error={errors.password} hint={t.minChars(MIN_PASSWORD_LENGTH)}>
             <PasswordInput value={form.password} onChange={(e) => set("password", e.target.value)} aria-invalid={!!errors.password || undefined} autoComplete="new-password" />
           </Field>
-          <Field label="Confirm password" required error={errors.confirmPassword}>
+          <Field label={t.confirmPassword} required error={errors.confirmPassword}>
             <PasswordInput value={form.confirmPassword} onChange={(e) => set("confirmPassword", e.target.value)} aria-invalid={!!errors.confirmPassword || undefined} autoComplete="new-password" />
           </Field>
-          <Field label="Gender" required error={errors.gender}>
-            <SelectField value={form.gender} onChange={(v) => set("gender", v)} options={genderOptions} invalid={!!errors.gender} />
+          <Field label={t.gender} required error={errors.gender}>
+            <SelectField value={form.gender} onChange={(v) => set("gender", v)} options={translate(genderOptions)} placeholder={t.select} invalid={!!errors.gender} />
           </Field>
-          <Field label="Date of birth" required error={errors.dob} hint="Must be 18 or older">
-            <DateField value={form.dob ?? ""} onChange={(v) => set("dob", v)} maxDate={eighteenYearsAgo()} invalid={!!errors.dob} />
+          <Field label={t.dob} required error={errors.dob} hint={t.dobHint}>
+            <DateField value={form.dob ?? ""} onChange={(v) => set("dob", v)} maxDate={eighteenYearsAgo()} placeholder={t.pickDate} invalid={!!errors.dob} />
           </Field>
         </FieldGrid>
       )}
 
       {step === 2 && (
         <FieldGrid>
-          <Field label="Caste" required error={errors.caste}>
-            <SelectField searchable value={form.caste} onChange={(v) => set("caste", v)} options={casteOptions} invalid={!!errors.caste} />
+          <Field label={t.caste} required error={errors.caste}>
+            <SelectField searchable value={form.caste} onChange={(v) => set("caste", v)} options={casteOptions} placeholder={t.select} invalid={!!errors.caste} />
           </Field>
-          <Field label="Sub caste">
+          <Field label={t.subCaste}>
             <SelectField
               searchable
               value={form.subCaste}
               onChange={(v) => set("subCaste", v)}
               options={subCastes}
-              placeholder={form.caste && !subCastes.length ? "Not applicable" : "Select"}
+              placeholder={form.caste && !subCastes.length ? t.notApplicable : t.select}
               disabled={!subCastes.length}
             />
           </Field>
-          <Field label="Mother tongue" required error={errors.motherTongue}>
-            <SelectField searchable value={form.motherTongue} onChange={(v) => set("motherTongue", v)} options={motherTongueOptions} invalid={!!errors.motherTongue} />
+          <Field label={t.motherTongue} required error={errors.motherTongue}>
+            <SelectField searchable value={form.motherTongue} onChange={(v) => set("motherTongue", v)} options={motherTongueOptions} placeholder={t.select} invalid={!!errors.motherTongue} />
           </Field>
-          <Field label="Gothra" hint="Optional">
-            <SelectField searchable creatable value={form.gothra} onChange={(v) => set("gothra", v.slice(0, 60))} options={gothraOptions} />
+          <Field label={t.gothra} hint={t.optional}>
+            <SelectField searchable creatable value={form.gothra} onChange={(v) => set("gothra", v.slice(0, 60))} options={gothraOptions} placeholder={t.select} />
           </Field>
-          <Field label="Marital status" required error={errors.martialStatus}>
-            <SelectField value={form.martialStatus} onChange={(v) => set("martialStatus", v)} options={maritalOptions} invalid={!!errors.martialStatus} />
+          <Field label={t.marital} required error={errors.martialStatus}>
+            <SelectField value={form.martialStatus} onChange={(v) => set("martialStatus", v)} options={translate(maritalOptions)} placeholder={t.select} invalid={!!errors.martialStatus} />
           </Field>
-          <Field label="Highest qualification" required error={errors.qualification}>
-            <SelectField value={form.qualification} onChange={(v) => set("qualification", v)} options={qualificationOptions} invalid={!!errors.qualification} />
+          <Field label={t.qualification} required error={errors.qualification}>
+            <SelectField value={form.qualification} onChange={(v) => set("qualification", v)} options={translate(qualificationOptions)} placeholder={t.select} invalid={!!errors.qualification} />
           </Field>
-          <Field label="Profile created by" required error={errors.profileCreatedBy} className="sm:col-span-2">
-            <SelectField value={form.profileCreatedBy} onChange={(v) => set("profileCreatedBy", v)} options={createdByOptions} invalid={!!errors.profileCreatedBy} />
+          <Field label={t.createdBy} required error={errors.profileCreatedBy} className="sm:col-span-2">
+            <SelectField value={form.profileCreatedBy} onChange={(v) => set("profileCreatedBy", v)} options={translate(createdByOptions)} placeholder={t.select} invalid={!!errors.profileCreatedBy} />
           </Field>
         </FieldGrid>
       )}
 
       {step === 3 && (
         <div className="flex flex-col gap-4">
-          <Field label="Photos" required error={errors.photos}>
-            <PhotoManager value={photos} onChange={(p) => { setPhotos(p); setErrors((e) => ({ ...e, photos: "" })); }} />
+          <Field label={t.photos} required error={errors.photos}>
+            <PhotoManager value={photos} onChange={(p) => { setPhotos(p); setErrors((e) => ({ ...e, photos: "" })); }} text={t.photo} />
           </Field>
           <FieldGrid>
-            <Field label="WhatsApp number" required error={errors.mobile} hint="We'll send a verification code here">
+            <Field label={t.whatsapp} required error={errors.mobile} hint={t.whatsappHint}>
               <div className="flex">
                 <span className="flex items-center rounded-l-md border border-r-0 border-input bg-muted px-3 text-sm text-muted-foreground">+91</span>
                 <Input inputMode="numeric" value={form.mobile} onChange={(e) => set("mobile", e.target.value.replace(/\D/g, "").slice(0, 10))} aria-invalid={!!errors.mobile || undefined} className="h-10 rounded-l-none bg-card" autoComplete="tel-national" />
               </div>
             </Field>
-            <Field label="Alternate number" hint="Optional" error={errors.alternateMob}>
+            <Field label={t.altNumber} hint={t.optional} error={errors.alternateMob}>
               <Input inputMode="numeric" value={form.alternateMob} onChange={(e) => set("alternateMob", e.target.value.replace(/\D/g, "").slice(0, 10))} className="h-10 bg-card" />
             </Field>
             <Field
-              label="Referral ID"
-              hint="Optional · 7 characters"
-              error={form.referralId && !referralOk ? "Invalid referral ID" : undefined}
+              label={t.referral}
+              hint={t.referralHint}
+              error={form.referralId && !referralOk ? t.invalidReferral : undefined}
               className="sm:col-span-2">
               <Input value={form.referralId ?? ""} maxLength={7} onChange={(e) => set("referralId", e.target.value.toUpperCase())} className="h-10 bg-card font-mono uppercase" />
             </Field>
           </FieldGrid>
           <div className="flex items-center justify-between rounded-2xl border border-gold/40 bg-accent p-4">
             <div>
-              <p className="text-sm font-semibold">Annual membership</p>
-              <p className="text-xs text-muted-foreground">Includes {INITIAL_NO_INTEREST} credits (1 per interest)</p>
+              <p className="text-sm font-semibold">{t.annual}</p>
+              <p className="text-xs text-muted-foreground">{t.includes(INITIAL_NO_INTEREST)}</p>
             </div>
             <p className="font-display text-3xl font-bold text-primary">₹{amount}</p>
           </div>
@@ -325,58 +336,56 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
         {step > 1 ? (
           <Button variant="outline" size="lg" className="h-11" onClick={() => setStep((s) => (s - 1) as Step)}>
             <ArrowLeft />
-            Back
+            {t.back}
           </Button>
         ) : null}
         <Button size="lg" className="h-11 flex-1" onClick={next} disabled={!!busy || isStarting}>
           {step < 3 ? (
             <>
-              {busy === "Checking…" ? "Checking…" : "Continue"}
+              {busy === "checking" ? t.busy.checking : t.continue}
               <ArrowRight />
             </>
           ) : (
             <>
               <CreditCard />
-              {isStarting ? "Opening checkout…" : `Pay ₹${amount} & register`}
+              {isStarting ? t.opening : t.pay(amount)}
             </>
           )}
         </Button>
       </div>
       <p className="mt-4 text-center text-sm text-muted-foreground">
-        Already a member?{" "}
+        {t.already}{" "}
         <button type="button" onClick={() => setCurrentForm("login")} className="font-semibold text-primary hover:underline">
-          Log in
+          {t.login}
         </button>
       </p>
 
       <Dialog open={noteOpen} onOpenChange={setNoteOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-display text-2xl">Before you pay</DialogTitle>
-            <DialogDescription>A few honest notes about Seetha Rama Kalyana.</DialogDescription>
+            <DialogTitle className="font-display text-2xl">{t.beforePay}</DialogTitle>
+            <DialogDescription>{t.beforePayDesc}</DialogDescription>
           </DialogHeader>
           <ul className="space-y-3 text-sm leading-relaxed">
             {[
-              "We're in an active growth phase. New profiles join regularly.",
-              "You'll get an email whenever someone sends or accepts your interest.",
-              `Your membership includes ${INITIAL_NO_INTEREST} credits: each interest you send uses 1. It's a one-time annual fee with no hidden charges.`,
+              ...t.notes(INITIAL_NO_INTEREST),
               <>
-                Need help? Write to{" "}
+                {t.helpBefore}{" "}
                 <a href={`mailto:${SUPPORT_EMAIL}`} className="font-semibold text-primary">
                   {SUPPORT_EMAIL}
                 </a>{" "}
-                and we reply within 24 hours.
+                {t.helpAfter}
               </>,
-            ].map((t, i) => (
+            ].map((note, i) => (
               <li key={i} className="flex gap-2.5">
                 <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success" />
-                <span>{t}</span>
+                <span>{note}</span>
               </li>
             ))}
           </ul>
           <DialogFooter>
             <Button size="lg" className="w-full" onClick={pay}>
-              I understand · Pay ₹{amount}
+              {t.understand(amount)}
             </Button>
           </DialogFooter>
         </DialogContent>

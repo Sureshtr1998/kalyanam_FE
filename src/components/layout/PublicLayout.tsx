@@ -9,54 +9,59 @@ import { usePWA } from "@/components/misc/usePWA";
 import { isLoggedIn } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { REGISTRATION_FEE, REGISTRATION_FEE_ORIGINAL, SUPPORT_EMAIL } from "@/utils/constants";
+import { localeOf, usePublicLang } from "@/lib/i18n";
+import { LanguageSelect } from "@/components/common/LanguageSelect";
+import { layoutText } from "./lang";
 
-const links = [
-  { to: "/about-us", label: "About" },
-  { to: "/communities", label: "Communities" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/blog", label: "Blog" },
-  { to: "/partner-with-us", label: "Partner With Us" },
+type Text = (typeof layoutText)["en"];
+
+const navLinks = (t: Text) => [
+  { to: "/about-us", label: t.about },
+  { to: "/communities", label: t.communities },
+  { to: "/pricing", label: t.pricing },
+  { to: "/blog", label: t.blog },
+  { to: "/partner-with-us", label: t.partner },
 ];
 
-const footerGroups = [
+const footerGroups = (t: Text) => [
   {
     title: "Seetha Rama Kalyana",
     links: [
-      { to: "/about-us", label: "About us" },
-      { to: "/communities", label: "Our communities" },
-      { to: "/partner-with-us", label: "Partner with us" },
-      { to: "/blog", label: "Blog" },
+      { to: "/about-us", label: t.aboutUs },
+      { to: "/communities", label: t.ourCommunities },
+      { to: "/partner-with-us", label: t.partnerWithUs },
+      { to: "/blog", label: t.blog },
     ],
   },
   {
-    title: "Help",
+    title: t.help,
     links: [
-      { to: "/faq", label: "FAQs" },
-      { to: "/pricing", label: "Pricing" },
-      { to: "/contact-us", label: "Contact us" },
+      { to: "/faq", label: t.faqs },
+      { to: "/pricing", label: t.pricing },
+      { to: "/contact-us", label: t.contactUs },
     ],
   },
   {
-    title: "Policies",
+    title: t.policies,
     links: [
-      { to: "/terms", label: "Terms & conditions" },
-      { to: "/privacy", label: "Privacy policy" },
-      { to: "/refund-policy", label: "Refund policy" },
+      { to: "/terms", label: t.terms },
+      { to: "/privacy", label: t.privacy },
+      { to: "/refund-policy", label: t.refund },
     ],
   },
 ];
 
-const OfferBar = () => (
+const OfferBar = ({ t }: { t: Text }) => (
   <div className="bg-primary text-primary-foreground">
     <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-semibold sm:text-sm">
       <Sparkles className="size-4 shrink-0 text-gold" />
       <span>
-        Launch offer: annual membership{" "}
+        {t.offer}{" "}
         <span className="line-through opacity-70">₹{REGISTRATION_FEE_ORIGINAL}</span>{" "}
         <span className="rounded bg-gold px-1.5 py-0.5 font-bold text-gold-foreground">
           ₹{REGISTRATION_FEE}
         </span>{" "}
-        <span className="hidden sm:inline">· 53% off for a limited time</span>
+        <span className="hidden sm:inline">· {t.offerOff}</span>
       </span>
     </div>
   </div>
@@ -67,26 +72,36 @@ const PublicLayout = () => {
   const [open, setOpen] = useState(false);
   const loggedIn = isLoggedIn();
   const { showInstallButton, handleInstallClick, updateAvailable, reloadApp } = usePWA();
+  const [lang, setLang] = usePublicLang();
+  const t = layoutText[lang];
+  const links = navLinks(t);
 
   useEffect(() => setOpen(false), [location.pathname]);
 
+  useEffect(() => {
+    document.documentElement.lang = localeOf(lang);
+    return () => {
+      document.documentElement.lang = "en";
+    };
+  }, [lang]);
+
   const cta = loggedIn ? (
     <Button asChild>
-      <Link to="/home">My matches</Link>
+      <Link to="/home">{t.myMatches}</Link>
     </Button>
   ) : location.pathname === "/" ? (
     <Button asChild>
-      <a href="#join">Login / Register</a>
+      <a href="#join">{t.loginRegister}</a>
     </Button>
   ) : (
     <Button asChild>
-      <Link to="/">Login / Register</Link>
+      <Link to="/">{t.loginRegister}</Link>
     </Button>
   );
 
   return (
     <div className="flex min-h-dvh flex-col">
-      {location.pathname === "/" && <OfferBar />}
+      {location.pathname === "/" && <OfferBar t={t} />}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
           <Brand />
@@ -97,7 +112,7 @@ const PublicLayout = () => {
                 to={l.to}
                 className={({ isActive }) =>
                   cn(
-                    "rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary",
+                    "whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary xl:px-3.5",
                     isActive && "text-primary"
                   )
                 }>
@@ -109,9 +124,10 @@ const PublicLayout = () => {
             {showInstallButton && (
               <Button variant="outline" size="sm" onClick={handleInstallClick}>
                 <Download />
-                Install
+                {t.install}
               </Button>
             )}
+            <LanguageSelect value={lang} onChange={setLang} />
             <div className="hidden sm:block">{cta}</div>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
@@ -121,11 +137,11 @@ const PublicLayout = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[85vw] max-w-sm bg-background">
                 <SheetHeader>
-                  <SheetTitle className="sr-only">Menu</SheetTitle>
+                  <SheetTitle className="sr-only">{t.menu}</SheetTitle>
                   <Brand />
                 </SheetHeader>
                 <nav className="flex flex-col gap-1 px-4">
-                  {[{ to: "/", label: "Home" }, ...links, { to: "/faq", label: "FAQs" }, { to: "/contact-us", label: "Contact" }].map((l) => (
+                  {[{ to: "/", label: t.home }, ...links, { to: "/faq", label: t.faqs }, { to: "/contact-us", label: t.contact }].map((l) => (
                     <NavLink
                       key={l.to}
                       to={l.to}
@@ -168,10 +184,7 @@ const PublicLayout = () => {
                 <p className="text-xs uppercase tracking-[0.25em] text-gold">Hindu Matrimony</p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed opacity-80">
-              A trusted, community-first matrimony platform helping Hindu families find
-              life partners rooted in dharma, tradition and respect.
-            </p>
+            <p className="mt-4 text-sm leading-relaxed opacity-80">{t.tagline}</p>
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gold hover:underline">
@@ -179,7 +192,7 @@ const PublicLayout = () => {
               {SUPPORT_EMAIL}
             </a>
           </div>
-          {footerGroups.map((g) => (
+          {footerGroups(t).map((g) => (
             <div key={g.title}>
               <p className="text-sm font-bold uppercase tracking-wider text-white">{g.title}</p>
               <ul className="mt-4 space-y-2.5">
@@ -196,9 +209,9 @@ const PublicLayout = () => {
         </div>
         <div className="border-t border-white/10">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs opacity-70 sm:flex-row sm:px-6">
-            <p>© {new Date().getFullYear()} Seetha Rama Kalyana. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Seetha Rama Kalyana. {t.rights}</p>
             <p className="flex items-center gap-2">
-              <Lotus className="h-3 w-5 text-gold" /> Secure payments by Razorpay
+              <Lotus className="h-3 w-5 text-gold" /> {t.securePayments}
             </p>
           </div>
         </div>
@@ -206,10 +219,10 @@ const PublicLayout = () => {
 
       {updateAvailable && (
         <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 rounded-xl bg-primary px-4 py-3 text-sm text-primary-foreground shadow-xl">
-          <span>A new version is available</span>
+          <span>{t.newVersion}</span>
           <Button size="sm" variant="secondary" onClick={reloadApp}>
             <RefreshCw />
-            Update
+            {t.update}
           </Button>
         </div>
       )}

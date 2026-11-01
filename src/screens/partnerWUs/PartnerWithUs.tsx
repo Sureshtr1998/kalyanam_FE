@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BadgeIndianRupee, ChartLine, Languages, Megaphone, MessageCircle } from "lucide-react";
+import { BadgeIndianRupee, ChartLine, Megaphone, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldGrid } from "@/components/fields/Field";
-import { MultiSelectField, SelectField } from "@/components/fields/SelectField";
+import { MultiSelectField } from "@/components/fields/SelectField";
 import { PasswordInput } from "@/components/fields/PasswordInput";
 import { PhotoManager, type PhotoItem } from "@/components/profile/PhotoManager";
 import { BlockingLoader } from "@/components/common/Loaders";
@@ -26,10 +26,11 @@ import {
 } from "@/utils/constants";
 import { casteOptions, motherTongueOptions } from "@/utils/utils";
 import { errorMessage } from "@/lib/errors";
-import { languageNamesOptions, translations, type LanguageCode } from "./lang";
+import { usePublicLang } from "@/lib/i18n";
+import { translations } from "./lang";
 
 const PartnerWithUs = () => {
-  const [language, setLanguage] = useState<LanguageCode>("en");
+  const [language] = usePublicLang();
   const [data, setData] = useState<BrokerRegistrationForm>(brokerFormDefaultVals);
   const [idProof, setIdProof] = useState<PhotoItem[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
@@ -125,14 +126,6 @@ const PartnerWithUs = () => {
       <section className="bg-sunrise relative overflow-hidden">
         <div className="bg-kolam pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-16">
-          <div className="mx-auto mb-6 flex w-full max-w-xs items-center gap-2">
-            <Languages className="size-4 shrink-0 text-muted-foreground" />
-            <SelectField
-              value={language}
-              onChange={(v) => setLanguage(v as LanguageCode)}
-              options={languageNamesOptions}
-            />
-          </div>
           <Lotus className="mx-auto h-6 w-10 text-gold" />
           <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">{t("title")}</h1>
           <p className="mt-3 text-muted-foreground sm:text-lg">{t("subtitle")}</p>

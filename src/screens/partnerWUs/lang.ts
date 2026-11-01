@@ -1,20 +1,7 @@
+import type { Lang } from "@/lib/i18n";
 import { BROKERAGE_REGISTRATION_FEE, SUPPORT_PHONE } from "../../utils/constants";
 
-export type LanguageCode = "en" | "hi" | "kn" | "ta" | "te" | "ml" | "bn";
-
-
-export const languageNamesOptions = [
-  { label: "English", value: "en" },
-  { label: "ಕನ್ನಡ (Kannada)", value: "kn" },
-  { label: "हिंदी (Hindi)", value: "hi" },
-  { label: "தமிழ் (Tamil)", value: "ta" },
-  { label: "తెలుగు (Telugu)", value: "te" },
-  { label: "മലയാളം (Malayalam)", value: "ml" },
-  { label: "বাংলা (Bengali)", value: "bn" },
-]
-
-
-export const translations: Record<LanguageCode, Record<string, string>> = {
+export const translations: Record<Lang, Record<string, string>> = {
   kn: {
     title: "ಸೀತಾ ರಾಮ ಕಲ್ಯಾಣದೊಂದಿಗೆ ಪಾಲುದಾರರಾಗಿ",
     subtitle:
@@ -67,7 +54,6 @@ export const translations: Record<LanguageCode, Record<string, string>> = {
     label_note: "ಸೂಚನೆ",
     label_note_placeholder: "ನಿಮ್ಮ ಸೂಚನೆಯನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ",
     label_community_serve: "ನೀವು ಸೇವೆ ನೀಡುವ ಸಮುದಾಯಗಳು",
-    choose_language: "ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ",
     mother_tongues_serve: "ನೀವು ಸೇವೆ ನೀಡುವ ಮಾತೃಭಾಷೆಗಳು",
   },
   en: {
@@ -119,7 +105,6 @@ export const translations: Record<LanguageCode, Record<string, string>> = {
     label_note: "Note",
     label_note_placeholder: "Enter your note here",
     label_community_serve: "Communities You Serve",
-    choose_language: "Choose Language",
     mother_tongues_serve: "Mother Tongues You Serve",
   },
   hi: {
@@ -171,7 +156,6 @@ export const translations: Record<LanguageCode, Record<string, string>> = {
     label_note: "टिप्पणी",
     label_note_placeholder: "अपनी टिप्पणी यहाँ दर्ज करें",
     label_community_serve: "आप जिन समुदायों की सेवा करते हैं",
-    choose_language: "भाषा चुनें",
     mother_tongues_serve: "आप जिन मातृभाषाओं की सेवा करते हैं",
   },
 
@@ -224,7 +208,6 @@ export const translations: Record<LanguageCode, Record<string, string>> = {
     label_note: "குறிப்பு",
     label_note_placeholder: "உங்கள் குறிப்பை இங்கே உள்ளிடுங்கள்",
     label_community_serve: "நீங்கள் சேவை வழங்கும் சமூகங்கள்",
-    choose_language: "மொழியைத் தேர்வுசெய்யவும்",
     mother_tongues_serve: "நீங்கள் சேவை செய்யும் தாய்மொழிகள்",
   },
   te: {
@@ -276,111 +259,6 @@ export const translations: Record<LanguageCode, Record<string, string>> = {
     label_note: "గమనిక",
     label_note_placeholder: "మీ గమనికను ఇక్కడ నమోదు చేయండి",
     label_community_serve: "మీరు సేవలందించే సముదాయాలు",
-    choose_language: "భాషను ఎంచుకోండి",
     mother_tongues_serve: "మీరు సేవలందించే మాతృభాషలు",
-  },
-  ml: {
-    title: "സീതാ രാമ കല്യാണയുമായി പങ്കുചേരുക",
-    subtitle: "വിശ്വസ്തരായ മാട്രിമോണി ബ്രോക്കർമാരുടെ ഞങ്ങളുടെ ശൃംഖലയിൽ ചേരുക.",
-    benefits_title: "നിങ്ങളുടെ പ്രത്യേക ആനുകൂല്യങ്ങൾ",
-    benefit_1_strong: "വരുമാനം നൽകുന്ന റഫറൽ ബോണസ്:",
-    benefit_1_text:
-      "നിങ്ങളുടെ തനതായ കോഡ് ഉപയോഗിച്ച് രജിസ്റ്റർ ചെയ്യുന്ന ഓരോ ഉപയോക്താവിനും ഗണ്യമായ റഫറൽ ബോണസ് നേടുക. നിങ്ങൾ എത്രത്തോളം റഫർ ചെയ്യുന്നുവോ, അത്രത്തോളം നിങ്ങൾ സമ്പാദിക്കും!",
-    benefit_2_strong: "നിങ്ങളുടെ കമ്പനിയെ പരസ്യം ചെയ്യുക:",
-    benefit_2_text:
-      "വ്യക്തിഗത സേവനങ്ങൾ ഒഴിവാക്കി, ഒരു ശുദ്ധമായ സാങ്കേതിക പ്ലാറ്റ്‌ഫോമായി തുടരാൻ ഞങ്ങൾ പ്രതിജ്ഞാബദ്ധരാണ്. പകരം, സീതാ രാമ കല്യാണ ആപ്പിനുള്ളിൽ നിങ്ങളുടെ കമ്പനിയുടെയും ബന്ധപ്പെടാനുള്ള വിവരങ്ങളും പരസ്യം ചെയ്തുകൊണ്ട് വളരാൻ ഞങ്ങൾ നിങ്ങളെ സഹായിക്കും.",
-    benefit_3_strong: "സുതാര്യമായ ട്രാക്കിംഗ്:",
-    benefit_3_text:
-      "രജിസ്റ്റർ ചെയ്തുകഴിഞ്ഞാൽ, നിങ്ങളുടെ തനതായ റഫറൽ കോഡ് ഉപയോഗിച്ച് വിജയകരമായി രജിസ്റ്റർ ചെയ്ത എല്ലാ ഉപയോക്താക്കളെയും കാണാൻ ഒരു ഡാഷ്‌ബോർഡിലേക്ക് നിങ്ങൾക്ക് പ്രവേശനം ലഭിക്കും.",
-    contact_support: "വിശദമായ കമ്മീഷൻ ഘടനകൾക്കും പിന്തുണക്കും:",
-    contact_button: `${SUPPORT_PHONE}`,
-    onboarding_title: "നിങ്ങളുടെ 3-ഘട്ട ഓൺബോർഡിംഗ് പ്രക്രിയ",
-    step_1_title: "രജിസ്ട്രേഷൻ",
-    step_1_desc:
-      "നിങ്ങളുടെ വ്യക്തിപരമായ, കമ്പനി, വെരിഫിക്കേഷൻ വിവരങ്ങൾ (ഐഡി പ്രൂഫ് അപ്‌ലോഡ്) എന്നിവ നൽകി താഴെയുള്ള ഫോം പൂരിപ്പിക്കുക.",
-    step_2_title: "വെരിഫിക്കേഷൻ",
-    step_2_desc:
-      "ഞങ്ങളുടെ ടീം നിങ്ങളുടെ രേഖകളും കമ്പനി വിവരങ്ങളും പരിശോധിക്കും. ഇതിന് സാധാരണയായി 24-48 മണിക്കൂർ എടുക്കും.",
-    step_3_title: "കോഡ് & പങ്കിടുക",
-    step_3_desc:
-      "അംഗീകാരം ലഭിച്ചുകഴിഞ്ഞാൽ, നിങ്ങളുടെ തനതായ റഫറൽ കോഡ് നിങ്ങൾക്ക് ലഭിക്കും. പങ്കുവെക്കാൻ തുടങ്ങുക, നിങ്ങളുടെ റഫറലുകൾ ട്രാക്ക് ചെയ്യാൻ ആരംഭിക്കുക!",
-    form_title: "ഇപ്പോൾ അപേക്ഷിക്കുക",
-    section_1_title: "1. വ്യക്തിപരമായ & ബന്ധപ്പെടാനുള്ള വിവരങ്ങൾ",
-    label_name: "മുഴുവൻ പേര്",
-    placeholder_name: "നിങ്ങളുടെ മുഴുവൻ പേര്",
-    label_email: "ഇമെയിൽ വിലാസം",
-    placeholder_email: "you@example.com",
-    label_phone: "ഫോൺ നമ്പർ (10 അക്കങ്ങൾ)",
-    placeholder_phone: "ഉദാഹരണത്തിന്, 9876543210",
-    section_2_title: "2. അക്കൗണ്ട് സുരക്ഷ",
-    label_password: "പാസ്‌വേഡ്",
-    placeholder_password: "കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ",
-    label_confirm_password: "പാസ്‌വേഡ് ഉറപ്പാക്കുക",
-    placeholder_confirm_password: "പാസ്‌വേഡ് വീണ്ടും നൽകുക",
-    section_3_title: "3. ബിസിനസ്സ് വിവരങ്ങൾ",
-    label_company_name: "കമ്പനിയുടെ പേര്",
-    placeholder_company_name: "ഉദാഹരണത്തിന്, എബിസി മാട്രിമോണി സർവീസസ്",
-    label_address: "ബിസിനസ്സ് വിലാസം",
-    placeholder_address: "പൂർണ്ണമായ തപാൽ വിലാസം",
-    section_4_title: "4. വെരിഫിക്കേഷൻ രേഖ",
-    label_id_proof: "ഐഡി പ്രൂഫ് അപ്‌ലോഡ് ചെയ്യുക (ആധാർ/പാൻ/ഡിഎൽ)",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE}യ്ക്ക് രജിസ്റ്റർ ചെയ്യുക`,
-    label_note: "കുറിപ്പ്",
-    label_note_placeholder: "നിങ്ങളുടെ കുറിപ്പ് ഇവിടെ നൽകുക",
-    label_community_serve: "നിങ്ങൾ സേവനം നൽകുന്ന സമൂഹങ്ങൾ",
-    choose_language: "ഭാഷ തിരഞ്ഞെടുക്കുക",
-    mother_tongues_serve: "നിങ്ങൾ സേവനം നൽകുന്ന മാതൃഭാഷകൾ",
-  },
-  bn: {
-    title: "সীতা রাম কল্যাণের সাথে অংশীদার হন",
-    subtitle: "আমাদের বিশ্বস্ত ম্যাট্রিমনি ব্রোকারদের নেটওয়ার্কে যোগ দিন।",
-    benefits_title: "আপনার একচেটিয়া সুবিধাগুলি",
-    benefit_1_strong: "লাভজনক রেফারেল বোনাস:",
-    benefit_1_text:
-      "আপনার অনন্য কোড ব্যবহার করে রেজিস্ট্রেশন করা প্রতিটি ব্যবহারকারীর জন্য যথেষ্ট রেফারেল বোনাস পান। আপনি যত বেশি রেফার করবেন, তত বেশি আয় করবেন!",
-    benefit_2_strong: "আপনার কোম্পানির বিজ্ঞাপন দিন:",
-    benefit_2_text:
-      "আমরা ব্যক্তিগত পরিষেবাগুলি এড়িয়ে একটি বিশুদ্ধ প্রযুক্তি প্ল্যাটফর্ম হিসাবে থাকতে প্রতিশ্রুতিবদ্ধ। পরিবর্তে, আমরা সীতা রাম কল্যাণ অ্যাপের মধ্যে আপনার কোম্পানি এবং যোগাযোগের তথ্য বিজ্ঞাপন দিয়ে আপনাকে বেড়ে উঠতে সাহায্য করব।",
-    benefit_3_strong: "স্বচ্ছ ট্র্যাকিং:",
-    benefit_3_text:
-      "একবার নিবন্ধিত হলে, আপনার অনন্য রেফারেল কোড ব্যবহার করে সফলভাবে নিবন্ধিত সমস্ত ব্যবহারকারীদের দেখতে আপনি একটি ড্যাশবোর্ডে অ্যাক্সেস পাবেন।",
-    contact_support: "বিস্তারিত কমিশন কাঠামো এবং সহায়তার জন্য:",
-    contact_button: `${SUPPORT_PHONE}`,
-    onboarding_title: "আপনার ৩-ধাপে অনবোর্ডিং প্রক্রিয়া",
-    step_1_title: "নিবন্ধন",
-    step_1_desc:
-      "আপনার ব্যক্তিগত, কোম্পানি এবং যাচাইকরণের বিবরণ (আইডি প্রুফ আপলোড) সহ নীচের ফর্মটি পূরণ করুন।",
-    step_2_title: "যাচাইকরণ",
-    step_2_desc:
-      "আমাদের টিম আপনার নথি এবং কোম্পানির তথ্য যাচাই করবে। এটি সাধারণত ২৪-৪৮ ঘন্টা সময় নেয়।",
-    step_3_title: "কোড ও শেয়ার করুন",
-    step_3_desc:
-      "একবার অনুমোদিত হলে, আপনি আপনার অনন্য রেফারেল কোড পাবেন। শেয়ার করা শুরু করুন এবং আপনার রেফারেলগুলি ট্র্যাক করা শুরু করুন!",
-    form_title: "এখনই আবেদন করুন",
-    section_1_title: "১. ব্যক্তিগত ও যোগাযোগের তথ্য",
-    label_name: "পুরো নাম",
-    placeholder_name: "আপনার পুরো নাম",
-    label_email: "ইমেল ঠিকানা",
-    placeholder_email: "you@example.com",
-    label_phone: "ফোন নম্বর (১০ সংখ্যা)",
-    placeholder_phone: "যেমন, 9876543210",
-    section_2_title: "২. অ্যাকাউন্ট সুরক্ষা",
-    label_password: "পাসওয়ার্ড",
-    placeholder_password: "কমপক্ষে ৬টি অক্ষর",
-    label_confirm_password: "পাসওয়ার্ড নিশ্চিত করুন",
-    placeholder_confirm_password: "পাসওয়ার্ড আবার প্রবেশ করান",
-    section_3_title: "৩. ব্যবসার বিবরণ",
-    label_company_name: "কোম্পানির নাম",
-    placeholder_company_name: "যেমন, এবিসি ম্যাট্রিমনি সার্ভিসেস",
-    label_address: "ব্যবসার ঠিকানা",
-    placeholder_address: "সম্পূর্ণ ডাক ঠিকানা",
-    section_4_title: "৪. যাচাইকরণ নথি",
-    label_id_proof: "আইডি প্রুফ আপলোড করুন (আধার/প্যান/ডিএল)",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE} দিয়ে নিবন্ধন করুন`,
-    label_note: "নোট",
-    label_note_placeholder: "আপনার নোট এখানে লিখুন",
-    label_community_serve: "আপনি যেসব সম্প্রদায়ের সেবা দেন",
-    choose_language: "ভাষা নির্বাচন করুন",
-    mother_tongues_serve: "আপনি যে মাতৃভাষাগুলিতে সেবা দেন",
   },
 };

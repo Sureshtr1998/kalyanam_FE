@@ -18,58 +18,25 @@ import { OmSpinner } from "@/components/common/Loaders";
 import LoginForm from "@/components/forms/LoginForm";
 import SEO from "@/components/misc/SEO";
 import type { FormType } from "@/utils/interfaces";
-import {
-  INITIAL_NO_INTEREST,
-  OVERVIEW_ASTRO_FEE,
-  REGISTRATION_FEE,
-  REGISTRATION_FEE_ORIGINAL,
-  SEO_URL,
-} from "@/utils/constants";
+import { REGISTRATION_FEE, REGISTRATION_FEE_ORIGINAL, SEO_URL } from "@/utils/constants";
 import { isLoggedIn } from "@/lib/session";
+import { usePublicLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
+import { landerText } from "./lang";
 
 // Only the login form is needed on first paint; the rest load when opened.
 const RegistrationForm = lazy(() => import("@/components/forms/register/RegistrationForm"));
 const ForgotPasswordForm = lazy(() => import("@/components/forms/ForgotPasswordForm"));
 const LatestPosts = lazy(() => import("./LatestPosts"));
 
-const steps = [
-  {
-    icon: <UserRoundPlus />,
-    title: "Create your profile",
-    text: "Share your family background, education and what you're looking for, in about three minutes.",
-  },
-  {
-    icon: <Users />,
-    title: "Discover matches",
-    text: "See verified profiles from your community that fit your partner preferences.",
-  },
-  {
-    icon: <HeartHandshake />,
-    title: "Connect with families",
-    text: "Send an interest. When it's accepted, contact details are shared with both families.",
-  },
-];
-
-const values = [
-  { icon: <ShieldCheck />, title: "Verified members", text: "Email and WhatsApp numbers are verified with one-time codes before profiles go live." },
-  { icon: <Lock />, title: "Private by design", text: "Contact details stay hidden until both sides accept, or you choose to unlock them." },
-  { icon: <IndianRupee />, title: "Honest pricing", text: `₹${REGISTRATION_FEE} a year with ${INITIAL_NO_INTEREST} credits included (1 credit = 1 interest). No sales calls, no hidden fees.` },
-  { icon: <Bell />, title: "Instant updates", text: "Email alerts the moment someone sends or accepts your interest." },
-  { icon: <Sparkles />, title: "Vedic astrology", text: `Kundli matching and personal readings by our jyotishi, from ₹${OVERVIEW_ASTRO_FEE}.` },
-  { icon: <BadgeCheck />, title: "Hindu community only", text: "Dedicated exclusively to Hindu families, across castes and mother tongues." },
-];
-
-const heroPoints = [
-  { icon: <ShieldCheck />, title: "OTP-verified members", text: "Email and WhatsApp checked before profiles go live." },
-  { icon: <Lock />, title: "Private by design", text: "Contacts shared only after both sides accept." },
-  { icon: <IndianRupee />, title: `₹${REGISTRATION_FEE} a year`, text: `${INITIAL_NO_INTEREST} interest credits included. No sales calls.` },
-  { icon: <BadgeCheck />, title: "Hindu families only", text: "Across castes and mother tongues." },
-];
+const stepIcons = [<UserRoundPlus />, <Users />, <HeartHandshake />];
+const valueIcons = [<ShieldCheck />, <Lock />, <IndianRupee />, <Bell />, <Sparkles />, <BadgeCheck />];
+const heroIcons = [<ShieldCheck />, <Lock />, <IndianRupee />, <BadgeCheck />];
 
 const Lander = () => {
   const [form, setForm] = useState<FormType>("login");
   const navigate = useNavigate();
+  const t = landerText[usePublicLang()[0]];
 
   useEffect(() => {
     if (isLoggedIn()) navigate("/home", { replace: true });
@@ -107,12 +74,12 @@ const Lander = () => {
             {/* The round logo, with a Sanskrit verse (romanised) set on an arc above it and another below. */}
             <div className="lg:col-start-1 lg:row-start-1">
               <h1 className="sr-only">
-                <span lang="sa-Latn">tava anveṣaṇaṃ saphalaṃ bhavatu</span> (May your search be fruitful)
+                <span lang="sa-Latn">tava anveṣaṇaṃ saphalaṃ bhavatu</span> ({t.srMeaning})
               </h1>
               <div className="relative mx-auto size-[21rem] sm:size-96 lg:size-[30rem]">
                 <img
                   src="/logo.png"
-                  alt="Seetha Rama Kalyana emblem: Lord Rama and Seetha at their wedding"
+                  alt={t.emblemAlt}
                   width={512}
                   height={512}
                   loading="eager"
@@ -152,8 +119,8 @@ const Lander = () => {
                   <div className="mb-2 grid grid-cols-2 gap-1 rounded-[1.4rem] bg-muted p-1">
                     {(
                       [
-                        { key: "login", label: "Log in", active: form === "login", go: "login" },
-                        { key: "register", label: "Register", active: registering, go: 1 },
+                        { key: "login", label: t.login, active: form === "login", go: "login" },
+                        { key: "register", label: t.register, active: registering, go: 1 },
                       ] as const
                     ).map((t) => (
                       <button
@@ -186,13 +153,13 @@ const Lander = () => {
               {form === "login" && (
                 <div className="mt-4 flex items-center justify-between gap-3 rounded-2xl border border-primary/15 bg-primary px-5 py-4 text-primary-foreground shadow-lg">
                   <div>
-                    <p className="text-xs uppercase tracking-wide opacity-80">Annual membership</p>
+                    <p className="text-xs uppercase tracking-wide opacity-80">{t.annual}</p>
                     <p className="font-display text-2xl font-bold">
                       ₹{REGISTRATION_FEE} <span className="text-base font-normal opacity-70 line-through">₹{REGISTRATION_FEE_ORIGINAL}</span>
                     </p>
                   </div>
                   <Button variant="secondary" onClick={() => changeForm(1)}>
-                    Register
+                    {t.register}
                     <ArrowRight />
                   </Button>
                 </div>
@@ -201,24 +168,17 @@ const Lander = () => {
 
             {/* Below lg this drops under the form as plain full-width lines. */}
             <div className="mx-auto max-w-2xl text-center lg:col-start-1 lg:row-start-2">
-              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Seetha Rama Kalyana helps Hindu families find life partners rooted in dharma,
-                tradition and trust, with verified profiles and honest, minimal pricing.
-              </p>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Like the kalyana of Seetha and Rama, every marriage here begins with the blessing of
-                both families. Browse profiles from your community, send an interest, and connect
-                only when both sides agree.
-              </p>
+              <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">{t.intro1}</p>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{t.intro2}</p>
             </div>
           </div>
 
           {/* Key points */}
           <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {heroPoints.map((p) => (
-              <li key={p.title} className="flex items-start gap-3 rounded-2xl border border-gold/30 bg-card/80 p-3 shadow-sm backdrop-blur">
+            {t.heroPoints.map((p, i) => (
+              <li key={i} className="flex items-start gap-3 rounded-2xl border border-gold/30 bg-card/80 p-3 shadow-sm backdrop-blur">
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-accent text-primary [&_svg]:size-4">
-                  {p.icon}
+                  {heroIcons[i]}
                 </span>
                 <span>
                   <span className="block text-sm font-semibold">{p.title}</span>
@@ -232,13 +192,13 @@ const Lander = () => {
 
       {/* How it works */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-        <SectionHeading eyebrow="How it works" title="Three steps to your kalyana" />
+        <SectionHeading eyebrow={t.howEyebrow} title={t.howTitle} />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {steps.map((s, i) => (
-            <div key={s.title} className="relative rounded-3xl border border-border bg-card p-6 shadow-sm">
+          {t.steps.map((s, i) => (
+            <div key={i} className="relative rounded-3xl border border-border bg-card p-6 shadow-sm">
               <span className="absolute right-5 top-4 font-display text-5xl font-bold text-gold/25">{i + 1}</span>
               <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground [&_svg]:size-6">
-                {s.icon}
+                {stepIcons[i]}
               </div>
               <h3 className="mt-4 font-display text-2xl font-bold">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
@@ -251,15 +211,15 @@ const Lander = () => {
       <section className="bg-kolam border-y border-gold/20 bg-accent/40">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <SectionHeading
-            eyebrow="Why families trust us"
-            title="Tradition at heart, care in every detail"
-            description="We are a community service first, not a sales funnel."
+            eyebrow={t.valuesEyebrow}
+            title={t.valuesTitle}
+            description={t.valuesDescription}
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {values.map((v) => (
-              <div key={v.title} className="flex gap-4 rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
+            {t.values.map((v, i) => (
+              <div key={i} className="flex gap-4 rounded-2xl bg-card p-5 shadow-sm ring-1 ring-border">
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary [&_svg]:size-5">
-                  {v.icon}
+                  {valueIcons[i]}
                 </div>
                 <div>
                   <h3 className="font-semibold">{v.title}</h3>
@@ -274,10 +234,10 @@ const Lander = () => {
       {/* Blog teaser */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <SectionHeading align="left" eyebrow="From our blog" title="Guidance for your journey" />
+          <SectionHeading align="left" eyebrow={t.blogEyebrow} title={t.blogTitle} />
           <Button asChild variant="outline">
             <Link to="/blog">
-              All articles <ArrowRight />
+              {t.allArticles} <ArrowRight />
             </Link>
           </Button>
         </div>
@@ -294,13 +254,11 @@ const Lander = () => {
           <div className="bg-kolam pointer-events-none absolute inset-0 opacity-30" />
           <Lotus className="relative mx-auto h-8 w-14 text-gold" />
           <h2 className="relative mt-3 font-display text-3xl font-bold sm:text-4xl">
-            May your search be blessed
+            {t.ctaTitle}
           </h2>
-          <p className="relative mx-auto mt-3 max-w-xl opacity-85">
-            Join families across India and abroad who trust Seetha Rama Kalyana.
-          </p>
+          <p className="relative mx-auto mt-3 max-w-xl opacity-85">{t.ctaText}</p>
           <Button size="lg" variant="secondary" className="relative mt-6" onClick={() => changeForm(1)}>
-            Create your profile · ₹{REGISTRATION_FEE}/year
+            {t.ctaButton}
           </Button>
         </div>
       </section>
