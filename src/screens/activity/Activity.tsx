@@ -49,6 +49,20 @@ const STATUS_STYLE: Record<InvitationStatus, string> = {
   received: "bg-primary/10 text-primary border-primary/30",
 };
 
+const STATUS_FILTERS: { id: InvitationStatus; label: string }[] = [
+  { id: "received", label: "Action required" },
+  { id: "sent", label: "Awaiting reply" },
+  { id: "accept", label: "Accepted" },
+  { id: "decline", label: "Declined" },
+];
+
+const ACTED_LABEL: Record<InvitationStatus, string> = {
+  received: "Received",
+  sent: "Sent",
+  accept: "Accepted",
+  decline: "Declined",
+};
+
 const PAGE = 10;
 
 const Activity = () => {
@@ -62,6 +76,13 @@ const Activity = () => {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [shown, setShown] = useState(PAGE);
+  // Empty means every status is shown.
+  const [statuses, setStatuses] = useState<InvitationStatus[]>([]);
+
+  const toggleStatus = (s: InvitationStatus) => {
+    setShown(PAGE);
+    setStatuses((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
+  };
 
   const load = async (which: TabId) => {
     setLoading(true);
@@ -85,14 +106,26 @@ const Activity = () => {
   const selected = openId ? rows.find((r) => r._id === openId) ?? null : null;
   const setSelected = (row: UserDetails | null) => (row?._id ? openProfile(row._id) : closeProfile());
 
+  const statusCounts = useMemo(() => {
+    const counts: Partial<Record<InvitationStatus, number>> = {};
+    if (tab !== "interests") return counts;
+    for (const r of rows) {
+      const s = r.interests?.invitationStatus as InvitationStatus | undefined;
+      if (s) counts[s] = (counts[s] ?? 0) + 1;
+    }
+    return counts;
+  }, [rows, tab]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return rows;
+    const byStatus = tab === "interests" && statuses.length > 0;
+    if (!q && !byStatus) return rows;
     return rows.filter(
       (r) =>
-        r.basic?.fullName?.toLowerCase().includes(q) || r.basic?.uniqueId?.toLowerCase().includes(q)
+        (!byStatus || statuses.includes(r.interests?.invitationStatus as InvitationStatus)) &&
+        (!q || r.basic?.fullName?.toLowerCase().includes(q) || r.basic?.uniqueId?.toLowerCase().includes(q))
     );
-  }, [rows, query]);
+  }, [rows, query, tab, statuses]);
 
   const respond = async (id: string, action: "accept" | "decline") => {
     setBusyId(id);
@@ -163,6 +196,43 @@ const Activity = () => {
         </div>
       </div>
 
+      {tab === "interests" && rows.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Filter interests by status">
+          <button
+            type="button"
+            aria-pressed={statuses.length === 0}
+            onClick={() => {
+              setShown(PAGE);
+              setStatuses([]);
+            }}
+            className={cn(
+              "rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
+              statuses.length === 0
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-foreground/80 hover:bg-muted"
+            )}>
+            All ({rows.length})
+          </button>
+          {STATUS_FILTERS.map((f) => {
+            const active = statuses.includes(f.id);
+            return (
+              <button
+                key={f.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => toggleStatus(f.id)}
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition-colors sm:text-sm",
+                  active ? STATUS_STYLE[f.id] : "border-border bg-card text-foreground/80 hover:bg-muted"
+                )}>
+                {active && <Check className="size-3.5" />}
+                {f.label} ({statusCounts[f.id] ?? 0})
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {tab === "hidden" && (
         <p className="mb-4 flex gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-foreground/80">
           <Ban className="mt-0.5 size-4 shrink-0 text-primary" />
@@ -180,8 +250,14 @@ const Activity = () => {
       ) : filtered.length === 0 ? (
         <EmptyState
           icon={TABS.find((t) => t.id === tab)?.icon}
-          title={query ? "No results" : TABS.find((t) => t.id === tab)?.empty}
-          description={query ? "Try a different name or profile ID." : TABS.find((t) => t.id === tab)?.emptyText}
+          title={query || rows.length > 0 ? "No results" : TABS.find((t) => t.id === tab)?.empty}
+          description={
+            query
+              ? "Try a different name or profile ID."
+              : rows.length > 0
+                ? "No interests match the selected filters."
+                : TABS.find((t) => t.id === tab)?.emptyText
+          }
         />
       ) : (
         <ul className="space-y-3">
@@ -216,9 +292,16 @@ const Activity = () => {
                       <p className="mt-1 text-xs font-medium text-primary">Viewed you on {formatInstant(row.viewedAt, true)}</p>
                     )}
                     {tab === "interests" && status && (
-                      <Badge variant="outline" className={cn("mt-1.5", STATUS_STYLE[status])}>
-                        {status === "sent" ? "Awaiting reply" : getStatusLabel(status)}
-                      </Badge>
+                      <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <Badge variant="outline" className={STATUS_STYLE[status]}>
+                          {status === "sent" ? "Awaiting reply" : getStatusLabel(status)}
+                        </Badge>
+                        {row.interests?.actedAt && (
+                          <span className="text-xs text-muted-foreground">
+                            {ACTED_LABEL[status]} {formatInstant(row.interests.actedAt)}
+                          </span>
+                        )}
+                      </div>
                     )}
                     {status === "accept" && row.basic?.mobile && (
                       <p className="mt-1 text-xs font-semibold text-success">

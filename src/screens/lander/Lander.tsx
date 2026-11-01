@@ -104,9 +104,11 @@ const Lander = () => {
           {/* lg: emblem with the copy below it on the left, form on the right.
               Smaller screens stack emblem, form, then copy. */}
           <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-4">
-            {/* The round logo, with the heading set on an arc around it. */}
+            {/* The round logo, with a Sanskrit verse (romanised) set on an arc above it and another below. */}
             <div className="lg:col-start-1 lg:row-start-1">
-              <h1 className="sr-only">A sacred union, blessed like Seetha &amp; Rama</h1>
+              <h1 className="sr-only">
+                <span lang="sa-Latn">tava anveṣaṇaṃ saphalaṃ bhavatu</span> (May your search be fruitful)
+              </h1>
               <div className="relative mx-auto size-[21rem] sm:size-96 lg:size-[30rem]">
                 <img
                   src="/logo.png"
@@ -120,14 +122,24 @@ const Lander = () => {
                   <defs>
                     {/* Full circle starting at the bottom, drawn clockwise, so its midpoint is the top. */}
                     <path id="hero-arc" d="M200,366 A166,166 0 1,1 200,34 A166,166 0 1,1 200,366" />
+                    {/* Lower half, left to right, so that text reads upright. Its letters hang
+                        inward from the line, hence the larger radius to clear the image. */}
+                    <path id="hero-arc-bottom" d="M20,200 A180,180 0 0,0 380,200" />
                     <linearGradient id="hero-gold" x1="0" x2="1">
                       <stop offset="0" stopColor="var(--saffron-700)" />
                       <stop offset="1" stopColor="var(--marigold)" />
                     </linearGradient>
                   </defs>
-                  <text className="font-display text-[30px] font-bold" fill="var(--foreground)">
-                    <textPath href="#hero-arc" startOffset="50%" textAnchor="middle">
-                      A sacred union, <tspan fill="url(#hero-gold)">blessed like Seetha &amp; Rama</tspan>
+                  {/* textLength spreads each verse over nearly its half of the circle (πr, less a
+                      small gap at each side), so together the two lines ring the emblem. */}
+                  <text lang="sa-Latn" className="font-display text-[36px] font-bold" fill="var(--foreground)">
+                    <textPath href="#hero-arc" startOffset="50%" textAnchor="middle" textLength={500} lengthAdjust="spacing">
+                      tava anveṣaṇaṃ <tspan fill="url(#hero-gold)">saphalaṃ bhavatu</tspan>
+                    </textPath>
+                  </text>
+                  <text lang="sa-Latn" className="font-display text-[25px] font-bold italic" fill="var(--foreground)">
+                    <textPath href="#hero-arc-bottom" startOffset="50%" textAnchor="middle" textLength={545} lengthAdjust="spacing">
+                      <tspan fill="url(#hero-gold)">śrī-rāmacandra-caraṇau</tspan> śaraṇaṃ prapadye
                     </textPath>
                   </text>
                 </svg>

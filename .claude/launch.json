@@ -23,6 +23,15 @@
       "port": 5176
     },
     {
+      "name": "be-local",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d ..\\kalyanam_BE&& set PORT=5055&& set MONGO_URI=mongodb://localhost:27017/kalyanam_local&& node src/index.js"
+      ],
+      "port": 5055
+    },
+    {
       "name": "fe-preview",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

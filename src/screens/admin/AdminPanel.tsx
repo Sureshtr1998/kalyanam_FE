@@ -25,14 +25,105 @@ import { inr, type BrokerInfo, type Summary } from "@/components/staff/staffType
 import { SignupBars, Stat } from "@/components/staff/StaffStats";
 import { useUser } from "@/context/UserContext";
 import api from "@/utils/api";
+import { cn } from "@/lib/utils";
 import { formatInstant } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
+
+type Period = "today" | "yesterday" | "week" | "month";
+const PERIODS: [Period, string][] = [
+  ["today", "Today"],
+  ["yesterday", "Yesterday"],
+  ["week", "This week"],
+  ["month", "This month"],
+];
+const REVENUE_LABELS: Record<string, string> = {
+  registration: "Registrations",
+  credits: "Interest credits",
+  astrology: "Astrology",
+  partner: "Partner fees",
+  other: "Other",
+};
+
+interface PeriodStats {
+  from: string;
+  to: string;
+  members: { joined: number; male: number; female: number; referred: number };
+  partnersJoined: number;
+  revenue: { total: number; refunded: number; payments: number; byType: Record<string, { total: number; count: number }> };
+  commission: number;
+}
+
+const istDay = (d: string) => new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" });
+
+/** Sign-ups and earnings for one calendar period (IST). */
+const PeriodReport = ({ refreshKey }: { refreshKey: unknown }) => {
+  const [period, setPeriod] = useState<Period>("today");
+  const [stats, setStats] = useState<PeriodStats | null>(null);
+  useEffect(() => {
+    setStats(null);
+    api
+      .get<PeriodStats>("/manage/period", { params: { period } })
+      .then((res) => setStats(res.data))
+      .catch((err) => toast.error("Couldn't load the report", { description: errorMessage(err) }));
+  }, [period, refreshKey]);
+
+  const range = stats && (period === "today" || period === "yesterday" ? istDay(stats.from) : `${istDay(stats.from)} – ${istDay(stats.to)}`);
+  const byType = Object.entries(stats?.revenue.byType ?? {});
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-4">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold">Sign-ups & earnings</p>
+          <p className="text-xs text-muted-foreground">{range ?? " "}</p>
+        </div>
+        <div className="grid w-full grid-cols-4 gap-1 rounded-xl bg-muted p-1 sm:flex sm:w-auto">
+          {PERIODS.map(([v, label]) => (
+            <Button
+              key={v}
+              size="sm"
+              variant="ghost"
+              className={cn("h-7 px-1 text-xs sm:px-3 sm:text-sm",period === v && "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground")}
+              onClick={() => setPeriod(v)}
+            >
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
+      {!stats ? (
+        <Skeleton className="h-28 w-full rounded-2xl" />
+      ) : (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <Stat label="Members joined" value={stats.members.joined} hint={`${stats.members.female} brides · ${stats.members.male} grooms`} accent />
+            <Stat label="Earned" value={inr(stats.revenue.total)} hint={`${stats.revenue.payments} payments${stats.revenue.refunded ? ` · ${inr(stats.revenue.refunded)} refunded` : ""}`} accent />
+            <Stat label="Via partners" value={stats.members.referred} hint={`${inr(stats.commission)} commission owed`} />
+            <Stat label="Partners joined" value={stats.partnersJoined} />
+          </div>
+          {!!byType.length && (
+            <ul className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+              {byType.map(([type, r]) => (
+                <li key={type} className="flex items-center justify-between gap-3">
+                  <span>{REVENUE_LABELS[type] ?? type}</span>
+                  <span className="text-muted-foreground">{r.count}×</span>
+                  <span className="ml-auto font-semibold">{inr(r.total)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Overview = ({ summary }: { summary: Summary | null }) => {
   if (!summary) return <Skeleton className="h-96 w-full rounded-3xl" />;
   const { members: m, revenue, interests, brokers, commission } = summary;
   return (
     <div className="space-y-6">
+      <PeriodReport refreshKey={summary} />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label="Members" value={m.total} hint={`${m.female} brides · ${m.male} grooms`} accent />
         <Stat label="New this week" value={m.new7} hint={`${m.new30} in 30 days`} />
@@ -214,6 +305,8 @@ interface PaymentRow {
   credits?: number;
   paymentId?: string;
   orderId?: string;
+  amountRefunded?: number;
+  refundedAt?: string;
 }
 
 const Payments = () => {
@@ -252,7 +345,10 @@ const Payments = () => {
                   </p>
                 </TableCell>
                 <TableCell className="max-w-56 truncate">{r.note?.replace("Astro_", "Astrology · ")}</TableCell>
-                <TableCell className="text-right font-semibold">{inr(r.amount)}</TableCell>
+                <TableCell className="text-right font-semibold">
+                  <span className={cn(r.refundedAt && "text-muted-foreground line-through")}>{inr(r.amount)}</span>
+                  {r.refundedAt && <p className="text-xs font-normal text-destructive">Refunded {inr(r.amountRefunded)}</p>}
+                </TableCell>
                 <TableCell className="text-right">{r.credits ? (r.credits > 0 ? `+${r.credits}` : r.credits) : "-"}</TableCell>
                 <TableCell className="max-w-40 truncate font-mono text-xs">{r.paymentId || "-"}</TableCell>
               </TableRow>

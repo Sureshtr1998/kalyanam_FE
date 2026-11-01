@@ -69,6 +69,8 @@ export interface PartnerDetailsIn {
     note?: string
     qualification?: string[]
     country?: string[]
+    /** Must-have preferences; unset means every preference is one. */
+    strict?: string[]
     genderBrokerFilter?: string[]
 }
 
@@ -80,6 +82,7 @@ export interface InterestsIn {
     accepted?: string[]
     declined?: string[]
     invitationStatus?: 'accept' | 'decline' | 'sent' | 'received' | 'pending',
+    actedAt?: string | null,
 }
 
 export interface TransactionsIn {
@@ -89,6 +92,9 @@ export interface TransactionsIn {
     note?: string,
     amountPaid?: number,
     noOfInterest?: number,
+    refundId?: string,
+    amountRefunded?: number,
+    refundedAt?: string,
 }
 
 export type ConsultationMode = "Overview" | "Personalized" | "Kundli Matching";

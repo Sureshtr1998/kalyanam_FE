@@ -8,6 +8,7 @@ import {
   IndianRupee,
   LoaderCircle,
   Pencil,
+  RotateCcw,
   ShieldCheck,
   ShieldOff,
   Trash2,
@@ -512,8 +513,28 @@ export const MemberSheet = ({ id, kind, onClose, onChanged }: Props) => {
                               <p className="truncate font-mono text-xs text-muted-foreground">{t.paymentId || t.orderId}</p>
                             </div>
                             <div className="shrink-0 text-right">
-                              <p className="font-semibold">{inr(t.amountPaid)}</p>
+                              <p className={cn("font-semibold", t.refundedAt && "text-muted-foreground line-through")}>{inr(t.amountPaid)}</p>
                               <p className="text-xs text-muted-foreground">{formatInstant(t.dateOfTrans)}</p>
+                              {t.refundedAt ? (
+                                <Badge variant="outline" className="mt-1 border-destructive/40 text-destructive" title={t.refundId}>
+                                  <RotateCcw /> Refunded {inr(t.amountRefunded)} · {formatInstant(t.refundedAt)}
+                                </Badge>
+                              ) : (
+                                !!t.paymentId &&
+                                (t.amountPaid ?? 0) > 0 && (
+                                  <ConfirmButton
+                                    icon={busy === `refund-${t.paymentId}` ? <LoaderCircle className="animate-spin" /> : <RotateCcw />}
+                                    label="Refund"
+                                    destructive
+                                    disabled={!!busy}
+                                    className="mt-1 h-7"
+                                    title={`Refund ${inr(t.amountPaid)} to ${member.basic.fullName}?`}
+                                    description={`The full amount for "${t.note}" goes back to their original payment method through Razorpay and they get an email. This can't be undone. Credits or access they bought are not removed automatically.`}
+                                    confirm="Refund full amount"
+                                    onConfirm={() => act(`refund-${t.paymentId}`, post("refund", { paymentId: t.paymentId }))}
+                                  />
+                                )
+                              )}
                             </div>
                           </li>
                         ))}
