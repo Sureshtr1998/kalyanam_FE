@@ -103,10 +103,14 @@ const LaunchNote = ({ filtered }: { filtered?: boolean }) => (
         ? "Try widening the age range or adding more communities. Matching works both ways, so you only see families whose own preferences include you. "
         : ""}
       Seetha Rama Kalyana is new, and we're personally inviting families every
-      day. Please give us a little time, it can take a while before profiles
-      that match you both ways appear here.
+      day.{" "}
+      <span className="font-semibold text-primary">
+        Please give us a little time
+      </span>
+      , it can take a while before profiles that match you both ways appear
+      here.
     </p>
-    <ul className="mx-auto grid max-w-md gap-2 text-left">
+    <ul className="mx-auto grid max-w-2xl gap-2 text-left sm:grid-cols-2">
       <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
         <CalendarHeart className="mt-0.5 size-5 shrink-0 text-primary" />
         <span>
@@ -450,7 +454,7 @@ const Home = () => {
             <SheetDescription>
               Starts from your{" "}
               <Link
-                to="/profile"
+                to="/profile?tab=partner"
                 className="font-semibold text-primary underline-offset-2 hover:underline">
                 partner preferences
               </Link>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useSearchParams } from "react-router-dom";
 import { BadgeCheck, Briefcase, Download, Filter, House, LoaderCircle, Lock, Save, UserRound } from "lucide-react";
 import SEO from "@/components/misc/SEO";
 import { toast } from "sonner";
@@ -91,7 +92,11 @@ const Profile = () => {
   const { user, loaded, setUser } = useUser();
   const [data, setData] = useState<UserDetails>(user);
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
-  const [tab, setTab] = useState<Section>("basic");
+  const [searchParams] = useSearchParams();
+  const [tab, setTab] = useState<Section>(() => {
+    const requested = searchParams.get("tab");
+    return SECTIONS.some((s) => s.id === requested) ? (requested as Section) : "basic";
+  });
   const [showErrors, setShowErrors] = useState(false);
   const [saving, setSaving] = useState(false);
   const [verifyOpen, setVerifyOpen] = useState(false);

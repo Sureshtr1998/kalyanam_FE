@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { CalendarDays, ChevronDown, ChevronUp, Clock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -17,7 +17,40 @@ interface DateFieldProps {
   invalid?: boolean;
 }
 
-/** Calendar with month/year dropdowns. Works purely in "YYYY-MM-DD" strings. */
+const Chip = ({ active, className, ...props }: React.ComponentProps<"button"> & { active?: boolean }) => (
+  <button
+    type="button"
+    aria-pressed={active}
+    className={cn(
+      "h-9 rounded-lg border border-border bg-card text-sm font-medium tabular-nums transition-colors hover:border-primary/40 hover:bg-accent disabled:pointer-events-none disabled:opacity-35",
+      active && "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary",
+      className
+    )}
+    {...props}
+  />
+);
+
+type DateView = "days" | "months" | "years";
+
+const MONTHS = Array.from({ length: 12 }, (_, i) => new Date(2000, i, 1).toLocaleString("default", { month: "short" }));
+
+/** Day cells: round, roomy tap targets with a saffron selected state and a ringed "today". */
+const DAY_CLASSES = {
+  root: "w-full",
+  month_caption: "hidden",
+  weekdays: "flex",
+  weekday: "flex-1 pb-1 text-[0.7rem] font-semibold uppercase tracking-wide text-muted-foreground select-none",
+  week: "mt-1 flex w-full",
+  day: "group/day relative flex-1 p-0 text-center select-none",
+  today: "[&>button]:ring-1 [&>button]:ring-primary/50 [&>button]:font-semibold [&>button]:text-primary",
+  outside: "[&>button]:text-muted-foreground/50",
+  disabled: "[&>button]:opacity-30 [&>button]:pointer-events-none",
+};
+
+/**
+ * Date picker with a "selected date" header and drill-down views: tap the month/year
+ * caption to jump years → months → days. Works purely in "YYYY-MM-DD" strings.
+ */
 export const DateField = ({
   id,
   value,
@@ -29,9 +62,33 @@ export const DateField = ({
 }: DateFieldProps) => {
   const [open, setOpen] = useState(false);
   const selected = valueToLocalDate(value);
+  const [month, setMonth] = useState<Date>(selected ?? maxDate);
+  const [view, setView] = useState<DateView>("days");
+  const yearListRef = useRef<HTMLDivElement>(null);
+
+  const maxYear = maxDate.getFullYear();
+  const years = Array.from({ length: maxYear - minYear + 1 }, (_, i) => maxYear - i);
+  const atStart = month.getFullYear() === minYear && month.getMonth() === 0;
+  const atEnd = month.getFullYear() === maxYear && month.getMonth() === maxDate.getMonth();
+  const shiftMonth = (delta: number) => setMonth((m) => new Date(m.getFullYear(), m.getMonth() + delta, 1));
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    if (next) {
+      setMonth(selected ?? maxDate);
+      // No date yet (e.g. date of birth) — start at the year list, it's the biggest jump.
+      setView(selected ? "days" : "years");
+    }
+  };
+
+  // Keep the active year in view when the year list opens.
+  useEffect(() => {
+    if (view !== "years") return;
+    yearListRef.current?.querySelector<HTMLElement>("[data-active=true]")?.scrollIntoView({ block: "center" });
+  }, [view]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button
           id={id}
@@ -46,22 +103,114 @@ export const DateField = ({
           {value ? formatFloating(value) : placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          captionLayout="dropdown"
-          selected={selected}
-          defaultMonth={selected ?? maxDate}
-          startMonth={new Date(minYear, 0)}
-          endMonth={maxDate}
-          disabled={{ after: maxDate }}
-          onSelect={(d) => {
-            if (d) {
-              onChange(localDateToValue(d));
-              setOpen(false);
-            }
-          }}
-        />
+      <PopoverContent className="w-[19rem] overflow-hidden p-0" align="start">
+        {/* Selected date */}
+        <div className="border-b border-border bg-accent/40 px-4 py-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {selected ? selected.toLocaleString("default", { weekday: "long" }) : "Select a date"}
+          </p>
+          <p className={cn("font-display text-2xl font-bold leading-tight", !selected && "text-muted-foreground")}>
+            {selected
+              ? selected.toLocaleString("default", { day: "numeric", month: "long", year: "numeric" })
+              : "— — —"}
+          </p>
+        </div>
+
+        {/* Caption: drill-down toggle + month nav */}
+        <div className="flex items-center justify-between gap-2 px-3 pt-3">
+          <button
+            type="button"
+            onClick={() => setView(view === "days" ? "years" : "days")}
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-semibold transition-colors hover:bg-accent">
+            {view === "months" ? month.getFullYear() : `${MONTHS[month.getMonth()]} ${month.getFullYear()}`}
+            <ChevronDown className={cn("size-4 text-muted-foreground transition-transform", view !== "days" && "rotate-180")} />
+          </button>
+          {view === "days" && (
+            <div className="flex gap-1">
+              <Button type="button" variant="ghost" size="icon" className="size-8 rounded-full" aria-label="Previous month" disabled={atStart} onClick={() => shiftMonth(-1)}>
+                <ChevronLeft />
+              </Button>
+              <Button type="button" variant="ghost" size="icon" className="size-8 rounded-full" aria-label="Next month" disabled={atEnd} onClick={() => shiftMonth(1)}>
+                <ChevronRight />
+              </Button>
+            </div>
+          )}
+        </div>
+
+        <div className="p-3">
+          {view === "years" && (
+            <div ref={yearListRef} className="grid max-h-64 grid-cols-4 gap-1.5 overflow-y-auto pr-1">
+              {years.map((y) => (
+                <Chip
+                  key={y}
+                  data-active={y === month.getFullYear()}
+                  active={y === month.getFullYear()}
+                  onClick={() => {
+                    setMonth(new Date(y, Math.min(month.getMonth(), y === maxYear ? maxDate.getMonth() : 11), 1));
+                    setView("months");
+                  }}>
+                  {y}
+                </Chip>
+              ))}
+            </div>
+          )}
+
+          {view === "months" && (
+            <div className="grid grid-cols-3 gap-2">
+              {MONTHS.map((label, i) => {
+                const beyondMax = month.getFullYear() === maxYear && i > maxDate.getMonth();
+                return (
+                  <Chip
+                    key={label}
+                    active={i === month.getMonth()}
+                    disabled={beyondMax}
+                    className="h-11"
+                    onClick={() => {
+                      setMonth(new Date(month.getFullYear(), i, 1));
+                      setView("days");
+                    }}>
+                    {label}
+                  </Chip>
+                );
+              })}
+            </div>
+          )}
+
+          {view === "days" && (
+            <Calendar
+              mode="single"
+              hideNavigation
+              className="w-full p-0 [--cell-size:--spacing(9)]"
+              classNames={DAY_CLASSES}
+              selected={selected}
+              month={month}
+              onMonthChange={setMonth}
+              startMonth={new Date(minYear, 0)}
+              endMonth={maxDate}
+              disabled={{ after: maxDate }}
+              components={{
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                DayButton: ({ day, modifiers, className, ...props }) => (
+                  <button
+                    {...props}
+                    type="button"
+                    className={cn(
+                      "mx-auto flex size-(--cell-size) items-center justify-center rounded-full text-sm tabular-nums transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      modifiers.selected && "bg-primary font-semibold text-primary-foreground shadow-sm hover:bg-primary",
+                      className
+                    )}
+                  />
+                ),
+              }}
+              onSelect={(d) => {
+                if (d) {
+                  onChange(localDateToValue(d));
+                  setOpen(false);
+                }
+              }}
+            />
+          )}
+        </div>
       </PopoverContent>
     </Popover>
   );
@@ -86,19 +235,6 @@ const parseTime = (value?: string) => {
   return { hour: h24 % 12 || 12, minute: Number(m[2]), pm: h24 >= 12 };
 };
 
-const Chip = ({ active, onClick, children, className }: { active?: boolean; onClick: () => void; children: React.ReactNode; className?: string }) => (
-  <button
-    type="button"
-    aria-pressed={active}
-    onClick={onClick}
-    className={cn(
-      "h-9 rounded-lg border border-border bg-card text-sm font-medium tabular-nums transition-colors hover:border-primary/40 hover:bg-accent",
-      active && "border-primary bg-primary text-primary-foreground hover:border-primary hover:bg-primary",
-      className
-    )}>
-    {children}
-  </button>
-);
 
 /** Hour / minute / AM-PM picker with tap targets instead of scrolling lists. Stores "HH:mm" (24h). */
 export const TimeField = ({ id, value, onChange, invalid }: TimeFieldProps) => {

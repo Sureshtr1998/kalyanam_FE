@@ -43,15 +43,33 @@ export const EmptyState = ({
   description?: ReactNode;
   action?: ReactNode;
   className?: string;
-}) => (
+}) =>
+  image ? (
+    // Compact variant: moderate image and tight padding so content starts near the top.
+    <div
+      className={cn(
+        "flex flex-col items-center rounded-2xl border border-dashed border-gold/40 bg-card/60 p-5 text-center sm:p-8",
+        className
+      )}>
+      <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">{title}</h3>
+      <img
+        src={image}
+        alt=""
+        className="mt-4 size-24 rounded-full object-cover shadow-md ring-4 ring-gold/20 sm:size-28"
+      />
+      {description && (
+        <div className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </div>
+      )}
+      {action && <div className="mt-5">{action}</div>}
+    </div>
+  ) : (
   <div
     className={cn(
       "flex flex-col items-center rounded-2xl border border-dashed border-gold/40 bg-card/60 px-6 py-12 text-center",
       className
     )}>
-    {image && (
-      <img src={image} alt="" className="mb-5 size-36 rounded-full object-cover shadow-md ring-4 ring-gold/20 sm:size-44" />
-    )}
     {icon && (
       <div className="mb-4 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground">
         {icon}
@@ -63,4 +81,4 @@ export const EmptyState = ({
     )}
     {action && <div className="mt-6">{action}</div>}
   </div>
-);
+  );
