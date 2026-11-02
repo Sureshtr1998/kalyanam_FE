@@ -23,7 +23,6 @@ import api from "@/utils/api";
 import { setItem, user_login_token } from "@/utils/localStore";
 import {
   DISCOUNT_NAMES,
-  INITIAL_NO_INTEREST,
   SUPPORT_EMAIL,
   createdByOptions,
   emailRegex,
@@ -36,7 +35,8 @@ import {
   qualificationOptions,
 } from "@/utils/constants";
 import type { BasicDetailsIn, FormType, ImageFile } from "@/utils/interfaces";
-import { casteOptions, getRefferalAmount, motherTongueOptions, subCasteOptions } from "@/utils/utils";
+import { casteOptions, motherTongueOptions, subCasteOptions } from "@/utils/utils";
+import { feeLabel, usePricing } from "@/lib/pricing";
 import { errorMessage } from "@/lib/errors";
 import { usePublicLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -88,7 +88,9 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const [referralOk, setReferralOk] = useState(true);
   const leadTracked = useRef(false);
   const uploaded = useRef<{ key: string; media: ImageFile[]; at: number } | null>(null);
-  const t = registerText[usePublicLang()[0]];
+  const [lang] = usePublicLang();
+  const t = registerText[lang];
+  const pricing = usePricing();
   // Payment callbacks outlive a language change.
   const tRef = useRef(t);
   tRef.current = t;
@@ -120,8 +122,11 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
     };
   }, [form.referralId]);
 
-  // Only a code that passed validation earns the discounted price.
-  const amount = getRefferalAmount(referralOk ? form.referralId?.trim().toUpperCase() : undefined);
+  // Only a partner's code that passed validation earns the discounted price;
+  // promo codes pay the normal fee (the server decides the actual charge).
+  const code = referralOk ? (form.referralId?.trim().toUpperCase() ?? "") : "";
+  const amount = code && !DISCOUNT_NAMES.includes(code) ? pricing.referralFee : pricing.registrationFee;
+  const free = amount <= 0;
 
   const validate = (s: Step) => {
     const e: Record<string, string> = {};
@@ -174,6 +179,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       }
     }
     if (step < 3) setStep((s) => (s + 1) as Step);
+    else if (free) void pay();
     else setNoteOpen(true);
   };
 
@@ -217,15 +223,23 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       }
       setBusy(null);
 
-      await start({
-        purpose: "registration",
-        registration: {
-          ...form,
-          email: form.email.trim().toLowerCase(),
-          referralId: form.referralId?.trim().toUpperCase(),
-          images: uploaded.current!.media,
-        },
-      });
+      const registration = {
+        ...form,
+        email: form.email.trim().toLowerCase(),
+        referralId: form.referralId?.trim().toUpperCase(),
+        images: uploaded.current!.media,
+      };
+      if (!free) {
+        await start({ purpose: "registration", registration });
+        return;
+      }
+      // Pricing level 1: no checkout, the server creates the account straight away.
+      setBusy("creating");
+      const res = await api.post("/user-register", { registration });
+      trackPixel("CompleteRegistration", { value: 0, currency: "INR", content_name: "Free registration" });
+      setItem(user_login_token, res.data);
+      toast.success(t.welcome, { description: t.welcomeDesc });
+      window.location.href = "/profile";
     } catch (err) {
       setBusy(null);
       toast.error(t.cantContinue, { description: errorMessage(err) });
@@ -325,9 +339,9 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
           <div className="flex items-center justify-between rounded-2xl border border-gold/40 bg-accent p-4">
             <div>
               <p className="text-sm font-semibold">{t.annual}</p>
-              <p className="text-xs text-muted-foreground">{t.includes(INITIAL_NO_INTEREST)}</p>
+              <p className="text-xs text-muted-foreground">{t.includes(pricing.registrationInterests)}</p>
             </div>
-            <p className="font-display text-3xl font-bold text-primary">₹{amount}</p>
+            <p className="font-display text-3xl font-bold text-primary">{feeLabel(amount, lang)}</p>
           </div>
         </div>
       )}
@@ -347,8 +361,8 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
             </>
           ) : (
             <>
-              <CreditCard />
-              {isStarting ? t.opening : t.pay(amount)}
+              {free ? <Check /> : <CreditCard />}
+              {free ? t.registerFree : isStarting ? t.opening : t.pay(amount)}
             </>
           )}
         </Button>
@@ -368,7 +382,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
           </DialogHeader>
           <ul className="space-y-3 text-sm leading-relaxed">
             {[
-              ...t.notes(INITIAL_NO_INTEREST),
+              ...t.notes(pricing.registrationInterests),
               <>
                 {t.helpBefore}{" "}
                 <a href={`mailto:${SUPPORT_EMAIL}`} className="font-semibold text-primary">

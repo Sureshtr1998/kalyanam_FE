@@ -1,5 +1,4 @@
 import type { Lang } from "@/lib/i18n";
-import { INITIAL_NO_INTEREST as CREDITS, OVERVIEW_ASTRO_FEE as ASTRO, REGISTRATION_FEE as FEE } from "@/utils/constants";
 
 type Item = { title: string; text: string };
 
@@ -16,7 +15,7 @@ const en = {
   heroPoints: [
     { title: "OTP-verified members", text: "Email and WhatsApp checked before profiles go live." },
     { title: "Private by design", text: "Contacts shared only after both sides accept." },
-    { title: `₹${FEE} a year`, text: `${CREDITS} interest credits included. No sales calls.` },
+    { title: `{feeYear}`, text: `{credits} interest credits included. No sales calls.` },
     { title: "Hindu families only", text: "Across castes and mother tongues." },
   ] as Item[],
   howEyebrow: "How it works",
@@ -32,9 +31,9 @@ const en = {
   values: [
     { title: "Verified members", text: "Email and WhatsApp numbers are verified with one-time codes before profiles go live." },
     { title: "Private by design", text: "Contact details stay hidden until both sides accept, or you choose to unlock them." },
-    { title: "Honest pricing", text: `₹${FEE} a year with ${CREDITS} credits included (1 credit = 1 interest). No sales calls, no hidden fees.` },
+    { title: "Honest pricing", text: `{feeYear} with {credits} credits included (1 credit = 1 interest). No sales calls, no hidden fees.` },
     { title: "Instant updates", text: "Email alerts the moment someone sends or accepts your interest." },
-    { title: "Vedic astrology", text: `Kundli matching and personal readings by our jyotishi, from ₹${ASTRO}.` },
+    { title: "Vedic astrology", text: `Kundli matching and personal readings by our jyotishi, from {astroFrom}.` },
     { title: "Hindu community only", text: "Dedicated exclusively to Hindu families, across castes and mother tongues." },
   ] as Item[],
   blogEyebrow: "From our blog",
@@ -42,7 +41,7 @@ const en = {
   allArticles: "All articles",
   ctaTitle: "May your search be blessed",
   ctaText: "Join families across India and abroad who trust Seetha Rama Kalyana.",
-  ctaButton: `Create your profile · ₹${FEE}/year`,
+  ctaButton: `Create your profile · {feeYear}`,
   // Login form
   welcome: "Welcome back",
   welcomeSub: "Log in to continue your search",
@@ -72,7 +71,7 @@ export const landerText: Record<Lang, typeof en> = {
     heroPoints: [
       { title: "OTP ಮೂಲಕ ಪರಿಶೀಲಿತ ಸದಸ್ಯರು", text: "ಪ್ರೊಫೈಲ್ ಪ್ರಕಟವಾಗುವ ಮೊದಲು ಇಮೇಲ್ ಮತ್ತು ವಾಟ್ಸ್‌ಆ್ಯಪ್ ಪರಿಶೀಲನೆ." },
       { title: "ಗೌಪ್ಯತೆಗೆ ಆದ್ಯತೆ", text: "ಎರಡೂ ಕಡೆಯವರು ಒಪ್ಪಿದ ನಂತರವೇ ಸಂಪರ್ಕ ವಿವರ ಹಂಚಿಕೆ." },
-      { title: `ವರ್ಷಕ್ಕೆ ₹${FEE}`, text: `${CREDITS} ಆಸಕ್ತಿ ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿವೆ. ಮಾರಾಟದ ಕರೆಗಳಿಲ್ಲ.` },
+      { title: `{feeYear}`, text: `{credits} ಆಸಕ್ತಿ ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿವೆ. ಮಾರಾಟದ ಕರೆಗಳಿಲ್ಲ.` },
       { title: "ಹಿಂದೂ ಕುಟುಂಬಗಳಿಗೆ ಮಾತ್ರ", text: "ಎಲ್ಲ ಜಾತಿ ಮತ್ತು ಮಾತೃಭಾಷೆಗಳಿಗೆ." },
     ],
     howEyebrow: "ಇದು ಹೇಗೆ ಕೆಲಸ ಮಾಡುತ್ತದೆ",
@@ -88,9 +87,9 @@ export const landerText: Record<Lang, typeof en> = {
     values: [
       { title: "ಪರಿಶೀಲಿತ ಸದಸ್ಯರು", text: "ಪ್ರೊಫೈಲ್ ಪ್ರಕಟವಾಗುವ ಮೊದಲು ಇಮೇಲ್ ಮತ್ತು ವಾಟ್ಸ್‌ಆ್ಯಪ್ ಸಂಖ್ಯೆಗಳನ್ನು ಒಂದು-ಬಾರಿಯ ಕೋಡ್‌ನಿಂದ ಪರಿಶೀಲಿಸಲಾಗುತ್ತದೆ." },
       { title: "ಗೌಪ್ಯತೆಗೆ ಆದ್ಯತೆ", text: "ಎರಡೂ ಕಡೆಯವರು ಒಪ್ಪುವವರೆಗೆ ಅಥವಾ ನೀವೇ ಅನ್‌ಲಾಕ್ ಮಾಡುವವರೆಗೆ ಸಂಪರ್ಕ ವಿವರಗಳು ಮರೆಯಾಗಿರುತ್ತವೆ." },
-      { title: "ಪ್ರಾಮಾಣಿಕ ಶುಲ್ಕ", text: `ವರ್ಷಕ್ಕೆ ₹${FEE}, ${CREDITS} ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿ (1 ಕ್ರೆಡಿಟ್ = 1 ಆಸಕ್ತಿ). ಮಾರಾಟದ ಕರೆಗಳಿಲ್ಲ, ಗುಪ್ತ ಶುಲ್ಕಗಳಿಲ್ಲ.` },
+      { title: "ಪ್ರಾಮಾಣಿಕ ಶುಲ್ಕ", text: `{feeYear}, {credits} ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿ (1 ಕ್ರೆಡಿಟ್ = 1 ಆಸಕ್ತಿ). ಮಾರಾಟದ ಕರೆಗಳಿಲ್ಲ, ಗುಪ್ತ ಶುಲ್ಕಗಳಿಲ್ಲ.` },
       { title: "ತ್ವರಿತ ಮಾಹಿತಿ", text: "ಯಾರಾದರೂ ಆಸಕ್ತಿ ಕಳುಹಿಸಿದ ಅಥವಾ ಸ್ವೀಕರಿಸಿದ ಕ್ಷಣವೇ ಇಮೇಲ್ ಸೂಚನೆ." },
-      { title: "ವೈದಿಕ ಜ್ಯೋತಿಷ್ಯ", text: `ನಮ್ಮ ಜ್ಯೋತಿಷಿಗಳಿಂದ ಕುಂಡಲಿ ಹೊಂದಾಣಿಕೆ ಮತ್ತು ವೈಯಕ್ತಿಕ ಭವಿಷ್ಯ, ₹${ASTRO} ರಿಂದ.` },
+      { title: "ವೈದಿಕ ಜ್ಯೋತಿಷ್ಯ", text: `ನಮ್ಮ ಜ್ಯೋತಿಷಿಗಳಿಂದ ಕುಂಡಲಿ ಹೊಂದಾಣಿಕೆ ಮತ್ತು ವೈಯಕ್ತಿಕ ಭವಿಷ್ಯ, {astroFrom} ರಿಂದ.` },
       { title: "ಹಿಂದೂ ಸಮುದಾಯಕ್ಕೆ ಮಾತ್ರ", text: "ಎಲ್ಲ ಜಾತಿ ಮತ್ತು ಮಾತೃಭಾಷೆಗಳ ಹಿಂದೂ ಕುಟುಂಬಗಳಿಗೆ ಮಾತ್ರ ಮೀಸಲು." },
     ],
     blogEyebrow: "ನಮ್ಮ ಬ್ಲಾಗ್‌ನಿಂದ",
@@ -98,7 +97,7 @@ export const landerText: Record<Lang, typeof en> = {
     allArticles: "ಎಲ್ಲ ಲೇಖನಗಳು",
     ctaTitle: "ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಆಶೀರ್ವಾದವಿರಲಿ",
     ctaText: "ಸೀತಾ ರಾಮ ಕಲ್ಯಾಣವನ್ನು ನಂಬಿರುವ ಭಾರತ ಮತ್ತು ವಿದೇಶದ ಕುಟುಂಬಗಳೊಂದಿಗೆ ಸೇರಿ.",
-    ctaButton: `ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ರಚಿಸಿ · ₹${FEE}/ವರ್ಷ`,
+    ctaButton: `ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ರಚಿಸಿ · {feeYear}`,
     welcome: "ಮರಳಿ ಸ್ವಾಗತ",
     welcomeSub: "ನಿಮ್ಮ ಹುಡುಕಾಟ ಮುಂದುವರಿಸಲು ಲಾಗಿನ್ ಮಾಡಿ",
     email: "ಇಮೇಲ್",
@@ -124,7 +123,7 @@ export const landerText: Record<Lang, typeof en> = {
     heroPoints: [
       { title: "OTP-सत्यापित सदस्य", text: "प्रोफ़ाइल लाइव होने से पहले ईमेल और व्हाट्सऐप की जाँच।" },
       { title: "गोपनीयता सर्वोपरि", text: "दोनों पक्षों की स्वीकृति के बाद ही संपर्क साझा।" },
-      { title: `₹${FEE} प्रति वर्ष`, text: `${CREDITS} रुचि क्रेडिट शामिल। कोई सेल्स कॉल नहीं।` },
+      { title: `{feeYear}`, text: `{credits} रुचि क्रेडिट शामिल। कोई सेल्स कॉल नहीं।` },
       { title: "केवल हिंदू परिवार", text: "सभी जातियों और मातृभाषाओं के लिए।" },
     ],
     howEyebrow: "यह कैसे काम करता है",
@@ -140,9 +139,9 @@ export const landerText: Record<Lang, typeof en> = {
     values: [
       { title: "सत्यापित सदस्य", text: "प्रोफ़ाइल लाइव होने से पहले ईमेल और व्हाट्सऐप नंबर वन-टाइम कोड से सत्यापित किए जाते हैं।" },
       { title: "गोपनीयता सर्वोपरि", text: "जब तक दोनों पक्ष स्वीकार न करें या आप स्वयं अनलॉक न करें, संपर्क विवरण छिपे रहते हैं।" },
-      { title: "ईमानदार मूल्य", text: `₹${FEE} प्रति वर्ष, ${CREDITS} क्रेडिट शामिल (1 क्रेडिट = 1 रुचि)। कोई सेल्स कॉल नहीं, कोई छिपा शुल्क नहीं।` },
+      { title: "ईमानदार मूल्य", text: `{feeYear}, {credits} क्रेडिट शामिल (1 क्रेडिट = 1 रुचि)। कोई सेल्स कॉल नहीं, कोई छिपा शुल्क नहीं।` },
       { title: "तुरंत सूचना", text: "जैसे ही कोई आपकी रुचि भेजे या स्वीकार करे, ईमेल अलर्ट।" },
-      { title: "वैदिक ज्योतिष", text: `हमारे ज्योतिषी द्वारा कुंडली मिलान और व्यक्तिगत फलादेश, ₹${ASTRO} से।` },
+      { title: "वैदिक ज्योतिष", text: `हमारे ज्योतिषी द्वारा कुंडली मिलान और व्यक्तिगत फलादेश, {astroFrom} से।` },
       { title: "केवल हिंदू समुदाय", text: "सभी जातियों और मातृभाषाओं के हिंदू परिवारों के लिए समर्पित।" },
     ],
     blogEyebrow: "हमारे ब्लॉग से",
@@ -150,7 +149,7 @@ export const landerText: Record<Lang, typeof en> = {
     allArticles: "सभी लेख",
     ctaTitle: "आपकी खोज को आशीर्वाद मिले",
     ctaText: "भारत और विदेश के उन परिवारों से जुड़ें जो सीता राम कल्याण पर भरोसा करते हैं।",
-    ctaButton: `अपनी प्रोफ़ाइल बनाएँ · ₹${FEE}/वर्ष`,
+    ctaButton: `अपनी प्रोफ़ाइल बनाएँ · {feeYear}`,
     welcome: "फिर से स्वागत है",
     welcomeSub: "अपनी खोज जारी रखने के लिए लॉगिन करें",
     email: "ईमेल",
@@ -176,7 +175,7 @@ export const landerText: Record<Lang, typeof en> = {
     heroPoints: [
       { title: "OTP மூலம் சரிபார்க்கப்பட்ட உறுப்பினர்கள்", text: "சுயவிவரம் வெளியாகும் முன் மின்னஞ்சல் மற்றும் வாட்ஸ்அப் சரிபார்ப்பு." },
       { title: "தனியுரிமைக்கு முன்னுரிமை", text: "இருவரும் ஏற்ற பிறகே தொடர்பு விவரங்கள் பகிரப்படும்." },
-      { title: `ஆண்டுக்கு ₹${FEE}`, text: `${CREDITS} விருப்பக் கிரெடிட்கள் அடங்கும். விற்பனை அழைப்புகள் இல்லை.` },
+      { title: `{feeYear}`, text: `{credits} விருப்பக் கிரெடிட்கள் அடங்கும். விற்பனை அழைப்புகள் இல்லை.` },
       { title: "இந்து குடும்பங்களுக்கு மட்டும்", text: "அனைத்து சாதிகள் மற்றும் தாய்மொழிகளுக்கும்." },
     ],
     howEyebrow: "இது எப்படி செயல்படுகிறது",
@@ -192,9 +191,9 @@ export const landerText: Record<Lang, typeof en> = {
     values: [
       { title: "சரிபார்க்கப்பட்ட உறுப்பினர்கள்", text: "சுயவிவரம் வெளியாகும் முன் மின்னஞ்சல் மற்றும் வாட்ஸ்அப் எண்கள் ஒருமுறைக் குறியீட்டால் சரிபார்க்கப்படுகின்றன." },
       { title: "தனியுரிமைக்கு முன்னுரிமை", text: "இருவரும் ஏற்கும் வரை அல்லது நீங்களே திறக்கும் வரை தொடர்பு விவரங்கள் மறைக்கப்பட்டிருக்கும்." },
-      { title: "நேர்மையான கட்டணம்", text: `ஆண்டுக்கு ₹${FEE}, ${CREDITS} கிரெடிட்கள் அடங்கும் (1 கிரெடிட் = 1 விருப்பம்). விற்பனை அழைப்புகள் இல்லை, மறைமுகக் கட்டணங்கள் இல்லை.` },
+      { title: "நேர்மையான கட்டணம்", text: `{feeYear}, {credits} கிரெடிட்கள் அடங்கும் (1 கிரெடிட் = 1 விருப்பம்). விற்பனை அழைப்புகள் இல்லை, மறைமுகக் கட்டணங்கள் இல்லை.` },
       { title: "உடனடித் தகவல்", text: "யாராவது உங்களுக்கு விருப்பம் அனுப்பும் அல்லது ஏற்கும் நொடியே மின்னஞ்சல் அறிவிப்பு." },
-      { title: "வேத ஜோதிடம்", text: `எங்கள் ஜோதிடரின் ஜாதகப் பொருத்தம் மற்றும் தனிப்பட்ட பலன்கள், ₹${ASTRO} முதல்.` },
+      { title: "வேத ஜோதிடம்", text: `எங்கள் ஜோதிடரின் ஜாதகப் பொருத்தம் மற்றும் தனிப்பட்ட பலன்கள், {astroFrom} முதல்.` },
       { title: "இந்து சமூகத்திற்கு மட்டும்", text: "அனைத்து சாதிகள் மற்றும் தாய்மொழிகளைச் சேர்ந்த இந்து குடும்பங்களுக்கு மட்டுமே அர்ப்பணிக்கப்பட்டது." },
     ],
     blogEyebrow: "எங்கள் வலைப்பதிவிலிருந்து",
@@ -202,7 +201,7 @@ export const landerText: Record<Lang, typeof en> = {
     allArticles: "அனைத்துக் கட்டுரைகள்",
     ctaTitle: "உங்கள் தேடல் ஆசீர்வதிக்கப்படட்டும்",
     ctaText: "சீதா ராம கல்யாணத்தை நம்பும் இந்தியா மற்றும் வெளிநாட்டுக் குடும்பங்களுடன் இணையுங்கள்.",
-    ctaButton: `உங்கள் சுயவிவரத்தை உருவாக்குங்கள் · ₹${FEE}/ஆண்டு`,
+    ctaButton: `உங்கள் சுயவிவரத்தை உருவாக்குங்கள் · {feeYear}`,
     welcome: "மீண்டும் வருக",
     welcomeSub: "உங்கள் தேடலைத் தொடர உள்நுழையுங்கள்",
     email: "மின்னஞ்சல்",
@@ -228,7 +227,7 @@ export const landerText: Record<Lang, typeof en> = {
     heroPoints: [
       { title: "OTP-ధృవీకరించిన సభ్యులు", text: "ప్రొఫైల్ ప్రచురణకు ముందే ఈమెయిల్ మరియు వాట్సాప్ తనిఖీ." },
       { title: "గోప్యతకే ప్రాధాన్యం", text: "ఇరువైపులా అంగీకరించిన తర్వాతే సంప్రదింపు వివరాలు పంచుకోబడతాయి." },
-      { title: `సంవత్సరానికి ₹${FEE}`, text: `${CREDITS} ఆసక్తి క్రెడిట్‌లు చేర్చబడ్డాయి. సేల్స్ కాల్స్ ఉండవు.` },
+      { title: `{feeYear}`, text: `{credits} ఆసక్తి క్రెడిట్‌లు చేర్చబడ్డాయి. సేల్స్ కాల్స్ ఉండవు.` },
       { title: "హిందూ కుటుంబాలకు మాత్రమే", text: "అన్ని కులాలు మరియు మాతృభాషలకు." },
     ],
     howEyebrow: "ఇది ఎలా పనిచేస్తుంది",
@@ -244,9 +243,9 @@ export const landerText: Record<Lang, typeof en> = {
     values: [
       { title: "ధృవీకరించిన సభ్యులు", text: "ప్రొఫైల్ ప్రచురణకు ముందే ఈమెయిల్ మరియు వాట్సాప్ నంబర్లు వన్-టైమ్ కోడ్‌తో ధృవీకరించబడతాయి." },
       { title: "గోప్యతకే ప్రాధాన్యం", text: "ఇరువైపులా అంగీకరించే వరకు లేదా మీరే అన్‌లాక్ చేసే వరకు సంప్రదింపు వివరాలు దాగి ఉంటాయి." },
-      { title: "నిజాయితీగల ధరలు", text: `సంవత్సరానికి ₹${FEE}, ${CREDITS} క్రెడిట్‌లతో (1 క్రెడిట్ = 1 ఆసక్తి). సేల్స్ కాల్స్ లేవు, దాచిన రుసుములు లేవు.` },
+      { title: "నిజాయితీగల ధరలు", text: `{feeYear}, {credits} క్రెడిట్‌లతో (1 క్రెడిట్ = 1 ఆసక్తి). సేల్స్ కాల్స్ లేవు, దాచిన రుసుములు లేవు.` },
       { title: "తక్షణ సమాచారం", text: "ఎవరైనా మీకు ఆసక్తి పంపిన లేదా అంగీకరించిన క్షణమే ఈమెయిల్ హెచ్చరిక." },
-      { title: "వైదిక జ్యోతిష్యం", text: `మా జ్యోతిష్కులచే జాతక పొంతన మరియు వ్యక్తిగత ఫలితాలు, ₹${ASTRO} నుండి.` },
+      { title: "వైదిక జ్యోతిష్యం", text: `మా జ్యోతిష్కులచే జాతక పొంతన మరియు వ్యక్తిగత ఫలితాలు, {astroFrom} నుండి.` },
       { title: "హిందూ సమాజానికి మాత్రమే", text: "అన్ని కులాలు మరియు మాతృభాషల హిందూ కుటుంబాలకు మాత్రమే అంకితం." },
     ],
     blogEyebrow: "మా బ్లాగ్ నుండి",
@@ -254,7 +253,7 @@ export const landerText: Record<Lang, typeof en> = {
     allArticles: "అన్ని వ్యాసాలు",
     ctaTitle: "మీ అన్వేషణకు ఆశీర్వాదం లభించుగాక",
     ctaText: "సీతా రామ కళ్యాణను నమ్మే భారతదేశం మరియు విదేశాల్లోని కుటుంబాలతో చేరండి.",
-    ctaButton: `మీ ప్రొఫైల్ సృష్టించండి · ₹${FEE}/సంవత్సరం`,
+    ctaButton: `మీ ప్రొఫైల్ సృష్టించండి · {feeYear}`,
     welcome: "తిరిగి స్వాగతం",
     welcomeSub: "మీ అన్వేషణ కొనసాగించడానికి లాగిన్ అవ్వండి",
     email: "ఈమెయిల్",

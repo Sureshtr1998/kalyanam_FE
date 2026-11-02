@@ -10,12 +10,13 @@ import { MemberManager } from "@/components/staff/MemberManager";
 import { SignupBars, Stat } from "@/components/staff/StaffStats";
 import { inr, type Summary } from "@/components/staff/staffTypes";
 import api from "@/utils/api";
-import { REFERRAL_REGISTRATION_FEE, REGISTRATION_FEE } from "@/utils/constants";
+import { usePricing } from "@/lib/pricing";
 import { errorMessage } from "@/lib/errors";
 
 /** A partner's home: their referral ID, commission and the members they brought in. */
 const PartnerDashboard = () => {
   const [summary, setSummary] = useState<Summary | null>(null);
+  const pricing = usePricing();
 
   const load = useCallback(() => {
     api
@@ -27,7 +28,9 @@ const PartnerDashboard = () => {
 
   const code = summary?.broker?.referralId;
   const shareText = code
-    ? `Register on Seetha Rama Kalyana with my referral ID ${code} and pay ₹${REFERRAL_REGISTRATION_FEE} instead of ₹${REGISTRATION_FEE}: ${window.location.origin}`
+    ? pricing.registrationFee > 0
+      ? `Register on Seetha Rama Kalyana with my referral ID ${code} and pay ₹${pricing.referralFee} instead of ₹${pricing.registrationFee}: ${window.location.origin}`
+      : `Register free on Seetha Rama Kalyana with my referral ID ${code}: ${window.location.origin}`
     : "";
 
   const share = async () => {
@@ -68,8 +71,14 @@ const PartnerDashboard = () => {
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Your referral ID</p>
               <p className="font-mono text-4xl font-bold tracking-wider text-primary">{code}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Members pay {inr(REFERRAL_REGISTRATION_FEE)} instead of {inr(REGISTRATION_FEE)}; you earn{" "}
-                {inr(summary.commission.perMember)} for each.
+                {pricing.registrationFee > 0 ? (
+                  <>
+                    Members pay {inr(pricing.referralFee)} instead of {inr(pricing.registrationFee)}; you earn{" "}
+                    {inr(pricing.brokerCommission)} for each.
+                  </>
+                ) : (
+                  "Registration is free right now, so new referrals don't earn a commission. Members still appear in your list."
+                )}
               </p>
             </div>
             <div className="flex gap-2">

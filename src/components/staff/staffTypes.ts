@@ -89,6 +89,8 @@ export interface Summary {
   interests?: { sent: number; accepted: number; contacts: number };
   brokers?: { total: number; pending: number; approved: number; suspended: number };
   commission: { perMember: number; referred: number; earned?: number; paid: number; due: number };
+  /** Admins only: the live pricing level (1–4). */
+  pricingLevel?: number;
 }
 
 export const inr = (n?: number) =>

@@ -1,15 +1,14 @@
 import type { Lang } from "@/lib/i18n";
-import { INITIAL_NO_INTEREST as CREDITS } from "@/utils/constants";
 
 const en = {
   title: "Simple, honest pricing",
   subtitle: "One yearly membership, then top up credits only if you need more. No sales calls, no hidden charges.",
-  offer: "53% off · launch offer",
+  offer: "{off} off · launch offer",
   annual: "Annual membership",
   perYear: "per year",
   registerNow: "Register now",
   perks: [
-    `${CREDITS} credits included (1 credit = 1 interest)`,
+    `{credits} credits included (1 credit = 1 interest)`,
     "Browse verified profiles from your community",
     "Email alerts for every interest sent & accepted",
     "Contact details shared on mutual acceptance",
@@ -33,12 +32,12 @@ export const pricingText: Record<Lang, typeof en> = {
   kn: {
     title: "ಸರಳ, ಪ್ರಾಮಾಣಿಕ ಬೆಲೆ",
     subtitle: "ಒಂದು ವಾರ್ಷಿಕ ಸದಸ್ಯತ್ವ, ಹೆಚ್ಚು ಬೇಕಾದರೆ ಮಾತ್ರ ಕ್ರೆಡಿಟ್ ಟಾಪ್-ಅಪ್ ಮಾಡಿ. ಮಾರಾಟದ ಕರೆಗಳಿಲ್ಲ, ಗುಪ್ತ ಶುಲ್ಕಗಳಿಲ್ಲ.",
-    offer: "53% ರಿಯಾಯಿತಿ · ಪ್ರಾರಂಭಿಕ ಕೊಡುಗೆ",
+    offer: "{off} ರಿಯಾಯಿತಿ · ಪ್ರಾರಂಭಿಕ ಕೊಡುಗೆ",
     annual: "ವಾರ್ಷಿಕ ಸದಸ್ಯತ್ವ",
     perYear: "ಪ್ರತಿ ವರ್ಷ",
     registerNow: "ಈಗಲೇ ನೋಂದಾಯಿಸಿ",
     perks: [
-      `${CREDITS} ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿವೆ (1 ಕ್ರೆಡಿಟ್ = 1 ಆಸಕ್ತಿ)`,
+      `{credits} ಕ್ರೆಡಿಟ್‌ಗಳು ಸೇರಿವೆ (1 ಕ್ರೆಡಿಟ್ = 1 ಆಸಕ್ತಿ)`,
       "ನಿಮ್ಮ ಸಮುದಾಯದ ಪರಿಶೀಲಿತ ಪ್ರೊಫೈಲ್‌ಗಳನ್ನು ನೋಡಿ",
       "ಕಳುಹಿಸಿದ ಮತ್ತು ಸ್ವೀಕೃತವಾದ ಪ್ರತಿ ಆಸಕ್ತಿಗೆ ಇಮೇಲ್ ಸೂಚನೆ",
       "ಪರಸ್ಪರ ಒಪ್ಪಿಗೆಯ ನಂತರ ಸಂಪರ್ಕ ವಿವರಗಳ ಹಂಚಿಕೆ",
@@ -59,12 +58,12 @@ export const pricingText: Record<Lang, typeof en> = {
   hi: {
     title: "सरल, ईमानदार मूल्य",
     subtitle: "एक वार्षिक सदस्यता, फिर ज़रूरत हो तभी क्रेडिट टॉप-अप करें। कोई सेल्स कॉल नहीं, कोई छिपा शुल्क नहीं।",
-    offer: "53% छूट · लॉन्च ऑफ़र",
+    offer: "{off} छूट · लॉन्च ऑफ़र",
     annual: "वार्षिक सदस्यता",
     perYear: "प्रति वर्ष",
     registerNow: "अभी पंजीकरण करें",
     perks: [
-      `${CREDITS} क्रेडिट शामिल (1 क्रेडिट = 1 रुचि)`,
+      `{credits} क्रेडिट शामिल (1 क्रेडिट = 1 रुचि)`,
       "अपने समुदाय की सत्यापित प्रोफ़ाइल देखें",
       "भेजी और स्वीकार की गई हर रुचि पर ईमेल अलर्ट",
       "आपसी स्वीकृति पर संपर्क विवरण साझा",
@@ -85,12 +84,12 @@ export const pricingText: Record<Lang, typeof en> = {
   ta: {
     title: "எளிய, நேர்மையான கட்டணம்",
     subtitle: "ஒரே ஆண்டு உறுப்பினர் கட்டணம், தேவைப்பட்டால் மட்டும் கிரெடிட்களை டாப்-அப் செய்யுங்கள். விற்பனை அழைப்புகள் இல்லை, மறைமுகக் கட்டணங்கள் இல்லை.",
-    offer: "53% தள்ளுபடி · அறிமுகச் சலுகை",
+    offer: "{off} தள்ளுபடி · அறிமுகச் சலுகை",
     annual: "ஆண்டு உறுப்பினர்",
     perYear: "ஆண்டுக்கு",
     registerNow: "இப்போதே பதிவு செய்யுங்கள்",
     perks: [
-      `${CREDITS} கிரெடிட்கள் அடங்கும் (1 கிரெடிட் = 1 விருப்பம்)`,
+      `{credits} கிரெடிட்கள் அடங்கும் (1 கிரெடிட் = 1 விருப்பம்)`,
       "உங்கள் சமூகத்தின் சரிபார்க்கப்பட்ட சுயவிவரங்களைப் பாருங்கள்",
       "அனுப்பிய மற்றும் ஏற்கப்பட்ட ஒவ்வொரு விருப்பத்திற்கும் மின்னஞ்சல் அறிவிப்பு",
       "இருவரும் ஏற்றதும் தொடர்பு விவரங்கள் பகிரப்படும்",
@@ -111,12 +110,12 @@ export const pricingText: Record<Lang, typeof en> = {
   te: {
     title: "సరళమైన, నిజాయితీగల ధరలు",
     subtitle: "ఒక వార్షిక సభ్యత్వం, అవసరమైతేనే క్రెడిట్‌లు టాప్-అప్ చేసుకోండి. సేల్స్ కాల్స్ లేవు, దాచిన ఛార్జీలు లేవు.",
-    offer: "53% తగ్గింపు · ప్రారంభ ఆఫర్",
+    offer: "{off} తగ్గింపు · ప్రారంభ ఆఫర్",
     annual: "వార్షిక సభ్యత్వం",
     perYear: "సంవత్సరానికి",
     registerNow: "ఇప్పుడే నమోదు చేసుకోండి",
     perks: [
-      `${CREDITS} క్రెడిట్‌లు చేర్చబడ్డాయి (1 క్రెడిట్ = 1 ఆసక్తి)`,
+      `{credits} క్రెడిట్‌లు చేర్చబడ్డాయి (1 క్రెడిట్ = 1 ఆసక్తి)`,
       "మీ సమాజపు ధృవీకరించిన ప్రొఫైల్‌లను చూడండి",
       "పంపిన మరియు అంగీకరించిన ప్రతి ఆసక్తికి ఈమెయిల్ హెచ్చరిక",
       "పరస్పర అంగీకారంతో సంప్రదింపు వివరాలు పంచుకోబడతాయి",

@@ -10,12 +10,14 @@ import {
 import { Kalasha, Thoranam } from "@/components/common/Ornaments";
 import SEO from "@/components/misc/SEO";
 import NotFound from "@/screens/notFound/NotFound";
-import { INITIAL_NO_INTEREST, REGISTRATION_FEE, SEO_URL } from "@/utils/constants";
+import { SEO_URL } from "@/utils/constants";
+import { usePricing } from "@/lib/pricing";
 import { communities } from "./seoComm";
 
 /** Landing page for one community, e.g. /communities/brahmin-matrimony. */
 const CommunityPage = () => {
   const { slug } = useParams();
+  const pricing = usePricing();
   const community = communities.find((c) => c.slug === slug);
   if (!community) return <NotFound />;
 
@@ -40,7 +42,10 @@ const CommunityPage = () => {
     },
     {
       question: `How much does ${name} matrimony cost?`,
-      answer: `Membership is ₹${REGISTRATION_FEE} a year and includes ${INITIAL_NO_INTEREST} credits (1 credit = 1 interest). There are no sales calls or hidden charges.`,
+      answer:
+        pricing.registrationFee > 0
+          ? `Membership is ₹${pricing.registrationFee} a year and includes ${pricing.registrationInterests} credits (1 credit = 1 interest). There are no sales calls or hidden charges.`
+          : `Registration is free right now and includes ${pricing.registrationInterests} credits (1 credit = 1 interest). There are no sales calls or hidden charges.`,
     },
   ];
 
@@ -48,7 +53,7 @@ const CommunityPage = () => {
     <>
       <SEO
         title={`${name} Matrimony | ${subs.slice(0, 3).join(", ")} Brides & Grooms | Seetha Rama Kalyana`}
-        description={`Find ${name} brides and grooms (${sub}) on Seetha Rama Kalyana. Verified Hindu profiles, two-way privacy controls and membership at ₹${REGISTRATION_FEE}/year.`}
+        description={`Find ${name} brides and grooms (${sub}) on Seetha Rama Kalyana. Verified Hindu profiles, two-way privacy controls and ${pricing.registrationFee > 0 ? `membership at ₹${pricing.registrationFee}/year` : "free registration"}.`}
         keywords={`${name} matrimony, ${subs.map((s) => `${s} matrimony`).join(", ")}, ${name} brides, ${name} grooms, hindu matrimony`}
         url={url}
         pageType="faq"

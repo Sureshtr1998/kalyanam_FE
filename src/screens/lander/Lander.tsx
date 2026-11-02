@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
@@ -18,7 +18,8 @@ import { OmSpinner } from "@/components/common/Loaders";
 import LoginForm from "@/components/forms/LoginForm";
 import SEO from "@/components/misc/SEO";
 import type { FormType } from "@/utils/interfaces";
-import { REGISTRATION_FEE, REGISTRATION_FEE_ORIGINAL, SEO_URL } from "@/utils/constants";
+import { SEO_URL } from "@/utils/constants";
+import { feeLabel, fillPrices, usePricing } from "@/lib/pricing";
 import { isLoggedIn } from "@/lib/session";
 import { usePublicLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -36,7 +37,9 @@ const heroIcons = [<ShieldCheck />, <Lock />, <IndianRupee />, <BadgeCheck />];
 const Lander = () => {
   const [form, setForm] = useState<FormType>("login");
   const navigate = useNavigate();
-  const t = landerText[usePublicLang()[0]];
+  const [lang] = usePublicLang();
+  const pricing = usePricing();
+  const t = useMemo(() => fillPrices(landerText[lang], pricing, lang), [lang, pricing]);
 
   useEffect(() => {
     if (isLoggedIn()) navigate("/home", { replace: true });
@@ -155,7 +158,10 @@ const Lander = () => {
                   <div>
                     <p className="text-xs uppercase tracking-wide opacity-80">{t.annual}</p>
                     <p className="font-display text-2xl font-bold">
-                      ₹{REGISTRATION_FEE} <span className="text-base font-normal opacity-70 line-through">₹{REGISTRATION_FEE_ORIGINAL}</span>
+                      {feeLabel(pricing.registrationFee, lang)}{" "}
+                      {pricing.registrationFeeOriginal ? (
+                        <span className="text-base font-normal opacity-70 line-through">₹{pricing.registrationFeeOriginal}</span>
+                      ) : null}
                     </p>
                   </div>
                   <Button variant="secondary" onClick={() => changeForm(1)}>

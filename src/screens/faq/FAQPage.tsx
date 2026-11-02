@@ -1,16 +1,10 @@
+import { useMemo } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Mail } from "lucide-react";
 import { Lotus } from "@/components/common/Brand";
 import SEO from "../../components/misc/SEO";
-import {
-  INITIAL_NO_INTEREST,
-  PURCHASE_INTEREST_FEE,
-  PURCHASE_INTEREST_FEE_2,
-  PURCHASE_NO_INTEREST,
-  PURCHASE_NO_INTEREST_2,
-  SEO_URL,
-  SUPPORT_EMAIL,
-} from "../../utils/constants";
+import { SEO_URL, SUPPORT_EMAIL } from "../../utils/constants";
+import { fillPrices, usePricing } from "@/lib/pricing";
 
 interface FAQItem {
   id: string;
@@ -66,7 +60,7 @@ const faqItems: FAQItem[] = [
   {
     id: "faq-3",
     question: "How many interests can I send?",
-    answer: `Membership includes ${INITIAL_NO_INTEREST} credits. Each interest you send uses 1 credit, so you can send ${INITIAL_NO_INTEREST} interests. More credits can be bought under Account whenever you need them.`,
+    answer: "Membership includes {credits} credits. Each interest you send uses 1 credit, so you can send {credits} interests. More credits can be bought under Account whenever you need them.",
     icon: "pi pi-envelope",
   },
   {
@@ -79,7 +73,7 @@ const faqItems: FAQItem[] = [
   {
     id: "faq-5",
     question: "What are the pricing plans for buying more credits?",
-    answer: `We offer two plans: ${PURCHASE_NO_INTEREST} credits for ₹${PURCHASE_INTEREST_FEE} and ${PURCHASE_NO_INTEREST_2} credits for ₹${PURCHASE_INTEREST_FEE_2}.`,
+    answer: "We offer two plans: {pack1Credits} credits for {pack1Fee} and {pack2Credits} credits for {pack2Fee}.",
     icon: "pi pi-wallet",
   },
   {
@@ -113,49 +107,53 @@ const faqItems: FAQItem[] = [
   },
 ];
 
-const FAQPage = () => (
-  <>
-    <SEO
-      title="FAQ | Seetha Rama Kalyana"
-      description="Frequently Asked Questions about Seetha Rama Kalyana matrimony services."
-      keywords="faq, hindu matrimony, seetha rama kalyana"
-      pageType="faq"
-      faqItems={faqItems}
-      url={SEO_URL + "/faq"}
-    />
-    <div className="bg-kolam">
-      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-        <header className="mb-10 text-center">
-          <Lotus className="mx-auto h-6 w-10 text-gold" />
-          <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">Frequently asked questions</h1>
-          <p className="mt-3 text-muted-foreground">Quick answers to the most common questions about our platform.</p>
-        </header>
-        <Accordion type="single" collapsible className="space-y-3">
-          {faqItems.map((faq) => (
-            <AccordionItem
-              key={faq.id}
-              value={faq.id}
-              className="rounded-2xl border border-border bg-card px-4 shadow-sm last:border-b">
-              <AccordionTrigger className="gap-3 text-left text-base font-semibold hover:no-underline">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-[15px] leading-relaxed text-muted-foreground">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <div className="mt-10 rounded-3xl border border-gold/40 bg-accent p-6 text-center">
-          <h2 className="font-display text-2xl font-bold">Can't find your answer?</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Write to us. We reply within 24 hours.</p>
-          <a href={`mailto:${SUPPORT_EMAIL}`} className="mt-3 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
-            <Mail className="size-4" />
-            {SUPPORT_EMAIL}
-          </a>
+const FAQPage = () => {
+  const pricing = usePricing();
+  const items = useMemo(() => fillPrices(faqItems, pricing), [pricing]);
+  return (
+    <>
+      <SEO
+        title="FAQ | Seetha Rama Kalyana"
+        description="Frequently Asked Questions about Seetha Rama Kalyana matrimony services."
+        keywords="faq, hindu matrimony, seetha rama kalyana"
+        pageType="faq"
+        faqItems={items}
+        url={SEO_URL + "/faq"}
+      />
+      <div className="bg-kolam">
+        <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+          <header className="mb-10 text-center">
+            <Lotus className="mx-auto h-6 w-10 text-gold" />
+            <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">Frequently asked questions</h1>
+            <p className="mt-3 text-muted-foreground">Quick answers to the most common questions about our platform.</p>
+          </header>
+          <Accordion type="single" collapsible className="space-y-3">
+            {items.map((faq) => (
+              <AccordionItem
+                key={faq.id}
+                value={faq.id}
+                className="rounded-2xl border border-border bg-card px-4 shadow-sm last:border-b">
+                <AccordionTrigger className="gap-3 text-left text-base font-semibold hover:no-underline">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-[15px] leading-relaxed text-muted-foreground">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <div className="mt-10 rounded-3xl border border-gold/40 bg-accent p-6 text-center">
+            <h2 className="font-display text-2xl font-bold">Can't find your answer?</h2>
+            <p className="mt-1 text-sm text-muted-foreground">Write to us. We reply within 24 hours.</p>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="mt-3 inline-flex items-center gap-2 font-semibold text-primary hover:underline">
+              <Mail className="size-4" />
+              {SUPPORT_EMAIL}
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 export default FAQPage;

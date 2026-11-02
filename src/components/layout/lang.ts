@@ -13,7 +13,8 @@ const en = {
   loginRegister: "Login / Register",
   menu: "Menu",
   offer: "Launch offer: annual membership",
-  offerOff: "53% off for a limited time",
+  offerOff: "{off} off for a limited time",
+  offerFree: "Launch offer: registration is free for a limited time",
   tagline:
     "A trusted, community-first matrimony platform helping Hindu families find life partners rooted in dharma, tradition and respect.",
   help: "Help",
@@ -46,7 +47,8 @@ export const layoutText: Record<Lang, typeof en> = {
     loginRegister: "ಲಾಗಿನ್ / ನೋಂದಣಿ",
     menu: "ಮೆನು",
     offer: "ಪ್ರಾರಂಭಿಕ ಕೊಡುಗೆ: ವಾರ್ಷಿಕ ಸದಸ್ಯತ್ವ",
-    offerOff: "ಸೀಮಿತ ಅವಧಿಗೆ 53% ರಿಯಾಯಿತಿ",
+    offerOff: "ಸೀಮಿತ ಅವಧಿಗೆ {off} ರಿಯಾಯಿತಿ",
+    offerFree: "ಪ್ರಾರಂಭಿಕ ಕೊಡುಗೆ: ಸೀಮಿತ ಅವಧಿಗೆ ನೋಂದಣಿ ಉಚಿತ",
     tagline:
       "ಧರ್ಮ, ಸಂಪ್ರದಾಯ ಮತ್ತು ಗೌರವದಲ್ಲಿ ಬೇರೂರಿದ ಜೀವನ ಸಂಗಾತಿಯನ್ನು ಹುಡುಕಲು ಹಿಂದೂ ಕುಟುಂಬಗಳಿಗೆ ನೆರವಾಗುವ, ಸಮುದಾಯಕ್ಕೆ ಮೊದಲ ಆದ್ಯತೆ ನೀಡುವ ವಿಶ್ವಾಸಾರ್ಹ ವಿವಾಹ ವೇದಿಕೆ.",
     help: "ಸಹಾಯ",
@@ -76,7 +78,8 @@ export const layoutText: Record<Lang, typeof en> = {
     loginRegister: "लॉगिन / पंजीकरण",
     menu: "मेनू",
     offer: "लॉन्च ऑफ़र: वार्षिक सदस्यता",
-    offerOff: "सीमित समय के लिए 53% छूट",
+    offerOff: "सीमित समय के लिए {off} छूट",
+    offerFree: "लॉन्च ऑफ़र: सीमित समय के लिए पंजीकरण निःशुल्क",
     tagline:
       "एक विश्वसनीय, समुदाय-प्रथम विवाह मंच जो हिंदू परिवारों को धर्म, परंपरा और सम्मान में रचे-बसे जीवनसाथी खोजने में मदद करता है।",
     help: "सहायता",
@@ -106,7 +109,8 @@ export const layoutText: Record<Lang, typeof en> = {
     loginRegister: "உள்நுழை / பதிவு",
     menu: "மெனு",
     offer: "அறிமுகச் சலுகை: ஆண்டு உறுப்பினர் கட்டணம்",
-    offerOff: "குறுகிய காலத்திற்கு 53% தள்ளுபடி",
+    offerOff: "குறுகிய காலத்திற்கு {off} தள்ளுபடி",
+    offerFree: "அறிமுகச் சலுகை: குறுகிய காலத்திற்கு பதிவு இலவசம்",
     tagline:
       "தர்மம், பாரம்பரியம் மற்றும் மரியாதையில் வேரூன்றிய வாழ்க்கைத் துணையைக் கண்டறிய இந்து குடும்பங்களுக்கு உதவும், சமூகத்திற்கு முன்னுரிமை தரும் நம்பகமான திருமணத் தளம்.",
     help: "உதவி",
@@ -136,7 +140,8 @@ export const layoutText: Record<Lang, typeof en> = {
     loginRegister: "లాగిన్ / నమోదు",
     menu: "మెనూ",
     offer: "ప్రారంభ ఆఫర్: వార్షిక సభ్యత్వం",
-    offerOff: "పరిమిత కాలానికి 53% తగ్గింపు",
+    offerOff: "పరిమిత కాలానికి {off} తగ్గింపు",
+    offerFree: "ప్రారంభ ఆఫర్: పరిమిత కాలానికి నమోదు ఉచితం",
     tagline:
       "ధర్మం, సంప్రదాయం మరియు గౌరవంలో పాతుకుపోయిన జీవిత భాగస్వామిని కనుగొనడంలో హిందూ కుటుంబాలకు సహాయపడే, సమాజానికి ప్రాధాన్యమిచ్చే నమ్మకమైన వివాహ వేదిక.",
     help: "సహాయం",

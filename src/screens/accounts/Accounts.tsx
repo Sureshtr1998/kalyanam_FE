@@ -30,7 +30,7 @@ import { BlockingLoader } from "@/components/common/Loaders";
 import { useUser } from "@/context/UserContext";
 import { useCheckout, type PaidOrder } from "@/hooks/useCheckout";
 import api from "@/utils/api";
-import { INTEREST_PACKS } from "@/utils/constants";
+import { PACK_TITLES, usePricing, type PackKey } from "@/lib/pricing";
 import type { TransactionsIn } from "@/utils/interfaces";
 import { formatInstant } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
@@ -59,8 +59,9 @@ const CopyId = ({ value }: { value?: string }) =>
 
 const Accounts = () => {
   const { user, setUser, remaining } = useUser();
+  const pricing = usePricing();
   const [applying, setApplying] = useState(false);
-  const [pack, setPack] = useState<keyof typeof INTEREST_PACKS | null>(null);
+  const [pack, setPack] = useState<PackKey | null>(null);
   const [blockId, setBlockId] = useState("");
   const [blocking, setBlocking] = useState(false);
 
@@ -103,7 +104,7 @@ const Accounts = () => {
 
   const { start, isStarting } = useCheckout({ description: "Interest pack", onPaid });
 
-  const buy = async (key: keyof typeof INTEREST_PACKS) => {
+  const buy = async (key: PackKey) => {
     setPack(key);
     const ok = await start({ purpose: "interest", pack: key });
     if (!ok) setPack(null);
@@ -166,8 +167,8 @@ const Accounts = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
-          {(Object.keys(INTEREST_PACKS) as (keyof typeof INTEREST_PACKS)[]).map((key) => {
-            const p = INTEREST_PACKS[key];
+          {(Object.keys(pricing.interestPacks) as PackKey[]).map((key) => {
+            const p = pricing.interestPacks[key];
             const best = key === "premium";
             return (
               <div
@@ -181,7 +182,7 @@ const Accounts = () => {
                 )}
                 <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                   {best ? <Zap className="size-4 text-primary" /> : <Heart className="size-4 text-primary" />}
-                  {p.title}
+                  {PACK_TITLES[key]}
                 </div>
                 <p className="mt-2 font-display text-4xl font-bold">{inr(p.amount)}</p>
                 <p className="text-sm text-muted-foreground">

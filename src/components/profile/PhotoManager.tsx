@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ImagePlus, Star, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MAX_FILE_SIZE_MB, MAX_IMAGES, imageUrl } from "@/utils/constants";
+import { shrinkImage } from "@/lib/image";
 import type { ImageFile } from "@/utils/interfaces";
 
 export type PhotoItem = ImageFile | File;
@@ -33,6 +34,7 @@ interface Props {
 export const PhotoManager = ({ value, onChange, className, text = defaultText }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | null>(null);
+  const [shrinking, setShrinking] = useState(false);
 
   const previews = useMemo(
     () => value.map((item) => (item instanceof File ? URL.createObjectURL(item) : imageUrl(item.url, "card"))),
@@ -43,23 +45,27 @@ export const PhotoManager = ({ value, onChange, className, text = defaultText }:
     [previews]
   );
 
-  const addFiles = (files: FileList | null) => {
+  const addFiles = async (files: FileList | null) => {
     if (!files?.length) return;
     setError(null);
     const room = MAX_IMAGES - value.length;
     const picked: File[] = [];
-    for (const file of Array.from(files)) {
-      if (!ACCEPTED.includes(file.type)) {
+    setShrinking(true);
+    for (const original of Array.from(files)) {
+      if (!ACCEPTED.includes(original.type)) {
         setError(text.type);
         continue;
       }
-      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      // Phone photos are often several MB; shrink them instead of rejecting.
+      const file = await shrinkImage(original, MAX_FILE_SIZE_MB * 1024 * 1024);
+      if (!file) {
         setError(text.size(MAX_FILE_SIZE_MB));
         continue;
       }
       const dup = value.some((v) => v instanceof File && v.name === file.name && v.size === file.size);
       if (!dup) picked.push(file);
     }
+    setShrinking(false);
     if (picked.length > room) setError(text.max(MAX_IMAGES));
     if (picked.length) onChange([...value, ...picked.slice(0, room)]);
   };
@@ -123,7 +129,9 @@ export const PhotoManager = ({ value, onChange, className, text = defaultText }:
         }}
       />
       <p className={cn("mt-2 text-xs", error ? "font-medium text-destructive" : "text-muted-foreground")}>
-        {error ?? `JPG or PNG, under ${MAX_FILE_SIZE_MB} MB each. A clear, recent face photo works best.`}
+        {shrinking
+          ? "Preparing photo…"
+          : (error ?? "JPG or PNG. Large photos are resized automatically. A clear, recent face photo works best.")}
       </p>
     </div>
   );

@@ -18,7 +18,8 @@ import { BlockingLoader } from "@/components/common/Loaders";
 import { useCheckout, type PaidOrder } from "@/hooks/useCheckout";
 import Consultations from "./Consultations";
 import api from "@/utils/api";
-import { ASTRO_FEES, SUPPORT_EMAIL, genderOptions } from "@/utils/constants";
+import { SUPPORT_EMAIL, genderOptions } from "@/utils/constants";
+import { usePricing } from "@/lib/pricing";
 import type { AstrologyIn, ConsultationMode } from "@/utils/interfaces";
 import { toFloatingString } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
@@ -112,6 +113,7 @@ const FRESH_WINDOW_MS = 3 * 60 * 1000;
 const complete = (b: Birth) => !!(b.name.trim() && b.gender && b.date && b.time && b.place.trim());
 
 const Astrology = () => {
+  const astroFees = usePricing().astroFees;
   const [mode, setMode] = useState<ConsultationMode>("Overview");
   const [me, setMe] = useState<Birth>(emptyBirth());
   const [match, setMatch] = useState<Birth>(emptyBirth("Female"));
@@ -236,7 +238,7 @@ const Astrology = () => {
                     <span className="block font-semibold">{t.modes[m.value].title}</span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{t.modes[m.value].blurb}</span>
                   </span>
-                  <span className="shrink-0 font-display text-xl font-bold text-primary sm:mt-auto sm:text-2xl">₹{ASTRO_FEES[m.value]}</span>
+                  <span className="shrink-0 font-display text-xl font-bold text-primary sm:mt-auto sm:text-2xl">₹{astroFees[m.value]}</span>
                 </label>
               ))}
             </RadioGroup>
@@ -258,7 +260,7 @@ const Astrology = () => {
 
             <Button size="lg" className="w-full" disabled={!ready || isStarting} onClick={submit}>
               <Sparkles />
-              {isStarting ? t.opening : t.pay(ASTRO_FEES[mode])}
+              {isStarting ? t.opening : t.pay(astroFees[mode])}
             </Button>
           </CardContent>
         </Card>
