@@ -5,10 +5,25 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Lotus, SectionHeading } from "@/components/common/Brand";
 import SEO from "@/components/misc/SEO";
-import { SEO_URL } from "@/utils/constants";
 import { usePublicLang } from "@/lib/i18n";
-import { feeLabel, fillPrices, usePricing, type AstroMode, type PackKey } from "@/lib/pricing";
+import { seoText } from "@/lib/seoText";
+import { feeLabel, fillPrices, PACK_TITLES, usePricing, type AstroMode, type PackKey } from "@/lib/pricing";
+import { SEO_URL } from "@/utils/constants";
 import { pricingText } from "./lang";
+
+const product = (name: string, description: string, price: number) => ({
+  "@type": "Product",
+  name,
+  description,
+  brand: { "@id": `${SEO_URL}/#organization` },
+  offers: {
+    "@type": "Offer",
+    price,
+    priceCurrency: "INR",
+    availability: "https://schema.org/InStock",
+    url: `${SEO_URL}/pricing`,
+  },
+});
 
 const Pricing = () => {
   const [lang] = usePublicLang();
@@ -18,10 +33,23 @@ const Pricing = () => {
   return (
     <>
       <SEO
-        title="Pricing Plans | Seetha Rama Kalyana"
-        description="Explore Seetha Rama Kalyana's registration and interest purchase plans. Start your journey with a one-time registration fee and buy interest credits to connect with your ideal match."
+        title={seoText.pricing[lang].title}
+        description={seoText.pricing[lang].description}
         keywords="hindu matrimony, matrimony, registration fee, interest pack, pricing plans, Seetha Rama Kalyana"
-        url={SEO_URL + "/pricing"}
+        additionalSchema={[
+          product(
+            "Seetha Rama Kalyana yearly membership",
+            `One year of Hindu matrimony membership with ${pricing.registrationInterests} interest credits (1 credit = 1 interest).`,
+            pricing.registrationFee
+          ),
+          ...(Object.keys(pricing.interestPacks) as PackKey[]).map((key) =>
+            product(
+              `Seetha Rama Kalyana ${PACK_TITLES[key]}`,
+              `${pricing.interestPacks[key].interests} extra interest credits for members.`,
+              pricing.interestPacks[key].amount
+            )
+          ),
+        ]}
       />
       <div className="bg-kolam">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">

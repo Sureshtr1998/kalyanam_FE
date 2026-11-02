@@ -9,7 +9,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { publicPages, root } from "./routes.mjs";
+import { LOCALES, localePath, publicPages, root } from "./routes.mjs";
 
 const dist = resolve(root, "dist");
 const ssrDir = resolve(root, "dist-ssr");
@@ -21,11 +21,15 @@ const shell = readFileSync(existsSync(shellFile) ? shellFile : resolve(dist, "in
 writeFileSync(shellFile, shell);
 // The home page's hero image is preloaded by index.html; other pages don't show it.
 const HERO_PRELOAD = /\s*<link rel="preload" as="image" href="\/assets\/hero\.webp" \/>/;
+const TRANSLATED_HOMES = LOCALES.map(([lang]) => localePath("/", lang));
 
 // React renders a page's <title>, <meta> and <link> tags first; they belong in <head>.
 const HEAD_TAGS = /^(?:<(?:link|meta)\b[^>]*>|<title>[^<]*<\/title>)+/;
 // The template's own title and default tags are replaced by the page's.
 const DEFAULT_TAGS = /\s*<title>[^<]*<\/title>|\s*<meta data-default[^>]*\/>/g;
+
+// /kn, /kn/pricing … are the Kannada versions; everything else is English.
+const htmlLang = (url) => LOCALES.find(([lang]) => lang !== "en" && (url === `/${lang}` || url.startsWith(`/${lang}/`)))?.[1] ?? "en-IN";
 
 const page = async (url, marker) => {
   const html = await render(url);
@@ -34,7 +38,9 @@ const page = async (url, marker) => {
   if (!head.includes("<title>")) throw new Error(`${url}: no <title> rendered`);
   // data-default: main.tsx removes these before React adds its own, so none are duplicated.
   const headTags = head.replace(/<(link|meta|title)\b/g, "<$1 data-default");
-  return (url === "/" ? shell : shell.replace(HERO_PRELOAD, ""))
+  const isHome = TRANSLATED_HOMES.includes(url);
+  return (isHome ? shell : shell.replace(HERO_PRELOAD, ""))
+    .replace('<html lang="en-IN">', `<html lang="${htmlLang(url)}">`)
     .replace(DEFAULT_TAGS, "")
     .replace("</head>", () => `    ${headTags}\n  </head>`)
     .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="${marker}">${body}</div>`);

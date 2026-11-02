@@ -18,7 +18,6 @@ import type { BrokerRegistrationForm } from "@/utils/brokerInterface";
 import type { ImageFile } from "@/utils/interfaces";
 import {
   MIN_PASSWORD_LENGTH,
-  SEO_URL,
   SUPPORT_NUMBER,
   UPLOAD_REUSE_MS,
   brokerFormDefaultVals,
@@ -26,6 +25,7 @@ import {
 import { casteOptions, motherTongueOptions } from "@/utils/utils";
 import { errorMessage } from "@/lib/errors";
 import { usePublicLang } from "@/lib/i18n";
+import { seoText } from "@/lib/seoText";
 import { translations } from "./lang";
 import { fillPrices, usePricing } from "@/lib/pricing";
 
@@ -118,10 +118,9 @@ const PartnerWithUs = () => {
   return (
     <>
       <SEO
-        title="Partner With Us | Matrimony Broker Partnership – Seetha Rama Kalyana"
-        description="Partner with Seetha Rama Kalyana as a trusted matrimony broker. Earn referral commissions, track registrations, and grow your business digitally."
+        title={seoText.partner[language].title}
+        description={seoText.partner[language].description}
         keywords="matrimony broker partnership, matrimony referral program, marriage broker platform, seetha rama kalyana partner, matrimony agent registration"
-        url={SEO_URL + "/partner-with-us"}
       />
       <BlockingLoader show={!!busy} message={busy ?? undefined} />
 

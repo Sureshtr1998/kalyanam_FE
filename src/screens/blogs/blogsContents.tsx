@@ -11,16 +11,28 @@ import tenUrl from "../../assets/blogs/10.webp";
 import elevenUrl from "../../assets/blogs/11.webp";
 import genUrl from "../../assets/blogs/gen.webp";
 
+// Every post went live on BLOG_PUBLISHED and was last rewritten on BLOG_UPDATED, unless the
+// post sets its own dates. Give a post a new `updatedAt` whenever its content really changes.
+// Keep BLOG_UPDATED in sync with scripts/routes.mjs.
+export const BLOG_PUBLISHED = "2026-01-06";
+export const BLOG_UPDATED = "2026-10-31";
+
 export interface BlogPost {
   id: number;
   title: string;
   slug: string;
   keywords: string;
   summary: string;
-  category: "Tips" | "Success Stories" | "Lifestyle" | "Events";
+  category: "Tips" | "Lifestyle" | "Events";
   readTime: string;
   imageUrl: string;
   isFeatured?: boolean;
+  publishedAt?: string;
+  updatedAt?: string;
+  /** A two or three sentence direct answer, shown first: what search snippets and AI assistants quote. */
+  answer?: string;
+  /** Short factual takeaways, shown as a list under the answer. */
+  keyFacts?: string[];
   fullContent: React.ReactNode[];
 }
 
@@ -190,7 +202,7 @@ export const blogPosts: BlogPost[] = [
     summary:
       "How to celebrate diversity within Hindu traditions when two different linguistic or regional backgrounds come together.",
     imageUrl: fiveUrl,
-    category: "Success Stories",
+    category: "Tips",
     readTime: "6 min read",
     fullContent: [
       <>
@@ -745,36 +757,59 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 21,
-    title: "Success Stories: How Brahmin Couples Found Love Online",
+    title: "What Actually Helps Brahmin Families Find a Match Online",
     slug: "success-stories-brahmin-matrimony-online",
     keywords:
-      "Brahmin success stories, matrimony success stories India, find love online Brahmin, trusted marriage site results, real matrimony matches",
+      "Brahmin matrimony online, Brahmin bride and groom search, gotra matching, Brahmin matrimony tips, trusted matrimony site",
     summary:
-      "Real-life stories of Brahmin brides and grooms who found their perfect match on our trusted matrimony platform.",
-    category: "Success Stories",
+      "A practical guide for Brahmin families searching online: what to put in the profile, how to handle gotra and horoscope questions, and how to judge a matrimony site.",
+    category: "Tips",
     readTime: "7 min read",
     imageUrl: genUrl,
+    updatedAt: "2026-11-02",
+    answer:
+      "Brahmin families find good matches online when the profile states the essentials up front (sub-sect, gotra, nakshatra, food habits and family values), the horoscope is ready to share, and both sides talk early about expectations. Choose a site that verifies profiles and lets you control who sees your details.",
+    keyFacts: [
+      "Gotra is checked to avoid sagotra marriages, so list yours on the profile.",
+      "Nakshatra, rashi and birth time let families run kundli matching before the first call.",
+      "Sub-sects (for example Smartha, Madhwa, Iyer, Iyengar, Deshastha) matter to many families, so state your openness clearly.",
+      "Privacy controls that hide your profile from non-matching members cut down unwanted contact.",
+    ],
     fullContent: [
       <>
-        Nothing proves the efficacy of a <strong>trusted marriage site</strong>{" "}
-        like real results. Our <strong>Brahmin success stories</strong>{" "}
-        highlight couples who found deep compatibility through our platform.
+        Searching for a <strong>Brahmin bride or groom online</strong> works
+        best when families treat the profile as the first conversation. Most of
+        the questions that come up in the first call can be answered on the
+        profile itself.
       </>,
       <>
-        <strong>Overcoming Distance:</strong> Many of our{" "}
-        <strong>matrimony success stories India</strong> involve couples living
-        in different cities who connected via our advanced location and
-        community filters.
+        <strong>State the essentials clearly:</strong> sub-sect, gotra,
+        nakshatra, rashi, mother tongue and food habits. Families filter on
+        these first, and a complete profile is far more likely to receive an
+        interest than a vague one.
       </>,
       <>
-        <strong>Family Approval:</strong> For these couples, the ability for
-        parents to review <strong>real matrimony matches</strong> together was
-        the key to a successful and happy union.
+        <strong>Keep the horoscope ready:</strong> share an accurate birth date,
+        time and place. With these, both families can run{" "}
+        <strong>kundli matching</strong> before meeting, which saves time for
+        everyone.
       </>,
       <>
-        Are you ready to be our next success story? Start your journey to{" "}
-        <strong>find love online Brahmin</strong> style with{" "}
-        <strong>Seetha Rama Kalyana</strong> today.
+        <strong>Be honest about flexibility:</strong> if you are open to other
+        sub-sects or to a partner living in another city or abroad, say so.
+        Clear partner preferences bring better suggestions.
+      </>,
+      <>
+        <strong>Judge the platform, not just the profiles:</strong> check
+        whether the site verifies members, whether you control who can see
+        your photos and contact details, and whether pricing is clear with no
+        sales calls. These are the things <strong>Seetha Rama Kalyana</strong>{" "}
+        was built around.
+      </>,
+      <>
+        <strong>Involve the family early:</strong> let parents review
+        shortlisted profiles together with you. Agreeing on priorities at the
+        start avoids disappointment later.
       </>,
     ],
   },
@@ -1608,25 +1643,56 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 48,
-    title: "Success Stories: From Profile Creation to 'I Do' in 6 Months",
+    title: "From Profile to Wedding in Six Months: A Practical Plan",
     slug: "matrimony-success-stories-within-6-months",
     keywords:
-      "real matrimony success stories, finding match quickly, successful Indian marriages, Seetha Rama Kalyana couples",
+      "find a match quickly, matrimony search plan, how long to find a match, arranged marriage timeline, matrimony tips",
     summary:
-      "Inspiring stories of couples who found their perfect match quickly by using the right filters and being active.",
-    category: "Success Stories",
+      "A month-by-month plan for families who want to move from creating a matrimony profile to a confirmed alliance within about six months.",
+    category: "Tips",
     readTime: "7 min read",
     imageUrl: genUrl,
+    updatedAt: "2026-11-02",
+    answer:
+      "Six months is realistic when the profile is complete in the first week, you send and answer interests every week, horoscopes are matched before meetings, and the family agrees on non-negotiables early. Most delays come from incomplete profiles and slow replies.",
+    keyFacts: [
+      "Month 1: complete profile, recent photos, horoscope details and clear partner preferences.",
+      "Months 2 and 3: send interests weekly, reply within a few days, and shortlist after kundli matching.",
+      "Months 3 and 4: family calls and first meetings with shortlisted matches.",
+      "Months 5 and 6: second meetings, family visits and a decision.",
+    ],
     fullContent: [
       <>
-        Our <strong>real matrimony success stories</strong> prove that{" "}
-        <strong>finding a match quickly</strong> is possible when you are
-        serious and the platform is verified.
+        There is no guaranteed timeline for finding a life partner, but
+        families who follow a simple plan usually move much faster than those
+        who wait for the right profile to appear.
       </>,
       <>
-        <strong>Seetha Rama Kalyana couples</strong> often mention that our
-        'Community Filter' was the most helpful tool in finding someone who
-        shared their dietary and cultural habits.
+        <strong>Month 1, get the profile right:</strong> fill every section,
+        add three to five recent photos, and enter the birth details needed
+        for horoscope matching. Write partner preferences that reflect what
+        truly matters, not a long wish list.
+      </>,
+      <>
+        <strong>Months 2 and 3, stay active:</strong> send a few interests
+        every week and reply to the ones you receive within a few days. Use{" "}
+        <strong>kundli matching</strong> and community filters to shortlist
+        before anyone gets on a call.
+      </>,
+      <>
+        <strong>Months 3 and 4, talk and meet:</strong> start with a family
+        call, then a first meeting. Prepare a few honest questions about
+        career plans, where you will live and expectations from each family.
+      </>,
+      <>
+        <strong>Months 5 and 6, decide:</strong> second meetings and family
+        visits help both sides decide with confidence. If a match is not
+        right, say so politely and keep the search going.
+      </>,
+      <>
+        On <strong>Seetha Rama Kalyana</strong>, verified profiles and privacy
+        controls keep the search focused on families who fit your preferences,
+        so your time goes into conversations that matter.
       </>,
     ],
   },

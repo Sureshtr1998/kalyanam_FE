@@ -31,11 +31,22 @@ const metaPixel = (id: string) => `
 const metaPixelNoscript = (id: string) =>
   `<noscript><img height="1" width="1" style="display: none" src="https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1" /></noscript>`;
 
+// Search Console / Bing Webmaster Tools ownership tags, only when their codes are set.
+const siteVerification = (env: Record<string, string>) =>
+  [
+    env.VITE_GOOGLE_SITE_VERIFICATION &&
+      `<meta name="google-site-verification" content="${env.VITE_GOOGLE_SITE_VERIFICATION}" />`,
+    env.VITE_BING_SITE_VERIFICATION && `<meta name="msvalidate.01" content="${env.VITE_BING_SITE_VERIFICATION}" />`,
+  ]
+    .filter(Boolean)
+    .join("\n    ");
+
 const htmlEnv = (env: Record<string, string>): Plugin => ({
   name: "html-env",
   transformIndexHtml: (html) =>
     html
       .replaceAll("%SITE_URL%", (env.VITE_SITE_URL || "").replace(/\/+$/, ""))
+      .replace("<!-- %SITE_VERIFICATION% -->", siteVerification(env))
       .replace("<!-- %META_PIXEL% -->", env.VITE_META_PIXEL_ID ? metaPixel(env.VITE_META_PIXEL_ID) : "")
       .replace("<!-- %META_PIXEL_NOSCRIPT% -->", env.VITE_META_PIXEL_ID ? metaPixelNoscript(env.VITE_META_PIXEL_ID) : ""),
 });
@@ -71,6 +82,8 @@ export default defineConfig(({ mode }) => {
           // Offline/repeat navigations get the empty app, not the prerendered home page
           // (scripts/prerender.mjs writes app-shell.html after this build).
           navigateFallback: "app-shell.html",
+          // Plain files opened in a tab (robots.txt, sitemap.xml, llms.txt, the IndexNow key) stay files.
+          navigateFallbackDenylist: [/\.(txt|xml)$/],
           additionalManifestEntries: [{ url: "app-shell.html", revision: String(Date.now()) }],
         },
         manifest: {

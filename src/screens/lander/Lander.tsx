@@ -18,10 +18,10 @@ import { OmSpinner } from "@/components/common/Loaders";
 import LoginForm from "@/components/forms/LoginForm";
 import SEO from "@/components/misc/SEO";
 import type { FormType } from "@/utils/interfaces";
-import { SEO_URL } from "@/utils/constants";
 import { feeLabel, fillPrices, usePricing } from "@/lib/pricing";
 import { isLoggedIn } from "@/lib/session";
 import { usePublicLang } from "@/lib/i18n";
+import { seoText } from "@/lib/seoText";
 import { cn } from "@/lib/utils";
 import { landerText } from "./lang";
 
@@ -84,10 +84,9 @@ const Lander = () => {
   return (
     <>
       <SEO
-        title="Seetha Rama Kalyana | Hindu Matrimony"
-        description="Join Seetha Rama Kalyana, the trusted Hindu matrimony platform, to find your ideal life partner with respect, dharma, and tradition."
-        keywords="hindu matrimony, seetha rama kalyana, matchmaking, marriage, kannada matrimony, brahmin matrimony"
-        url={SEO_URL}
+        title={seoText.home[lang].title}
+        description={seoText.home[lang].description}
+        keywords="hindu matrimony, hindu matrimony india, hindu brides, hindu grooms, matrimony site, kundli matching, brahmin matrimony, seetha rama kalyana"
       />
 
       {/* Hero */}

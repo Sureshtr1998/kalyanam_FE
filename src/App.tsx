@@ -12,6 +12,7 @@ import ProtectedRoute from "@/components/misc/ProtectedRoute";
 import PublicLayout from "@/components/layout/PublicLayout";
 import { OmSpinner } from "@/components/common/Loaders";
 import Lander from "@/screens/lander/Lander";
+import { PATH_LANGS } from "@/lib/i18n";
 
 // Everything except the landing page is split into its own chunk.
 const AppLayout = lazy(() => import("@/components/layout/AppLayout"));
@@ -37,6 +38,8 @@ const RefundPolicy = lazy(() => import("@/screens/refund/Refund"));
 const PartnerWithUs = lazy(() => import("@/screens/partnerWUs/PartnerWithUs"));
 const CommunitiesServe = lazy(() => import("@/screens/communities/Communities"));
 const CommunityPage = lazy(() => import("@/screens/communities/CommunityPage"));
+const Cities = lazy(() => import("@/screens/cities/Cities"));
+const CityPage = lazy(() => import("@/screens/cities/CityPage"));
 const NotFound = lazy(() => import("@/screens/notFound/NotFound"));
 
 const ScrollToTop = () => {
@@ -65,6 +68,17 @@ const AppRoutes = () => (
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/matrimony" element={<Cities />} />
+        <Route path="/matrimony/:slug" element={<CityPage />} />
+        {/* Translated pages in their own language, e.g. /kn/about-us (see TRANSLATED_PATHS). */}
+        {PATH_LANGS.map((lang) => (
+          <Route key={lang} path={`/${lang}`}>
+            <Route index element={<Lander />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route path="pricing" element={<Pricing />} />
+            <Route path="partner-with-us" element={<PartnerWithUs />} />
+          </Route>
+        ))}
         <Route path="*" element={<NotFound />} />
       </Route>
 

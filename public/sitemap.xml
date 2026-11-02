@@ -1,25 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.seetharamakalyana.in/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/about-us</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/about-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/about-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/about-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/about-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/about-us" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/pricing</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/pricing" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/pricing" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/pricing" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/pricing" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/pricing" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -38,151 +62,157 @@
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/partner-with-us</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/contact-us</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/terms</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/privacy</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/refund-policy</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/create-perfect-matrimony-profile</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/top-10-brahmin-wedding-traditions</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/modern-groom-checklist-india</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/understanding-kundali-matching-significance</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/inter-community-hindu-marriage-tips</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/online-matrimony-safety-guide</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/meaning-of-saptapadi-seven-vows</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/questions-to-ask-matrimony-match</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/career-and-marriage-balance</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/family-role-modern-arranged-marriage</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/budget-destination-weddings-india</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/financial-planning-for-newly-married-couples</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/top-matrimony-site-global-indians</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/brahmin-matrimony-guide-perfect-match</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/reasons-to-choose-trusted-hindu-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/understanding-gothras-brahmin-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/use-filters-best-matrimony-site-results</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/rise-of-niche-brahmin-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/top-matrimonial-keywords-bio-tips</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/vedic-marriage-rituals-brahmin-weddings</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -194,157 +224,157 @@
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/truth-about-big-matrimony-sites-duplicate-profiles</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/high-cost-of-matrimony-subscriptions-exposed</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/fake-profiles-scams-major-marriage-sites</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/niche-brahmin-matrimony-vs-mega-platforms</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/kannada-matrimony-traditions-modern-world</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/telugu-brahmin-matrimony-traditions</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/tamil-matrimony-iyer-iyengar-weddings</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/north-indian-pandit-matrimony-rituals</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/importance-of-mother-tongue-in-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/kerala-brahmin-matrimony-namboothiri-traditions</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/marathi-brahmin-matrimony-peshwa-legacy</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/rajput-matrimony-traditions-legacy</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/aggarwal-baniya-matrimony-success</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/lingayat-matrimony-traditions-karnataka</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/jat-matrimony-search-traditions</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/yadav-matrimony-heritage-lineage</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/maratha-matrimony-maharashtra-traditions</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/rama-seetha-marriage-blueprint</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/lessons-loyalty-seetha-rama-marriage</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/vivaha-panchami-significance-marriage</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/why-minimal-fee-beats-free-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/data-science-matchmaking-hindu-marriage</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/top-tips-find-match-indian-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/marriage-bureau-vs-matrimony-apps</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/evolution-arranged-marriage-digital-age</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/importance-verified-matrimony-profiles</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -356,242 +386,506 @@
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/matrimony-profile-photo-guide</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/why-seetha-rama-kalyana-is-the-last-stop</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/agarwal-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/arora-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/baniya-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/brahmin-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/bhumihar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/chettiar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/dhoba-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/ezhava-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/gounder-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/gurmukh-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/jat-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/kamma-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/kayastha-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/khatri-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/koli-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/kumbhar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/kurmi-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/kshatriya-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/lohana-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/mali-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/maratha-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/maheshwari-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/mudaliar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/nair-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/naidu-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/patel-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/rajput-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/reddy-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/saini-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/sindhi-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/sonar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/teli-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/vankar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/vanniyar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/vellalar-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/vishwakarma-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/vysya-matrimony</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/communities/yadav-matrimony</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/mumbai</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/delhi-ncr</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/bengaluru</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/hyderabad</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/chennai</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/pune</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/kolkata</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/ahmedabad</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/jaipur</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/lucknow</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/kochi</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/matrimony/nri</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/about-us</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/about-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/about-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/about-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/about-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/about-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/pricing</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/pricing" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/pricing" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/pricing" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/pricing" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/pricing" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/partner-with-us</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/about-us</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/about-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/about-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/about-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/about-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/about-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/pricing</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/pricing" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/pricing" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/pricing" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/pricing" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/pricing" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/partner-with-us</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/about-us</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/about-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/about-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/about-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/about-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/about-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/pricing</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/pricing" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/pricing" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/pricing" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/pricing" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/pricing" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/partner-with-us</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/about-us</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/about-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/about-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/about-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/about-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/about-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/about-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/pricing</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/pricing" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/pricing" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/pricing" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/pricing" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/pricing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/pricing" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/partner-with-us</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
   </url>
 </urlset>

@@ -16,8 +16,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Lotus, SectionHeading } from "@/components/common/Brand";
 import SEO from "@/components/misc/SEO";
-import { SEO_URL } from "@/utils/constants";
 import { usePublicLang } from "@/lib/i18n";
+import { seoText } from "@/lib/seoText";
 import { aboutText } from "./lang";
 import { fillPrices, usePricing } from "@/lib/pricing";
 import hanuman from "@/assets/hanuman.webp";
@@ -38,10 +38,9 @@ const AboutUs = () => {
   return (
     <>
       <SEO
-        title="About Us | Seetha Rama Kalyana"
-        description="Learn about Seetha Rama Kalyana, our mission, and our dedicated team serving the Hindu community."
+        title={seoText.about[lang].title}
+        description={seoText.about[lang].description}
         keywords="hindu matrimony, about us, seetha rama kalyana"
-        url={SEO_URL + "/about-us"}
       />
 
       <section className="bg-sunrise relative overflow-hidden">
