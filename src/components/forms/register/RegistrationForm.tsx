@@ -46,27 +46,37 @@ import { registerText } from "./lang";
 type Step = 1 | 2 | 3;
 type Busy = keyof (typeof registerText)["en"]["busy"];
 
+// Equal columns, each a dot with its label centred below, so the row stays centred at any width.
+// The connector runs from the edge of one dot to the edge of the next.
 const StepDots = ({ step, steps }: { step: Step; steps: string[] }) => (
-  <ol className="mb-6 flex items-center gap-2">
+  <ol className="mx-auto mb-6 flex max-w-sm items-start">
     {steps.map((label, i) => {
       const n = (i + 1) as Step;
       const done = n < step;
       const active = n === step;
       return (
-        <li key={label} className="flex flex-1 items-center gap-2">
+        <li key={label} className="relative flex flex-1 flex-col items-center gap-1.5 text-center" aria-current={active ? "step" : undefined}>
+          {i < steps.length - 1 && (
+            <span
+              aria-hidden
+              className={cn(
+                "absolute left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] top-3.5 h-0.5 rounded-full transition-colors",
+                done ? "bg-success" : "bg-border"
+              )}
+            />
+          )}
           <span
             className={cn(
-              "flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors",
+              "relative flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors",
               done && "bg-success text-success-foreground",
               active && "bg-primary text-primary-foreground ring-4 ring-primary/15",
               !done && !active && "bg-muted text-muted-foreground"
             )}>
             {done ? <Check className="size-4" /> : n}
           </span>
-          <span className={cn("hidden text-xs font-semibold sm:block", active ? "text-foreground" : "text-muted-foreground")}>
+          <span className={cn("px-1 text-[11px] font-semibold leading-tight sm:text-xs", active ? "text-foreground" : "text-muted-foreground")}>
             {label}
           </span>
-          {i < steps.length - 1 && <span className={cn("h-px flex-1", done ? "bg-success" : "bg-border")} />}
         </li>
       );
     })}
@@ -88,6 +98,16 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const [referralOk, setReferralOk] = useState(true);
   const leadTracked = useRef(false);
   const uploaded = useRef<{ key: string; media: ImageFile[]; at: number } | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const shownStep = useRef(step);
+
+  // On phones the Continue button sits a long way below the stepper; bring the new step's top into view.
+  useEffect(() => {
+    if (shownStep.current === step) return;
+    shownStep.current = step;
+    const el = rootRef.current;
+    if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [step]);
   const [lang] = usePublicLang();
   const t = registerText[lang];
   const pricing = usePricing();
@@ -249,7 +269,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const subCastes = subCasteOptions(form.caste);
 
   return (
-    <div>
+    <div ref={rootRef} className="scroll-mt-24">
       <BlockingLoader show={!!busy && busy !== "checking"} message={busy ? t.busy[busy] : undefined} />
       <div className="mb-4 text-center">
         <h2 className="font-display text-3xl font-bold">{t.title}</h2>
