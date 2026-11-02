@@ -9,7 +9,7 @@ const LatestPosts = () => (
         key={p.id}
         to={`/blog/${p.slug}`}
         className="group w-[82%] shrink-0 snap-center overflow-hidden rounded-3xl sm:w-auto border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-        <img src={p.imageUrl} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
+        <img src={p.imageUrl} alt="" loading="lazy" width={640} height={400} className="aspect-[16/10] h-auto w-full object-cover" />
         <div className="p-5">
           <p className="text-xs font-bold uppercase tracking-wide text-gold-foreground">{p.category} · {p.readTime}</p>
           <h3 className="mt-2 font-display text-xl font-bold leading-snug group-hover:text-primary">{p.title}</h3>

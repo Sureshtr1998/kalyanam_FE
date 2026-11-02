@@ -54,7 +54,7 @@ const Blog = () => {
           <Link
             to={`/blog/${featured.slug}`}
             className="group mb-12 grid overflow-hidden rounded-[2rem] border border-gold/40 bg-card shadow-lg lg:grid-cols-2">
-            <img src={featured.imageUrl} alt="" className="aspect-[16/10] size-full object-cover lg:aspect-auto" />
+            <img src={featured.imageUrl} alt="" width={1280} height={800} fetchPriority="high" className="aspect-[16/10] size-full object-cover lg:aspect-auto" />
             <div className="flex flex-col justify-center gap-3 p-6 sm:p-10">
               <span className="w-fit rounded-full bg-primary px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground">
                 Featured
@@ -77,7 +77,7 @@ const Blog = () => {
                 key={p.id}
                 to={`/blog/${p.slug}`}
                 className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
-                <img src={p.imageUrl} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
+                <img src={p.imageUrl} alt="" loading="lazy" width={640} height={400} className="aspect-[16/10] h-auto w-full object-cover" />
                 <div className="flex flex-1 flex-col gap-2 p-5">
                   <Meta post={p} />
                   <h3 className="font-display text-xl font-bold leading-snug group-hover:text-primary">{p.title}</h3>

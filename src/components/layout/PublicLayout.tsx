@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Mail, Menu, RefreshCw, Sparkles } from "lucide-react";
 import { Brand, BrandMark, Lotus } from "@/components/common/Brand";
 import { OmSpinner } from "@/components/common/Loaders";
@@ -11,19 +11,20 @@ import { isLoggedIn } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { SUPPORT_EMAIL } from "@/utils/constants";
 import { fillPrices, isFreeRegistration, usePricing, type Pricing } from "@/lib/pricing";
-import { localeOf, usePublicLang } from "@/lib/i18n";
+import { localeOf, localePath, splitLocalePath, TRANSLATED_PATHS, usePublicLang, type Lang } from "@/lib/i18n";
 import { LanguageSelect } from "@/components/common/LanguageSelect";
 import { layoutText } from "./lang";
 
 type Text = (typeof layoutText)["en"];
 
-const navLinks = (t: Text) => [
-  { to: "/about-us", label: t.about },
-  { to: "/communities", label: t.communities },
-  { to: "/pricing", label: t.pricing },
-  { to: "/blog", label: t.blog },
-  { to: "/partner-with-us", label: t.partner },
-];
+const navLinks = (t: Text, lang: Lang) =>
+  [
+    { to: "/about-us", label: t.about },
+    { to: "/communities", label: t.communities },
+    { to: "/pricing", label: t.pricing },
+    { to: "/blog", label: t.blog },
+    { to: "/partner-with-us", label: t.partner },
+  ].map((l) => ({ ...l, to: localePath(l.to, lang) }));
 
 const footerGroups = (t: Text) => [
   {
@@ -31,6 +32,7 @@ const footerGroups = (t: Text) => [
     links: [
       { to: "/about-us", label: t.aboutUs },
       { to: "/communities", label: t.ourCommunities },
+      { to: "/matrimony", label: t.cities },
       { to: "/partner-with-us", label: t.partnerWithUs },
       { to: "/blog", label: t.blog },
     ],
@@ -79,15 +81,25 @@ const OfferBar = ({ t, pricing }: { t: Text; pricing: Pricing }) => (
 
 const PublicLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  // The page without its language prefix: /kn/pricing -> /pricing.
+  const { lang: urlLang, path } = splitLocalePath(location.pathname);
   const [open, setOpen] = useState(false);
   const loggedIn = isLoggedIn();
   const { updateAvailable, reloadApp } = usePWA();
   const [lang, setLang] = usePublicLang();
   const pricing = usePricing();
   const t = useMemo(() => fillPrices(layoutText[lang], pricing, lang), [lang, pricing]);
-  const links = navLinks(t);
+  const links = navLinks(t, lang);
 
   useEffect(() => setOpen(false), [location.pathname]);
+
+  // Returning visitors who chose a language land on that language's URL.
+  useEffect(() => {
+    if (!urlLang && lang !== "en" && TRANSLATED_PATHS.includes(path)) {
+      navigate(localePath(path, lang) + location.search + location.hash, { replace: true });
+    }
+  }, [urlLang, lang, path, location.search, location.hash, navigate]);
 
   useEffect(() => {
     document.documentElement.lang = localeOf(lang);
@@ -100,19 +112,19 @@ const PublicLayout = () => {
     <Button asChild>
       <Link to="/home">{t.myMatches}</Link>
     </Button>
-  ) : location.pathname === "/" ? (
+  ) : path === "/" ? (
     <Button asChild>
       <a href="#join">{t.loginRegister}</a>
     </Button>
   ) : (
     <Button asChild>
-      <Link to="/">{t.loginRegister}</Link>
+      <Link to={localePath("/", lang)}>{t.loginRegister}</Link>
     </Button>
   );
 
   return (
     <div className="flex min-h-dvh flex-col">
-      {location.pathname === "/" && <OfferBar t={t} pricing={pricing} />}
+      {path === "/" && <OfferBar t={t} pricing={pricing} />}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Brand />
@@ -148,7 +160,7 @@ const PublicLayout = () => {
                   <Brand />
                 </SheetHeader>
                 <nav className="flex flex-col gap-1 px-4">
-                  {[{ to: "/", label: t.home }, ...links, { to: "/faq", label: t.faqs }, { to: "/contact-us", label: t.contact }].map((l) => (
+                  {[{ to: localePath("/", lang), label: t.home }, ...links, { to: "/faq", label: t.faqs }, { to: "/contact-us", label: t.contact }].map((l) => (
                     <NavLink
                       key={l.to}
                       to={l.to}
@@ -205,7 +217,7 @@ const PublicLayout = () => {
               <ul className="mt-4 space-y-2.5">
                 {g.links.map((l) => (
                   <li key={l.to}>
-                    <Link to={l.to} className="text-sm opacity-80 hover:text-gold hover:opacity-100">
+                    <Link to={localePath(l.to, lang)} className="text-sm opacity-80 hover:text-gold hover:opacity-100">
                       {l.label}
                     </Link>
                   </li>

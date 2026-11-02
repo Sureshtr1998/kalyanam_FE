@@ -1,4 +1,6 @@
-import { SEO_URL, SITE_NAME, SUPPORT_EMAIL } from "@/utils/constants";
+import { useLocation } from "react-router-dom";
+import { LANGUAGES, localeOf, localePath, splitLocalePath, TRANSLATED_PATHS } from "@/lib/i18n";
+import { SEO_URL, SITE_NAME, SOCIAL_PROFILES, SUPPORT_EMAIL, SUPPORT_PHONE } from "@/utils/constants";
 
 type JsonLd = Record<string, unknown>;
 
@@ -6,7 +8,7 @@ interface SEOProps {
   title: string;
   description: string;
   keywords?: string;
-  /** Absolute canonical URL. Defaults to the site root. */
+  /** Absolute canonical URL. Defaults to the site root; translated pages use their own language's URL. */
   url?: string;
   /** Absolute or root-relative share image. */
   image?: string;
@@ -20,9 +22,12 @@ interface SEOProps {
   additionalSchema?: JsonLd[];
 }
 
-const DEFAULT_IMAGE = `${SEO_URL}/assets/hero.webp`;
+// 1200x630 JPEG: the size and format every link preview (WhatsApp, Facebook, X, LinkedIn) supports.
+const DEFAULT_IMAGE = `${SEO_URL}/assets/og-default.jpg`;
 
 const absolute = (path: string) => (path.startsWith("http") ? path : `${SEO_URL}${path}`);
+/** Absolute URL of a site path; the home page has no trailing slash, like SEO_URL. */
+const pageHref = (path: string) => (path === "/" ? SEO_URL : `${SEO_URL}${path}`);
 
 /**
  * Per-page metadata. React 19 hoists <title>, <meta> and <link> into <head>;
@@ -32,7 +37,7 @@ export default function SEO({
   title,
   description,
   keywords,
-  url = SEO_URL,
+  url: pageUrl = SEO_URL,
   image = DEFAULT_IMAGE,
   noindex = false,
   type = "website",
@@ -42,23 +47,42 @@ export default function SEO({
   additionalSchema = [],
 }: SEOProps) {
   const img = absolute(image);
+  const { pathname } = useLocation();
+  const { lang: urlLang, path } = splitLocalePath(pathname);
+  const lang = urlLang ?? "en";
+  const locale = localeOf(lang);
+  const translated = TRANSLATED_PATHS.includes(path);
+  const url = translated ? pageHref(localePath(path, lang)) : pageUrl;
+
   const graph: JsonLd[] = [
     {
       "@type": "Organization",
       "@id": `${SEO_URL}/#organization`,
       name: SITE_NAME,
+      alternateName: ["Seetha Rama Kalyana Matrimony", "Seetharamakalyana"],
       url: SEO_URL,
-      logo: `${SEO_URL}/logo.png`,
+      logo: { "@type": "ImageObject", url: `${SEO_URL}/logo.png`, width: 512, height: 512 },
       email: SUPPORT_EMAIL,
       description:
-        "A trusted Hindu matrimony platform helping families find the perfect life partner based on tradition, values, and trust.",
+        "A newly launched Hindu matrimony platform for families across India and abroad, with verified profiles, two-way privacy, horoscope matching and no sales calls.",
+      areaServed: { "@type": "Country", name: "India" },
+      knowsLanguage: LANGUAGES.map((l) => l.locale),
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: SUPPORT_EMAIL,
+        telephone: SUPPORT_PHONE.replace(/\s/g, ""),
+        areaServed: "IN",
+        availableLanguage: ["English", "Kannada", "Hindi", "Telugu", "Tamil"],
+      },
+      ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
     },
     {
       "@type": "WebSite",
       "@id": `${SEO_URL}/#website`,
       url: SEO_URL,
       name: `${SITE_NAME} Matrimony`,
-      inLanguage: "en-IN",
+      inLanguage: LANGUAGES.map((l) => l.locale),
       publisher: { "@id": `${SEO_URL}/#organization` },
     },
     {
@@ -67,6 +91,7 @@ export default function SEO({
       url,
       name: title,
       description,
+      inLanguage: locale,
       primaryImageOfPage: img,
       isPartOf: { "@id": `${SEO_URL}/#website` },
     },
@@ -111,14 +136,33 @@ export default function SEO({
       {keywords && <meta name="keywords" content={keywords} />}
       <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
       {!noindex && <link rel="canonical" href={url} />}
+      {/* Every language version lists all of them, itself included. */}
+      {!noindex &&
+        translated &&
+        LANGUAGES.map((l) => (
+          <link
+            key={l.value}
+            rel="alternate"
+            hrefLang={l.locale}
+            href={pageHref(localePath(path, l.value))}
+          />
+        ))}
+      {!noindex && translated && <link rel="alternate" hrefLang="x-default" href={pageHref(path)} />}
 
       <meta property="og:site_name" content={SITE_NAME} />
-      <meta property="og:locale" content="en_IN" />
+      <meta property="og:locale" content={locale.replace("-", "_")} />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={img} />
+      {img === DEFAULT_IMAGE && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content="Seetha Rama Kalyana, Hindu matrimony across India" />
+        </>
+      )}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />

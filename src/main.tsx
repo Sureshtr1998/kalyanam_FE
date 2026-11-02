@@ -1,4 +1,10 @@
 import { createRoot, hydrateRoot } from "react-dom/client";
+// Self-hosted fonts: no render-blocking request to Google Fonts, and the service worker caches them.
+import "@fontsource-variable/manrope";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource/cormorant-garamond/700.css";
+import "@fontsource-variable/fraunces/opsz.css";
 import "./index.css";
 import App from "./App.tsx";
 import { initPWA } from "./lib/pwa";
