@@ -1,5 +1,4 @@
 import type { Lang } from "@/lib/i18n";
-import { REGISTRATION_FEE as FEE } from "@/utils/constants";
 
 type Item = { title: string; text: string };
 
@@ -23,7 +22,7 @@ const en = {
   whyTitle: "Our commitment to you",
   values: [
     { title: "Security & trust", text: "Encrypted connections, Razorpay-secured payments and OTP-verified members keep your data protected." },
-    { title: `Minimal pricing · ₹${FEE}/year`, text: "Our goal is to serve the community, not to profit. We keep pricing minimal so everyone can participate." },
+    { title: `Minimal pricing · {feeYear}`, text: "Our goal is to serve the community, not to profit. We keep pricing minimal so everyone can participate." },
     { title: "Serving the Hindu community", text: "Strictly focused on Hindu families, so every match is relevant to our traditions." },
     { title: "Active & engaged", text: "Instant email notifications when someone sends you an interest or accepts yours." },
     { title: "Every device", text: "Designed for phones first, and just as comfortable on tablets and desktops." },
@@ -39,7 +38,7 @@ const en = {
   ] as Item[],
   ctaTitle: "Ready to start your journey?",
   ctaText: "Join our growing community and find your ideal partner.",
-  ctaButton: `Register now · ₹${FEE}/year`,
+  ctaButton: `Register now · {feeYear}`,
 };
 
 export const aboutText: Record<Lang, typeof en> = {
@@ -64,7 +63,7 @@ export const aboutText: Record<Lang, typeof en> = {
     whyTitle: "ನಿಮಗೆ ನಮ್ಮ ಬದ್ಧತೆ",
     values: [
       { title: "ಸುರಕ್ಷತೆ ಮತ್ತು ನಂಬಿಕೆ", text: "ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿದ ಸಂಪರ್ಕಗಳು, Razorpay ಸುರಕ್ಷಿತ ಪಾವತಿಗಳು ಮತ್ತು OTP-ಪರಿಶೀಲಿತ ಸದಸ್ಯರು ನಿಮ್ಮ ಮಾಹಿತಿಯನ್ನು ಸುರಕ್ಷಿತವಾಗಿಡುತ್ತವೆ." },
-      { title: `ಕನಿಷ್ಠ ಶುಲ್ಕ · ₹${FEE}/ವರ್ಷ`, text: "ನಮ್ಮ ಗುರಿ ಸಮುದಾಯದ ಸೇವೆ, ಲಾಭವಲ್ಲ. ಎಲ್ಲರೂ ಭಾಗವಹಿಸುವಂತೆ ಶುಲ್ಕವನ್ನು ಕನಿಷ್ಠವಾಗಿರಿಸಿದ್ದೇವೆ." },
+      { title: `ಕನಿಷ್ಠ ಶುಲ್ಕ · {feeYear}`, text: "ನಮ್ಮ ಗುರಿ ಸಮುದಾಯದ ಸೇವೆ, ಲಾಭವಲ್ಲ. ಎಲ್ಲರೂ ಭಾಗವಹಿಸುವಂತೆ ಶುಲ್ಕವನ್ನು ಕನಿಷ್ಠವಾಗಿರಿಸಿದ್ದೇವೆ." },
       { title: "ಹಿಂದೂ ಸಮುದಾಯದ ಸೇವೆ", text: "ಕೇವಲ ಹಿಂದೂ ಕುಟುಂಬಗಳ ಮೇಲೆ ಗಮನ, ಆದ್ದರಿಂದ ಪ್ರತಿ ಹೊಂದಾಣಿಕೆಯೂ ನಮ್ಮ ಸಂಪ್ರದಾಯಕ್ಕೆ ಸಂಬಂಧಿಸಿದ್ದು." },
       { title: "ಸಕ್ರಿಯ ಮತ್ತು ತೊಡಗಿಸಿಕೊಂಡ", text: "ಯಾರಾದರೂ ನಿಮಗೆ ಆಸಕ್ತಿ ಕಳುಹಿಸಿದಾಗ ಅಥವಾ ನಿಮ್ಮದನ್ನು ಸ್ವೀಕರಿಸಿದಾಗ ತಕ್ಷಣ ಇಮೇಲ್ ಸೂಚನೆ." },
       { title: "ಪ್ರತಿ ಸಾಧನದಲ್ಲೂ", text: "ಮೊದಲು ಮೊಬೈಲ್‌ಗಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ, ಟ್ಯಾಬ್ಲೆಟ್ ಮತ್ತು ಕಂಪ್ಯೂಟರ್‌ಗಳಲ್ಲೂ ಅಷ್ಟೇ ಸುಲಭ." },
@@ -80,7 +79,7 @@ export const aboutText: Record<Lang, typeof en> = {
     ],
     ctaTitle: "ನಿಮ್ಮ ಪಯಣ ಆರಂಭಿಸಲು ಸಿದ್ಧರೇ?",
     ctaText: "ಬೆಳೆಯುತ್ತಿರುವ ನಮ್ಮ ಸಮುದಾಯವನ್ನು ಸೇರಿ, ನಿಮ್ಮ ಸೂಕ್ತ ಸಂಗಾತಿಯನ್ನು ಕಂಡುಕೊಳ್ಳಿ.",
-    ctaButton: `ಈಗಲೇ ನೋಂದಾಯಿಸಿ · ₹${FEE}/ವರ್ಷ`,
+    ctaButton: `ಈಗಲೇ ನೋಂದಾಯಿಸಿ · {feeYear}`,
   },
   hi: {
     heroLead: "हिंदू परिवारों को जोड़ते हुए,",
@@ -102,7 +101,7 @@ export const aboutText: Record<Lang, typeof en> = {
     whyTitle: "आपके प्रति हमारी प्रतिबद्धता",
     values: [
       { title: "सुरक्षा और विश्वास", text: "एन्क्रिप्टेड कनेक्शन, Razorpay-सुरक्षित भुगतान और OTP-सत्यापित सदस्य आपके डेटा को सुरक्षित रखते हैं।" },
-      { title: `न्यूनतम शुल्क · ₹${FEE}/वर्ष`, text: "हमारा लक्ष्य समुदाय की सेवा है, मुनाफ़ा नहीं। हम शुल्क न्यूनतम रखते हैं ताकि हर कोई भाग ले सके।" },
+      { title: `न्यूनतम शुल्क · {feeYear}`, text: "हमारा लक्ष्य समुदाय की सेवा है, मुनाफ़ा नहीं। हम शुल्क न्यूनतम रखते हैं ताकि हर कोई भाग ले सके।" },
       { title: "हिंदू समुदाय की सेवा", text: "केवल हिंदू परिवारों पर केंद्रित, ताकि हर मैच हमारी परंपराओं के अनुरूप हो।" },
       { title: "सक्रिय और जुड़े हुए", text: "जब कोई आपको रुचि भेजे या आपकी रुचि स्वीकार करे, तुरंत ईमेल सूचना।" },
       { title: "हर डिवाइस पर", text: "पहले फ़ोन के लिए बनाया गया, और टैबलेट व डेस्कटॉप पर भी उतना ही आसान।" },
@@ -118,7 +117,7 @@ export const aboutText: Record<Lang, typeof en> = {
     ],
     ctaTitle: "अपनी यात्रा शुरू करने के लिए तैयार हैं?",
     ctaText: "हमारे बढ़ते समुदाय से जुड़ें और अपना आदर्श जीवनसाथी खोजें।",
-    ctaButton: `अभी पंजीकरण करें · ₹${FEE}/वर्ष`,
+    ctaButton: `अभी पंजीकरण करें · {feeYear}`,
   },
   ta: {
     heroLead: "இந்து குடும்பங்களை இணைத்து,",
@@ -140,7 +139,7 @@ export const aboutText: Record<Lang, typeof en> = {
     whyTitle: "உங்களுக்கான எங்கள் உறுதி",
     values: [
       { title: "பாதுகாப்பு மற்றும் நம்பிக்கை", text: "குறியாக்கப்பட்ட இணைப்புகள், Razorpay பாதுகாப்பான கட்டணங்கள் மற்றும் OTP-சரிபார்க்கப்பட்ட உறுப்பினர்கள் உங்கள் தரவைப் பாதுகாக்கின்றன." },
-      { title: `குறைந்தபட்ச கட்டணம் · ₹${FEE}/ஆண்டு`, text: "எங்கள் இலக்கு சமூக சேவை, லாபம் அல்ல. அனைவரும் பங்கேற்க கட்டணத்தைக் குறைவாக வைத்துள்ளோம்." },
+      { title: `குறைந்தபட்ச கட்டணம் · {feeYear}`, text: "எங்கள் இலக்கு சமூக சேவை, லாபம் அல்ல. அனைவரும் பங்கேற்க கட்டணத்தைக் குறைவாக வைத்துள்ளோம்." },
       { title: "இந்து சமூகத்திற்கான சேவை", text: "இந்து குடும்பங்களில் மட்டுமே கவனம், அதனால் ஒவ்வொரு பொருத்தமும் நம் பாரம்பரியத்திற்கு ஏற்றது." },
       { title: "சுறுசுறுப்பான தொடர்பு", text: "யாராவது உங்களுக்கு விருப்பம் அனுப்பும்போது அல்லது உங்களுடையதை ஏற்கும்போது உடனடி மின்னஞ்சல் அறிவிப்பு." },
       { title: "எல்லா சாதனங்களிலும்", text: "முதலில் மொபைலுக்காக வடிவமைக்கப்பட்டது, டேப்லெட் மற்றும் கணினியிலும் அதே எளிமை." },
@@ -156,7 +155,7 @@ export const aboutText: Record<Lang, typeof en> = {
     ],
     ctaTitle: "உங்கள் பயணத்தைத் தொடங்கத் தயாரா?",
     ctaText: "வளர்ந்து வரும் எங்கள் சமூகத்தில் இணைந்து, உங்களுக்கேற்ற துணையைக் கண்டறியுங்கள்.",
-    ctaButton: `இப்போதே பதிவு செய்யுங்கள் · ₹${FEE}/ஆண்டு`,
+    ctaButton: `இப்போதே பதிவு செய்யுங்கள் · {feeYear}`,
   },
   te: {
     heroLead: "హిందూ కుటుంబాలను కలుపుతూ,",
@@ -178,7 +177,7 @@ export const aboutText: Record<Lang, typeof en> = {
     whyTitle: "మీ పట్ల మా నిబద్ధత",
     values: [
       { title: "భద్రత మరియు నమ్మకం", text: "ఎన్‌క్రిప్ట్ చేసిన కనెక్షన్‌లు, Razorpay సురక్షిత చెల్లింపులు మరియు OTP-ధృవీకరించిన సభ్యులు మీ డేటాను రక్షిస్తాయి." },
-      { title: `కనీస ధర · ₹${FEE}/సంవత్సరం`, text: "మా లక్ష్యం సమాజ సేవ, లాభం కాదు. అందరూ పాల్గొనగలిగేలా ధరను కనిష్టంగా ఉంచాము." },
+      { title: `కనీస ధర · {feeYear}`, text: "మా లక్ష్యం సమాజ సేవ, లాభం కాదు. అందరూ పాల్గొనగలిగేలా ధరను కనిష్టంగా ఉంచాము." },
       { title: "హిందూ సమాజానికి సేవ", text: "కేవలం హిందూ కుటుంబాలపైనే దృష్టి, కాబట్టి ప్రతి మ్యాచ్ మన సంప్రదాయాలకు సంబంధించినదే." },
       { title: "చురుకైన అనుసంధానం", text: "ఎవరైనా మీకు ఆసక్తి పంపినప్పుడు లేదా మీది అంగీకరించినప్పుడు తక్షణ ఈమెయిల్ నోటిఫికేషన్." },
       { title: "ప్రతి పరికరంలో", text: "ముందుగా ఫోన్‌ల కోసం రూపొందించబడింది, టాబ్లెట్‌లు మరియు డెస్క్‌టాప్‌లలో కూడా అంతే సౌకర్యంగా." },
@@ -194,6 +193,6 @@ export const aboutText: Record<Lang, typeof en> = {
     ],
     ctaTitle: "మీ ప్రయాణం ప్రారంభించడానికి సిద్ధమా?",
     ctaText: "ఎదుగుతున్న మా సమాజంలో చేరి, మీకు తగిన భాగస్వామిని కనుగొనండి.",
-    ctaButton: `ఇప్పుడే నమోదు చేసుకోండి · ₹${FEE}/సంవత్సరం`,
+    ctaButton: `ఇప్పుడే నమోదు చేసుకోండి · {feeYear}`,
   },
 };

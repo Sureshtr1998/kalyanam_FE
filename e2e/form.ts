@@ -11,11 +11,15 @@ export const choose = async (page: Page, label: string, search?: string) => {
   await page.getByRole("option").first().click();
 };
 
-/** Sets a DateField through its month/year dropdowns. */
+/** Sets a DateField through its year grid, then month grid. */
 export const pickDate = async (page: Page, label: string, { year, month, day }: { year: number; month: string; day: number }) => {
   await field(page, label).getByRole("button").click();
-  await page.getByRole("combobox", { name: /year/i }).selectOption(String(year));
-  await page.getByRole("combobox", { name: /month/i }).selectOption({ label: month });
+  const popover = page.getByRole("dialog");
+  // An empty field opens on the year grid; a filled one opens on days.
+  const yearChip = popover.getByRole("button", { name: String(year), exact: true });
+  if (!(await yearChip.isVisible())) await popover.getByRole("button", { name: /^\w+ \d{4}$/ }).click();
+  await yearChip.click();
+  await popover.getByRole("button", { name: month.slice(0, 3), exact: true }).click();
   // Day buttons are named like "Monday, May 20th, 1996".
   await page.getByRole("button", { name: new RegExp(`${month} ${day}(st|nd|rd|th), ${year}$`) }).click();
 };

@@ -17,7 +17,6 @@ import api from "@/utils/api";
 import type { BrokerRegistrationForm } from "@/utils/brokerInterface";
 import type { ImageFile } from "@/utils/interfaces";
 import {
-  BROKERAGE_REGISTRATION_FEE,
   MIN_PASSWORD_LENGTH,
   SEO_URL,
   SUPPORT_NUMBER,
@@ -28,17 +27,20 @@ import { casteOptions, motherTongueOptions } from "@/utils/utils";
 import { errorMessage } from "@/lib/errors";
 import { usePublicLang } from "@/lib/i18n";
 import { translations } from "./lang";
+import { fillPrices, usePricing } from "@/lib/pricing";
 
 const PartnerWithUs = () => {
   const [language] = usePublicLang();
+  const pricing = usePricing();
   const [data, setData] = useState<BrokerRegistrationForm>(brokerFormDefaultVals);
   const [idProof, setIdProof] = useState<PhotoItem[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const t = useCallback(
-    (key: string): string => translations[language]?.[key] || translations.en[key] || key,
-    [language]
+    (key: string): string =>
+      fillPrices(translations[language]?.[key] || translations.en[key] || key, pricing, language),
+    [language, pricing]
   );
 
   const set = <K extends keyof BrokerRegistrationForm>(k: K, v: BrokerRegistrationForm[K]) =>
@@ -225,7 +227,7 @@ const PartnerWithUs = () => {
               </Field>
             </div>
             <Button size="lg" className="w-full" disabled={incomplete || isStarting || !!busy} onClick={submit}>
-              {isStarting ? "Opening checkout…" : t("submit_button") || `Pay ₹${BROKERAGE_REGISTRATION_FEE} & apply`}
+              {isStarting ? "Opening checkout…" : t("submit_button")}
             </Button>
           </div>
         </section>

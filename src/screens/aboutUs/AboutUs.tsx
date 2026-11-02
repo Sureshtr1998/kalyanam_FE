@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -18,6 +19,7 @@ import SEO from "@/components/misc/SEO";
 import { SEO_URL } from "@/utils/constants";
 import { usePublicLang } from "@/lib/i18n";
 import { aboutText } from "./lang";
+import { fillPrices, usePricing } from "@/lib/pricing";
 import hanuman from "@/assets/hanuman.webp";
 
 const valueIcons = [<ShieldCheck />, <IndianRupee />, <Users />, <Mail />, <Smartphone />, <Heart />];
@@ -30,7 +32,9 @@ const links = [
 ];
 
 const AboutUs = () => {
-  const t = aboutText[usePublicLang()[0]];
+  const [lang] = usePublicLang();
+  const pricing = usePricing();
+  const t = useMemo(() => fillPrices(aboutText[lang], pricing, lang), [lang, pricing]);
   return (
     <>
       <SEO

@@ -1,21 +1,20 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Check, Heart, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Lotus, SectionHeading } from "@/components/common/Brand";
 import SEO from "@/components/misc/SEO";
-import {
-  ASTRO_FEES,
-  INTEREST_PACKS,
-  REGISTRATION_FEE,
-  REGISTRATION_FEE_ORIGINAL,
-  SEO_URL,
-} from "@/utils/constants";
+import { SEO_URL } from "@/utils/constants";
 import { usePublicLang } from "@/lib/i18n";
+import { feeLabel, fillPrices, usePricing, type AstroMode, type PackKey } from "@/lib/pricing";
 import { pricingText } from "./lang";
 
 const Pricing = () => {
-  const t = pricingText[usePublicLang()[0]];
+  const [lang] = usePublicLang();
+  const pricing = usePricing();
+  const t = useMemo(() => fillPrices(pricingText[lang], pricing, lang), [lang, pricing]);
+  const original = pricing.registrationFeeOriginal;
   return (
     <>
       <SEO
@@ -37,12 +36,14 @@ const Pricing = () => {
           <div className="mx-auto max-w-3xl overflow-hidden rounded-[2rem] border-2 border-primary bg-card shadow-xl">
             <div className="grid md:grid-cols-[1fr_1.1fr]">
               <div className="flex flex-col justify-center bg-primary p-8 text-primary-foreground">
-                <Badge className="mb-3 w-fit bg-gold text-gold-foreground">{t.offer}</Badge>
+                {original ? <Badge className="mb-3 w-fit bg-gold text-gold-foreground">{t.offer}</Badge> : null}
                 <p className="text-sm uppercase tracking-wide opacity-80">{t.annual}</p>
-                <p className="mt-1 font-display text-6xl font-bold">₹{REGISTRATION_FEE}</p>
-                <p className="opacity-70">
-                  <span className="line-through">₹{REGISTRATION_FEE_ORIGINAL}</span> {t.perYear}
-                </p>
+                <p className="mt-1 font-display text-6xl font-bold">{feeLabel(pricing.registrationFee, lang)}</p>
+                {pricing.registrationFee > 0 ? (
+                  <p className="opacity-70">
+                    {original ? <span className="line-through">₹{original}</span> : null} {t.perYear}
+                  </p>
+                ) : null}
                 <Button asChild size="lg" variant="secondary" className="mt-6">
                   <Link to="/">{t.registerNow}</Link>
                 </Button>
@@ -62,8 +63,8 @@ const Pricing = () => {
 
           <SectionHeading className="mt-16" eyebrow={t.topUpsEyebrow} title={t.packsTitle} description={t.packsDescription} />
           <div className="mx-auto mt-8 grid max-w-3xl gap-5 sm:grid-cols-2">
-            {(Object.keys(INTEREST_PACKS) as (keyof typeof INTEREST_PACKS)[]).map((key) => {
-              const p = INTEREST_PACKS[key];
+            {(Object.keys(pricing.interestPacks) as PackKey[]).map((key) => {
+              const p = pricing.interestPacks[key];
               const best = key === "premium";
               return (
                 <div key={key} className={`relative rounded-3xl border bg-card p-6 shadow-sm ${best ? "border-primary shadow-lg" : "border-border"}`}>
@@ -84,11 +85,11 @@ const Pricing = () => {
 
           <SectionHeading className="mt-16" eyebrow={t.optional} title={t.astroTitle} />
           <div className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-3">
-            {(Object.keys(ASTRO_FEES) as (keyof typeof ASTRO_FEES)[]).map((k) => (
+            {(Object.keys(pricing.astroFees) as AstroMode[]).map((k) => (
               <div key={k} className="rounded-2xl border border-border bg-card p-5 text-center">
                 <Sparkles className="mx-auto size-5 text-gold" />
                 <p className="mt-2 font-semibold">{t.astro[k]}</p>
-                <p className="font-display text-3xl font-bold text-primary">₹{ASTRO_FEES[k]}</p>
+                <p className="font-display text-3xl font-bold text-primary">₹{pricing.astroFees[k]}</p>
               </div>
             ))}
           </div>

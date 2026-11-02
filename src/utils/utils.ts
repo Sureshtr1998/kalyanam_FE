@@ -1,7 +1,7 @@
 import type { UserDetails } from "./interfaces";
 import casteData from "./caste.json"
 import languageData from "./lang.json"
-import { REFERRAL_REGISTRATION_FEE, CONTACT_COST, DISCOUNT_NAMES, PERSONAL_DISCOUNT_PRICE, REGISTRATION_FEE } from "./constants";
+import { CONTACT_COST } from "./constants";
 
 export const normalizeToArray = (value: string | string[] | undefined): string[] => {
     if (!value) return [];
@@ -115,10 +115,3 @@ export const subCasteOptions = (caste: string) => {
         value: subCaste
     }));
 };
-
-
-export const getRefferalAmount = (referralId?: string) => {
-    if (!referralId) return REGISTRATION_FEE
-    else if (DISCOUNT_NAMES.includes(referralId)) return PERSONAL_DISCOUNT_PRICE
-    else return REFERRAL_REGISTRATION_FEE
-}

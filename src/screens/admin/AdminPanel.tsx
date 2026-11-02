@@ -23,6 +23,7 @@ import { MemberManager } from "@/components/staff/MemberManager";
 import { ConfirmButton } from "@/components/staff/MemberSheet";
 import { inr, type BrokerInfo, type Summary } from "@/components/staff/staffTypes";
 import { SignupBars, Stat } from "@/components/staff/StaffStats";
+import { PricingLevels } from "@/components/staff/PricingLevels";
 import { useUser } from "@/context/UserContext";
 import api from "@/utils/api";
 import { cn } from "@/lib/utils";
@@ -415,6 +416,7 @@ const AdminPanel = () => {
             ["members", "Members"],
             ["partners", `Partners${summary?.brokers?.pending ? ` (${summary.brokers.pending} new)` : ""}`],
             ["payments", "Payments"],
+            ["pricing", `Pricing${summary?.pricingLevel ? ` · L${summary.pricingLevel}` : ""}`],
           ].map(([v, label]) => (
             <TabsTrigger key={v} value={v} className="px-4 py-1.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               {label}
@@ -444,6 +446,9 @@ const AdminPanel = () => {
         </TabsContent>
         <TabsContent value="payments">
           <Payments />
+        </TabsContent>
+        <TabsContent value="pricing">
+          <PricingLevels onChanged={loadSummary} />
         </TabsContent>
       </Tabs>
     </div>

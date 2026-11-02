@@ -25,8 +25,26 @@ const recordPixel = (page: Page) =>
   });
 const pixelCalls = (page: Page) => page.evaluate(() => JSON.parse(sessionStorage.getItem("fbq") ?? "[]"));
 
+/** Picks a noisy 4000×3000 JPEG, several MB like a phone camera photo. */
+const pickBigPhoto = (page: Page) =>
+  page.locator('input[type="file"]').evaluate(async (input: HTMLInputElement) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 4000;
+    canvas.height = 3000;
+    const ctx = canvas.getContext("2d")!;
+    const img = ctx.createImageData(canvas.width, canvas.height);
+    for (let i = 0; i < img.data.length; i++) img.data[i] = (i * 2654435761) >>> 24;
+    ctx.putImageData(img, 0, 0);
+    const blob = await new Promise<Blob>((r) => canvas.toBlob((b) => r(b!), "image/jpeg", 0.95));
+    const dt = new DataTransfer();
+    dt.items.add(new File([blob], "camera.jpg", { type: "image/jpeg" }));
+    input.files = dt.files;
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    return blob.size;
+  });
+
 /** Fills all three steps and stops on the "Before you pay" note. */
-const fillRegistration = async (page: Page, { referral }: { referral?: string } = {}) => {
+const fillRegistration = async (page: Page, { referral, bigPhoto }: { referral?: string; bigPhoto?: boolean } = {}) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Register" }).first().click();
   await expect(page.locator("#join").getByRole("heading", { name: "Create your profile" })).toBeVisible();
@@ -49,7 +67,8 @@ const fillRegistration = async (page: Page, { referral }: { referral?: string } 
   await page.getByRole("button", { name: "Continue" }).click();
 
   // Step 3: photos & contact
-  await page.locator('input[type="file"]').setInputFiles(tinyPng);
+  if (bigPhoto) await pickBigPhoto(page);
+  else await page.locator('input[type="file"]').setInputFiles(tinyPng);
   await field(page, "WhatsApp number").getByRole("textbox").fill("9876500001");
   if (referral) await field(page, "Referral ID").getByRole("textbox").fill(referral);
 };
@@ -89,6 +108,20 @@ test("registration: validated, priced by the server, paid, then signed in", asyn
 test("registration: the ad link /?join=1 opens the register form", async ({ page }) => {
   await page.goto("/?join=1");
   await expect(page.locator("#join").getByRole("heading", { name: "Create your profile" })).toBeVisible();
+});
+
+test("registration: a large phone photo is shrunk under 1 MB instead of rejected", async ({ page, api }) => {
+  stubRegistration(api);
+  await fillRegistration(page, { bigPhoto: true });
+
+  await expect(page.getByRole("img", { name: "Photo 1" })).toBeVisible();
+  await expect(page.getByText(/must be under/)).toHaveCount(0);
+
+  const upload = page.waitForRequest("**/user-register/upload-images");
+  await page.getByRole("button", { name: "Pay ₹351 & register" }).click();
+  await page.getByRole("button", { name: /I understand · Pay ₹351/ }).click();
+  expect((await upload).postDataBuffer()!.length).toBeLessThan(1024 * 1024 + 2048);
+  await razorpay(page).opened();
 });
 
 test("registration: a valid referral ID shows and charges the referral price", async ({ page, api }) => {

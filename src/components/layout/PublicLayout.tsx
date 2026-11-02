@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Mail, Menu, RefreshCw, Sparkles } from "lucide-react";
 import { Brand, BrandMark, Lotus } from "@/components/common/Brand";
@@ -9,7 +9,8 @@ import { usePWA } from "@/components/misc/usePWA";
 import { InstallButton } from "@/components/misc/InstallButton";
 import { isLoggedIn } from "@/lib/session";
 import { cn } from "@/lib/utils";
-import { REGISTRATION_FEE, REGISTRATION_FEE_ORIGINAL, SUPPORT_EMAIL } from "@/utils/constants";
+import { SUPPORT_EMAIL } from "@/utils/constants";
+import { fillPrices, isFreeRegistration, usePricing, type Pricing } from "@/lib/pricing";
 import { localeOf, usePublicLang } from "@/lib/i18n";
 import { LanguageSelect } from "@/components/common/LanguageSelect";
 import { layoutText } from "./lang";
@@ -52,18 +53,26 @@ const footerGroups = (t: Text) => [
   },
 ];
 
-const OfferBar = ({ t }: { t: Text }) => (
+const OfferBar = ({ t, pricing }: { t: Text; pricing: Pricing }) => (
   <div className="bg-primary text-primary-foreground">
     <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-semibold sm:text-sm">
       <Sparkles className="size-4 shrink-0 text-gold" />
-      <span>
-        {t.offer}{" "}
-        <span className="line-through opacity-70">₹{REGISTRATION_FEE_ORIGINAL}</span>{" "}
-        <span className="rounded bg-gold px-1.5 py-0.5 font-bold text-gold-foreground">
-          ₹{REGISTRATION_FEE}
-        </span>{" "}
-        <span className="hidden sm:inline">· {t.offerOff}</span>
-      </span>
+      {isFreeRegistration(pricing) ? (
+        <span>{t.offerFree}</span>
+      ) : (
+        <span>
+          {t.offer}{" "}
+          {pricing.registrationFeeOriginal ? (
+            <>
+              <span className="line-through opacity-70">₹{pricing.registrationFeeOriginal}</span>{" "}
+            </>
+          ) : null}
+          <span className="rounded bg-gold px-1.5 py-0.5 font-bold text-gold-foreground">
+            ₹{pricing.registrationFee}
+          </span>{" "}
+          {pricing.registrationFeeOriginal ? <span className="hidden sm:inline">· {t.offerOff}</span> : null}
+        </span>
+      )}
     </div>
   </div>
 );
@@ -74,7 +83,8 @@ const PublicLayout = () => {
   const loggedIn = isLoggedIn();
   const { updateAvailable, reloadApp } = usePWA();
   const [lang, setLang] = usePublicLang();
-  const t = layoutText[lang];
+  const pricing = usePricing();
+  const t = useMemo(() => fillPrices(layoutText[lang], pricing, lang), [lang, pricing]);
   const links = navLinks(t);
 
   useEffect(() => setOpen(false), [location.pathname]);
@@ -102,7 +112,7 @@ const PublicLayout = () => {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      {location.pathname === "/" && <OfferBar t={t} />}
+      {location.pathname === "/" && <OfferBar t={t} pricing={pricing} />}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
           <Brand />

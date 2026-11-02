@@ -544,13 +544,8 @@ export const SUPPORT_PHONE = '+91 8105710930'
 /** SUPPORT_PHONE as digits only, for wa.me / tel: links. */
 export const SUPPORT_NUMBER = SUPPORT_PHONE.replace(/\D/g, "")
 
-// Display prices only. The server (kalyanam_BE/src/utils/constants.js) decides
-// what is charged; keep these in sync with it.
-
-export const REGISTRATION_FEE = 351
-/** Struck-through "was" price shown next to REGISTRATION_FEE. */
-export const REGISTRATION_FEE_ORIGINAL = 751
-export const INITIAL_NO_INTEREST = 36
+// Prices come from the server at runtime (GET /pricing, see src/lib/pricing.ts):
+// an admin picks the pricing level in the panel.
 
 // Credits: sending an interest uses 1, seeing a contact straight away uses 5.
 export const INTEREST_COST = 1
@@ -560,27 +555,8 @@ export const CONTACT_COST = 5
 export const MEMBERSHIP_START = "March 2027"
 
 //Referrals
-// Registering with a partner's referral ID (server: REFERRAL_REGISTRATION_FEE).
-export const REFERRAL_REGISTRATION_FEE = 301
-
-
-//Make sure it is exactly 7 characters
+// Promo codes (exactly 7 characters): accepted, but charged the normal fee.
 export const DISCOUNT_NAMES = ["BRAHMIN", "SITARAM"]
-
-export const PERSONAL_DISCOUNT_PRICE = 351
-
-
-export const PURCHASE_NO_INTEREST = 21
-export const PURCHASE_INTEREST_FEE = 101
-export const PURCHASE_NO_INTEREST_2 = 56
-export const PURCHASE_INTEREST_FEE_2 = 251
-
-//Astrology
-export const OVERVIEW_ASTRO_FEE = 51
-export const KUNDLI_MATCHING_ASTRO_FEE = 201
-export const PERSONALIZED_ASTRO_FEE = 251
-
-export const BROKERAGE_REGISTRATION_FEE = 501
 
 
 /** Canonical site origin (VITE_SITE_URL). */
@@ -588,16 +564,6 @@ export const SEO_URL = env.siteUrl
 
 /** Photon (OpenStreetMap) place search, used by PlaceField. */
 export const PLACE_SEARCH_URL = "https://photon.komoot.io/api/"
-export const INTEREST_PACKS = {
-    basic: { amount: PURCHASE_INTEREST_FEE, interests: PURCHASE_NO_INTEREST, title: "Basic Pack" },
-    premium: { amount: PURCHASE_INTEREST_FEE_2, interests: PURCHASE_NO_INTEREST_2, title: "Premium Pack" },
-} as const
-
-export const ASTRO_FEES = {
-    "Overview": OVERVIEW_ASTRO_FEE,
-    "Personalized": PERSONALIZED_ASTRO_FEE,
-    "Kundli Matching": KUNDLI_MATCHING_ASTRO_FEE,
-} as const
 
 /** ImageKit transform for a profile photo at the given display size. */
 export const imageUrl = (url: string | undefined, size: "thumb" | "card" | "full" = "card") => {

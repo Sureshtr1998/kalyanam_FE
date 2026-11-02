@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/i18n";
-import { BROKERAGE_REGISTRATION_FEE, SUPPORT_PHONE } from "../../utils/constants";
+import { SUPPORT_PHONE } from "../../utils/constants";
 
 export const translations: Record<Lang, Record<string, string>> = {
   kn: {
@@ -50,7 +50,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     label_id_proof: "ಐಡಿ ಪ್ರೂಫ್ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ (ಆಧಾರ್/ಪ್ಯಾನ್/ಡಿಎಲ್)",
     accept_formats:
       "ಸ್ವೀಕರಿಸಿದ ಸ್ವರೂಪಗಳು: JPG, PNG, PDF. ಪರಿಶೀಲನೆಗಾಗಿ ಇದು ಕಡ್ಡಾಯವಾಗಿದೆ.",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE} ಗೆ ನೋಂದಣಿ ಮಾಡಿ`,
+    submit_button: `{brokerFee} ಗೆ ನೋಂದಣಿ ಮಾಡಿ`,
     label_note: "ಸೂಚನೆ",
     label_note_placeholder: "ನಿಮ್ಮ ಸೂಚನೆಯನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ",
     label_community_serve: "ನೀವು ಸೇವೆ ನೀಡುವ ಸಮುದಾಯಗಳು",
@@ -101,7 +101,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     placeholder_address: "Full mailing address",
     section_4_title: "4. Verification Document",
     label_id_proof: "Upload ID Proof (Aadhar/PAN/DL)",
-    submit_button: `Pay ₹${BROKERAGE_REGISTRATION_FEE} & apply`,
+    submit_button: `Pay {brokerFee} & apply`,
     label_note: "Note",
     label_note_placeholder: "Enter your note here",
     label_community_serve: "Communities You Serve",
@@ -152,7 +152,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     placeholder_address: "पूरा डाक पता",
     section_4_title: "4. सत्यापन दस्तावेज़",
     label_id_proof: "आईडी प्रूफ अपलोड करें (आधार/पैन/डीएल)",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE} में पंजीकरण करें`,
+    submit_button: `{brokerFee} में पंजीकरण करें`,
     label_note: "टिप्पणी",
     label_note_placeholder: "अपनी टिप्पणी यहाँ दर्ज करें",
     label_community_serve: "आप जिन समुदायों की सेवा करते हैं",
@@ -204,7 +204,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     placeholder_address: "முழு அஞ்சல் முகவரி",
     section_4_title: "4. சரிபார்ப்பு ஆவணம்",
     label_id_proof: "அடையாள அட்டை பதிவேற்றம் (ஆதார்/பான்/ஓட்டுநர் உரிமம்)",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE}க்கு பதிவு செய்யவும்`,
+    submit_button: `{brokerFee}க்கு பதிவு செய்யவும்`,
     label_note: "குறிப்பு",
     label_note_placeholder: "உங்கள் குறிப்பை இங்கே உள்ளிடுங்கள்",
     label_community_serve: "நீங்கள் சேவை வழங்கும் சமூகங்கள்",
@@ -255,7 +255,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     placeholder_address: "పూర్తి పోస్టల్ చిరునామా",
     section_4_title: "4. ధృవీకరణ పత్రం",
     label_id_proof: "ఐడి ప్రూఫ్ అప్‌లోడ్ చేయండి (ఆధార్/పాన్/డిఎల్)",
-    submit_button: `₹${BROKERAGE_REGISTRATION_FEE}కి నమోదు చేయండి`,
+    submit_button: `{brokerFee}కి నమోదు చేయండి`,
     label_note: "గమనిక",
     label_note_placeholder: "మీ గమనికను ఇక్కడ నమోదు చేయండి",
     label_community_serve: "మీరు సేవలందించే సముదాయాలు",
