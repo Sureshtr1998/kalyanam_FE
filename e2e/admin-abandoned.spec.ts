@@ -38,7 +38,7 @@ const rows = [
   row({ id: "a4", name: "Sita Devi", email: "sita@example.test", mobile: "9000000004" }),
 ];
 
-const listBody = (list = rows) => ({
+const listBody = (list: Record<string, unknown>[] = rows) => ({
   rows: list,
   total: list.length,
   page: 1,
