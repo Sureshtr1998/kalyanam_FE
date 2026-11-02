@@ -80,7 +80,7 @@ test("registration: validated, priced by the server, paid, then signed in", asyn
 
   await recordPixel(page);
   await fillRegistration(page);
-  await expect(page.getByText("₹351").last()).toBeVisible();
+  await expect(page.locator("#join").getByText("₹351").last()).toBeVisible();
   await page.getByRole("button", { name: "Pay ₹351 & register" }).click();
   await expect(page.getByRole("dialog", { name: "Before you pay" })).toBeVisible();
   await page.getByRole("button", { name: /I understand · Pay ₹351/ }).click();

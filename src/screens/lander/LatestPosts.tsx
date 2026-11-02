@@ -8,7 +8,7 @@ const LatestPosts = () => (
       <Link
         key={p.id}
         to={`/blog/${p.slug}`}
-        className="group overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+        className="group w-[82%] shrink-0 snap-center overflow-hidden rounded-3xl sm:w-auto border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
         <img src={p.imageUrl} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
         <div className="p-5">
           <p className="text-xs font-bold uppercase tracking-wide text-gold-foreground">{p.category} · {p.readTime}</p>
