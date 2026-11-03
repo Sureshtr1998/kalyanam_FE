@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDownUp,
-  CalendarHeart,
   EyeOff,
   Leaf,
-  MailCheck,
   RotateCcw,
   SlidersHorizontal,
   X,
@@ -49,11 +47,11 @@ import { errorMessage } from "@/lib/errors";
 import { isBroker } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { normalizeToArray } from "@/utils/utils";
-import { MEMBERSHIP_START } from "@/utils/constants";
-import { localeOf, useMemberLang, type Lang } from "@/lib/i18n";
+import { useMemberLang, type Lang } from "@/lib/i18n";
 import { LanguageSelect } from "@/components/common/LanguageSelect";
 import ganesh from "@/assets/ganesh.webp";
 import { homeText } from "./lang";
+import { LoginNotice, MembershipNotes } from "./LoginNotice";
 
 const PAGE_SIZE = 10;
 
@@ -96,16 +94,9 @@ const activeFilterCount = (f: MatchFilters | null) => {
   ].filter(Boolean).length;
 };
 
-const membershipStart = new Date(`1 ${MEMBERSHIP_START}`);
-
 /** Shown when there are no matches (with or without filters): sets expectations for an early-stage platform. */
 const LaunchNote = ({ filtered, lang }: { filtered?: boolean; lang: Lang }) => {
   const t = homeText[lang];
-  const locale = localeOf(lang);
-  const start = Number.isNaN(membershipStart.getTime())
-    ? MEMBERSHIP_START
-    : membershipStart.toLocaleString(locale, { month: "long", year: "numeric" });
-  const now = new Date().toLocaleString(locale, { month: "long" });
   return (
     <div className="space-y-4">
       <p>
@@ -114,21 +105,7 @@ const LaunchNote = ({ filtered, lang }: { filtered?: boolean; lang: Lang }) => {
         <span className="font-semibold text-primary">{t.patience}</span>
         {t.patienceRest}
       </p>
-      <ul className="mx-auto grid max-w-2xl gap-2 text-left sm:grid-cols-2">
-        <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
-          <CalendarHeart className="mt-0.5 size-5 shrink-0 text-primary" />
-          <span>
-            <b>{t.membershipBold(start)}</b>
-            {t.membershipRest(now)}
-          </span>
-        </li>
-        <li className="flex gap-3 rounded-xl bg-accent p-3 text-accent-foreground">
-          <MailCheck className="mt-0.5 size-5 shrink-0 text-primary" />
-          <span>
-            <b>{t.noCheckBold}</b> {t.noCheckRest}
-          </span>
-        </li>
-      </ul>
+      <MembershipNotes lang={lang} className="mx-auto grid max-w-2xl gap-2 text-left sm:grid-cols-2" />
       <p>{t.completeTip}</p>
     </div>
   );
@@ -239,6 +216,7 @@ const Home = () => {
         description="Matches for your profile."
         noindex
       />
+      {!broker && loaded && user._id && <LoginNotice user={user} lang={lang} />}
       <div className="mb-2 flex items-baseline gap-2">
         <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl">
           {broker ? "Referred profiles" : "Your matches"}
