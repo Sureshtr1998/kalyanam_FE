@@ -32,3 +32,13 @@ test("partners don't get the login notice", async ({ page, api }) => {
   await expect(page.getByRole("heading", { name: "Partner dashboard" })).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
+
+test("a new member with an unfinished profile doesn't get the notice yet", async ({ page, api }) => {
+  await signIn(page);
+  api.on("GET /my-profile", { body: { profile: memberProfile({ hasCompleteProfile: false }) } });
+  api.on("POST /fetch-profiles", { body: { profiles: [], totalProfiles: 0 } });
+
+  await page.goto("/home");
+  await page.waitForURL("**/profile");
+  await expect(page.getByRole("dialog", { name: "Welcome back" })).toHaveCount(0);
+});
