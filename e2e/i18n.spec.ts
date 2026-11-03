@@ -52,6 +52,7 @@ test("empty matches default to the member's mother tongue and can be overridden"
   api.on("POST /fetch-profiles", { body: { profiles: [], totalProfiles: 0 } });
 
   await page.goto("/home");
+  await page.getByRole("dialog").getByRole("button", { name: "ಸರಿ" }).click();
   await expect(page.getByRole("heading", { name: "ನಾವು ಈಗಷ್ಟೇ ಆರಂಭಿಸಿದ್ದೇವೆ, ಬೇಗನೆ ಸೇರಿದ್ದಕ್ಕೆ ಧನ್ಯವಾದಗಳು" })).toBeVisible();
 
   await pickLanguage(page, "English");

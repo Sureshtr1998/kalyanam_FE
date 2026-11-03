@@ -16,8 +16,15 @@ export const isLoggedIn = () => !!getSession()?.token;
 
 export const isBroker = () => getSession()?.role === "BROKER";
 
+/** sessionStorage key holding the id of the member who has seen the home-page login notice this session. */
+export const LOGIN_NOTICE_SHOWN = "login_notice_shown";
 
 export const signOut = () => {
   removeItem(user_login_token);
+  try {
+    sessionStorage.removeItem(LOGIN_NOTICE_SHOWN); // logging back in shows the notice again
+  } catch {
+    // Storage blocked: nothing to clear.
+  }
   window.location.href = "/";
 };
