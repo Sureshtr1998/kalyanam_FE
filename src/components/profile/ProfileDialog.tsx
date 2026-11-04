@@ -54,7 +54,9 @@ interface Props {
   remaining?: number;
   /** Show "send interest" (fresh matches only). */
   canSendInterest?: boolean;
-  /** The profile left the current list (interest sent, blocked, reported, unlocked). */
+  /** Offer "Skip profile" (opened from Matches). */
+  canSkip?: boolean;
+  /** The profile left the current list (interest sent, skipped, blocked, reported, unlocked). */
   onRemoved?: (id: string, usedInterests?: number) => void;
   onContactViewed?: () => void;
 }
@@ -290,6 +292,7 @@ export const ProfileDialog = ({
   contactUnlocked,
   remaining = 0,
   canSendInterest,
+  canSkip,
   onRemoved,
   onContactViewed,
 }: Props) => {
@@ -418,6 +421,7 @@ export const ProfileDialog = ({
       <ProfileMoreMenu
         name={firstName}
         busy={actions.busy}
+        onSkip={canSkip ? actions.skip : undefined}
         onBlock={actions.block}
         onReport={actions.report}
         triggerClassName={triggerClassName}

@@ -5,7 +5,7 @@ import api from "@/utils/api";
 import type { UserDetails } from "@/utils/interfaces";
 import { errorMessage } from "@/lib/errors";
 
-/** Shortlist / interest / block / report for one profile. */
+/** Shortlist / interest / skip / block / report for one profile. */
 export const useProfileActions = (
   profile: UserDetails,
   onRemoved?: (id: string, usedInterests?: number) => void
@@ -52,6 +52,23 @@ export const useProfileActions = (
       onRemoved?.(id);
     });
 
+  const skip = () =>
+    run(async () => {
+      await api.post("/skip-profile", { userId: id });
+      onRemoved?.(id);
+      toast.success(`Skipped ${profile.basic.fullName}`, {
+        description: "They won't show in your matches. Bring them back from Activity, Skipped.",
+        action: {
+          label: "Undo",
+          onClick: () =>
+            void api
+              .post("/unskip-profile", { userId: id })
+              .then(() => toast.success("Restored", { description: "They'll show in your matches again." }))
+              .catch((err) => toast.error("Couldn't undo", { description: errorMessage(err) })),
+        },
+      });
+    });
+
   const report = (reason: string, details: string) =>
     run(async () => {
       const res = await api.post<{ msg: string }>("/report-profile", { userId: id, reason, details });
@@ -59,5 +76,5 @@ export const useProfileActions = (
       onRemoved?.(id);
     });
 
-  return { id, busy, saved, toggleShortlist, sendInterest, block, report };
+  return { id, busy, saved, toggleShortlist, sendInterest, skip, block, report };
 };

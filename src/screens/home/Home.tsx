@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDownUp,
@@ -53,7 +53,8 @@ import ganesh from "@/assets/ganesh.webp";
 import { homeText } from "./lang";
 import { LoginNotice, MembershipNotes } from "./LoginNotice";
 
-const PAGE_SIZE = 10;
+// Divisible by every grid width (1, 2, 3 and 4 columns), so full pages never end on a half row.
+const PAGE_SIZE = 12;
 
 interface ProfilesResponse {
   profiles: UserDetails[];
@@ -120,6 +121,8 @@ const Home = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  // Only the latest refill may land, so quick successive skips don't flicker.
+  const refillId = useRef(0);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [draft, setDraft] = useState<MatchFilters>({ partner: {} });
   const [draftCount, setDraftCount] = useState<number | null>(null);
@@ -132,6 +135,7 @@ const Home = () => {
   useEffect(() => {
     if (!loaded || !user._id || !filters) return;
     let cancelled = false;
+    refillId.current++; // a page change supersedes any refill in flight
     setLoading(true);
     fetchProfiles(filters, page, PAGE_SIZE)
       .then((res) => {
@@ -196,6 +200,17 @@ const Home = () => {
     setMatches((prev) => prev.filter((m) => m._id !== id));
     setTotal((t) => Math.max(0, t - 1));
     if (used) void refresh();
+    // The server already excludes the removed profile, so re-reading this page
+    // pulls the next match into the gap. Quietly: no skeleton, no scroll.
+    if (!filters) return;
+    const mine = ++refillId.current;
+    fetchProfiles(filters, page, PAGE_SIZE)
+      .then((res) => {
+        if (mine !== refillId.current) return;
+        setMatches(res.data.profiles);
+        setTotal(res.data.totalProfiles);
+      })
+      .catch(() => undefined);
   };
 
   const vegOnly = normalizeToArray(filters?.diet).join() === "Vegetarian";
@@ -293,7 +308,7 @@ const Home = () => {
 
       {loading ? (
         <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {Array.from({ length: 8 }).map((_, i) => (
+          {Array.from({ length: PAGE_SIZE }).map((_, i) => (
             <div
               key={i}
               className="overflow-hidden rounded-3xl bg-card ring-1 ring-border">

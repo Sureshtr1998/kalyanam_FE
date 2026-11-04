@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Ban, EllipsisVertical, Flag } from "lucide-react";
+import { Ban, EllipsisVertical, EyeOff, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -42,14 +42,16 @@ const REASONS = [
 interface MenuProps {
   name: string;
   busy: boolean;
+  /** Shown only where skipping makes sense (matches). */
+  onSkip?: () => void;
   onBlock: () => void;
   onReport: (reason: string, details: string) => void;
   className?: string;
   triggerClassName?: string;
 }
 
-/** "⋮" menu with Block and Report, each behind a clear confirmation. */
-export const ProfileMoreMenu = ({ name, busy, onBlock, onReport, className, triggerClassName }: MenuProps) => {
+/** "⋮" menu with Skip (undoable), plus Block and Report, each behind a clear confirmation. */
+export const ProfileMoreMenu = ({ name, busy, onSkip, onBlock, onReport, className, triggerClassName }: MenuProps) => {
   const [blockOpen, setBlockOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reason, setReason] = useState(REASONS[0]);
@@ -64,6 +66,12 @@ export const ProfileMoreMenu = ({ name, busy, onBlock, onReport, className, trig
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
+          {onSkip && (
+            <DropdownMenuItem disabled={busy} onSelect={onSkip}>
+              <EyeOff />
+              Skip profile
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem onSelect={() => setBlockOpen(true)}>
             <Ban />
             Hide &amp; block
