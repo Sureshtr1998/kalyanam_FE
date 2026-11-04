@@ -26,6 +26,7 @@ const rows = (p: Level): [string, string][] => [
   ["Credits on joining", String(p.registrationInterests)],
   ["With referral ID", p.registrationFee > 0 ? inr(p.referralFee) : "Free"],
   ["Partner commission", inr(p.brokerCommission)],
+  ["Member refer & earn reward", p.memberReferralReward > 0 ? inr(p.memberReferralReward) : "-"],
   [`Basic pack (${p.interestPacks.basic.interests})`, inr(p.interestPacks.basic.amount)],
   [`Premium pack (${p.interestPacks.premium.interests})`, inr(p.interestPacks.premium.amount)],
   ["Astro: Overview", inr(p.astroFees.Overview)],

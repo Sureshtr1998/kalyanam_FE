@@ -91,6 +91,11 @@ const eighteenYearsAgo = () => {
 const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<BasicDetailsIn>({ ...formDefaultVals.basic, referralId: "" } as BasicDetailsIn);
+  // Refer & earn links (/?join=1&ref=CODE) fill in the friend's code. Read after mount for hydration.
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase();
+    if (ref && /^[A-Z0-9]{7}$/.test(ref)) setForm((f) => (f.referralId ? f : { ...f, referralId: ref }));
+  }, []);
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [noteOpen, setNoteOpen] = useState(false);
@@ -142,7 +147,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
     };
   }, [form.referralId]);
 
-  // Only a partner's code that passed validation earns the discounted price;
+  // Only a partner's or member's code that passed validation earns the discounted price;
   // promo codes pay the normal fee (the server decides the actual charge).
   const code = referralOk ? (form.referralId?.trim().toUpperCase() ?? "") : "";
   const amount = code && !DISCOUNT_NAMES.includes(code) ? pricing.referralFee : pricing.registrationFee;

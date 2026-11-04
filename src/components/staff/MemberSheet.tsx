@@ -325,6 +325,13 @@ export const MemberSheet = ({ id, kind, onClose, onChanged }: Props) => {
                     label="Referral"
                     value={member.basic.referralId ? `${member.basic.referralId}${member.broker ? ` (${member.broker.name})` : ""}` : "None"}
                   />
+                  {member.referredByMember && (
+                    <Row
+                      label="Referred by member"
+                      value={`${member.referredByMember.fullName ?? ""} · ${member.referredByMember.uniqueId ?? ""} (code ${member.referredByCode ?? "-"})`}
+                    />
+                  )}
+                  {member.referralCode && <Row label="Own referral code" value={member.referralCode} />}
                   {admin && member.basic.referralId && member.broker && (
                     <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-muted p-3 text-sm">
                       <span className="flex items-center gap-1.5">
@@ -499,6 +506,51 @@ export const MemberSheet = ({ id, kind, onClose, onChanged }: Props) => {
                     </form>
                   </section>
                 )}
+                {admin && !!member.referralRewards?.length && (
+                  <section className="rounded-2xl border border-border p-4">
+                    <h3 className="mb-2 text-sm font-bold">
+                      Refer &amp; earn rewards{" "}
+                      <span className="font-normal text-muted-foreground">
+                        · {member.referralRewards.length} friend{member.referralRewards.length === 1 ? "" : "s"} joined
+                      </span>
+                    </h3>
+                    <ul className="divide-y divide-border text-sm">
+                      {member.referralRewards.map((r) => (
+                        <li key={r._id} className="flex items-start justify-between gap-3 py-2">
+                          <div className="min-w-0">
+                            <p className="font-medium">{r.friendName || "Friend"} joined · {formatInstant(r.createdAt)}</p>
+                            <p className="truncate text-xs text-muted-foreground" title={r.note}>
+                              {r.status === "paid"
+                                ? r.refundId
+                                  ? `Refunded on ${r.paymentId} · ${r.refundId}`
+                                  : r.note || "Paid"
+                                : r.note || "Refund in progress"}
+                            </p>
+                          </div>
+                          <div className="shrink-0 text-right">
+                            <p className="font-semibold">{inr(r.amount)}</p>
+                            {r.status === "paid" ? (
+                              <Badge variant="outline" className="mt-1">
+                                Paid{r.paidAt ? ` · ${formatInstant(r.paidAt)}` : ""}
+                              </Badge>
+                            ) : (
+                              <ConfirmButton
+                                icon={busy === `reward-${r._id}` ? <LoaderCircle className="animate-spin" /> : <IndianRupee />}
+                                label="Mark paid"
+                                disabled={!!busy}
+                                className="mt-1 h-7"
+                                title={`Mark ${inr(r.amount)} as paid to ${member.basic.fullName}?`}
+                                description={`Only do this after you have sent ${inr(r.amount)} yourself (UPI or bank). ${r.status === "processing" ? "This reward says a Razorpay refund was in progress: check the Razorpay dashboard first so it isn't paid twice." : "Razorpay couldn't refund it automatically."}`}
+                                confirm="Mark as paid"
+                                onConfirm={() => act(`reward-${r._id}`, post("referral-reward", { rewardId: r._id }))}
+                              />
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
                 {admin ? (
                   <section className="rounded-2xl border border-border p-4">
                     <h3 className="mb-2 text-sm font-bold">
@@ -515,6 +567,9 @@ export const MemberSheet = ({ id, kind, onClose, onChanged }: Props) => {
                             <div className="shrink-0 text-right">
                               <p className={cn("font-semibold", t.refundedAt && "text-muted-foreground line-through")}>{inr(t.amountPaid)}</p>
                               <p className="text-xs text-muted-foreground">{formatInstant(t.dateOfTrans)}</p>
+                              {!!t.referralRefunded && (
+                                <p className="text-xs text-muted-foreground">−{inr(t.referralRefunded)} refer &amp; earn</p>
+                              )}
                               {t.refundedAt ? (
                                 <Badge variant="outline" className="mt-1 border-destructive/40 text-destructive" title={t.refundId}>
                                   <RotateCcw /> Refunded {inr(t.amountRefunded)} · {formatInstant(t.refundedAt)}

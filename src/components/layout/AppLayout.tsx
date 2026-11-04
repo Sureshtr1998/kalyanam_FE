@@ -10,6 +10,7 @@ import {
   Activity as ActivityIcon,
   BriefcaseBusiness,
   ShieldCheck,
+  Gift,
 } from "lucide-react";
 import { Brand } from "@/components/common/Brand";
 import { InstallButton } from "@/components/misc/InstallButton";
@@ -30,15 +31,16 @@ import { cn } from "@/lib/utils";
 import { imageUrl } from "@/utils/constants";
 import { getInitials } from "@/utils/utils";
 
-const userNav = [
+const userNav: { to: string; label: string; short?: string; icon: typeof Users }[] = [
   { to: "/home", label: "Matches", icon: Users },
   { to: "/activity", label: "Activity", icon: ActivityIcon },
   { to: "/astrology", label: "Astrology", icon: Sparkles },
   { to: "/profile", label: "Profile", icon: UserRound },
+  { to: "/refer", label: "Refer & Earn", short: "Refer", icon: Gift },
   { to: "/account", label: "Account", icon: Settings },
 ];
 
-const brokerNav = [
+const brokerNav: { to: string; label: string; short?: string; icon: typeof Users }[] = [
   { to: "/partner", label: "My Members", icon: Users },
   { to: "/matchmaker-profile", label: "My Agency", icon: BriefcaseBusiness },
 ];
@@ -91,9 +93,9 @@ const Shell = ({ children }: { children: ReactNode }) => {
                 to={to}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
+                    "flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground",
                     isActive && "bg-primary/8 text-primary hover:bg-primary/10 hover:text-primary",
-                    // No room for a sixth link until xl; it's always in the avatar menu.
+                    // No room for a seventh link until xl; it's always in the avatar menu.
                     to === adminLink.to && "hidden xl:flex"
                   )
                 }>
@@ -172,7 +174,7 @@ const Shell = ({ children }: { children: ReactNode }) => {
         className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
         aria-label="Primary">
         <div className="mx-auto flex max-w-xl">
-          {tabBarNav.map(({ to, label, icon: Icon }) => (
+          {tabBarNav.map(({ to, label, short, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
@@ -191,7 +193,7 @@ const Shell = ({ children }: { children: ReactNode }) => {
                     )}>
                     <Icon className="size-5" />
                   </span>
-                  {label}
+                  {short ?? label}
                 </>
               )}
             </NavLink>

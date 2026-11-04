@@ -94,6 +94,8 @@ export interface TransactionsIn {
     noOfInterest?: number,
     refundId?: string,
     amountRefunded?: number,
+    /** Refer & earn rewards paid back on this payment. */
+    referralRefunded?: number,
     refundedAt?: string,
 }
 

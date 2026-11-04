@@ -27,6 +27,7 @@ const ADMIN_STATUS = [
   ...STATUS,
   { label: "Referred by a partner", value: "referred" },
   { label: "Commission due", value: "commissionDue" },
+  { label: "Refer & earn reward due", value: "referralRewardDue" },
   { label: "Admins", value: "admin" },
 ];
 const GENDER = [

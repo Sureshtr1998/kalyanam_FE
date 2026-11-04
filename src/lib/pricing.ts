@@ -15,6 +15,8 @@ export interface Pricing {
   registrationFeeOriginal: number | null;
   registrationInterests: number;
   referralFee: number;
+  /** Refer & earn: what a member gets back when a friend registers with their code. */
+  memberReferralReward: number;
   brokerCommission: number;
   interestPacks: Record<PackKey, { amount: number; interests: number }>;
   astroFees: Record<AstroMode, number>;
@@ -33,6 +35,7 @@ export const DEFAULT_PRICING: Pricing = {
   registrationFeeOriginal: 999,
   registrationInterests: 36,
   referralFee: 301,
+  memberReferralReward: 71,
   brokerCommission: 101,
   interestPacks: {
     basic: { amount: 101, interests: 21 },

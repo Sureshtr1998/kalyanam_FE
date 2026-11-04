@@ -47,9 +47,9 @@ const Lander = () => {
 
   useEffect(() => {
     if (isLoggedIn()) navigate("/home", { replace: true });
-    // Ad links use /?join=1 to open registration instead of login. Read after mount so the
+    // Ad links use /?join=1 (and refer & earn links ?ref=CODE) to open registration instead of login. Read after mount so the
     // prerendered (login) markup still hydrates cleanly.
-    else if (new URLSearchParams(window.location.search).has("join")) {
+    else if (["join", "ref"].some((k) => new URLSearchParams(window.location.search).has(k))) {
       setForm(1);
       document.getElementById("join")?.scrollIntoView({ block: "start" });
     }
