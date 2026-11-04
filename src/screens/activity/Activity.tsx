@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Ban, Bookmark, Check, Eye, Footprints, Heart, Phone, Search, X } from "lucide-react";
+import { Ban, Bookmark, Check, Eye, EyeOff, Footprints, Heart, Phone, RotateCcw, Search, X } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ProfilePlaceholder } from "@/components/common/ProfilePlaceholder";
@@ -22,13 +22,14 @@ import { errorMessage } from "@/lib/errors";
 import { cn } from "@/lib/utils";
 import { getStatusLabel, type InvitationStatus } from "./helper";
 
-type TabId = "interests" | "shortlist" | "visitors" | "viewed" | "hidden";
+type TabId = "interests" | "shortlist" | "visitors" | "viewed" | "skipped" | "hidden";
 
 const ENDPOINT: Record<TabId, string> = {
   interests: "/fetch-invitation-status",
   shortlist: "/shortlist",
   visitors: "/profile-views",
   viewed: "/view-contact",
+  skipped: "/skipped-profiles",
   hidden: "/hidden-profiles",
 };
 
@@ -37,6 +38,7 @@ const TABS: { id: TabId; label: string; short?: string; icon: React.ReactNode; e
   { id: "shortlist", label: "Shortlisted", short: "Shortlist", icon: <Bookmark />, empty: "Your shortlist is empty", emptyText: "Tap the bookmark on any profile to save it here and decide later." },
   { id: "visitors", label: "Viewed you", short: "Visitors", icon: <Footprints />, empty: "No visitors yet", emptyText: "Members who open your profile appear here. A complete profile with clear photos gets more visits." },
   { id: "viewed", label: "Contacts", icon: <Phone />, empty: "No contacts unlocked", emptyText: "Unlocked contact details are saved here so you can find them again." },
+  { id: "skipped", label: "Skipped", icon: <EyeOff />, empty: "Nothing skipped", emptyText: "Profiles you skip from Matches land here. Restore one to see it in your matches again." },
   { id: "hidden", label: "Blocked", icon: <Ban />, empty: "No one is blocked", emptyText: "Members you block can't see your profile, and you won't see theirs." },
 ];
 
@@ -153,6 +155,19 @@ const Activity = () => {
     }
   };
 
+  const unskip = async (id: string) => {
+    setBusyId(id);
+    try {
+      const res = await api.post("/unskip-profile", { userId: id });
+      toast.success("Restored", { description: res.data.msg });
+      setRows((prev) => prev.filter((r) => r._id !== id));
+    } catch (err) {
+      toast.error("Couldn't restore", { description: errorMessage(err) });
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const pendingCount =
     tab === "interests" ? rows.filter((r) => r.interests?.invitationStatus === "received").length : 0;
 
@@ -161,13 +176,13 @@ const Activity = () => {
       <SEO title="Activity | Seetha Rama Kalyana" description="Your interests and activity." noindex />
       <PageHeader
         title="Activity"
-        description="Interests, your shortlist, who viewed you, unlocked contacts and blocked members."
+        description="Interests, your shortlist, who viewed you, unlocked contacts, skipped and blocked members."
       />
 
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <Tabs value={tab} onValueChange={(v) => setTab(v as TabId)} className="min-w-0">
-          {/* Phones: all five tabs fit in one grid row (icon over label) so none hide off-screen. */}
-          <TabsList className="grid h-auto w-full grid-cols-5 gap-0.5 bg-card p-1 shadow-sm ring-1 ring-border sm:inline-flex sm:w-max sm:gap-0">
+          {/* Phones: all six tabs fit in one grid row (icon over label) so none hide off-screen. */}
+          <TabsList className="grid h-auto w-full grid-cols-6 gap-0.5 bg-card p-1 shadow-sm ring-1 ring-border sm:inline-flex sm:w-max sm:gap-0">
             {TABS.map((t) => (
               <TabsTrigger
                 key={t.id}
@@ -336,6 +351,12 @@ const Activity = () => {
                         Decline
                       </Button>
                     </>
+                  )}
+                  {tab === "skipped" && (
+                    <Button size="sm" variant="secondary" className="flex-1 sm:flex-none" disabled={busyId === id} onClick={() => unskip(id)}>
+                      <RotateCcw />
+                      Restore
+                    </Button>
                   )}
                   {tab === "hidden" && (
                     <Button size="sm" variant="secondary" className="flex-1 sm:flex-none" disabled={busyId === id} onClick={() => unhide(id)}>

@@ -7,6 +7,7 @@ import {
   Images,
   Sparkles,
   Users,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -31,6 +32,10 @@ interface Props {
   /** Remove the card from the grid; `usedInterest` when interests were spent. */
   onRemoved: (id: string, usedInterest?: number) => void;
 }
+
+// Frosted white disc that reads on any photo; each button adds its own colour and hover fill.
+const PHOTO_BUTTON =
+  "size-9 rounded-full bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.25)] ring-1 ring-black/5 backdrop-blur-sm transition-all hover:scale-105 active:scale-95 disabled:opacity-60 [&_svg]:size-[18px]";
 
 const shortHeight = (h?: string) => {
   const label = h ? fetchLabel(heightOptions, h) : "-";
@@ -84,6 +89,8 @@ const ProfileCard = ({ match, remaining, onRemoved }: Props) => {
             className="transition-transform duration-700 group-hover:scale-105"
           />
         )}
+        {/* Top scrim so the white controls stay readable on bright photos. */}
+        {!broker && <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/30 to-transparent" />}
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-saffron-950/70 to-transparent" />
 
         <div className="absolute inset-x-0 bottom-3 flex flex-wrap justify-center gap-1.5 px-3">
@@ -111,34 +118,58 @@ const ProfileCard = ({ match, remaining, onRemoved }: Props) => {
         </div>
       </button>
 
-      {/* Top-right controls sit outside the photo button so they stay clickable. */}
+      {/* Photo controls sit outside the photo button so they stay clickable:
+          save and more on the left, skip on the right. */}
       {!broker && (
-        <div className="absolute right-2.5 top-2.5 flex items-center gap-1">
+        <>
+          <div className="absolute left-3 top-3 flex items-center gap-1.5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={actions.toggleShortlist}
+                  disabled={actions.busy}
+                  aria-pressed={actions.saved}
+                  aria-label={actions.saved ? "Remove from shortlist" : "Add to shortlist"}
+                  className={cn(
+                    PHOTO_BUTTON,
+                    actions.saved
+                      ? "bg-gold text-gold-foreground hover:bg-gold/90 hover:text-gold-foreground"
+                      : "text-gold-foreground hover:bg-gold hover:text-gold-foreground"
+                  )}>
+                  <Bookmark className={cn(actions.saved && "fill-current")} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{actions.saved ? "Shortlisted" : "Shortlist"}</TooltipContent>
+            </Tooltip>
+            <ProfileMoreMenu
+              name={basic.fullName}
+              busy={actions.busy}
+              onSkip={actions.skip}
+              onBlock={actions.block}
+              onReport={actions.report}
+              triggerClassName={cn(
+                PHOTO_BUTTON,
+                "text-foreground/75 hover:bg-white hover:text-primary data-[state=open]:bg-white data-[state=open]:text-primary"
+              )}
+            />
+          </div>
           <Tooltip>
             <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={actions.toggleShortlist}
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(PHOTO_BUTTON, "absolute right-3 top-3 text-destructive hover:bg-destructive hover:text-white")}
                 disabled={actions.busy}
-                aria-pressed={actions.saved}
-                aria-label={actions.saved ? "Remove from shortlist" : "Add to shortlist"}
-                className={cn(
-                  "flex size-9 items-center justify-center rounded-full backdrop-blur transition",
-                  actions.saved ? "bg-gold text-gold-foreground" : "bg-black/35 text-white hover:bg-black/55"
-                )}>
-                <Bookmark className={cn("size-4", actions.saved && "fill-current")} />
-              </button>
+                onClick={actions.skip}
+                aria-label={`Skip ${basic.fullName}`}>
+                <X />
+              </Button>
             </TooltipTrigger>
-            <TooltipContent>{actions.saved ? "Shortlisted" : "Shortlist"}</TooltipContent>
+            <TooltipContent>Skip (hide from your matches)</TooltipContent>
           </Tooltip>
-          <ProfileMoreMenu
-            name={basic.fullName}
-            busy={actions.busy}
-            onBlock={actions.block}
-            onReport={actions.report}
-            triggerClassName="size-9 bg-black/35 text-white hover:bg-black/55 hover:text-white"
-          />
-        </div>
+        </>
       )}
 
       <div className="flex flex-1 flex-col items-center p-4 text-center">
@@ -219,6 +250,7 @@ const ProfileCard = ({ match, remaining, onRemoved }: Props) => {
           onOpenChange={setOpen}
           remaining={remaining}
           canSendInterest
+          canSkip
           onRemoved={onRemoved}
         />
       )}
