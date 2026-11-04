@@ -36,7 +36,12 @@ interface Options {
 }
 
 export const useCheckout = ({ description, onPaid }: Options) => {
-  const { Razorpay, isLoading: scriptLoading, error: scriptError } = useRazorpay();
+  const { Razorpay, isLoading, error: scriptError } = useRazorpay();
+  // react-razorpay@3 sets isLoading=true on every mount but only clears it when it
+  // injects the script itself. On a remount (e.g. Account -> Matches -> Account) the
+  // script is already on window, so isLoading stays true forever. Trust window instead.
+  const scriptLoaded = typeof window !== "undefined" && "Razorpay" in window;
+  const scriptLoading = isLoading && !scriptLoaded;
   const [isStarting, setIsStarting] = useState(false);
 
   const start = useCallback(
