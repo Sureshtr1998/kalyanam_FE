@@ -21,6 +21,7 @@ const Profile = lazy(() => import("@/screens/profile/Profile"));
 const Accounts = lazy(() => import("@/screens/accounts/Accounts"));
 const Activity = lazy(() => import("@/screens/activity/Activity"));
 const Astrology = lazy(() => import("@/screens/astrology/Astrology"));
+const ReferEarn = lazy(() => import("@/screens/refer/ReferEarn"));
 const BrokerProfile = lazy(
   () => import("@/screens/brokerProfile/BrokerProfile"),
 );
@@ -100,6 +101,7 @@ const AppRoutes = () => (
         <Route path="/activity" element={<Activity />} />
         <Route path="/astrology" element={<Astrology />} />
         <Route path="/account" element={<Accounts />} />
+        <Route path="/refer" element={<ReferEarn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/matchmaker-profile" element={<BrokerProfile />} />
         <Route path="/partner" element={<PartnerDashboard />} />

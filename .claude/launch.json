@@ -32,6 +32,15 @@
       "port": 5055
     },
     {
+      "name": "be-env",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d ..\\kalyanam_BE&& set PORT=5055&& node src/index.js"
+      ],
+      "port": 5055
+    },
+    {
       "name": "fe-preview",
       "runtimeExecutable": "npx",
       "runtimeArgs": [

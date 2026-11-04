@@ -43,6 +43,25 @@ export interface MemberDetail extends UserDetails {
     totalPaid: number;
   };
   broker?: { name: string; companyName?: string; referralId: string } | null;
+  /** Refer & earn: this member's own code, and the member whose code they used. */
+  referralCode?: string;
+  referredByCode?: string;
+  referredByMember?: { _id: string; fullName?: string; uniqueId?: string } | null;
+  /** Admins only. */
+  referralRewards?: ReferralReward[];
+}
+
+export interface ReferralReward {
+  _id: string;
+  friend: string;
+  friendName?: string;
+  amount: number;
+  status: "processing" | "paid" | "pending";
+  paymentId?: string;
+  refundId?: string;
+  note?: string;
+  createdAt: string;
+  paidAt?: string;
 }
 
 export interface BrokerInfo {
