@@ -25,6 +25,7 @@ import { inr, type BrokerInfo, type Summary } from "@/components/staff/staffType
 import { SignupBars, Stat } from "@/components/staff/StaffStats";
 import { PricingLevels } from "@/components/staff/PricingLevels";
 import { AbandonedCheckouts } from "@/components/staff/AbandonedCheckouts";
+import { MemberReferrals } from "@/components/staff/MemberReferrals";
 import { useUser } from "@/context/UserContext";
 import api from "@/utils/api";
 import { cn } from "@/lib/utils";
@@ -416,6 +417,7 @@ const AdminPanel = () => {
             ["overview", "Overview"],
             ["members", "Members"],
             ["partners", `Partners${summary?.brokers?.pending ? ` (${summary.brokers.pending} new)` : ""}`],
+            ["referrals", "Referrals"],
             ["payments", "Payments"],
             ["abandoned", "Abandoned"],
             ["pricing", `Pricing${summary?.pricingLevel ? ` · L${summary.pricingLevel}` : ""}`],
@@ -445,6 +447,9 @@ const AdminPanel = () => {
               setTab("members");
             }}
           />
+        </TabsContent>
+        <TabsContent value="referrals">
+          <MemberReferrals onChanged={loadSummary} />
         </TabsContent>
         <TabsContent value="payments">
           <Payments />
