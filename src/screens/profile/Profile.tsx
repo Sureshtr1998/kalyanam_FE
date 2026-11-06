@@ -216,6 +216,7 @@ const Profile = () => {
       <OtpVerifyDialog
         open={verifyOpen}
         onOpenChange={setVerifyOpen}
+        name={basic.fullName}
         email={basic.email}
         mobile={basic.mobile}
         onVerified={save}
