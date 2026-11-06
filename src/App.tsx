@@ -1,4 +1,11 @@
-import { Suspense, lazy, useEffect } from "react";
+import {
+  Suspense,
+  createElement,
+  lazy,
+  useEffect,
+  useState,
+  type ComponentType,
+} from "react";
 import {
   BrowserRouter,
   Route,
@@ -27,21 +34,67 @@ const BrokerProfile = lazy(
 );
 const AdminPanel = lazy(() => import("@/screens/admin/AdminPanel"));
 const PartnerDashboard = lazy(() => import("@/screens/partner/PartnerDashboard"));
-const AboutUs = lazy(() => import("@/screens/aboutUs/AboutUs"));
-const FaqPage = lazy(() => import("@/screens/faq/FAQPage"));
-const TermsConditions = lazy(() => import("@/screens/terms/TermsConditions"));
-const PrivacyPolicy = lazy(() => import("@/screens/privacy/PrivacyPolicy"));
-const Blog = lazy(() => import("@/screens/blogs/Blog"));
-const BlogPostDetail = lazy(() => import("@/screens/blogs/BlogPostDetail"));
-const ContactUs = lazy(() => import("@/screens/contactUs/ContactUs"));
-const Pricing = lazy(() => import("@/screens/pricing/Pricing"));
-const RefundPolicy = lazy(() => import("@/screens/refund/Refund"));
-const PartnerWithUs = lazy(() => import("@/screens/partnerWUs/PartnerWithUs"));
-const CommunitiesServe = lazy(() => import("@/screens/communities/Communities"));
-const CommunityPage = lazy(() => import("@/screens/communities/CommunityPage"));
-const Cities = lazy(() => import("@/screens/cities/Cities"));
-const CityPage = lazy(() => import("@/screens/cities/CityPage"));
-const NotFound = lazy(() => import("@/screens/notFound/NotFound"));
+// Public pages are prerendered. Hydrating one while its chunk is still loading makes React
+// swap the page for the Suspense fallback and back, which jumps the footer (CLS ~0.85 on
+// mobile). main.tsx calls preloadRoute() first; a page whose chunk is already loaded then
+// renders directly instead of suspending.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Page = ComponentType<any> & { preload: () => Promise<unknown> };
+const page = (load: () => Promise<{ default: ComponentType<object> }>): Page => {
+  let loaded: ComponentType<object> | undefined;
+  const preload = () => load().then((m) => (loaded = m.default));
+  const Lazy = lazy(() => load().then((m) => ((loaded = m.default), m)));
+  // Decided once per mount, so a page never switches between the two and remounts.
+  const Page = (props: object) => {
+    const [Eager] = useState(() => loaded);
+    return Eager ? createElement(Eager, props) : createElement(Lazy, props);
+  };
+  return Object.assign(Page, { preload });
+};
+
+const AboutUs = page(() => import("@/screens/aboutUs/AboutUs"));
+const FaqPage = page(() => import("@/screens/faq/FAQPage"));
+const TermsConditions = page(() => import("@/screens/terms/TermsConditions"));
+const PrivacyPolicy = page(() => import("@/screens/privacy/PrivacyPolicy"));
+const Blog = page(() => import("@/screens/blogs/Blog"));
+const BlogPostDetail = page(() => import("@/screens/blogs/BlogPostDetail"));
+const ContactUs = page(() => import("@/screens/contactUs/ContactUs"));
+const Pricing = page(() => import("@/screens/pricing/Pricing"));
+const RefundPolicy = page(() => import("@/screens/refund/Refund"));
+const PartnerWithUs = page(() => import("@/screens/partnerWUs/PartnerWithUs"));
+const CommunitiesServe = page(() => import("@/screens/communities/Communities"));
+const CommunityPage = page(() => import("@/screens/communities/CommunityPage"));
+const Cities = page(() => import("@/screens/cities/Cities"));
+const CityPage = page(() => import("@/screens/cities/CityPage"));
+const NotFound = page(() => import("@/screens/notFound/NotFound"));
+
+// Same table as the public <Route>s below; translated paths (/kn/about-us) drop the prefix.
+const PUBLIC_PAGES: [RegExp, Page][] = [
+  [/^\/about-us$/, AboutUs],
+  [/^\/partner-with-us$/, PartnerWithUs],
+  [/^\/faq$/, FaqPage],
+  [/^\/terms$/, TermsConditions],
+  [/^\/communities$/, CommunitiesServe],
+  [/^\/communities\/[^/]+$/, CommunityPage],
+  [/^\/blog$/, Blog],
+  [/^\/blog\/[^/]+$/, BlogPostDetail],
+  [/^\/contact-us$/, ContactUs],
+  [/^\/pricing$/, Pricing],
+  [/^\/refund-policy$/, RefundPolicy],
+  [/^\/privacy$/, PrivacyPolicy],
+  [/^\/matrimony$/, Cities],
+  [/^\/matrimony\/[^/]+$/, CityPage],
+];
+
+/** Loads the chunk of the public page at `path` (if any), so hydration doesn't suspend. */
+// eslint-disable-next-line react-refresh/only-export-components
+export const preloadRoute = (path: string): Promise<unknown> => {
+  const lang = PATH_LANGS.find((l) => path === `/${l}` || path.startsWith(`/${l}/`));
+  const bare = lang ? path.slice(lang.length + 1) || "/" : path;
+  if (bare === "/") return Promise.resolve();
+  const hit = PUBLIC_PAGES.find(([re]) => re.test(bare));
+  return (hit ? hit[1] : NotFound).preload();
+};
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();

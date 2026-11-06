@@ -1,5 +1,6 @@
 // Renders every <section data-name> in creatives.html to ../<name>.png.
 // Run from the repo root: node marketing/meta-ads/src/render.cjs
+// ONLY=hindi renders just the sections whose name contains "hindi".
 // For another pricing level (see kalyanam_BE/src/utils/pricing.js), pass it:
 //   node marketing/meta-ads/src/render.cjs 2   → ../levels/L2/<name>.png
 // creatives.html is written at level 3 (₹351); other levels swap the prices in.
@@ -72,6 +73,7 @@ const forLevel = (html, level) => {
   const ads = await page.$$("section[data-name]");
   for (const ad of ads) {
     const name = await ad.getAttribute("data-name");
+    if (process.env.ONLY && !name.includes(process.env.ONLY)) continue;
     await ad.screenshot({ path: path.join(outDir, `${name}.png`) });
     console.log(name);
   }
