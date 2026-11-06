@@ -79,7 +79,8 @@ const STATUS_BADGE: Record<Status, { label: string; className: string }> = {
   paid: { label: "Paid", className: "border-success/40 text-success" },
 };
 
-const JOIN_LINK = "https://seetharamakalyana.in/?join=1";
+// www: the bare domain was forwarded by GoDaddy, which dropped ?join=1 on the way.
+const JOIN_LINK = "https://www.seetharamakalyana.in/?join=1";
 
 const whatsappLink = (r: AbandonedRow) =>
   `https://wa.me/91${r.mobile}?text=${encodeURIComponent(

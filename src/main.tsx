@@ -6,7 +6,7 @@ import "@fontsource/cormorant-garamond/600.css";
 import "@fontsource/cormorant-garamond/700.css";
 import "@fontsource-variable/fraunces/opsz.css";
 import "./index.css";
-import App from "./App.tsx";
+import App, { preloadRoute } from "./App.tsx";
 import { initPWA } from "./lib/pwa";
 
 initPWA();
@@ -21,7 +21,11 @@ const root = document.getElementById("root")!;
 const prerendered = root.dataset.prerendered;
 const path = window.location.pathname.replace(/\/+$/, "") || "/";
 if (prerendered === "*" || prerendered === path) {
-  hydrateRoot(root, <App />);
+  // The prerendered HTML stays on screen while the page's chunk loads; a failed load falls
+  // back to normal lazy loading.
+  preloadRoute(path)
+    .catch(() => {})
+    .finally(() => hydrateRoot(root, <App />));
 } else {
   root.replaceChildren();
   createRoot(root).render(<App />);
