@@ -10,6 +10,7 @@ import nineUrl from "../../assets/blogs/9.webp";
 import tenUrl from "../../assets/blogs/10.webp";
 import elevenUrl from "../../assets/blogs/11.webp";
 import genUrl from "../../assets/blogs/gen.webp";
+import { LONG_POSTS } from "./longPosts";
 
 // Every post went live on BLOG_PUBLISHED and was last rewritten on BLOG_UPDATED, unless the
 // post sets its own dates. Give a post a new `updatedAt` whenever its content really changes.
@@ -34,6 +35,14 @@ export interface BlogPost {
   /** Short factual takeaways, shown as a list under the answer. */
   keyFacts?: string[];
   fullContent: React.ReactNode[];
+  /** Long-form body after `fullContent`: each section gets an <h2>; a block is a paragraph or a bullet list. */
+  sections?: BlogSection[];
+}
+
+export type BlogBlock = React.ReactNode | { list: React.ReactNode[] };
+export interface BlogSection {
+  heading: string;
+  blocks: BlogBlock[];
 }
 
 export const blogPosts: BlogPost[] = [
@@ -44,6 +53,7 @@ export const blogPosts: BlogPost[] = [
       "Learn how to make your Seetha Rama Kalyana matrimony profile stand out. Attract genuine matches with honesty, clarity, and a personal touch.",
     category: "Tips",
     slug: "create-perfect-matrimony-profile",
+    updatedAt: "2026-11-08",
     keywords:
       "matrimony profile tips, online dating profile, Hindu matrimony profile bio",
     readTime: "5 min read",
@@ -161,6 +171,7 @@ export const blogPosts: BlogPost[] = [
     title:
       "Understanding Kundali Matching: Scientific vs. Traditional Perspectives",
     slug: "understanding-kundali-matching-significance",
+    updatedAt: "2026-11-08",
     keywords:
       "kundali matching, guna milan significance, Vedic astrology marriage, horoscope compatibility India, ashta koota matching",
     summary:
@@ -232,6 +243,7 @@ export const blogPosts: BlogPost[] = [
     id: 6,
     title: "5 Red Flags to Watch for When Searching for a Partner Online",
     slug: "online-matrimony-safety-guide",
+    updatedAt: "2026-11-08",
     keywords:
       "matrimony safety tips, verify matrimony profile, avoid matrimony fraud, safe online dating India, secure matrimony search",
     summary:
@@ -266,6 +278,7 @@ export const blogPosts: BlogPost[] = [
     id: 7,
     title: "Sacred Steps: The Deep Meaning Behind the Saptapadi",
     slug: "meaning-of-saptapadi-seven-vows",
+    updatedAt: "2026-11-08",
     keywords:
       "saptapadi meaning, seven vows of Hindu marriage, Hindu wedding rituals explained, sacred marriage vows, saat phere significance",
     summary:
@@ -301,6 +314,7 @@ export const blogPosts: BlogPost[] = [
     title:
       "First Call Jitters? 10 Meaningful Questions to Ask Your Potential Match",
     slug: "questions-to-ask-matrimony-match",
+    updatedAt: "2026-11-08",
     keywords:
       "first call matrimony questions, deep conversation starters for marriage, understanding partner compatibility, matrimony talk tips",
     summary:
@@ -582,6 +596,7 @@ export const blogPosts: BlogPost[] = [
     id: 16,
     title: "Understanding Gothras in Brahmin Matrimony: Why it Matters",
     slug: "understanding-gothras-brahmin-matrimony",
+    updatedAt: "2026-11-08",
     keywords:
       "Gothra significance, same Gothra marriage, Brahmin Gothra list, marriage within Gothra, Brahmin wedding traditions",
     summary:
@@ -968,6 +983,7 @@ export const blogPosts: BlogPost[] = [
     id: 26,
     title: "Kannada Matrimony: Traditional Values in a Modern World",
     slug: "kannada-matrimony-traditions-modern-world",
+    updatedAt: "2026-11-08",
     keywords:
       "Kannada matrimony, Karnataka Brahmin marriage, Kannada bride and groom, Madhwa matrimony, Smartha matrimony",
     summary:
@@ -1003,6 +1019,7 @@ export const blogPosts: BlogPost[] = [
     id: 27,
     title: "Telugu Brahmin Matrimony: Finding Harmony in Traditions",
     slug: "telugu-brahmin-matrimony-traditions",
+    updatedAt: "2026-11-08",
     keywords:
       "Telugu Brahmin matrimony, Telugu marriage rituals, Niyogi Brahmin matrimony, Vaidiki Brahmin bride, Telugu wedding traditions",
     summary:
@@ -1037,6 +1054,7 @@ export const blogPosts: BlogPost[] = [
     id: 28,
     title: "Tamil Matrimony: Exploring the Grace of Iyer and Iyengar Weddings",
     slug: "tamil-matrimony-iyer-iyengar-weddings",
+    updatedAt: "2026-11-08",
     keywords:
       "Tamil matrimony, Iyer matrimony, Iyengar matrimony, Tamil Brahmin bride, Tamil wedding rituals, Chennai matrimony",
     summary:
@@ -1445,6 +1463,7 @@ export const blogPosts: BlogPost[] = [
     id: 41,
     title: "The Symbolism of Vivaha Panchami in Hindu Matrimony",
     slug: "vivaha-panchami-significance-marriage",
+    updatedAt: "2026-11-08",
     keywords:
       "Vivaha Panchami, Rama Sita wedding date, auspicious marriage dates, Hindu wedding calendar",
     summary:
@@ -1745,3 +1764,6 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
+
+// Long-form rewrites replace the short originals (see longPosts.tsx).
+for (const post of blogPosts) Object.assign(post, LONG_POSTS[post.slug]);

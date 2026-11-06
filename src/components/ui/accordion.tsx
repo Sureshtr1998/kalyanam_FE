@@ -50,9 +50,13 @@ function AccordionContent({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
+    // forceMount keeps closed answers in the DOM, so the prerendered FAQ, city and
+    // community pages carry their answers for search engines.
     <AccordionPrimitive.Content
+      forceMount
       data-slot="accordion-content"
-      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+      // Closed answers stay mounted (forceMount), so hide them ourselves.
+      className="overflow-hidden text-sm data-[state=closed]:hidden data-[state=open]:animate-accordion-down"
       {...props}
     >
       <div className={cn("pt-0 pb-4", className)}>{children}</div>

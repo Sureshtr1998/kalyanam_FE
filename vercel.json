@@ -1,5 +1,8 @@
 {
     "cleanUrls": true,
+    "redirects": [
+        { "source": "/communities-we-serve", "destination": "/communities", "permanent": true }
+    ],
     "rewrites": [
         {
             "source": "/:page(home|activity|astrology|account|profile|matchmaker-profile|partner|admin)",
