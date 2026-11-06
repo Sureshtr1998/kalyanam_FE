@@ -233,7 +233,7 @@ const Home = () => {
       />
       {/* New members are sent to /profile until it's complete, so this first shows once their biodata is filled in. */}
       {!broker && loaded && user._id && user.hasCompleteProfile && (
-        <LoginNotice user={user} lang={lang} />
+        <LoginNotice user={user} lang={memberLang} onLangChange={setMemberLang} />
       )}
       <div className="mb-2 flex items-baseline gap-2">
         <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl">
