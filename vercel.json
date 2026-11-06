@@ -1,7 +1,91 @@
 {
     "cleanUrls": true,
     "redirects": [
-        { "source": "/communities-we-serve", "destination": "/communities", "permanent": true }
+        {
+            "source": "/communities-we-serve",
+            "destination": "/communities",
+            "permanent": true
+        },
+        {
+            "source": "/blog/vedic-marriage-rituals-brahmin-weddings",
+            "destination": "/blog/top-10-brahmin-wedding-traditions",
+            "permanent": true
+        },
+        {
+            "source": "/blog/success-stories-brahmin-matrimony-online",
+            "destination": "/blog/brahmin-matrimony-guide-perfect-match",
+            "permanent": true
+        },
+        {
+            "source": "/blog/rise-of-niche-brahmin-matrimony",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/niche-brahmin-matrimony-vs-mega-platforms",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/truth-about-big-matrimony-sites-duplicate-profiles",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/high-cost-of-matrimony-subscriptions-exposed",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/why-minimal-fee-beats-free-matrimony",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/why-seetha-rama-kalyana-is-the-last-stop",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/data-science-matchmaking-hindu-marriage",
+            "destination": "/blog/reasons-to-choose-trusted-hindu-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/fake-profiles-scams-major-marriage-sites",
+            "destination": "/blog/online-matrimony-safety-guide",
+            "permanent": true
+        },
+        {
+            "source": "/blog/importance-verified-matrimony-profiles",
+            "destination": "/blog/online-matrimony-safety-guide",
+            "permanent": true
+        },
+        {
+            "source": "/blog/use-filters-best-matrimony-site-results",
+            "destination": "/blog/top-tips-find-match-indian-matrimony",
+            "permanent": true
+        },
+        {
+            "source": "/blog/top-matrimonial-keywords-bio-tips",
+            "destination": "/blog/create-perfect-matrimony-profile",
+            "permanent": true
+        },
+        {
+            "source": "/blog/matrimony-profile-photo-guide",
+            "destination": "/blog/create-perfect-matrimony-profile",
+            "permanent": true
+        },
+        {
+            "source": "/blog/evolution-arranged-marriage-digital-age",
+            "destination": "/blog/family-role-modern-arranged-marriage",
+            "permanent": true
+        },
+        {
+            "source": "/blog/lessons-loyalty-seetha-rama-marriage",
+            "destination": "/blog/rama-seetha-marriage-blueprint",
+            "permanent": true
+        }
     ],
     "rewrites": [
         {

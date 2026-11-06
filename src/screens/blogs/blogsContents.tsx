@@ -11,6 +11,9 @@ import tenUrl from "../../assets/blogs/10.webp";
 import elevenUrl from "../../assets/blogs/11.webp";
 import genUrl from "../../assets/blogs/gen.webp";
 import { LONG_POSTS } from "./longPosts";
+import { GUIDE_POSTS } from "./guidePosts";
+import { COMMUNITY_POSTS } from "./communityPosts";
+import { POST_FAQS } from "./postFaqs";
 
 // Every post went live on BLOG_PUBLISHED and was last rewritten on BLOG_UPDATED, unless the
 // post sets its own dates. Give a post a new `updatedAt` whenever its content really changes.
@@ -96,6 +99,7 @@ export const blogPosts: BlogPost[] = [
       "Explore the principles of Seetha Rama Kalyana, emphasizing dharma, mutual respect, and commitment in finding a compatible life partner.",
     category: "Lifestyle",
     slug: "top-10-brahmin-wedding-traditions",
+    updatedAt: "2026-11-08",
     keywords:
       "Seetha Rama Kalyanam philosophy, Hindu matrimony values, Dharma in marriage, divine match search, spiritual compatibility, traditional marriage principles, mutual respect in matrimony, Seetha Rama Kalyana lifestyle",
     readTime: "6 min read",
@@ -135,6 +139,7 @@ export const blogPosts: BlogPost[] = [
     id: 3,
     title: "Essential Checklist for Modern Grooms: Beyond the Wedding Day",
     slug: "modern-groom-checklist-india",
+    updatedAt: "2026-11-08",
     keywords:
       "Indian groom tips, marriage preparation for men, modern Hindu wedding, life after marriage for men, groom responsibilities",
     summary:
@@ -208,6 +213,7 @@ export const blogPosts: BlogPost[] = [
     title:
       "Bridging Cultures: Success Tips for Inter-Community Hindu Marriages",
     slug: "inter-community-hindu-marriage-tips",
+    updatedAt: "2026-11-08",
     keywords:
       "inter-community marriage, diverse Hindu wedding, cultural integration in marriage, pan-India matrimony, cross-cultural relationship",
     summary:
@@ -349,6 +355,7 @@ export const blogPosts: BlogPost[] = [
     id: 9,
     title: "Supporting Ambition: How Modern Couples Balance Two Careers",
     slug: "career-and-marriage-balance",
+    updatedAt: "2026-11-08",
     keywords:
       "working couples India, balancing career and marriage, dual-income households, supportive life partner, career growth marriage",
     summary:
@@ -383,6 +390,7 @@ export const blogPosts: BlogPost[] = [
     id: 10,
     title: "The Family's Role in Modern Arranged Marriages",
     slug: "family-role-modern-arranged-marriage",
+    updatedAt: "2026-11-08",
     keywords:
       "parents role in matrimony, modern arranged marriage India, family involvement in wedding, choosing a life partner",
     summary:
@@ -417,6 +425,7 @@ export const blogPosts: BlogPost[] = [
     id: 11,
     title: "Top 5 Budget-Friendly Destination Wedding Locations in India",
     slug: "budget-destination-weddings-india",
+    updatedAt: "2026-11-08",
     keywords:
       "destination wedding India, budget wedding locations, unique wedding venues India, Indian wedding planning, affordable wedding spots",
     summary:
@@ -451,6 +460,7 @@ export const blogPosts: BlogPost[] = [
     id: 12,
     title: "Financial Harmony: Why Couples Should Talk About Money",
     slug: "financial-planning-for-newly-married-couples",
+    updatedAt: "2026-11-08",
     keywords:
       "marriage financial planning, Indian couples money management, pre-marriage financial talk, financial compatibility",
     summary:
@@ -486,6 +496,7 @@ export const blogPosts: BlogPost[] = [
     title:
       "Why Seetha Rama Kalyana is the Top Matrimony Site for Global Indians",
     slug: "top-matrimony-site-global-indians",
+    updatedAt: "2026-11-08",
     keywords:
       "top matrimony site, best matrimony website India, trusted matrimony services, top rated marriage sites, Seetha Rama Kalyana reviews",
     summary:
@@ -524,6 +535,7 @@ export const blogPosts: BlogPost[] = [
     title:
       "The Ultimate Guide to Brahmin Matrimony: Finding Your Perfect Match",
     slug: "brahmin-matrimony-guide-perfect-match",
+    updatedAt: "2026-11-08",
     keywords:
       "Brahmin matrimony, best Brahmin marriage site, Brahmin bride and groom, Iyer matrimony, Iyengar matrimony, Kannada Brahmin matrimony",
     summary:
@@ -560,6 +572,7 @@ export const blogPosts: BlogPost[] = [
     id: 15,
     title: "10 Reasons to Choose a Trusted Hindu Matrimony Platform",
     slug: "reasons-to-choose-trusted-hindu-matrimony",
+    updatedAt: "2026-11-08",
     keywords:
       "trusted Hindu matrimony, safe marriage site, Indian matrimony services, best site for Hindu wedding, matrimonial profile safety",
     summary:
@@ -626,356 +639,6 @@ export const blogPosts: BlogPost[] = [
         At <strong>Seetha Rama Kalyana</strong>, we make it easy to filter
         profiles based on Gothra, respecting this core tenet of{" "}
         <strong>Brahmin wedding traditions</strong>.
-      </>,
-    ],
-  },
-  {
-    id: 17,
-    title: "How to Use Filters to Find the Best Matrimony Site Results",
-    slug: "use-filters-best-matrimony-site-results",
-    keywords:
-      "how to find matrimony match, best matrimony site filters, search by community, search by profession, matrimony search tips",
-    summary:
-      "Maximize your search efficiency on the best matrimony site by using advanced filters for community, education, and location.",
-    category: "Tips",
-    readTime: "5 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        To get the most out of the <strong>best matrimony site</strong>, you
-        must learn to master the search filters. Narrowing down your preferences
-        saves time and connects you with the right people faster.
-      </>,
-      <>
-        <strong>Search by Community:</strong> Whether you need{" "}
-        <strong>Brahmin matrimony</strong> or specific regional matches, our{" "}
-        <strong>search by community</strong> feature is the most powerful tool
-        at your disposal.
-      </>,
-      <>
-        <strong>Professional Compatibility:</strong> Looking for a partner with
-        a similar career path? Use the <strong>search by profession</strong>{" "}
-        filter to find doctors, engineers, or entrepreneurs within your
-        community.
-      </>,
-      <>
-        Follow these <strong>matrimony search tips</strong> to turn our platform
-        into your personal matchmaking assistant.
-      </>,
-    ],
-  },
-  {
-    id: 18,
-    title: "The Rise of Niche Matrimony: Focus on Brahmin Communities",
-    slug: "rise-of-niche-brahmin-matrimony",
-    keywords:
-      "Brahmin community marriage, niche matrimony sites, best Brahmin matrimony India, traditional Brahmin match, community specific marriage",
-    summary:
-      "Why niche platforms focusing on Brahmin community marriage are becoming more popular than general matrimonial websites.",
-    category: "Lifestyle",
-    readTime: "6 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        While general sites are large, <strong>niche matrimony sites</strong>{" "}
-        offer a more tailored experience. For{" "}
-        <strong>Brahmin community marriage</strong>, this means a higher density
-        of relevant profiles.
-      </>,
-      <>
-        <strong>Shared Values:</strong> Finding a{" "}
-        <strong>traditional Brahmin match</strong> is easier when everyone on
-        the platform shares similar dietary habits, religious rituals, and
-        lifestyle choices.
-      </>,
-      <>
-        <strong>Efficiency:</strong> You don't have to scroll through thousands
-        of irrelevant profiles. We are built to be the{" "}
-        <strong>best Brahmin matrimony India</strong> has to offer for focused
-        searches.
-      </>,
-      <>
-        Experience the difference of a{" "}
-        <strong>community specific marriage</strong> platform that understands
-        your unique cultural requirements.
-      </>,
-    ],
-  },
-  {
-    id: 19,
-    title: "Top Matrimonial Keywords You Should Include in Your Bio",
-    slug: "top-matrimonial-keywords-bio-tips",
-    keywords:
-      "matrimony bio keywords, best matrimony profile description, improve matrimony profile, top searched marriage terms, profile bio tips",
-    summary:
-      "Boost your profile visibility by including top-searched matrimony terms that help the right matches find you easily.",
-    category: "Tips",
-    readTime: "4 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        If you want to appear in more searches on a{" "}
-        <strong>top matrimony site</strong>, you need to use the right keywords
-        in your bio. Think of your profile as a mini-search engine.
-      </>,
-      <>
-        <strong>Specific Terms:</strong> Instead of saying "I am religious," use
-        terms like "follow Vedic values" or "interested in{" "}
-        <strong>Brahmin matrimony</strong> traditions."
-      </>,
-      <>
-        <strong>Career Keywords:</strong> Use the{" "}
-        <strong>best matrimony profile description</strong> practices by clearly
-        stating your job title, as many users use the professional search
-        filter.
-      </>,
-      <>
-        Include <strong>top searched marriage terms</strong> like
-        "family-oriented," "well-settled," and "cultural values" to{" "}
-        <strong>improve your matrimony profile</strong> ranking.
-      </>,
-    ],
-  },
-  {
-    id: 20,
-    title: "Vedic Marriage Rituals: A Journey Through Time",
-    slug: "vedic-marriage-rituals-brahmin-weddings",
-    keywords:
-      "Vedic wedding rituals, Brahmin marriage ceremonies, Kanyadaan meaning, Vivaha Samskara, traditional Hindu wedding steps",
-    summary:
-      "Discover the deep spiritual meanings behind ancient Brahmin marriage ceremonies and the Vivaha Samskara.",
-    category: "Lifestyle",
-    readTime: "9 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        The <strong>Vivaha Samskara</strong> is considered the most important of
-        all Hindu rites of passage. <strong>Vedic wedding rituals</strong> are
-        not just ceremonies but spiritual contracts between two souls.
-      </>,
-      <>
-        <strong>Kanyadaan Meaning:</strong> This emotional ritual is the giving
-        away of the bride, signifying the father's trust in the groom to uphold
-        her happiness and <strong>traditional Hindu wedding steps</strong>.
-      </>,
-      <>
-        <strong>Brahmin Marriage Ceremonies:</strong> From the 'Panigrahana' to
-        the 'Laja-homa,' each act has a specific Sanskrit mantra that invokes
-        divine blessings for a long and prosperous life.
-      </>,
-      <>
-        Explore our blog to learn more about how{" "}
-        <strong>Brahmin matrimony</strong> preserves these timeless rituals in
-        the modern world.
-      </>,
-    ],
-  },
-  {
-    id: 21,
-    title: "What Actually Helps Brahmin Families Find a Match Online",
-    slug: "success-stories-brahmin-matrimony-online",
-    keywords:
-      "Brahmin matrimony online, Brahmin bride and groom search, gotra matching, Brahmin matrimony tips, trusted matrimony site",
-    summary:
-      "A practical guide for Brahmin families searching online: what to put in the profile, how to handle gotra and horoscope questions, and how to judge a matrimony site.",
-    category: "Tips",
-    readTime: "7 min read",
-    imageUrl: genUrl,
-    updatedAt: "2026-11-02",
-    answer:
-      "Brahmin families find good matches online when the profile states the essentials up front (sub-sect, gotra, nakshatra, food habits and family values), the horoscope is ready to share, and both sides talk early about expectations. Choose a site that verifies profiles and lets you control who sees your details.",
-    keyFacts: [
-      "Gotra is checked to avoid sagotra marriages, so list yours on the profile.",
-      "Nakshatra, rashi and birth time let families run kundli matching before the first call.",
-      "Sub-sects (for example Smartha, Madhwa, Iyer, Iyengar, Deshastha) matter to many families, so state your openness clearly.",
-      "Privacy controls that hide your profile from non-matching members cut down unwanted contact.",
-    ],
-    fullContent: [
-      <>
-        Searching for a <strong>Brahmin bride or groom online</strong> works
-        best when families treat the profile as the first conversation. Most of
-        the questions that come up in the first call can be answered on the
-        profile itself.
-      </>,
-      <>
-        <strong>State the essentials clearly:</strong> sub-sect, gotra,
-        nakshatra, rashi, mother tongue and food habits. Families filter on
-        these first, and a complete profile is far more likely to receive an
-        interest than a vague one.
-      </>,
-      <>
-        <strong>Keep the horoscope ready:</strong> share an accurate birth date,
-        time and place. With these, both families can run{" "}
-        <strong>kundli matching</strong> before meeting, which saves time for
-        everyone.
-      </>,
-      <>
-        <strong>Be honest about flexibility:</strong> if you are open to other
-        sub-sects or to a partner living in another city or abroad, say so.
-        Clear partner preferences bring better suggestions.
-      </>,
-      <>
-        <strong>Judge the platform, not just the profiles:</strong> check
-        whether the site verifies members, whether you control who can see
-        your photos and contact details, and whether pricing is clear with no
-        sales calls. These are the things <strong>Seetha Rama Kalyana</strong>{" "}
-        was built around.
-      </>,
-      <>
-        <strong>Involve the family early:</strong> let parents review
-        shortlisted profiles together with you. Agreeing on priorities at the
-        start avoids disappointment later.
-      </>,
-    ],
-  },
-  {
-    id: 22,
-    title:
-      "The Truth About Big Matrimony Sites: Why You See the Same Profiles Every Day",
-    slug: "truth-about-big-matrimony-sites-duplicate-profiles",
-    keywords:
-      "matrimony site complaints, fake profiles on shaadi, matrimony app scam, repeat profiles matrimony, shaadi vs matrimony price",
-    summary:
-      "Ever feel like you are seeing the same 10 people on repeat? Learn how big matrimony sites manipulate your feed to keep you subscribed.",
-    category: "Tips",
-    readTime: "7 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        If you have used major platforms like Shaadi or Bharat Matrimony, you
-        have likely noticed a frustrating trend: the same profiles appearing day
-        after day. This isn't a coincidence; it's a tactic to make their
-        database look larger than it is.
-      </>,
-      <>
-        <strong>Recycled Inactive Data:</strong> Many{" "}
-        <strong>big matrimony sites</strong> keep profiles active even if the
-        user hasn't logged in for years. By showing you these "ghost profiles,"
-        they create an illusion of choice while you waste time sending requests
-        to accounts that will never respond.
-      </>,
-      <>
-        <strong>Algorithmic Loops:</strong> These platforms often hide new,
-        relevant matches behind a paywall, forcing you to look at the same{" "}
-        <strong>repeat profiles matrimony</strong> users are tired of seeing. It
-        is a loop designed to keep you on the app longer, not to find you a
-        partner.
-      </>,
-      <>
-        At <strong>Seetha Rama Kalyana</strong>, we prioritize active users. If
-        a profile is inactive, we move it out of the main feed to ensure your
-        time is spent on genuine, available matches.
-      </>,
-    ],
-  },
-  {
-    id: 23,
-    title:
-      "Hidden Costs: Is Paying 5000+ for a Matrimony Subscription Worth It?",
-    slug: "high-cost-of-matrimony-subscriptions-exposed",
-    keywords:
-      "matrimony subscription cost, expensive matrimony sites, shaadi premium price, bharat matrimony gold pack cost, affordable matrimony site",
-    summary:
-      "With subscription prices skyrocketing to ₹5000 and above, we analyze if big matrimony sites actually provide value or just drain your wallet.",
-    category: "Lifestyle",
-    readTime: "6 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        The cost of finding love online has become a massive burden. Major
-        players often charge <strong>₹5000 to ₹15000</strong> for "Premium" or
-        "Gold" packages. But what are you actually paying for?
-      </>,
-      <>
-        <strong>The Pay-to-Talk Trap:</strong> Most{" "}
-        <strong>expensive matrimony sites</strong> won't even let you send a
-        simple message without a heavy fee. Even after paying, there is no
-        guarantee that the profile you like is even active or real.
-      </>,
-      <>
-        <strong>Artificial Scarcity:</strong> These platforms often limit your
-        daily views and "interests" to force you into higher-tier plans. It is a
-        business model built on profit, not <strong>Hindu matrimony</strong>{" "}
-        values.
-      </>,
-      <>
-        We believe marriage is a sacred union, not a luxury commodity. Our goal
-        is to provide an <strong>affordable matrimony site</strong> experience
-        that remains accessible to every Indian family.
-      </>,
-    ],
-  },
-  {
-    id: 24,
-    title:
-      "The Fake Profile Epidemic: How to Spot Scams on Major Marriage Sites",
-    slug: "fake-profiles-scams-major-marriage-sites",
-    keywords:
-      "fake profiles on matrimony sites, matrimony bot accounts, how to spot matrimony scam, shaadi fake profile check, bharat matrimony complaints",
-    summary:
-      "Bot accounts and scammers are flooding big marriage platforms. Learn the red flags and why these sites fail to delete inactive users.",
-    category: "Tips",
-    readTime: "8 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        One of the biggest <strong>matrimony app scams</strong> today is the
-        presence of bot accounts. These profiles use stock photos and generic
-        bios to keep users engaged and clicking, even when no real person is
-        behind the screen.
-      </>,
-      <>
-        <strong>Failure to Delete:</strong> Large sites often refuse to delete
-        old profiles because high user counts look good to investors. This
-        results in a <strong>fake profile epidemic</strong> where 40% of the
-        database is either inactive or fraudulent.
-      </>,
-      <>
-        <strong>The 'Interest' Scam:</strong> Have you ever received an
-        'Interest' the moment your subscription expired? This is a common tactic
-        used by <strong>big marriage sites</strong> to lure you back into
-        paying, often using automated bots.
-      </>,
-      <>
-        At <strong>Seetha Rama Kalyana</strong>, we implement strict manual
-        verification. We would rather have a smaller database of 100% real
-        people than millions of <strong>inactive users</strong>.
-      </>,
-    ],
-  },
-  {
-    id: 25,
-    title: "Why Niche Brahmin Matrimony Sites Are Safer Than Mega-Platforms",
-    slug: "niche-brahmin-matrimony-vs-mega-platforms",
-    keywords:
-      "Brahmin matrimony safety, specialized matrimony vs general sites, trusted Brahmin marriage site, avoid matrimony spam, personalized matchmaking",
-    summary:
-      "Mega-platforms treat you like a number. See why specialized Brahmin matrimony services offer better verification and fewer fakes.",
-    category: "Lifestyle",
-    readTime: "5 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        When a platform tries to cater to everyone, it often ends up serving no
-        one well. Mega-platforms are too big to monitor, leading to{" "}
-        <strong>matrimony spam</strong> and a lack of accountability.
-      </>,
-      <>
-        <strong>Community Accountability:</strong> On a{" "}
-        <strong>trusted Brahmin marriage site</strong>, the community is smaller
-        and more connected. This makes it much harder for scammers to hide and
-        much easier for us to verify Gothras and family backgrounds.
-      </>,
-      <>
-        <strong>Personalized Support:</strong> Unlike the automated customer
-        service of <strong>shaadi or bharat matrimony</strong>, we provide
-        personalized attention. We know our community and we care about the
-        success of every <strong>Brahmin bride and groom</strong>.
-      </>,
-      <>
-        Don't get lost in the noise of mega-sites. Choose{" "}
-        <strong>personalized matchmaking</strong> that respects your time, your
-        money, and your traditions.
       </>,
     ],
   },
@@ -1089,6 +752,7 @@ export const blogPosts: BlogPost[] = [
     id: 29,
     title: "North Indian Pandit Matrimony: Sacred Rituals and Global Matches",
     slug: "north-indian-pandit-matrimony-rituals",
+    updatedAt: "2026-11-08",
     keywords:
       "Pandit matrimony, North Indian Brahmin marriage, Kashmiri Pandit matrimony, Saraswat Brahmin bride, Kanya Pujan traditions",
     summary:
@@ -1123,6 +787,7 @@ export const blogPosts: BlogPost[] = [
     id: 30,
     title: "The Importance of Language in Matrimony: Why Mother Tongue Matters",
     slug: "importance-of-mother-tongue-in-matrimony",
+    updatedAt: "2026-11-08",
     keywords:
       "matrimony by language, mother tongue marriage, importance of native language, linguistic compatibility in marriage",
     summary:
@@ -1159,6 +824,7 @@ export const blogPosts: BlogPost[] = [
     id: 31,
     title: "Kerala Brahmin Matrimony: The Unique Traditions of Namboothiris",
     slug: "kerala-brahmin-matrimony-namboothiri-traditions",
+    updatedAt: "2026-11-08",
     keywords:
       "Kerala Brahmin matrimony, Namboothiri marriage, Kerala wedding rituals, Malayalam matrimony, Palakkad Iyer matrimony",
     summary:
@@ -1194,6 +860,7 @@ export const blogPosts: BlogPost[] = [
     id: 32,
     title: "Marathi Brahmin Matrimony: From Peshwa Legacy to Modern Unions",
     slug: "marathi-brahmin-matrimony-peshwa-legacy",
+    updatedAt: "2026-11-08",
     keywords:
       "Marathi Brahmin matrimony, Deshastha Brahmin marriage, Kokanastha Brahmin bride, Marathi wedding rituals, Pune matrimony",
     summary:
@@ -1230,6 +897,7 @@ export const blogPosts: BlogPost[] = [
     id: 33,
     title: "Rajput Matrimony: Honoring the Legacy of Valor and Tradition",
     slug: "rajput-matrimony-traditions-legacy",
+    updatedAt: "2026-11-08",
     keywords:
       "Rajput matrimony, Rajput wedding rituals, Thakur marriage, Rajput bride and groom, Kshatriya matrimony",
     summary:
@@ -1261,6 +929,7 @@ export const blogPosts: BlogPost[] = [
     id: 34,
     title: "Aggarwal and Baniya Matrimony: Success through Shared Values",
     slug: "aggarwal-baniya-matrimony-success",
+    updatedAt: "2026-11-08",
     keywords:
       "Aggarwal matrimony, Baniya marriage site, Gupta matrimony, Jain Baniya wedding, business community matrimony",
     summary:
@@ -1291,6 +960,7 @@ export const blogPosts: BlogPost[] = [
     id: 35,
     title: "Lingayat Matrimony: The Path of Simple and Sacred Unions",
     slug: "lingayat-matrimony-traditions-karnataka",
+    updatedAt: "2026-11-08",
     keywords:
       "Lingayat matrimony, Lingayat wedding rituals, Veerashaiva marriage, Karnataka Lingayat bride, Shiva marriage traditions",
     summary:
@@ -1320,6 +990,7 @@ export const blogPosts: BlogPost[] = [
     id: 36,
     title: "Jat Matrimony: Culture, Community, and Compatibility",
     slug: "jat-matrimony-search-traditions",
+    updatedAt: "2026-11-08",
     keywords:
       "Jat matrimony, Jat wedding customs, Haryanvi Jat marriage, Punjabi Jat bride, Jat community matchmaking",
     summary:
@@ -1349,6 +1020,7 @@ export const blogPosts: BlogPost[] = [
     id: 37,
     title: "Yadav Matrimony: Heritage of the Yaduvanshi Lineage",
     slug: "yadav-matrimony-heritage-lineage",
+    updatedAt: "2026-11-08",
     keywords:
       "Yadav matrimony, Yaduvanshi marriage, Ahir community wedding, Yadav bride and groom, North Indian Yadav matrimony",
     summary:
@@ -1378,6 +1050,7 @@ export const blogPosts: BlogPost[] = [
     id: 38,
     title: "Maratha Matrimony: Celebrating the Royal Heritage of Maharashtra",
     slug: "maratha-matrimony-maharashtra-traditions",
+    updatedAt: "2026-11-08",
     keywords:
       "Maratha matrimony, Maratha 96 Kuli, Maratha wedding rituals, Mumbai matrimony, Marathi Kshatriya marriage",
     summary:
@@ -1406,6 +1079,7 @@ export const blogPosts: BlogPost[] = [
     id: 39,
     title: "The Vivaha of Rama and Seetha: The Blueprint for a Perfect Union",
     slug: "rama-seetha-marriage-blueprint",
+    updatedAt: "2026-11-08",
     keywords:
       "Rama Seetha marriage story, ideal Hindu couple, lessons from Ramayana marriage, divine union Rama Sita",
     summary:
@@ -1428,34 +1102,6 @@ export const blogPosts: BlogPost[] = [
         By naming our platform <strong>Seetha Rama Kalyana</strong>, we aim to
         bring a touch of this <strong>divine union</strong> to every profile we
         host.
-      </>,
-    ],
-  },
-  {
-    id: 40,
-    title: "Lessons in Loyalty: What Modern Couples can Learn from Seetha Rama",
-    slug: "lessons-loyalty-seetha-rama-marriage",
-    keywords:
-      "loyalty in marriage, Seetha Rama relationship lessons, Hindu marriage values, commitment in matrimony",
-    summary:
-      "In an age of 'quick dates,' we look at the eternal loyalty between Rama and Seetha as a pillar for modern matrimony.",
-    category: "Lifestyle",
-    readTime: "6 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        <strong>Loyalty in marriage</strong> is the foundation of the{" "}
-        <strong>Seetha Rama relationship</strong>. Despite years of separation,
-        their mental and spiritual connection remained unbroken.
-      </>,
-      <>
-        Modern <strong>Hindu marriage values</strong> emphasize that commitment
-        is a choice made every day. We encourage our users to look for this
-        quality during their <strong>matrimony search</strong>.
-      </>,
-      <>
-        At Seetha Rama Kalyana, we help you find someone who values{" "}
-        <strong>commitment in matrimony</strong> as much as the legends of old.
       </>,
     ],
   },
@@ -1489,70 +1135,10 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    id: 42,
-    title:
-      "The 'Seriousness Filter': Why a Minimal Fee Beats a Free Matrimony Site",
-    slug: "why-minimal-fee-beats-free-matrimony",
-    keywords:
-      "affordable matrimony India, paid vs free matrimony, cheap matrimony sites, serious marriage seekers, verify matrimony profile",
-    summary:
-      "Why 100% free sites are often full of fakes, and how a nominal commitment fee ensures you only meet serious alliance seekers.",
-    category: "Tips",
-    readTime: "6 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        Searching for a <strong>100% free matrimony site</strong> often leads to
-        a dead end of inactive profiles and bots. Why? Because there is no
-        barrier to entry for scammers.
-      </>,
-      <>
-        At <strong>Seetha Rama Kalyana</strong>, we charge a{" "}
-        <strong>nominal commitment fee</strong>, less than the price of a movie
-        ticket. This acts as a 'Seriousness Filter,' ensuring that every user
-        you talk to is genuinely looking for a life partner.
-      </>,
-      <>
-        Our <strong>affordable matrimony India</strong> service focuses on
-        quality over quantity. You don't have to pay thousands, but that small
-        contribution helps us keep the platform safe and verified.
-      </>,
-    ],
-  },
-  {
-    id: 43,
-    title: "Smart Matching: Using Data Science to Find Your Divine Soulmate",
-    slug: "data-science-matchmaking-hindu-marriage",
-    keywords:
-      "tech based matrimony, matrimony algorithm, smart search filters, secure matrimony technology, modern matchmaking India",
-    summary:
-      "Behind the scenes of Seetha Rama Kalyana: How our lightweight, efficient tech stack helps you find matches faster.",
-    category: "Tips",
-    readTime: "5 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        Our <strong>tech based matrimony</strong> platform is built for speed
-        and security. Unlike heavy, ad-cluttered sites, our{" "}
-        <strong>matrimony algorithm</strong> is optimized to find matches based
-        on Gothra, community, and lifestyle.
-      </>,
-      <>
-        We use <strong>smart search filters</strong> that learn from your
-        preferences. The more you interact, the better our{" "}
-        <strong>modern matchmaking India</strong> tools become at suggesting the
-        right people.
-      </>,
-      <>
-        By keeping our technology efficient, we pass the savings onto you,
-        providing a premium experience at a <strong>minimal cost</strong>.
-      </>,
-    ],
-  },
-  {
     id: 44,
     title: "Top 10 Tips to Find Your Match on an Indian Matrimony Site",
     slug: "top-tips-find-match-indian-matrimony",
+    updatedAt: "2026-11-08",
     keywords:
       "how to find life partner online, matrimony search tips, successful marriage search, best way to use matrimony sites",
     summary:
@@ -1582,6 +1168,7 @@ export const blogPosts: BlogPost[] = [
     id: 45,
     title: "Marriage Bureau vs. Matrimony Apps: Which One is Right for You?",
     slug: "marriage-bureau-vs-matrimony-apps",
+    updatedAt: "2026-11-08",
     keywords:
       "marriage bureau near me, online matrimony vs traditional, finding match through agent, modern matrimonial services",
     summary:
@@ -1608,62 +1195,10 @@ export const blogPosts: BlogPost[] = [
     ],
   },
   {
-    id: 46,
-    title: "The Evolution of Arranged Marriage in the Digital Age",
-    slug: "evolution-arranged-marriage-digital-age",
-    keywords:
-      "modern arranged marriage, Indian wedding trends 2026, finding love in arranged marriage, matrimony technology",
-    summary:
-      "How technology is giving more choice and voice to individuals while keeping family traditions intact.",
-    category: "Lifestyle",
-    readTime: "8 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        <strong>Modern arranged marriage</strong> is no longer about two
-        strangers meeting on the wedding day. It is about 'Self-Choice'
-        supported by family wisdom.
-      </>,
-      <>
-        Latest <strong>Indian wedding trends 2026</strong> show that 80% of
-        couples prefer to talk for at least 3-6 months before finalizing. Our
-        platform facilitates this secure communication.
-      </>,
-      <>
-        <strong>Finding love in arranged marriage</strong> is the new normal,
-        thanks to <strong>matrimony technology</strong> that bridges the gap
-        between traditions and personal compatibility.
-      </>,
-    ],
-  },
-  {
-    id: 47,
-    title: "Why Verified Profiles are the Most Important Feature in Matrimony",
-    slug: "importance-verified-matrimony-profiles",
-    keywords:
-      "verified matrimony profiles, safe partner search, matrimony background check, trusted marriage site",
-    summary:
-      "Don't waste time on ghost profiles. Learn why verification is the gold standard for a successful marriage search.",
-    category: "Tips",
-    readTime: "5 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        A <strong>safe partner search</strong> starts with a blue tick.{" "}
-        <strong>Verified matrimony profiles</strong> have 70% higher engagement
-        because they build immediate trust.
-      </>,
-      <>
-        At Seetha Rama Kalyana, we perform a manual{" "}
-        <strong>matrimony background check</strong> on all paid members,
-        ensuring you are talking to real people with real intentions.
-      </>,
-    ],
-  },
-  {
     id: 48,
     title: "From Profile to Wedding in Six Months: A Practical Plan",
     slug: "matrimony-success-stories-within-6-months",
+    updatedAt: "2026-11-08",
     keywords:
       "find a match quickly, matrimony search plan, how long to find a match, arranged marriage timeline, matrimony tips",
     summary:
@@ -1671,7 +1206,6 @@ export const blogPosts: BlogPost[] = [
     category: "Tips",
     readTime: "7 min read",
     imageUrl: genUrl,
-    updatedAt: "2026-11-02",
     answer:
       "Six months is realistic when the profile is complete in the first week, you send and answer interests every week, horoscopes are matched before meetings, and the family agrees on non-negotiables early. Most delays come from incomplete profiles and slow replies.",
     keyFacts: [
@@ -1715,55 +1249,35 @@ export const blogPosts: BlogPost[] = [
       </>,
     ],
   },
-  {
-    id: 49,
-    title: "The Ultimate Guide to Designing Your Matrimony Profile Photo",
-    slug: "matrimony-profile-photo-guide",
-    keywords:
-      "matrimony photo tips, best profile pictures for marriage, how to take matrimony photos, profile visibility",
-    summary:
-      "Your photo is your first impression. Learn the do's and don'ts of matrimony photography to attract the right interest.",
-    category: "Tips",
-    readTime: "6 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        Good <strong>matrimony photo tips</strong>: Avoid group photos and heavy
-        filters. Use natural light and a smiling portrait to appear approachable
-        and genuine.
-      </>,
-      <>
-        The <strong>best profile pictures for marriage</strong> are those that
-        show your personality, whether you're in traditional wear or professional
-        attire.
-      </>,
-    ],
-  },
-  {
-    id: 50,
-    title: "Final Word: Why Your Search for a Soulmate Ends Here",
-    slug: "why-seetha-rama-kalyana-is-the-last-stop",
-    keywords:
-      "best matrimony site for serious people, trusted hindu marriage platform, final choice matrimony, join seetha rama kalyana",
-    summary:
-      "Concluding our 50-blog series with a look at why we are the most trusted, value-driven choice for your family.",
-    category: "Tips",
-    readTime: "5 min read",
-    imageUrl: genUrl,
-    fullContent: [
-      <>
-        We are the <strong>best matrimony site for serious people</strong>{" "}
-        because we don't treat your life partner search like a game.
-      </>,
-      <>
-        With a <strong>trusted Hindu marriage platform</strong> name like ours
-        and a commitment to affordable, verified service, your journey ends
-        here. <strong>Join Seetha Rama Kalyana</strong> and take the first step
-        toward your divine union.
-      </>,
-    ],
-  },
 ];
 
 // Long-form rewrites replace the short originals (see longPosts.tsx).
-for (const post of blogPosts) Object.assign(post, LONG_POSTS[post.slug]);
+const REWRITES = { ...LONG_POSTS, ...GUIDE_POSTS, ...COMMUNITY_POSTS };
+// Titles kept under ~60 characters so Google shows them in full.
+const SHORT_TITLES: Record<string, string> = {
+  "aggarwal-baniya-matrimony-success": "Agarwal and Baniya Matrimony: Gotras and Traditions",
+  "brahmin-matrimony-guide-perfect-match": "Brahmin Matrimony: A Guide to Finding the Right Match",
+  "create-perfect-matrimony-profile": "How to Create a Matrimony Profile That Gets Noticed",
+  "importance-of-mother-tongue-in-matrimony": "Why Mother Tongue Matters in Matrimony",
+  "inter-community-hindu-marriage-tips": "Inter-Community Hindu Marriage: Tips for Families",
+  "jat-matrimony-search-traditions": "Jat Matrimony: Gotra Rules and Wedding Customs",
+  "kerala-brahmin-matrimony-namboothiri-traditions": "Namboothiri Matrimony: Kerala Brahmin Traditions",
+  "marathi-brahmin-matrimony-peshwa-legacy": "Marathi Brahmin Matrimony: Traditions and Matchmaking",
+  "marriage-bureau-vs-matrimony-apps": "Marriage Bureau vs Matrimony Apps: Which Is Better?",
+  "north-indian-pandit-matrimony-rituals": "North Indian Brahmin Weddings: Rituals and Matchmaking",
+  "questions-to-ask-matrimony-match": "Questions to Ask a Potential Match Before Marriage",
+  "tamil-matrimony-iyer-iyengar-weddings": "Tamil Brahmin Weddings: Iyer and Iyengar Traditions",
+  "understanding-kundali-matching-significance": "Kundli Matching Explained: 36 Gunas, Doshas, Poruthams",
+  "yadav-matrimony-heritage-lineage": "Yadav Matrimony: Heritage and Wedding Customs",
+};
+for (const post of blogPosts) {
+  Object.assign(post, REWRITES[post.slug]);
+  if (SHORT_TITLES[post.slug]) post.title = SHORT_TITLES[post.slug];
+  const faqs = POST_FAQS[post.slug];
+  if (faqs) {
+    post.sections = [
+      ...(post.sections ?? []),
+      { heading: "Frequently asked questions", blocks: faqs.map(([q, a]) => <><strong>{q}</strong> {a}</>) },
+    ];
+  }
+}
