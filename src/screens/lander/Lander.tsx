@@ -103,11 +103,15 @@ const Lander = () => {
               </h1>
               <div className="relative mx-auto size-[18.5rem] sm:size-96 lg:size-[30rem]">
                 <img
-                  src="/logo.png"
+                  // The page's largest image (LCP). Kept in step with the preload in index.html.
+                  src="/logo-512.webp"
+                  srcSet="/logo-384.webp 384w, /logo-512.webp 512w"
+                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 288px, 222px"
                   alt={t.emblemAlt}
                   width={512}
                   height={512}
                   loading="eager"
+                  fetchPriority="high"
                   className="absolute inset-[12.5%] size-3/4 rounded-full shadow-xl shadow-primary/20 ring-4 ring-gold/30"
                 />
                 <svg viewBox="0 0 400 400" aria-hidden className="absolute inset-0 size-full overflow-visible">
