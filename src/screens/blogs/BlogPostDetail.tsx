@@ -12,7 +12,18 @@ const BlogPostPage = () => {
 
   if (!post) return <NotFound />;
 
-  const more = blogPosts.filter((p) => p.id !== post.id).slice(0, 3);
+  // Related posts first (shared keywords, then same category), so readers and crawlers move
+  // between posts on the same topic.
+  const words = (p: typeof post) => new Set(p.keywords.toLowerCase().split(/[\s,]+/).filter((w) => w.length > 3));
+  const mine = words(post);
+  const score = (p: typeof post) =>
+    [...words(p)].filter((w) => mine.has(w)).length * 2 + (p.category === post.category ? 1 : 0);
+  const more = blogPosts
+    .filter((p) => p.id !== post.id)
+    .map((p) => ({ p, s: score(p) }))
+    .sort((a, b) => b.s - a.s || a.p.id - b.p.id)
+    .slice(0, 3)
+    .map(({ p }) => p);
   const url = `${SEO_URL}/blog/${post.slug}`;
   const published = post.publishedAt ?? BLOG_PUBLISHED;
   const updated = post.updatedAt ?? BLOG_UPDATED;
@@ -22,7 +33,8 @@ const BlogPostPage = () => {
   return (
     <>
       <SEO
-        title={`${post.title} | Seetha Rama Kalyana`}
+        // Google shows ~60 characters; drop the brand suffix rather than cut the post title.
+        title={post.title.length <= 38 ? `${post.title} | Seetha Rama Kalyana` : post.title}
         description={post.summary}
         keywords={post.keywords || "matrimony tips, hindu wedding, seetha rama kalyana"}
         url={url}

@@ -5,7 +5,8 @@ import type { BlogPost } from "./blogsContents";
 // When a post here changes, also bump its `updatedAt` in blogsContents.tsx: scripts/routes.mjs
 // reads the sitemap lastmod from that file.
 // House rules: no invented success stories, member counts, testimonials or ratings.
-type LongPost = Pick<BlogPost, "readTime" | "answer" | "keyFacts" | "fullContent" | "sections">;
+export type LongPost = Pick<BlogPost, "readTime" | "answer" | "keyFacts" | "fullContent" | "sections"> &
+  Partial<Pick<BlogPost, "title" | "summary" | "keywords">>;
 
 export const LONG_POSTS: Record<string, LongPost> = {
   "understanding-kundali-matching-significance": {
