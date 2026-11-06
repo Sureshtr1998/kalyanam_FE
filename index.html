@@ -8,8 +8,9 @@
     <!-- %META_PIXEL% -->
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+    <!-- Small copies of public/logo.png: browsers fetch the favicon on every first visit. -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <meta name="theme-color" content="#c2410c" />
     <!-- Home-screen app on iOS -->
@@ -28,8 +29,8 @@
     <meta data-default property="og:url" content="%SITE_URL%/" />
     <meta data-default name="twitter:card" content="summary_large_image" />
 
-    <!-- Preload important images -->
-    <link rel="preload" as="image" href="/assets/hero.webp" />
+    <!-- The home page's emblem (its LCP image); see Lander.tsx. Other pages drop this (scripts/prerender.mjs). -->
+    <link rel="preload" as="image" href="/logo-512.webp" imagesrcset="/logo-384.webp 384w, /logo-512.webp 512w" imagesizes="(min-width: 1024px) 360px, (min-width: 640px) 288px, 222px" fetchpriority="high" />
   </head>
 
   <body>

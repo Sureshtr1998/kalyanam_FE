@@ -19,8 +19,8 @@ const { render } = await import(pathToFileURL(resolve(ssrDir, "prerender.js")).h
 const shellFile = resolve(dist, "app-shell.html");
 const shell = readFileSync(existsSync(shellFile) ? shellFile : resolve(dist, "index.html"), "utf8");
 writeFileSync(shellFile, shell);
-// The home page's hero image is preloaded by index.html; other pages don't show it.
-const HERO_PRELOAD = /\s*<link rel="preload" as="image" href="\/assets\/hero\.webp" \/>/;
+// The home page's emblem is preloaded by index.html; other pages don't show it.
+const HERO_PRELOAD = /\s*<!-- The home page's emblem[^>]*-->\s*<link rel="preload" as="image" href="\/logo-512\.webp"[^>]*\/>/;
 const TRANSLATED_HOMES = LOCALES.map(([lang]) => localePath("/", lang));
 
 // React renders a page's <title>, <meta> and <link> tags first; they belong in <head>.
