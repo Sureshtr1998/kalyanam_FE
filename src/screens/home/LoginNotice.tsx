@@ -16,6 +16,7 @@ import { downloadProfilePdf } from "@/lib/profilePdf";
 import { LOGIN_NOTICE_SHOWN } from "@/lib/session";
 import { MEMBERSHIP_START } from "@/utils/constants";
 import { localeOf, type Lang } from "@/lib/i18n";
+import { LanguageSelect } from "@/components/common/LanguageSelect";
 import { homeText } from "./lang";
 
 const membershipStart = new Date(`1 ${MEMBERSHIP_START}`);
@@ -64,7 +65,15 @@ const markShown = (id: string) => {
 };
 
 /** Shown once per browser session after a member logs in, with a shortcut to their biodata PDF. */
-export const LoginNotice = ({ user, lang }: { user: UserDetails; lang: Lang }) => {
+export const LoginNotice = ({
+  user,
+  lang,
+  onLangChange,
+}: {
+  user: UserDetails;
+  lang: Lang;
+  onLangChange: (lang: Lang) => void;
+}) => {
   const t = homeText[lang];
   const [open, setOpen] = useState(() => !!user._id && !alreadyShown(user._id));
   const [downloading, setDownloading] = useState(false);
@@ -90,7 +99,10 @@ export const LoginNotice = ({ user, lang }: { user: UserDetails; lang: Lang }) =
     <Dialog open={open} onOpenChange={close}>
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="font-display text-2xl">{t.welcomeTitle}</DialogTitle>
+          <div className="flex items-start justify-between gap-3 pr-6">
+            <DialogTitle className="font-display text-2xl">{t.welcomeTitle}</DialogTitle>
+            <LanguageSelect value={lang} onChange={onLangChange} className="shrink-0" />
+          </div>
           <DialogDescription>{t.welcomeDesc}</DialogDescription>
         </DialogHeader>
         <MembershipNotes lang={lang} className="grid gap-2 text-sm" />
