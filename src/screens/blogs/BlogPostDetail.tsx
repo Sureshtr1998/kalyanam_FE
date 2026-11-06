@@ -94,6 +94,24 @@ const BlogPostPage = () => {
           {post.fullContent.map((para, i) => (
             <p key={i}>{para}</p>
           ))}
+          {post.sections?.map((section) => (
+            <section key={section.heading} className="space-y-5 pt-4">
+              <h2 className="font-display text-2xl font-bold leading-tight text-foreground sm:text-[28px]">
+                {section.heading}
+              </h2>
+              {section.blocks.map((block, i) =>
+                block && typeof block === "object" && "list" in block ? (
+                  <ul key={i} className="list-disc space-y-2 pl-6 marker:text-primary">
+                    {block.list.map((item, j) => (
+                      <li key={j}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p key={i}>{block}</p>
+                ),
+              )}
+            </section>
+          ))}
         </div>
       </article>
       <section className="border-t border-border bg-accent/30">
