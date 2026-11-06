@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Mail, MessageCircle, RefreshCw, ShieldCheck } from "lucide-react";
+import { Check, Copy, Mail, MessageCircle, RefreshCw, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import { errorMessage } from "@/lib/errors";
 import { SUPPORT_EMAIL } from "@/utils/constants";
 
 interface Props {
+  name?: string;
   email: string;
   mobile: string;
   open: boolean;
@@ -34,7 +35,8 @@ const Otp = ({ value, onChange }: { value: string; onChange: (v: string) => void
 );
 
 /** Verifies the member's email + WhatsApp number with two OTPs. */
-export const OtpVerifyDialog = ({ email, mobile, open, onOpenChange, onVerified }: Props) => {
+export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVerified }: Props) => {
+  const [copied, setCopied] = useState(false);
   const [emailOtp, setEmailOtp] = useState("");
   const [mobileOtp, setMobileOtp] = useState("");
   const [timer, setTimer] = useState(0);
@@ -68,6 +70,24 @@ export const OtpVerifyDialog = ({ email, mobile, open, onOpenChange, onVerified 
     const t = setTimeout(() => setTimer((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [timer]);
+
+  const helpSubject = "Help verifying my profile";
+  const helpMessage =
+    `Namaste,\n\n` +
+    `This is ${name?.trim() || "a member"}, registered with mobile number +91 ${mobile} ` +
+    `and email ID ${email}. I am not able to receive or enter the verification codes. ` +
+    `Please help me verify my profile.\n\nThank you.`;
+
+  const copyHelp = async () => {
+    try {
+      await navigator.clipboard.writeText(helpMessage);
+      setCopied(true);
+      toast.success("Message copied", { description: `Paste it in an email to ${SUPPORT_EMAIL}` });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Couldn't copy", { description: "Please select the text and copy it manually." });
+    }
+  };
 
   const verify = async () => {
     setVerifying(true);
@@ -130,13 +150,25 @@ export const OtpVerifyDialog = ({ email, mobile, open, onOpenChange, onVerified 
             <RefreshCw />
             {timer > 0 ? `Resend codes in ${timer}s` : "Resend codes"}
           </Button>
+        </div>
+
+        <div className="space-y-2 rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground">
           <p>
-            Still stuck? Email{" "}
-            <a href={`mailto:${SUPPORT_EMAIL}`} className="font-semibold text-primary hover:underline">
+            Still stuck? Copy this message and email it to{" "}
+            <a
+              href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(helpSubject)}&body=${encodeURIComponent(helpMessage)}`}
+              className="font-semibold text-primary hover:underline">
               {SUPPORT_EMAIL}
-            </a>{" "}
-            with your registered email and number.
+            </a>
+            .
           </p>
+          <p className="select-all whitespace-pre-line rounded-md bg-card p-2.5 text-left text-foreground">
+            {helpMessage}
+          </p>
+          <Button variant="outline" size="sm" className="w-full" onClick={copyHelp}>
+            {copied ? <Check /> : <Copy />}
+            {copied ? "Copied" : "Copy message"}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
