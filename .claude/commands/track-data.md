@@ -17,7 +17,7 @@ Follow the memory notes `track-data-routine` and `meta-ads-campaign-status`. In 
      - hourly spend today
      - placements
      - budget_remaining
-   - Ask the user for the Razorpay paid-member count. It's the source of truth, because Meta under-counts members.
+   - Real joins: read https://www.seetharamakalyana.in/admin (Overview → "New sign-ups · last 14 days") for today, yesterday and this week. That's the source of truth, because Meta under-counts members. Admin has no source column. To report "without WhatsApp", subtract Meta's WhatsApp-placement paid count from the joins, and WhatsApp spend from the spend. Never repeat members' names, phones or emails.
    - Benchmarks:
 
      | Metric | Expected |

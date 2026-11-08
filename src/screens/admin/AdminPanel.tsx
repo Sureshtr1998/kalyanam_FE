@@ -26,6 +26,8 @@ import { SignupBars, Stat } from "@/components/staff/StaffStats";
 import { PricingLevels } from "@/components/staff/PricingLevels";
 import { AbandonedCheckouts } from "@/components/staff/AbandonedCheckouts";
 import { MemberReferrals } from "@/components/staff/MemberReferrals";
+import { AdSpend } from "@/components/staff/AdSpend";
+import { Backups } from "@/components/staff/Backups";
 import { useUser } from "@/context/UserContext";
 import api from "@/utils/api";
 import { cn } from "@/lib/utils";
@@ -127,6 +129,7 @@ const Overview = ({ summary }: { summary: Summary | null }) => {
   return (
     <div className="space-y-6">
       <PeriodReport refreshKey={summary} />
+      <AdSpend />
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label="Members" value={m.total} hint={`${m.female} brides · ${m.male} grooms`} accent />
         <Stat label="New this week" value={m.new7} hint={`${m.new30} in 30 days`} />
@@ -421,6 +424,7 @@ const AdminPanel = () => {
             ["payments", "Payments"],
             ["abandoned", "Abandoned"],
             ["pricing", `Pricing${summary?.pricingLevel ? ` · L${summary.pricingLevel}` : ""}`],
+            ["backups", "Backups"],
           ].map(([v, label]) => (
             <TabsTrigger key={v} value={v} className="px-4 py-1.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               {label}
@@ -459,6 +463,9 @@ const AdminPanel = () => {
         </TabsContent>
         <TabsContent value="pricing">
           <PricingLevels onChanged={loadSummary} />
+        </TabsContent>
+        <TabsContent value="backups">
+          <Backups />
         </TabsContent>
       </Tabs>
     </div>
