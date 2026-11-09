@@ -75,7 +75,8 @@ export interface BrokerInfo {
   caste?: string[];
   motherTongue?: string[];
   referralId?: string;
-  status: "pending" | "approved" | "suspended";
+  status: "pending" | "approved" | "suspended" | "rejected";
+  rejectReason?: string;
   createdAt?: string;
   lastActiveAt?: string;
   idProofs?: { url: string; fileId: string }[];

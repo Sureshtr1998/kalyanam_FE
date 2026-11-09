@@ -21,8 +21,30 @@ interface Props {
   mobile: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onVerified: () => void;
+  /** Gets the verify response, which for partners carries the verification token. */
+  onVerified: (data: { verificationToken?: string }) => void;
+  /** Partners verify before they have an account, on their own endpoints. */
+  variant?: "member" | "partner";
 }
+
+const VARIANTS = {
+  member: {
+    send: "/send-otp",
+    verify: "/verify-otp-registration",
+    button: "Verify & save profile",
+    subject: "Help verifying my profile",
+    who: "a member",
+    ask: "Please help me verify my profile.",
+  },
+  partner: {
+    send: "/broker-send-otp",
+    verify: "/broker-verify-otp",
+    button: "Verify & continue to payment",
+    subject: "Help verifying my partner application",
+    who: "a partner applicant",
+    ask: "Please help me complete my partner registration.",
+  },
+};
 
 const Otp = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
   <InputOTP maxLength={6} value={value} onChange={onChange} inputMode="numeric" pattern="^[0-9]*$">
@@ -35,7 +57,8 @@ const Otp = ({ value, onChange }: { value: string; onChange: (v: string) => void
 );
 
 /** Verifies the member's email + WhatsApp number with two OTPs. */
-export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVerified }: Props) => {
+export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVerified, variant = "member" }: Props) => {
+  const v = VARIANTS[variant];
   const [copied, setCopied] = useState(false);
   const [emailOtp, setEmailOtp] = useState("");
   const [mobileOtp, setMobileOtp] = useState("");
@@ -45,14 +68,14 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
 
   const send = useCallback(async () => {
     try {
-      const res = await api.post("/send-otp", { email, mobile });
+      const res = await api.post(v.send, { email, mobile });
       toast.success("Codes sent", { description: res.data.msg });
       setTimer(60);
     } catch (err) {
       toast.error("Couldn't send codes", { description: errorMessage(err) });
       onOpenChange(false);
     }
-  }, [email, mobile, onOpenChange]);
+  }, [email, mobile, onOpenChange, v.send]);
 
   useEffect(() => {
     const key = `${email}|${mobile}`;
@@ -71,12 +94,12 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
     return () => clearTimeout(t);
   }, [timer]);
 
-  const helpSubject = "Help verifying my profile";
+  const helpSubject = v.subject;
   const helpMessage =
     `Namaste,\n\n` +
-    `This is ${name?.trim() || "a member"}, registered with mobile number +91 ${mobile} ` +
+    `This is ${name?.trim() || v.who}, registered with mobile number +91 ${mobile} ` +
     `and email ID ${email}. I am not able to receive or enter the verification codes. ` +
-    `Please help me verify my profile.\n\nThank you.`;
+    `${v.ask}\n\nThank you.`;
 
   const copyHelp = async () => {
     try {
@@ -92,10 +115,10 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
   const verify = async () => {
     setVerifying(true);
     try {
-      await api.post("/verify-otp-registration", { emailOtp, mobileOtp });
+      const res = await api.post(v.verify, { email, mobile, emailOtp, mobileOtp });
       toast.success("Verified", { description: "Thank you, your contact details are confirmed." });
       onOpenChange(false);
-      onVerified();
+      onVerified(res.data ?? {});
     } catch (err) {
       toast.error("Verification failed", { description: errorMessage(err, "Invalid code") });
     } finally {
@@ -141,7 +164,7 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
           className="w-full"
           onClick={verify}
           disabled={verifying || emailOtp.length !== 6 || mobileOtp.length !== 6}>
-          {verifying ? "Verifying…" : "Verify & save profile"}
+          {verifying ? "Verifying…" : v.button}
         </Button>
 
         <div className="space-y-2 text-center text-xs text-muted-foreground">

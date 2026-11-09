@@ -21,6 +21,8 @@ interface AdDay {
   joined?: number;
   /** Joined without a partner referral code: the ones ads can take credit for. */
   direct?: number;
+  /** Money earned that day (member payments + partner fees, net of refunds). */
+  earned?: number;
 }
 
 type AdSpendResponse =
@@ -43,6 +45,14 @@ const sum = (days: AdDay[], k: keyof Omit<AdDay, "date">) => days.reduce((t, d) 
 
 /** Spend per registration, or "–" when there were none. */
 const perReg = (spend: number, regs: number, cur: string) => (regs ? money(spend / regs, cur) : spend ? "No sign-ups" : "–");
+
+/** Earned minus spent, green when in profit and red when at a loss. */
+const Profit = ({ value, cur }: { value: number; cur: string }) => (
+  <span className={cn("font-semibold", value > 0 && "text-success", value < 0 && "text-destructive")}>
+    {value > 0 ? "+" : value < 0 ? "−" : ""}
+    {money(Math.abs(value), cur)}
+  </span>
+);
 
 /** Meta ad spend for the last 14 days, read by the backend from the Marketing API. */
 export const AdSpend = () => {
@@ -112,6 +122,8 @@ export const AdSpend = () => {
   const spend14 = sum(days, "spend");
   const direct14 = sum(days, "direct");
   const hasJoins = days.some((d) => d.joined !== undefined);
+  const hasEarned = days.some((d) => d.earned !== undefined);
+  const earned14 = sum(days, "earned");
   const max = Math.max(1, ...days.map((d) => d.spend));
 
   return (
@@ -163,6 +175,11 @@ export const AdSpend = () => {
           <p className="mb-2 text-sm font-semibold">
             Cost per registration · by day
             <span className="ml-2 font-normal text-muted-foreground">14 days: {perReg(spend14, direct14, cur)} ({direct14} sign-ups)</span>
+            {hasEarned && (
+              <span className="ml-2 font-normal text-muted-foreground">
+                · spent {money(spend14, cur)} · earned {money(earned14, cur)} · profit <Profit value={earned14 - spend14} cur={cur} />
+              </span>
+            )}
           </p>
           <div className="max-h-80 overflow-auto rounded-xl border border-border">
             <Table>
@@ -170,6 +187,8 @@ export const AdSpend = () => {
                 <TableRow>
                   <TableHead>Day</TableHead>
                   <TableHead className="text-right">Spend</TableHead>
+                  {hasEarned && <TableHead className="text-right">Earned</TableHead>}
+                  {hasEarned && <TableHead className="text-right">Profit</TableHead>}
                   <TableHead className="text-right">Sign-ups</TableHead>
                   <TableHead className="text-right">Cost / sign-up</TableHead>
                   <TableHead className="hidden text-right sm:table-cell">Meta-tracked</TableHead>
@@ -181,6 +200,12 @@ export const AdSpend = () => {
                   <TableRow key={d.date}>
                     <TableCell className="whitespace-nowrap">{d === today ? "Today" : dayLabel(d.date)}</TableCell>
                     <TableCell className="text-right">{money(d.spend, cur)}</TableCell>
+                    {hasEarned && <TableCell className="text-right">{money(d.earned ?? 0, cur)}</TableCell>}
+                    {hasEarned && (
+                      <TableCell className="text-right whitespace-nowrap">
+                        <Profit value={(d.earned ?? 0) - d.spend} cur={cur} />
+                      </TableCell>
+                    )}
                     <TableCell className="text-right">
                       {d.direct}
                       {!!d.joined && d.joined !== d.direct && (
@@ -202,7 +227,8 @@ export const AdSpend = () => {
         </div>
       )}
       <p className="mt-2 text-[11px] text-muted-foreground">
-        Sign-ups are members who joined that day without a partner code, so their cost is spend ÷ all direct sign-ups (some may
+        Earned is all money received that day (member payments and partner fees, minus refunds); profit is earned minus ad
+        spend, before partner commission. Sign-ups are members who joined that day without a partner code, so their cost is spend ÷ all direct sign-ups (some may
         not have come from ads). Meta-tracked counts are registrations the pixel credited to ads. Today's Meta numbers can lag by a
         few hours.
       </p>
