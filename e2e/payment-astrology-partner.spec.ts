@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import { expect, memberProfile, razorpay, signIn, test } from "./fixtures";
+import { expect, memberProfile, razorpay, signIn, test, type FakeApi } from "./fixtures";
 import { choose, field, pickDate, tinyPng } from "./form";
 
 const pickTime = async (page: Page, label: string, hour: string, minute: string) => {
@@ -99,15 +99,31 @@ test.describe("partner sign-up", () => {
     await page.locator('input[type="file"]').setInputFiles(tinyPng);
   };
 
+  const mockOtp = (api: FakeApi) => {
+    api.on("POST /broker-send-otp", { body: { success: true, msg: "OTP sent to email and WhatsApp" } });
+    api.on("POST /broker-verify-otp", { body: { success: true, verificationToken: "tok_1" } });
+  };
+
+  const enterOtps = async (page: Page) => {
+    const dialog = page.getByRole("dialog");
+    await expect(dialog.getByText("Verify your contact")).toBeVisible();
+    const boxes = dialog.locator("[data-input-otp]");
+    await boxes.nth(0).fill("123456");
+    await boxes.nth(1).fill("654321");
+    await dialog.getByRole("button", { name: "Verify & continue to payment" }).click();
+  };
+
   test("uploads the ID proof before taking the ₹501 fee, then registers", async ({ page, api }) => {
     const media = [{ url: "https://ik.example.test/id.png", fileId: "id1" }];
     api.on("GET /broker-validation", { body: { success: true } });
+    mockOtp(api);
     api.on("POST /broker-register/upload-idproof", { body: { media } });
     api.on("POST /create-order", { body: { orderId: "order_partner_1", amount: 50100, currency: "INR" } });
     api.on("POST /broker-register", { status: 201, body: { success: true } });
 
     await fillPartnerForm(page);
     await page.getByRole("button", { name: "Pay ₹501 & apply" }).click();
+    await enterOtps(page);
 
     const options = await razorpay(page).opened();
     expect(options).toMatchObject({ order_id: "order_partner_1", amount: 50100 });
@@ -115,7 +131,14 @@ test.describe("partner sign-up", () => {
     expect(api.callsTo("POST /broker-register/upload-idproof")).toHaveLength(1);
     const body = api.callsTo("POST /create-order")[0].body as { purpose: string; broker: Record<string, unknown> };
     expect(body.purpose).toBe("broker");
-    expect(body.broker).toMatchObject({ email: "lakshmi@example.test", phone: "9000000001" });
+    expect(body.broker).toMatchObject({ email: "lakshmi@example.test", phone: "9000000001", verificationToken: "tok_1", idProofs: media });
+    expect(api.callsTo("POST /broker-send-otp")[0].body).toEqual({ email: "lakshmi@example.test", mobile: "9000000001" });
+    expect(api.callsTo("POST /broker-verify-otp")[0].body).toEqual({
+      email: "lakshmi@example.test",
+      mobile: "9000000001",
+      emailOtp: "123456",
+      mobileOtp: "654321",
+    });
     expect(body).not.toHaveProperty("amount");
 
     await razorpay(page).pay("pay_partner_1", "sig_partner_1");
@@ -132,10 +155,12 @@ test.describe("partner sign-up", () => {
 
   test("a failed ID upload stops before checkout, so nothing is charged", async ({ page, api }) => {
     api.on("GET /broker-validation", { body: { success: true } });
+    mockOtp(api);
     api.on("POST /broker-register/upload-idproof", { status: 500, body: { msg: "Failed to upload ID proof" } });
 
     await fillPartnerForm(page);
     await page.getByRole("button", { name: "Pay ₹501 & apply" }).click();
+    await enterOtps(page);
 
     await expect(page.getByText("Failed to upload ID proof")).toBeVisible();
     expect(api.callsTo("POST /create-order")).toHaveLength(0);
@@ -149,6 +174,21 @@ test.describe("partner sign-up", () => {
     await page.getByRole("button", { name: "Pay ₹501 & apply" }).click();
 
     await expect(page.getByText("Email already exists")).toBeVisible();
+    expect(api.callsTo("POST /create-order")).toHaveLength(0);
+    expect(api.callsTo("POST /broker-send-otp")).toHaveLength(0);
+  });
+
+  test("a wrong OTP never reaches checkout", async ({ page, api }) => {
+    api.on("GET /broker-validation", { body: { success: true } });
+    api.on("POST /broker-send-otp", { body: { success: true, msg: "OTP sent" } });
+    api.on("POST /broker-verify-otp", { status: 400, body: { success: false, msg: "Invalid WhatsApp OTP" } });
+
+    await fillPartnerForm(page);
+    await page.getByRole("button", { name: "Pay ₹501 & apply" }).click();
+    await enterOtps(page);
+
+    await expect(page.getByText("Invalid WhatsApp OTP")).toBeVisible();
+    expect(api.callsTo("POST /broker-register/upload-idproof")).toHaveLength(0);
     expect(api.callsTo("POST /create-order")).toHaveLength(0);
   });
 });

@@ -10,6 +10,7 @@ import { MultiSelectField } from "@/components/fields/SelectField";
 import { PasswordInput } from "@/components/fields/PasswordInput";
 import { PhotoManager, type PhotoItem } from "@/components/profile/PhotoManager";
 import { BlockingLoader } from "@/components/common/Loaders";
+import { OtpVerifyDialog } from "@/components/auth/OtpVerifyDialog";
 import { Lotus } from "@/components/common/Brand";
 import SEO from "@/components/misc/SEO";
 import { useCheckout, type PaidOrder } from "@/hooks/useCheckout";
@@ -35,6 +36,10 @@ const PartnerWithUs = () => {
   const [data, setData] = useState<BrokerRegistrationForm>(brokerFormDefaultVals);
   const [idProof, setIdProof] = useState<PhotoItem[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
+  const [verifyOpen, setVerifyOpen] = useState(false);
+  // The email + number the partner proved with OTPs, and the token that lets
+  // /create-order take their payment. Editing either field needs a new check.
+  const [verified, setVerified] = useState<{ contact: string; token: string } | null>(null);
   const navigate = useNavigate();
 
   const t = useCallback(
@@ -78,14 +83,34 @@ const PartnerWithUs = () => {
 
   const { start, isStarting } = useCheckout({ description: "Partner registration", onPaid });
 
+  const contact = `${data.email}|${data.phone}`;
+  const verificationToken = verified?.contact === contact ? verified.token : null;
+
   const submit = async () => {
     if (data.password.length < MIN_PASSWORD_LENGTH) {
       return toast.error(`Password must be at least ${MIN_PASSWORD_LENGTH} characters`);
     }
     if (data.password !== data.confirmPassword) return toast.error("Passwords don't match");
+    if (verificationToken) return checkout(verificationToken);
     try {
       setBusy("Checking your details…");
       await api.get("/broker-validation", { params: { email: data.email, mobile: data.phone } });
+      setBusy(null);
+      setVerifyOpen(true);
+    } catch (err) {
+      setBusy(null);
+      toast.error("Partner registration is unavailable right now", { description: errorMessage(err) });
+    }
+  };
+
+  const onVerified = ({ verificationToken: token }: { verificationToken?: string }) => {
+    if (!token) return toast.error("Verification failed", { description: "Please request new codes and try again." });
+    setVerified({ contact, token });
+    void checkout(token);
+  };
+
+  const checkout = async (token: string) => {
+    try {
       const key = files.map((f) => `${f.name}:${f.size}`).join("|");
       if (uploaded.current?.key !== key || Date.now() - uploaded.current.at > UPLOAD_REUSE_MS) {
         setBusy("Uploading your ID proof…");
@@ -101,7 +126,11 @@ const PartnerWithUs = () => {
       await start({
         purpose: "broker",
         // Validated and priced on the server before payment, like member sign-ups.
-        broker: { name, email: email.trim().toLowerCase(), phone, companyName, address, caste, motherTongue, note, password },
+        broker: {
+          name, email: email.trim().toLowerCase(), phone, companyName, address, caste, motherTongue, note, password,
+          verificationToken: token,
+          idProofs: uploaded.current?.media ?? [],
+        },
       });
     } catch (err) {
       setBusy(null);
@@ -123,6 +152,15 @@ const PartnerWithUs = () => {
         keywords="matrimony broker partnership, matrimony referral program, marriage broker platform, seetha rama kalyana partner, matrimony agent registration"
       />
       <BlockingLoader show={!!busy} message={busy ?? undefined} />
+      <OtpVerifyDialog
+        variant="partner"
+        open={verifyOpen}
+        onOpenChange={setVerifyOpen}
+        name={data.name}
+        email={data.email}
+        mobile={data.phone}
+        onVerified={onVerified}
+      />
 
       <section className="bg-sunrise relative overflow-hidden">
         <div className="bg-kolam pointer-events-none absolute inset-0 opacity-50" />

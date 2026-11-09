@@ -10,6 +10,7 @@ import {
   HandCoins,
   IndianRupee,
   Users,
+  XCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import SEO from "@/components/misc/SEO";
@@ -18,6 +19,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { MemberManager } from "@/components/staff/MemberManager";
 import { ConfirmButton } from "@/components/staff/MemberSheet";
@@ -170,9 +182,52 @@ const statusBadge = (s: BrokerInfo["status"]) =>
     <Badge className="bg-success text-white">Active</Badge>
   ) : s === "suspended" ? (
     <Badge variant="destructive">Suspended</Badge>
+  ) : s === "rejected" ? (
+    <Badge variant="outline" className="text-muted-foreground">Rejected · refunded</Badge>
   ) : (
     <Badge variant="outline" className="border-gold text-gold-foreground">Awaiting approval</Badge>
   );
+
+/** Asks for a reason (it goes in the email to them) before rejecting. */
+const RejectButton = ({ broker, disabled, onReject }: { broker: BrokerInfo; disabled: boolean; onReject: (reason: string) => void }) => {
+  const [reason, setReason] = useState("");
+  return (
+    <AlertDialog onOpenChange={(open) => !open && setReason("")}>
+      <AlertDialogTrigger asChild>
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={disabled}
+          className="border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive">
+          <XCircle /> Reject & refund
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Reject {broker.name}'s application?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Their {inr(broker.paidFee)} fee is refunded in full through Razorpay and they get an email with your reason.
+            They won't be able to log in or apply again with the same email or phone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <Textarea
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          maxLength={500}
+          placeholder="Reason, e.g. the ID proof is unreadable"
+          aria-label="Reason for rejecting"
+          className="min-h-20"
+        />
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button variant="destructive" disabled={!reason.trim()} onClick={() => onReject(reason.trim())}>
+            Reject & refund
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
 
 const Partners = ({ onShowMembers, onChanged }: { onShowMembers: (code: string) => void; onChanged: () => void }) => {
   const [brokers, setBrokers] = useState<BrokerInfo[] | null>(null);
@@ -223,6 +278,12 @@ const Partners = ({ onShowMembers, onChanged }: { onShowMembers: (code: string) 
             <span className="truncate">{b.email}</span>
             <span className="text-muted-foreground">Joined</span>
             <span>{formatInstant(b.createdAt)} · paid {inr(b.paidFee)}</span>
+            {b.rejectReason && (
+              <>
+                <span className="text-muted-foreground">Rejected</span>
+                <span>{b.rejectReason}</span>
+              </>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div className="rounded-xl bg-muted p-2">
@@ -260,6 +321,9 @@ const Partners = ({ onShowMembers, onChanged }: { onShowMembers: (code: string) 
                 onConfirm={() => act(b._id, "status", { status: "approved" })}
               />
             )}
+            {b.status === "pending" && (
+              <RejectButton broker={b} disabled={!!busy} onReject={(reason) => act(b._id, "reject", { reason })} />
+            )}
             {b.status === "suspended" && (
               <Button size="sm" disabled={!!busy} onClick={() => act(b._id, "status", { status: "approved" })}>
                 <CircleCheck /> Reactivate
@@ -281,14 +345,14 @@ const Partners = ({ onShowMembers, onChanged }: { onShowMembers: (code: string) 
                 onConfirm={() => act(b._id, "settle")}
               />
             )}
-            {b.status !== "suspended" && (
+            {(b.status === "approved" || b.status === "pending") && (
               <ConfirmButton
                 icon={<Ban />}
                 label="Suspend"
                 destructive
                 disabled={!!busy}
                 title={`Suspend ${b.name}?`}
-                description="They will be signed out and can't log in until you reactivate them. Members they referred are not affected."
+                description="They will be signed out, emailed, and can't log in until you reactivate them. Members they referred are not affected."
                 confirm="Suspend"
                 onConfirm={() => act(b._id, "status", { status: "suspended" })}
               />
