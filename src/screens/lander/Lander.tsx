@@ -40,6 +40,8 @@ const swipeRow =
 
 const Lander = () => {
   const [form, setForm] = useState<FormType>("login");
+  // Login and forgot-password share it, so a partner's reset stays on the partner account.
+  const [isPartner, setIsPartner] = useState(false);
   const navigate = useNavigate();
   const [lang] = usePublicLang();
   const pricing = usePricing();
@@ -57,6 +59,7 @@ const Lander = () => {
 
   const changeForm = (f: FormType) => {
     setForm(f);
+    if (f === 1) setIsPartner(false);
     document.getElementById("join")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -167,14 +170,14 @@ const Lander = () => {
                   </div>
                 )}
                 <div className="p-3 sm:p-6">
-                  {form === "login" && <LoginForm setCurrentForm={changeForm} />}
+                  {form === "login" && <LoginForm setCurrentForm={changeForm} isPartner={isPartner} setIsPartner={setIsPartner} />}
                   <Suspense
                     fallback={
                       <div className="flex min-h-64 items-center justify-center">
                         <OmSpinner className="size-14" />
                       </div>
                     }>
-                    {form === "forgotPassword" && <ForgotPasswordForm setCurrentForm={changeForm} />}
+                    {form === "forgotPassword" && <ForgotPasswordForm setCurrentForm={changeForm} isPartner={isPartner} />}
                     {registering && <RegistrationForm setCurrentForm={changeForm} />}
                   </Suspense>
                 </div>

@@ -8,10 +8,25 @@ test("logs in and lands on matches", async ({ page, api }) => {
   await page.goto("/");
   await page.locator("#login-email").fill("  Asha@Example.test ");
   await page.locator("#join").locator('input[type="password"]').fill("Secret@123");
-  await page.locator("#join").getByRole("button", { name: /log in/i }).click();
+  await page.locator("#join").locator('button[type="submit"]').click();
 
   await page.waitForURL("**/home");
   expect(api.callsTo("POST /login")[0].body).toMatchObject({ email: "asha@example.test", password: "Secret@123", isPartner: false });
+});
+
+test("partner login is a separate mode reached by a link", async ({ page, api }) => {
+  api.on("POST /login", { status: 400, body: { msg: "Invalid partner credentials" } });
+  await page.goto("/");
+  const join = page.locator("#join");
+  await join.getByRole("button", { name: "Partner login" }).click();
+  await expect(join.getByRole("heading", { name: "Partner login" })).toBeVisible();
+  await page.locator("#login-email").fill("broker@example.test");
+  await join.locator('input[type="password"]').fill("Secret@123");
+  await join.locator('button[type="submit"]').click();
+  expect(api.callsTo("POST /login")[0].body).toMatchObject({ isPartner: true });
+
+  await join.getByRole("button", { name: "Member login" }).click();
+  await expect(join.getByRole("heading", { name: "Welcome back" })).toBeVisible();
 });
 
 test("shows the server's message on a failed login", async ({ page, api }) => {
@@ -19,7 +34,7 @@ test("shows the server's message on a failed login", async ({ page, api }) => {
   await page.goto("/");
   await page.locator("#login-email").fill("asha@example.test");
   await page.locator("#join").locator('input[type="password"]').fill("wrong");
-  await page.locator("#join").getByRole("button", { name: /log in/i }).click();
+  await page.locator("#join").locator('button[type="submit"]').click();
 
   await expect(page.getByText("Invalid credentials")).toBeVisible();
   await expect(page).toHaveURL("/");

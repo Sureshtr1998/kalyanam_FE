@@ -3,8 +3,6 @@ import { ArrowLeft, KeyRound, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Field } from "@/components/fields/Field";
 import { PasswordInput } from "@/components/fields/PasswordInput";
@@ -15,11 +13,16 @@ import { errorMessage } from "@/lib/errors";
 
 type Step = "email" | "otp" | "password";
 
-const ForgotPasswordForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
+type Props = {
+  setCurrentForm: (f: FormType) => void;
+  // Partners have separate accounts, so every step says which kind this is.
+  // Set by the login form's partner mode.
+  isPartner: boolean;
+};
+
+const ForgotPasswordForm = ({ setCurrentForm, isPartner }: Props) => {
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
-  // Partners have separate accounts, so every step says which kind this is.
-  const [isPartner, setIsPartner] = useState(false);
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -80,7 +83,7 @@ const ForgotPasswordForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) 
         <div className="mx-auto mb-2 flex size-11 items-center justify-center rounded-full bg-accent text-primary">
           <KeyRound className="size-5" />
         </div>
-        <h2 className="font-display text-3xl font-bold">Reset password</h2>
+        <h2 className="font-display text-3xl font-bold">{isPartner ? "Reset partner password" : "Reset password"}</h2>
         <p className="text-sm text-muted-foreground">
           {step === "email" && "We'll email you a 6-digit code."}
           {step === "otp" && (
@@ -103,14 +106,6 @@ const ForgotPasswordForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) 
             className="h-11 bg-card"
           />
         </Field>
-      )}
-      {step === "email" && (
-        <div className="flex items-center gap-2">
-          <Checkbox id="fp-partner" checked={isPartner} onCheckedChange={(v) => setIsPartner(v === true)} />
-          <Label htmlFor="fp-partner" className="text-sm font-normal text-muted-foreground">
-            I am a registered matchmaker partner
-          </Label>
-        </div>
       )}
 
       {step === "otp" && (
