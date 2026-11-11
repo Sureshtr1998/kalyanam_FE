@@ -15,7 +15,8 @@ const product = (name: string, description: string, price: number) => ({
   "@type": "Product",
   name,
   description,
-  brand: { "@id": `${SEO_URL}/#organization` },
+  image: `${SEO_URL}/logo.png`,
+  brand: { "@type": "Brand", name: "Seetha Rama Kalyana" },
   offers: {
     "@type": "Offer",
     price,
