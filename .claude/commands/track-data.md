@@ -33,6 +33,8 @@ Follow the memory notes `track-data-routine` and `meta-ads-campaign-status`. In 
 
 2. **Facebook Page:** Business Suite → Insights → Content, at https://business.facebook.com/latest/insights/content?asset_id=914182555118025. For each post, story and reel, give views, interactions, comments, shares and link clicks. Also confirm the week's scheduled posts went out. Note that profile.php?id=61583189982529 is the user's personal profile, not the Page.
 
+   For reels, also give plays and average watch time where Business Suite shows them, and name the best-performing reel so the next `/weekly-posts` can do more of it.
+
 3. **Instagram:** open https://www.instagram.com/seetharamakalyanamat/ and give posts, followers, and likes, comments and views per post.
 
 Report as tables of actual vs expected, then one verdict per area and 1–3 actions. Update the `meta-ads-campaign-status` memory with the new read. Close the Chrome tab when done.
