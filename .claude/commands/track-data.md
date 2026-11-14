@@ -16,6 +16,7 @@ Follow the memory notes `track-data-routine` and `meta-ads-campaign-status`. In 
      - daily trend
      - hourly spend today
      - placements
+     - series ads: any ad with utm_content `ram_*` as its own rows (spend, CTR, paid, cost per paid), compared with the ads they replaced
      - budget_remaining
    - Real joins: read https://www.seetharamakalyana.in/admin (Overview → "New sign-ups · last 14 days") for today, yesterday and this week. That's the source of truth, because Meta under-counts members. Admin has no source column. To report "without WhatsApp", subtract Meta's WhatsApp-placement paid count from the joins, and WhatsApp spend from the spend. Never repeat members' names, phones or emails.
    - Benchmarks:
@@ -34,6 +35,8 @@ Follow the memory notes `track-data-routine` and `meta-ads-campaign-status`. In 
 2. **Facebook Page:** Business Suite → Insights → Content, at https://business.facebook.com/latest/insights/content?asset_id=914182555118025. For each post, story and reel, give views, interactions, comments, shares and link clicks. Also confirm the week's scheduled posts went out. Note that profile.php?id=61583189982529 is the user's personal profile, not the Page.
 
    For reels, also give plays and average watch time where Business Suite shows them, and name the best-performing reel so the next `/weekly-posts` can do more of it.
+
+   **Ramayana series** ("Unknown Heroes of Ramayana", Tue/Thu/Sun): for each part, give plays, average watch time, shares, and the FB Page and IG follower change since the previous read. Follows are the series' goal. Say whether the next part should keep the same hook style.
 
 3. **Instagram:** open https://www.instagram.com/seetharamakalyanamat/ and give posts, followers, and likes, comments and views per post.
 
