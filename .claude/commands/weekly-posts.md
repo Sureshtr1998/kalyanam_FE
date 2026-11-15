@@ -74,13 +74,32 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
     - The end card says "Register now · ₹351/year", with no "Follow" line.
     - Keep the shloka card as it is.
     - Save to `C:\Users\Suresh\Downloads\SRK_marketing\meta-ads\video\` as `AD_ramayana_w<week>p<part>_<person>_<lang>_9x16.mp4`.
-  - In the step 7 summary, **propose** where they go, matched by language:
-    - Kannada → L3
-    - Telugu and Tamil → Telugu+Tamil, and Telugu+Tamil outside home states
-    - Hindi → Hindi
-  - Pick the ads to replace from the latest `meta-ads-campaign-status` read: fatigued ads with falling CTR or frequency above 2.
-  - Use utm_content `ram_w<week>p<part>_<lang>`.
+  - **Account structure:** one campaign per language, with places and audiences as ad sets (see the `ads-account-structure-rule` memory). The cuts go into the matching language campaign:
+
+    | Cut | Campaign (ID) | Ad set |
+    |---|---|---|
+    | `_kn` | SRK \| Kannada (120252415073490693) | Kannada \| Karnataka \| Parents 45-65 |
+    | `_te` | SRK \| Telugu (120252420507450693) | Telugu \| AP + Telangana \| 45-65 |
+    | `_ta` | SRK \| Tamil (120252642638230693) | Tamil \| Tamil Nadu + Puducherry \| 45-65 |
+    | `_hi` | SRK \| Hindi (120252522581030693) | Hindi \| North India \| 45-65 |
+
+    - If Ads Manager shows a different structure, use what's there and update this table.
+    - Never create a new campaign for the series. A new ad set inside a language campaign needs a plan shown first and the user's OK.
+  - In the step 7 summary, **propose** this placement. Also propose which fatigued ads (falling CTR or frequency above 2, from the latest `/track-data` read) the user may want to pause. Don't pause anything yourself.
+  - Ad name `RAM-W<week>P<part>-<LANG> | <person>`; utm_content `ram_w<week>p<part>_<lang>`, keeping the rest of the existing URL (`?join=1&utm_source=meta&utm_medium=paid_social&utm_campaign=…`).
+  - **Website URL goes to the ad's language page**, not the English `/`: `https://www.seetharamakalyana.in/<kn|te|ta|hi>?join=1&…`. All Kannada ads were moved to `/kn` on 15 Nov 2026.
   - **Add them in Ads Manager only after the user says yes**, then set the part's status to `in_ads` with the ad ids.
+  - **How to add (Ads Manager UI; the Graph API with the page token is blocked by the safety check):**
+    1. Ads tab → filter "RAM-" → select an existing RAM ad in the right ad set (or the best ad there) → Duplicate → original campaign, 1 copy per part, untick "Show existing reactions". The copy becomes a draft.
+    2. Open the copy's editor (`/adsmanager/manage/ads/edit/standalone?act=3311139419043676&selected_ad_ids=<id>`), then rename it.
+    3. Media: "Remove media" → "Add media" → "Add Video" → **Videos tab** → Upload, using the file-input hook. On the Images tab the upload fails.
+    4. In the "Media upload" dialog, **untick "Publish this upload to current active ads as related media"**. It's ticked by default and would change live ads. Then Save.
+    5. Delete any auto-added **"Related media"** (other ads' images).
+    6. Tick "Ad includes media created or edited with AI". In Advantage+ creative enhancements, turn **Video touch-ups** off.
+    7. Website URL: set the language path (`/kn`, `/te`, `/ta`, `/hi`) and the new utm_content. Click the field, confirm `document.activeElement` is that input, then Ctrl+A and type. On a live ad the button is "Publish ad and message".
+    8. "Preview to publish" → Skip the variations upsell → **check that the dialog lists only this ad** → Publish.
+    - Never click the global "Review and publish (N)"; it publishes every draft.
+    - The browser window is short, so scroll the grid. If the editor's dialogs reset, Cancel and re-check rather than pushing on.
 
 **Reel B:**
 - Why join / how it works: text-led and fast. Hook in the first 2 seconds (e.g. "Looking for a match for your son or daughter?"), then 3 short benefit cards (verified profiles, number shared only when both families agree, ₹351/year), then the end card.
@@ -127,13 +146,19 @@ Each week, spread the lead languages evenly:
 3. Add text locally with the toolkit in `C:\Users\Suresh\Downloads\SRK_social_toolkit\` (render.js for images; reel.js + reel.html for videos; verify.js to check). Update the week folder and the designs list in the scripts. Run them from PowerShell. Check each reel: length, under 10 MB, text readable, and extract stills to look at.
 4. Write the APPROVAL_SHEET (with reel scene lists and stills), then **stop and wait for the user's approval**.
 5. Copy the final files to the scratchpad. Schedule each piece to both Facebook and Instagram in Business Suite (feed: `/latest/composer`, reels: `/latest/reels_composer`, stories: `/latest/story_composer`), using the file-input hook, date and time tricks from the memory note.
+   - "Post to" must show both "Seetha Rama Kalyana and seetharamakalyanamat". One reel then becomes 2 scheduled items, one FB and one IG.
+   - **Reels composer caption trap (14 Nov):** a synthetic paste shows the text in the box, but the reel saves with **no caption**; the scheduled list shows "Your reel".
+     - After scheduling, open Scheduled posts and check that every row shows the caption.
+     - Fix FB: open `/latest/composer/?asset_id=914182555118025&business_content_id=<ID>` and paste into the "Write in the dialogue…" box; the paste works there. Then click Schedule.
+     - Fix IG: row → panel "Actions" → "Edit Reel" → paste into "Describe your reel…" → Next → Schedule.
+     - Keep the caption text in a JS const inside the same call. A localStorage handoff pasted the word "null".
 6. Always click "Maybe later" on the Boost offer.
 7. Take a Planner screenshot, then give a summary, where the ad-ready cuts are saved (Reel B + the 12 Ramayana cuts), the proposed ad swaps, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
 
 **One-time (suggest once if not done):** pin 3 Instagram posts that answer "Is this real? How does it work? What does it cost?".
 
 **Hard rules:**
-- Never Boost, never touch ads or Ads Manager, and never spend money. The one exception: adding the Ramayana ad cuts to the campaigns the user approved in this run.
+- Never Boost, never touch ads or Ads Manager, and never spend money. The one exception: adding the Ramayana ad cuts to the language campaigns the user approved in this run, as new ads only. Don't change budgets, ad sets, or other ads.
 - No invented testimonials, member counts or success stories.
 - No film or TV clips, songs or logos.
 - Be respectful with devotional content.
