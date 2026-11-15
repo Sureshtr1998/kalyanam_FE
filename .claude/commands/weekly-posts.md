@@ -41,7 +41,7 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
     - Narration uses edge-tts neural voices (`pip install edge-tts mutagen`):
       - **Women's voices (user's choice, 14 Nov):**
         - English: **en-IN-NeerjaExpressiveNeural** at +3%.
-        - Ad cuts: kn-IN-SapnaNeural, te-IN-ShrutiNeural, ta-IN-PallaviNeural, hi-IN-SwaraNeural, at +5%.
+        - Regional voices (if ever needed for organic videos): kn-IN-SapnaNeural, te-IN-ShrutiNeural, ta-IN-PallaviNeural, hi-IN-SwaraNeural, at +5%.
         - The Sanskrit shloka is read by hi-IN-SwaraNeural.
       - **Pronunciation (user-approved respellings, used in the English voice only; on-screen text stays normal):**
         - "Seetha Rama Kalyana" → "Seetha Raama Kalyaana" (otherwise it sounds like "Kalyan")
@@ -68,44 +68,12 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
   5. Hashtags: #Ramayana #UnknownRamayana #SeethaRamaKalyana plus 2–3 language tags.
   6. The AI line.
 - **Teasers:** each part teases the next. Part 3 teases next week's theme.
-- **Ads in sync:**
-  - Each series video also gets **4 ad-ready cuts**: Kannada, Telugu, Tamil and Hindi.
-    - Same art layers; the hook and fact overlays and the end card are re-rendered in that language.
-    - The end card says "Register now · ₹351/year", with no "Follow" line.
-    - Keep the shloka card as it is.
-    - Save to `C:\Users\Suresh\Downloads\SRK_marketing\meta-ads\video\` as `AD_ramayana_w<week>p<part>_<person>_<lang>_9x16.mp4`.
-  - **Account structure:** one campaign per language, with places and audiences as ad sets (see the `ads-account-structure-rule` memory). The cuts go into the matching language campaign:
-
-    | Cut | Campaign (ID) | Ad set |
-    |---|---|---|
-    | `_kn` | SRK \| Kannada (120252415073490693) | Kannada \| Karnataka \| Parents 45-65 |
-    | `_te` | SRK \| Telugu (120252420507450693) | Telugu \| AP + Telangana \| 45-65 |
-    | `_ta` | SRK \| Tamil (120252642638230693) | Tamil \| Tamil Nadu + Puducherry \| 45-65 |
-    | `_hi` | SRK \| Hindi (120252522581030693) | Hindi \| North India \| 45-65 |
-
-    - If Ads Manager shows a different structure, use what's there and update this table.
-    - Never create a new campaign for the series. A new ad set inside a language campaign needs a plan shown first and the user's OK.
-  - In the step 7 summary, **propose** this placement. Also propose which fatigued ads (falling CTR or frequency above 2, from the latest `/track-data` read) the user may want to pause. Don't pause anything yourself.
-  - Ad name `RAM-W<week>P<part>-<LANG> | <person>`; utm_content `ram_w<week>p<part>_<lang>`, keeping the rest of the existing URL (`?join=1&utm_source=meta&utm_medium=paid_social&utm_campaign=…`).
-  - **Website URL goes to the ad's language page**, not the English `/`: `https://www.seetharamakalyana.in/<kn|te|ta|hi>?join=1&…`. All Kannada ads were moved to `/kn` on 15 Nov 2026.
-  - **Add them in Ads Manager only after the user says yes**, then set the part's status to `in_ads` with the ad ids.
-  - **How to add (Ads Manager UI; the Graph API with the page token is blocked by the safety check):**
-    1. Ads tab → filter "RAM-" → select an existing RAM ad in the right ad set (or the best ad there) → Duplicate → original campaign, 1 copy per part, untick "Show existing reactions". The copy becomes a draft.
-    2. Open the copy's editor (`/adsmanager/manage/ads/edit/standalone?act=3311139419043676&selected_ad_ids=<id>`), then rename it.
-    3. Media: "Remove media" → "Add media" → "Add Video" → **Videos tab** → Upload, using the file-input hook. On the Images tab the upload fails.
-    4. In the "Media upload" dialog, **untick "Publish this upload to current active ads as related media"**. It's ticked by default and would change live ads. Then Save.
-    5. Delete any auto-added **"Related media"** (other ads' images).
-    6. Tick "Ad includes media created or edited with AI". In Advantage+ creative enhancements, turn **Video touch-ups** off.
-    7. Website URL: set the language path (`/kn`, `/te`, `/ta`, `/hi`) and the new utm_content. Click the field, confirm `document.activeElement` is that input, then Ctrl+A and type. On a live ad the button is "Publish ad and message".
-    8. "Preview to publish" → Skip the variations upsell → **check that the dialog lists only this ad** → Publish.
-    - Never click the global "Review and publish (N)"; it publishes every draft.
-    - The browser window is short, so scroll the grid. If the editor's dialogs reset, Cancel and re-check rather than pushing on.
+- **Organic only: the series is never added to Meta paid ads** (user's rule, 15 Nov 2026). Don't make ad cuts of it and don't propose it as an ad.
 
 **Reel B:**
 - Why join / how it works: text-led and fast. Hook in the first 2 seconds (e.g. "Looking for a match for your son or daughter?"), then 3 short benefit cards (verified profiles, number shared only when both families agree, ₹351/year), then the end card.
 - Silent (no music), so the text carries the message. Keep all on-screen text inside the middle 80% (safe area).
 - Text in the reel's lead language (see Languages below), with a short English line where it helps.
-- **Also save an ad-ready cut** of Reel B (same video, end card with "Register now", no AI story frames) to `C:\Users\Suresh\Downloads\SRK_marketing\meta-ads\video\`, named with its language, e.g. `AD_why_join_te_9x16.mp4`, for possible Meta Reels ads. Don't upload it to Ads Manager; the user decides.
 - **Never save ad or social files inside the kalyanam_FE repo** (user's rule, 2026-11-13). Use only the week folder in Downloads and `Downloads\SRK_marketing\`.
 
 **Languages: give Kannada, Telugu, Tamil, Hindi and English equal weight (user's rule, 2026-11-13). Kannada is not the default.**
@@ -123,13 +91,22 @@ Each week, spread the lead languages evenly:
 | 4 main pieces (3 feed posts + Reel B) | One each: Kannada, Telugu, Tamil, Hindi. Rotate which day each language gets, week to week. |
 | 7 stories | At least one story per language. The 2 extra stories rotate, so over 2–3 weeks every language gets the same number. |
 | Traditions and festivals | Rotate regions equally: Karnataka, Andhra/Telangana, Tamil Nadu, North India (Hindi), and pan-Indian ones for English. Plan North Indian festivals too, e.g. Vivah Panchami, Karva Chauth, Chhath, Lohri. |
-| Ad-ready video cuts | Alternate the language across weeks so every campaign language gets fresh videos. |
 
 - **English-lead pieces:** use simple English for urban families and NRIs, with no regional script on the image.
 - **Captions:**
   1. Start with the lead language's line.
   2. Then one short line in each of the other 3 regional languages, in rotating order.
   3. Then English, unless English is the lead.
+  - **Register link = the lead language's page** (user's request, 15 Nov 2026), written in the lead language:
+    | Lead | Link in caption | Example line |
+    |---|---|---|
+    | Kannada | seetharamakalyana.in/kn | ಇಲ್ಲಿ ನೋಂದಾಯಿಸಿ: seetharamakalyana.in/kn |
+    | Telugu | seetharamakalyana.in/te | ఇక్కడ నమోదు చేసుకోండి: seetharamakalyana.in/te |
+    | Tamil | seetharamakalyana.in/ta | இங்கே பதிவு செய்யுங்கள்: seetharamakalyana.in/ta |
+    | Hindi | seetharamakalyana.in/hi | यहाँ रजिस्टर करें: seetharamakalyana.in/hi |
+    | English (incl. Ramayana series) | seetharamakalyana.in | Register: seetharamakalyana.in |
+    - Facebook makes the link clickable. On Instagram, captions links are not clickable, so also add "Link in bio" there.
+    - Stories: put the lead language's link on the story image's footer.
   4. Then 5–8 hashtags, mixing #KannadaMatrimony #TeluguMatrimony #TamilMatrimony #HindiMatrimony #HinduMatrimony to match the lead.
   5. Then the AI line.
 - **Fonts:** use Noto Serif Kannada, Telugu, Tamil or Devanagari to match the lead language. Ask a native speaker, or note it in the APPROVAL_SHEET, when the wording is new.
@@ -137,7 +114,7 @@ Each week, spread the lead languages evenly:
 
 **Content mix:**
 - Rotate themes: Trust, Tradition, Tips for parents, How it works.
-- Every post and reel ends with a light call to register (e.g. "Register at seetharamakalyana.in · ₹351/year"). Make at most 1 in 3 a hard "register today" post.
+- Every post and reel ends with a light call to register, using the lead language's page (e.g. "ఇక్కడ నమోదు చేసుకోండి: seetharamakalyana.in/te · ₹351/year"; see Captions above). Make at most 1 in 3 a hard "register today" post.
 - Include at least one post aimed at brides' families (mothers/daughters) each week, since brides are scarce.
 
 **Steps:**
@@ -153,12 +130,12 @@ Each week, spread the lead languages evenly:
      - Fix IG: row → panel "Actions" → "Edit Reel" → paste into "Describe your reel…" → Next → Schedule.
      - Keep the caption text in a JS const inside the same call. A localStorage handoff pasted the word "null".
 6. Always click "Maybe later" on the Boost offer.
-7. Take a Planner screenshot, then give a summary, where the ad-ready cuts are saved (Reel B + the 12 Ramayana cuts), the proposed ad swaps, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
+7. Take a Planner screenshot, then give a summary, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
 
 **One-time (suggest once if not done):** pin 3 Instagram posts that answer "Is this real? How does it work? What does it cost?".
 
 **Hard rules:**
-- Never Boost, never touch ads or Ads Manager, and never spend money. The one exception: adding the Ramayana ad cuts to the language campaigns the user approved in this run, as new ads only. Don't change budgets, ad sets, or other ads.
+- **This command is organic only (user's rule, 15 Nov 2026).** Never open Ads Manager; never create, change, pause or delete ads; never make ad cuts; never Boost; never spend money. Paid ads are handled only in `/track-data` sessions, and only when the user asks.
 - No invented testimonials, member counts or success stories.
 - No film or TV clips, songs or logos.
 - Be respectful with devotional content.
