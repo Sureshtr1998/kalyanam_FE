@@ -97,10 +97,11 @@ export const preloadRoute = (path: string): Promise<unknown> => {
 };
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [pathname]);
+    // A link to a section (/terms#safety) is scrolled by the page itself once it has rendered.
+    if (!hash) window.scrollTo({ top: 0 });
+  }, [pathname, hash]);
   return null;
 };
 
@@ -131,6 +132,10 @@ const AppRoutes = () => (
             <Route path="about-us" element={<AboutUs />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="partner-with-us" element={<PartnerWithUs />} />
+            <Route path="terms" element={<TermsConditions />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="refund-policy" element={<RefundPolicy />} />
+            <Route path="contact-us" element={<ContactUs />} />
           </Route>
         ))}
         <Route path="*" element={<NotFound />} />

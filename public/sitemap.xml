@@ -56,7 +56,7 @@
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/faq</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -74,27 +74,51 @@
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/contact-us</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/contact-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/contact-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/contact-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/contact-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/contact-us" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/terms</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/terms" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/terms" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/terms" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/terms" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/terms" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/privacy</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/privacy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/privacy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/privacy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/privacy" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/refund-policy</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/refund-policy" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/blog/create-perfect-matrimony-profile</loc>
@@ -649,6 +673,54 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
   </url>
   <url>
+    <loc>https://www.seetharamakalyana.in/kn/contact-us</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/contact-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/contact-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/contact-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/contact-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/contact-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/terms</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/terms" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/terms" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/terms" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/terms" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/terms" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/privacy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/privacy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/privacy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/privacy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/privacy" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/kn/refund-policy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/refund-policy" />
+  </url>
+  <url>
     <loc>https://www.seetharamakalyana.in/hi</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -695,6 +767,54 @@
     <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/contact-us</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/contact-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/contact-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/contact-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/contact-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/contact-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/terms</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/terms" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/terms" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/terms" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/terms" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/terms" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/privacy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/privacy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/privacy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/privacy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/privacy" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/hi/refund-policy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/refund-policy" />
   </url>
   <url>
     <loc>https://www.seetharamakalyana.in/te</loc>
@@ -745,6 +865,54 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
   </url>
   <url>
+    <loc>https://www.seetharamakalyana.in/te/contact-us</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/contact-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/contact-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/contact-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/contact-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/contact-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/terms</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/terms" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/terms" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/terms" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/terms" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/terms" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/privacy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/privacy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/privacy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/privacy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/privacy" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/te/refund-policy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/refund-policy" />
+  </url>
+  <url>
     <loc>https://www.seetharamakalyana.in/ta</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -791,5 +959,53 @@
     <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/partner-with-us" />
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/partner-with-us" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/partner-with-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/contact-us</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/contact-us" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/contact-us" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/contact-us" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/contact-us" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/contact-us" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/contact-us" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/terms</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/terms" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/terms" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/terms" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/terms" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/terms" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/privacy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/privacy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/privacy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/privacy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/privacy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/privacy" />
+  </url>
+  <url>
+    <loc>https://www.seetharamakalyana.in/ta/refund-policy</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.seetharamakalyana.in/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="kn-IN" href="https://www.seetharamakalyana.in/kn/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.seetharamakalyana.in/hi/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="te-IN" href="https://www.seetharamakalyana.in/te/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://www.seetharamakalyana.in/ta/refund-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.seetharamakalyana.in/refund-policy" />
   </url>
 </urlset>

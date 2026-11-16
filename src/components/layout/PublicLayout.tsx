@@ -160,7 +160,7 @@ const PublicLayout = () => {
                   <Brand />
                 </SheetHeader>
                 <nav className="flex flex-col gap-1 px-4">
-                  {[{ to: localePath("/", lang), label: t.home }, ...links, { to: "/faq", label: t.faqs }, { to: "/contact-us", label: t.contact }].map((l) => (
+                  {[{ to: localePath("/", lang), label: t.home }, ...links, { to: "/faq", label: t.faqs }, { to: localePath("/contact-us", lang), label: t.contact }].map((l) => (
                     <NavLink
                       key={l.to}
                       to={l.to}
