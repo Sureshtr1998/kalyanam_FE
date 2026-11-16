@@ -6,38 +6,41 @@ Run the "track data" routine for Seetha Rama Kalyana. Read only: never edit ads,
 
 Follow the memory notes `track-data-routine`, `meta-ads-campaign-status` and `ads-account-structure-rule`.
 
-## 0. Account structure (as of 14 Nov 2026): one campaign per language
+## 0. Account structure (as of 15 Nov 2026): one campaign per language, same format in all 4
+
+Every campaign has 2 ad sets: **Parents 45-65 (4 ads)** and **Young 24-34 (2 ads)**. 24 ads in total, ₹8,000/day.
 
 | Campaign | ID | Budget/day | Ad sets (`Language \| Place \| Audience`) |
 |---|---|---|---|
 | SRK \| Kannada | 120252415073490693 | ₹1,700 | Kannada \| Karnataka \| Parents 45-65 · Kannada \| Karnataka + 4 cities \| Young 24-34 |
-| SRK \| Telugu | 120252420507450693 | ₹2,100 | Telugu \| AP + Telangana \| 45-65 |
-| SRK \| Tamil | 120252642638230693 | ₹1,700 | Tamil \| Tamil Nadu + Puducherry \| 45-65 |
-| SRK \| Hindi | 120252522581030693 | ₹2,500 | Hindi \| North India \| 45-65 |
+| SRK \| Telugu | 120252420507450693 | ₹2,100 | Telugu \| AP + Telangana \| Parents 45-65 · Telugu \| AP + Telangana + 4 cities \| Young 24-34 |
+| SRK \| Tamil | 120252642638230693 | ₹1,700 | Tamil \| Tamil Nadu + Puducherry \| Parents 45-65 · Tamil \| Tamil Nadu + Puducherry + 4 cities \| Young 24-34 |
+| SRK \| Hindi | 120252522581030693 | ₹2,500 | Hindi \| North India \| Parents 45-65 · Hindi \| North India + 4 cities \| Young 24-34 |
 
+- Ads are named `<KN|TE|TA|HI>-0<n> <type>`.
 - If the campaign list in Ads Manager differs from this table, report the difference first, update this table and the memory note, and then continue.
-- Every ad's Website URL should go to its language page (`/kn`, `/te`, `/ta`, `/hi`). Flag any ad still landing on the English `/`.
+- Every ad's Website URL should match the ad's text language: Kannada text → `/kn`, Telugu → `/te`, Tamil → `/ta`, Hindi → `/hi`, **English text → `/`** (KN-02 and KN-05 are English ads on purpose). Flag any mismatch.
+- **There are no Ramayana series ads.** The series and all `/weekly-posts` content are organic only (user's rule, 15 Nov 2026). If any `RAM-` ad appears in Ads Manager, flag it.
 - Flag anything that breaks the structure rule: a campaign that isn't a language campaign, or leftover drafts and paused items that should be deleted. Only suggest the clean-up; don't do it.
 
 ## 1. Meta ads: report **by language**
 
 Open https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=3311139419043676&business_id=736180206161421
 
-**How to read the numbers:** read the Ads Manager tables in the page.
-- Use the Campaigns, Ad sets and Ads tabs, with the date picker set to Today, Yesterday, Last 7 days and Lifetime.
-- Use Breakdown → By delivery → Placement, Platform, and Age/Gender.
-- Use `get_page_text` and `find`; the browser window is short, so scroll the grid.
-- Don't call the Graph API with `window.__accessToken`. The safety check blocked it on 14 Nov. Use it only if the user has explicitly allowed it again.
+**How to read the numbers (user allowed this again on 16 Nov 2026): Graph API reads, read only.**
+- In the Ads Manager page, run JS with `window.__accessToken` against `https://adsmanager-graph.facebook.com/v22.0/` and `fetch(..., {credentials:'include'})`. Use GET only: never POST, never change anything.
+- In the output, replace "&" and "=" or the tool blocks it. Store results in a `window.` variable and print in parts if long.
+- Keep calls few; the API rate-limits after about 10. Use `/act_3311139419043676/insights` with `level=campaign|adset|ad`, `date_preset` (today, yesterday, last_7d, maximum) and `breakdowns=publisher_platform` / `age,gender` / `hourly_stats_aggregated_by_advertiser_time_zone`.
+- Paid = `offsite_conversion.fb_pixel_complete_registration`; Leads = `offsite_conversion.fb_pixel_lead`.
+- Prepaid balance ≈ (`spend_cap` − `amount_spent`) / 100 from `/act_3311139419043676?fields=spend_cap,amount_spent`.
+- If the API ever fails, fall back to the Ads Manager tables (`get_page_text`; the grid shows only about 6 rows).
 
 **Pull, per language campaign:**
 - Spend, link clicks, CTR, CPC, CPM, frequency, landing page views, Leads, paid (Website completed registration), cost per paid
   - for today, yesterday, the last 7 days and lifetime
 - The same per ad set
 - Per ad: the top 3 and bottom 3 by cost per paid, and ads with **frequency above 2 or falling CTR** (fatigue)
-- **Ramayana series ads** (names `RAM-W<week>P<part>-<LANG> | <person>`, utm_content `ram_w<week>p<part>_<lang>`):
-  - Give each its own row: status (in review, active, rejected), spend, CTR, Leads, paid, cost per paid.
-  - Compare against the ad set's other ads.
-  - Verdict: keep, scale, or pause after ₹500 spent with 0 paid.
+- Parents vs Young ad set in each language (which audience is cheaper).
 - WhatsApp placements (marketing messages + Status) as their own line
 - Total spend vs total budget (₹8,000/day), and the prepaid balance from Billing
 
@@ -81,8 +84,8 @@ Open https://www.instagram.com/seetharamakalyanamat/ and give posts, followers, 
 
 1. A **per-language table** (Kannada, Telugu, Tamil, Hindi, plus a total row): spend, Meta paid, cost per paid, CTR, frequency, trend vs the last read.
 2. Real joins from admin (all, and without WhatsApp).
-3. Series ads table.
-4. Organic tables (FB, IG, series).
+3. Per-ad table: top 3, bottom 3, and fatigue flags.
+4. Organic tables (FB, IG, Ramayana series).
 5. One verdict per language and per area, then 1–3 actions. Any change to campaigns or ad sets must follow the structure rule, and needs the plan shown and the user's OK first.
 
 Update the `meta-ads-campaign-status` memory with the new read. Close the Chrome tab when done.
