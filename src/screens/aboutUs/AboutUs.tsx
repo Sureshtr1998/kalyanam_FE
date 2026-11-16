@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Lotus, SectionHeading } from "@/components/common/Brand";
 import SEO from "@/components/misc/SEO";
-import { usePublicLang } from "@/lib/i18n";
+import { localePath, usePublicLang } from "@/lib/i18n";
 import { seoText } from "@/lib/seoText";
 import { aboutText } from "./lang";
 import { fillPrices, usePricing } from "@/lib/pricing";
@@ -99,7 +99,7 @@ const AboutUs = () => {
         <SectionHeading eyebrow={t.resourcesEyebrow} title={t.resourcesTitle} />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {links.map((l, i) => (
-            <Link key={l.to} to={l.to} className="group rounded-2xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-md">
+            <Link key={l.to} to={localePath(l.to, lang)} className="group rounded-2xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-md">
               <span className="flex size-10 items-center justify-center rounded-full bg-accent text-primary [&_svg]:size-5">{l.icon}</span>
               <h3 className="mt-3 flex items-center gap-1 font-semibold group-hover:text-primary">
                 {t.links[i].title} <ArrowRight className="size-4 transition group-hover:translate-x-0.5" />

@@ -19,7 +19,7 @@ export const localeOf = (lang: Lang) => LANGUAGES.find((l) => l.value === lang)?
  * (/kn, /hi/pricing …) so search engines index every version.
  * Keep in sync with TRANSLATED_PATHS in scripts/routes.mjs.
  */
-export const TRANSLATED_PATHS = ["/", "/about-us", "/pricing", "/partner-with-us"];
+export const TRANSLATED_PATHS = ["/", "/about-us", "/pricing", "/partner-with-us", "/terms", "/privacy", "/refund-policy", "/contact-us"];
 export const PATH_LANGS: Lang[] = LANGUAGES.map((l) => l.value).filter((l) => l !== "en");
 
 /** Splits a URL into its language prefix and the English path: /kn/pricing -> kn, /pricing. */

@@ -18,6 +18,7 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 | **Ramayana series videos** | **3** | **Tue, Thu, Sun at 7:30 pm** | 9:16 MP4, 1080×1920, **~30 s**, under 10 MB |
 | Reel B (why join) | 1 | Sat at 7:30 pm | 9:16 MP4, 1080×1920, 15–25 s, under 10 MB |
 | Stories | 7 (daily) | 8:30 am | 9:16 image |
+| **"Safe for daughters" posts** | **7 (daily)** | **12:30 pm** | 4:5 image, 1080×1350, text-led (no Gemini art needed) |
 
 **Ramayana series: "Unknown Heroes of Ramayana" (replaces the old devotional Reel A, from week of 24 Nov 2026):**
 - **Source of truth:** `C:\Users\Suresh\Downloads\SRK_marketing\ramayana_series\series.json`.
@@ -70,8 +71,44 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 - **Teasers:** each part teases the next. Part 3 teases next week's theme.
 - **Organic only: the series is never added to Meta paid ads** (user's rule, 15 Nov 2026). Don't make ad cuts of it and don't propose it as an ad.
 
+**"Safe for daughters": a daily women's safety post (user's request, 17 Nov 2026)**
+
+- **Goal:** women and their mothers trust the site. Brides are only about 1 in 14 joins, so this post is every day, all year.
+- **Lead language by day:**
+
+  | Mon | Tue | Wed | Thu | Fri | Sat | Sun |
+  |---|---|---|---|---|---|---|
+  | Kannada | Telugu | Tamil | Hindi | English | rotates | rotates |
+
+  - Sat and Sun take the next two languages in the order KN → TE → TA → HI → EN, carrying on from the previous week. Note this in the APPROVAL_SHEET.
+- **Themes:** one per day, in rotation. Don't repeat the same theme in the same language within 2 weeks.
+  1. Block anyone in one tap. Neither of you will see the other again.
+  2. Report a member from their profile. We review every report within 24 hours.
+  3. Misuse your number or photos? We remove that member permanently, with no refund.
+  4. Email us any time, day or night (contactus@seetharamakalyana.in). Your report is confidential.
+  5. Verified profiles, no agents, no brokers calling your family.
+  6. Hide your profile or photos whenever you want.
+  7. A safe first call: talk family to family, meet in public with family, and never send money to anyone you met online.
+  8. Serious harassment? We help you report it to the Cyber Crime helpline 1930 or cybercrime.gov.in.
+- **Only these promises** come from the Terms "Member safety" section, the Privacy Policy and the Refund Policy (updated 17 Nov 2026). Never say:
+  - "your number is never shown", or "your number is shared only when you agree" (a paid member can unlock it for 5 credits);
+  - "we refund you";
+  - "100% safe";
+  - "we reply instantly".
+  - "Day or night" means members can report any time. The promise is review within 24 hours.
+  - If the site's policy pages change, re-read them and update this list first.
+- **Design:** a calm, reassuring style, not scary. Use a soft maroon and gold card with a shield or lotus icon, big text in the lead language, and the email plus the lead-language link in the footer. Women's figures only as respectful illustrations; no victim imagery and no real faces.
+- **Caption:**
+  1. 2–3 lines in the lead language.
+  2. One English line (unless English is the lead).
+  3. "Report misuse any time: contactus@seetharamakalyana.in".
+  4. The safety-rules link **in the lead language** (policy pages exist in all 5 languages since 17 Nov 2026), written in that language: Kannada `seetharamakalyana.in/kn/terms#safety`, Telugu `/te/terms#safety`, Tamil `/ta/terms#safety`, Hindi `/hi/terms#safety`, English `seetharamakalyana.in/terms#safety`. The same rule applies to any other site link in any post: `/kn/contact-us`, `/hi/privacy`, and so on.
+  5. The lead-language register link (see Captions below).
+  6. Hashtags: #SafeMatrimony #WomenSafety #SeethaRamaKalyana plus the language tag.
+- Count these 7 posts in the APPROVAL_SHEET language tally, separately from the main pieces.
+
 **Reel B:**
-- Why join / how it works: text-led and fast. Hook in the first 2 seconds (e.g. "Looking for a match for your son or daughter?"), then 3 short benefit cards (verified profiles, number shared only when both families agree, ₹351/year), then the end card.
+- Why join / how it works: text-led and fast. Hook in the first 2 seconds (e.g. "Looking for a match for your son or daughter?"), then 3 short benefit cards (verified profiles, block and report any member, ₹351/year). Never claim "number shared only when both families agree": paid members can unlock a contact for 5 credits, then the end card.
 - Silent (no music), so the text carries the message. Keep all on-screen text inside the middle 80% (safe area).
 - Text in the reel's lead language (see Languages below), with a short English line where it helps.
 - **Never save ad or social files inside the kalyanam_FE repo** (user's rule, 2026-11-13). Use only the week folder in Downloads and `Downloads\SRK_marketing\`.

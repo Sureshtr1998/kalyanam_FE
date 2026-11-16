@@ -43,6 +43,13 @@ const faqItems: FAQItem[] = [
     icon: "pi pi-shield",
   },
   {
+    id: "faq-safety",
+    question: "What if someone misuses my phone number or photos?",
+    answer:
+      `Your contact details may be used only to talk about a marriage proposal. If anyone shares your number or photos, keeps calling after you say no, or harasses you, tap Block or Report on their profile, or email ${SUPPORT_EMAIL} any time, day or night. We review every report within 24 hours, keep it confidential, and permanently remove members who misuse details, with no refund.`,
+    icon: "pi pi-shield",
+  },
+  {
     id: "faq-15",
     question: "Can users from other castes or mother tongues view my profile?",
     answer:

@@ -32,7 +32,7 @@ export const LOCALES = [
   ["te", "te-IN"],
   ["ta", "ta-IN"],
 ];
-export const TRANSLATED_PATHS = ["/", "/about-us", "/pricing", "/partner-with-us"];
+export const TRANSLATED_PATHS = ["/", "/about-us", "/pricing", "/partner-with-us", "/terms", "/privacy", "/refund-policy", "/contact-us"];
 export const localePath = (path, lang) => (lang === "en" ? path : `/${lang}${path === "/" ? "" : path}`);
 
 /**
@@ -46,12 +46,12 @@ const englishPages = () => [
   ["/communities", "monthly", "0.8", "2026-10-31"],
   ["/matrimony", "monthly", "0.8", "2026-11-02"],
   ["/blog", "weekly", "0.8", "2026-11-02"],
-  ["/faq", "monthly", "0.7", "2026-11-02"],
+  ["/faq", "monthly", "0.7", "2026-11-17"],
   ["/partner-with-us", "monthly", "0.6", "2026-11-01"],
-  ["/contact-us", "yearly", "0.5", "2026-10-31"],
-  ["/terms", "yearly", "0.3", "2026-10-31"],
-  ["/privacy", "yearly", "0.3", "2026-10-31"],
-  ["/refund-policy", "yearly", "0.3", "2026-10-31"],
+  ["/contact-us", "yearly", "0.5", "2026-11-17"],
+  ["/terms", "yearly", "0.3", "2026-11-17"],
+  ["/privacy", "yearly", "0.3", "2026-11-17"],
+  ["/refund-policy", "yearly", "0.3", "2026-11-17"],
   ...blogPosts().map((p) => [`/blog/${p.slug}`, "monthly", "0.7", p.updatedAt]),
   ...slugsIn("src/screens/communities/seoComm.ts").map((s) => [`/communities/${s}`, "monthly", "0.7", "2026-10-31"]),
   ...slugsIn("src/screens/cities/seoCities.ts").map((s) => [`/matrimony/${s}`, "monthly", "0.7", "2026-11-02"]),
