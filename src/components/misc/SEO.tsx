@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { LANGUAGES, localeOf, localePath, splitLocalePath, TRANSLATED_PATHS } from "@/lib/i18n";
-import { SEO_URL, SITE_NAME, SOCIAL_PROFILES, SUPPORT_EMAIL, SUPPORT_PHONE } from "@/utils/constants";
+import { BRAND_SPELLINGS, SEO_URL, SITE_NAME, SOCIAL_PROFILES, SUPPORT_EMAIL, SUPPORT_PHONE } from "@/utils/constants";
 
 type JsonLd = Record<string, unknown>;
 
@@ -59,7 +59,7 @@ export default function SEO({
       "@type": "Organization",
       "@id": `${SEO_URL}/#organization`,
       name: SITE_NAME,
-      alternateName: ["Seetha Rama Kalyana Matrimony", "Seetharamakalyana"],
+      alternateName: ["Seetha Rama Kalyana Matrimony", ...BRAND_SPELLINGS, "Seetharamakalyana"],
       url: SEO_URL,
       logo: { "@type": "ImageObject", url: `${SEO_URL}/logo.png`, width: 512, height: 512 },
       email: SUPPORT_EMAIL,
@@ -82,6 +82,7 @@ export default function SEO({
       "@id": `${SEO_URL}/#website`,
       url: SEO_URL,
       name: `${SITE_NAME} Matrimony`,
+      alternateName: [SITE_NAME, ...BRAND_SPELLINGS],
       inLanguage: LANGUAGES.map((l) => l.locale),
       publisher: { "@id": `${SEO_URL}/#organization` },
     },

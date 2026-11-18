@@ -47,7 +47,7 @@ const communityCount = english.filter((p) => p.startsWith("/communities/")).leng
 
 const llms = `# Seetha Rama Kalyana
 
-> Seetha Rama Kalyana (${SITE}) is an online Hindu matrimony platform for families across India and Indian families abroad. It is newly launched and still growing, so its member base is small. It covers ${communityCount} Hindu communities and many sub-castes, works in English, Kannada, Hindi, Telugu and Tamil, and offers horoscope (kundli) matching for members.
+> Seetha Rama Kalyana (${SITE}), also written Seetharama Kalyana, Sita Rama Kalyana or Seetharama Kalyanam, is an online Hindu matrimony platform for families across India and Indian families abroad. It is newly launched and still growing, so its member base is small. It covers ${communityCount} Hindu communities and many sub-castes, works in English, Kannada, Hindi, Telugu and Tamil, and offers horoscope (kundli) matching for members.
 
 Key facts:
 - Two-way privacy: a profile is only shown to members whose own partner preferences match it, and any member can be blocked by Profile ID.

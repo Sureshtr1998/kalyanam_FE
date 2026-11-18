@@ -9,7 +9,7 @@ import { usePWA } from "@/components/misc/usePWA";
 import { InstallButton } from "@/components/misc/InstallButton";
 import { isLoggedIn } from "@/lib/session";
 import { cn } from "@/lib/utils";
-import { SUPPORT_EMAIL } from "@/utils/constants";
+import { BRAND_SPELLINGS, SUPPORT_EMAIL } from "@/utils/constants";
 import { fillPrices, isFreeRegistration, usePricing, type Pricing } from "@/lib/pricing";
 import { localeOf, localePath, splitLocalePath, TRANSLATED_PATHS, usePublicLang, type Lang } from "@/lib/i18n";
 import { LanguageSelect } from "@/components/common/LanguageSelect";
@@ -204,6 +204,9 @@ const PublicLayout = () => {
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed opacity-80">{t.tagline}</p>
+            <p className="mt-2 text-xs leading-relaxed opacity-60">
+              {t.alsoWritten} {BRAND_SPELLINGS.join(", ")}.
+            </p>
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-gold hover:underline">

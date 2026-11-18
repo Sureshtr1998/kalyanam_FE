@@ -5,7 +5,7 @@ type Item = { title: string; text: string };
 const en = {
   heroLead: "Connecting Hindu families,",
   heroGold: "fostering sacred bonds",
-  introBefore: "Seetha Rama Kalyana is a trusted, secure matrimony platform dedicated exclusively to the",
+  introBefore: "Seetha Rama Kalyana (also written Seetharama Kalyana or Sita Rama Kalyana) is a trusted, secure matrimony platform dedicated exclusively to the",
   introBold: "Hindu community",
   introAfter: ", fostering stable bonds rooted in tradition and trust.",
   hanumanAlt: "Lord Hanuman, symbol of devotion and service",

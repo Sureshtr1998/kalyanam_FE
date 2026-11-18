@@ -9,7 +9,7 @@ const en = {
   register: "Register",
   annual: "Annual membership",
   intro1:
-    "Seetha Rama Kalyana helps Hindu families find life partners rooted in dharma, tradition and trust, with verified profiles and honest, minimal pricing.",
+    "Seetha Rama Kalyana (also written Seetharama Kalyana) helps Hindu families find life partners rooted in dharma, tradition and trust, with verified profiles and honest, minimal pricing.",
   intro2:
     "Like the kalyana of Seetha and Rama, every marriage here begins with the blessing of both families. Browse profiles from your community, send an interest, and connect only when both sides agree.",
   heroPoints: [
