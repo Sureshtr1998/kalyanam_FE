@@ -536,6 +536,17 @@ export const MAX_FILE_SIZE_MB = 1;
 export const updatedDate = "November 17, 2026"
 
 export const SITE_NAME = "Seetha Rama Kalyana"
+/**
+ * Other ways people type the brand. Google reads "Seetharama" as one word, distinct from
+ * "Seetha Rama", so each spelling must appear on the page itself to be matched.
+ */
+export const BRAND_SPELLINGS = [
+  "Seetharama Kalyana",
+  "Sita Rama Kalyana",
+  "Sitarama Kalyana",
+  "Seetha Rama Kalyanam",
+  "Seetharama Kalyanam",
+]
 /** Brand primary (matches --primary and the PWA theme colour). */
 export const BRAND_COLOR = "#c2410c"
 

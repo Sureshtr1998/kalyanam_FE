@@ -112,6 +112,13 @@ const faqItems: FAQItem[] = [
       "We are focused on community service rather than profit. Pricing is kept minimal and transparent, ensuring fair access for all users.",
     icon: "pi pi-tags",
   },
+  {
+    id: "faq-name",
+    question: "Is Seetharama Kalyana the same as Seetha Rama Kalyana?",
+    answer:
+      "Yes. Seetha Rama Kalyana, Seetharama Kalyana, Sita Rama Kalyana and Seetharama Kalyanam are all the same Hindu matrimony platform at seetharamakalyana.in. The name means the wedding (kalyana) of Seetha and Rama.",
+    icon: "pi pi-info-circle",
+  },
 ];
 
 const FAQPage = () => {
