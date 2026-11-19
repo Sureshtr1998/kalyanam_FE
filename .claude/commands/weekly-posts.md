@@ -71,6 +71,18 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 - **Teasers:** each part teases the next. Part 3 teases next week's theme.
 - **Organic only: the series is never added to Meta paid ads** (user's rule, 15 Nov 2026). Don't make ad cuts of it and don't propose it as an ad.
 
+**"Why ₹351, not free?": a one-off feed post for the next run (user's request, 19 Nov 2026)**
+
+- Put it in as **one of the 3 feed posts** of the next week, then mark it done here: (not yet used).
+- **Message:** "Why ₹351, not free? Because marriage isn't time-pass." A small paid sign-up keeps casual browsers away, so the families here are serious about marriage.
+- **Allowed claims only:**
+  - registration is paid: ₹351 a year, less than ₹1 a day;
+  - OTP-verified profiles;
+  - no agents, no sales calls.
+- **Never claim** "no fake profiles", "100% genuine", or anything about other sites.
+- **Format:** 4:5, text-led, with the lead language from the language balance rule. The caption opens in the lead language, then the other 4 languages, and ends with a soft call to register.
+- **Make it a new organic design.** Don't reuse the paid images in `Downloads\SRK_marketing\meta-ads\why351\`: paid and organic stay separate (organic-never-paid rule).
+
 **"Safe for daughters": a daily women's safety post (user's request, 17 Nov 2026)**
 
 - **Goal:** women and their mothers trust the site. Brides are only about 1 in 14 joins, so this post is every day, all year.
