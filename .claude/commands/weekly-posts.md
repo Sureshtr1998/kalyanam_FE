@@ -73,7 +73,7 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 
 **"Why ₹351, not free?": a one-off feed post for the next run (user's request, 19 Nov 2026)**
 
-- Put it in as **one of the 3 feed posts** of the next week, then mark it done here: (not yet used).
+- Put it in as **one of the 3 feed posts** of the next week, then mark it done here: **used** as F1, Wed 25 Nov 2026 (Tamil lead). Remove this section on the next run.
 - **Message:** "Why ₹351, not free? Because marriage isn't time-pass." A small paid sign-up keeps casual browsers away, so the families here are serious about marriage.
 - **Allowed claims only:**
   - registration is paid: ₹351 a year, less than ₹1 a day;
