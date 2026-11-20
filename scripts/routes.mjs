@@ -43,8 +43,9 @@ const englishPages = () => [
   ["/", "weekly", "1.0", "2026-11-02"],
   ["/about-us", "monthly", "0.8", "2026-11-02"],
   ["/pricing", "monthly", "0.8", "2026-11-02"],
-  ["/communities", "monthly", "0.8", "2026-10-31"],
+  ["/communities", "monthly", "0.8", "2026-11-20"],
   ["/matrimony", "monthly", "0.8", "2026-11-02"],
+  ["/languages", "monthly", "0.8", "2026-11-20"],
   ["/blog", "weekly", "0.8", "2026-11-02"],
   ["/faq", "monthly", "0.7", "2026-11-17"],
   ["/partner-with-us", "monthly", "0.6", "2026-11-01"],
@@ -54,7 +55,8 @@ const englishPages = () => [
   ["/refund-policy", "yearly", "0.3", "2026-11-17"],
   ...blogPosts().map((p) => [`/blog/${p.slug}`, "monthly", "0.7", p.updatedAt]),
   ...slugsIn("src/screens/communities/seoComm.ts").map((s) => [`/communities/${s}`, "monthly", "0.7", "2026-11-20"]),
-  ...slugsIn("src/screens/cities/seoCities.ts").map((s) => [`/matrimony/${s}`, "monthly", "0.7", "2026-11-02"]),
+  ...slugsIn("src/screens/cities/seoCities.ts").map((s) => [`/matrimony/${s}`, "monthly", "0.7", s === "bengaluru" ? "2026-11-20" : "2026-11-02"]),
+  ...slugsIn("src/screens/languages/seoLanguages.ts").map((s) => [`/languages/${s}`, "monthly", "0.7", "2026-11-20"]),
 ];
 
 export const publicPages = () => {

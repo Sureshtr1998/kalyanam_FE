@@ -33,6 +33,7 @@ const footerGroups = (t: Text) => [
       { to: "/about-us", label: t.aboutUs },
       { to: "/communities", label: t.ourCommunities },
       { to: "/matrimony", label: t.cities },
+      { to: "/languages", label: t.languages },
       { to: "/partner-with-us", label: t.partnerWithUs },
       { to: "/blog", label: t.blog },
     ],

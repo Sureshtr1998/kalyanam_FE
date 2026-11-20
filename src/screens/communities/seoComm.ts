@@ -94,6 +94,12 @@ export const communities = [
     sub: "Raju, Verma, Saini",
     slug: "kshatriya-matrimony",
   },
+  {
+    id: 42,
+    name: "Lingayat",
+    sub: "Veerashaiva, Panchamasali, Banajiga, Sadar",
+    slug: "lingayat-matrimony",
+  },
   { id: 24, name: "Lohana", sub: "Thakkar, Bhatia", slug: "lohana-matrimony" },
   { id: 29, name: "Mali", sub: "Phule, Saini, Bagwan", slug: "mali-matrimony" },
   {
@@ -171,6 +177,12 @@ export const communities = [
     name: "Vishwakarma",
     sub: "Lohar, Panchal, Sutar, Gajjar",
     slug: "vishwakarma-matrimony",
+  },
+  {
+    id: 41,
+    name: "Vokkaliga",
+    sub: "Gangadikara, Kunchitiga, Hallikar, Marasu",
+    slug: "vokkaliga-matrimony",
   },
   {
     id: 13,

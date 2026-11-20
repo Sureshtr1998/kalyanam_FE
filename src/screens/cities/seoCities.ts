@@ -42,7 +42,7 @@ export const cities: City[] = [
     name: "Bengaluru",
     region: "Karnataka",
     languages: ["Kannada", "Telugu", "Tamil", "Hindi"],
-    communities: ["brahmin-matrimony", "reddy-matrimony", "vysya-matrimony", "naidu-matrimony", "mudaliar-matrimony"],
+    communities: ["vokkaliga-matrimony", "lingayat-matrimony", "brahmin-matrimony", "reddy-matrimony", "vysya-matrimony", "naidu-matrimony"],
     intro:
       "Bengaluru is home to Kannada families and to professionals from across India who moved for work. Many families here want a partner from their own community who also understands a working, often dual-career, household.",
     customs:
