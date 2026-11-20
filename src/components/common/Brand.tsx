@@ -27,7 +27,7 @@ export const Brand = ({ to = "/", className, compact }: BrandProps) => (
     <span className={cn("leading-none", compact && "hidden sm:block")}>
       <span className="block font-display text-[1.35rem] font-bold tracking-tight text-primary">
         Seetha Rama
-      </span>
+      </span>{" "}
       <span className="block text-[10px] font-semibold uppercase tracking-[0.32em] text-gold-foreground/80">
         Kalyana
       </span>
