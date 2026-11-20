@@ -35,7 +35,8 @@ const regions = [
         Serving <strong>Reddy</strong>, <strong>Kamma</strong> (Chowdary) and <strong>Naidu</strong> families,{" "}
         <strong>Nair</strong> (Menon, Pillai) and <strong>Ezhava</strong> communities, and Tamil{" "}
         <strong>Mudaliar</strong>, <strong>Vanniyar</strong>, <strong>Gounder</strong> and <strong>Chettiar</strong>{" "}
-        families, plus <strong>Arya Vysya</strong>, <strong>Lingayat</strong> and <strong>Vellalar</strong> traditions.
+        families, Kannada <strong>Vokkaliga</strong> and <strong>Lingayat</strong> families, plus{" "}
+        <strong>Arya Vysya</strong> and <strong>Vellalar</strong> traditions.
       </>
     ),
   },

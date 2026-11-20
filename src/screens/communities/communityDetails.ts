@@ -218,6 +218,18 @@ export const communityDetails: Record<string, CommunityDetail> = {
     ],
     tip: "Mention your region and gotra so families from the same tradition can find you.",
   },
+  "lingayat-matrimony": {
+    regions: "North and central Karnataka (Belagavi, Dharwad, Vijayapura, Kalaburagi, Davanagere) and nearby Maharashtra and Telangana",
+    languages: "Kannada, Marathi, Telugu",
+    about:
+      "Lingayat (Veerashaiva) families follow the teachings of the 12th-century reformer Basavanna and wear the ishtalinga. The community is one of the largest in Karnataka, with sub-communities such as Panchamasali, Banajiga and Sadar.",
+    customs: [
+      "Simple weddings, usually conducted by a Jangama",
+      "Basavanna's vachanas recited during the ceremony",
+      "Exchange of garlands and mangalya dharane, with the blessings of elders",
+    ],
+    tip: "Mention your sub-community, such as Panchamasali or Banajiga; many families look within it first.",
+  },
   "lohana-matrimony": {
     regions: "Gujarat, Kutch and Mumbai, with a large diaspora in East Africa, the UK and the Gulf",
     languages: "Gujarati, Kutchi, Sindhi",
@@ -373,6 +385,18 @@ export const communityDetails: Record<string, CommunityDetail> = {
       "Vishwakarma families, including Lohar, Panchal, Sutar and Gajjar families, are the traditional artisans of India: smiths, carpenters and sculptors. They honour Lord Vishwakarma, the divine architect.",
     customs: NORTH,
     tip: "Add your sub-group, state and the language spoken at home.",
+  },
+  "vokkaliga-matrimony": {
+    regions: "Southern Karnataka, especially Mandya, Mysuru, Hassan, Ramanagara, Tumakuru and Bengaluru",
+    languages: "Kannada",
+    about:
+      "Vokkaliga families are a large farming community of southern Karnataka, especially the Old Mysore region. Farming is still close to many families, and the community is also strong in business, the professions and public life in Bengaluru.",
+    customs: [
+      "Nischitartha (engagement), when the elders of both families fix the wedding",
+      "Devara karya, worship of the family deity before the wedding",
+      "Dhare and mangalya dharane at the muhurtha",
+    ],
+    tip: "Mention your sub-group (for example Gangadikara or Kunchitiga) and your native taluk.",
   },
   "vysya-matrimony": {
     regions: "Andhra Pradesh, Telangana, Karnataka and Tamil Nadu",

@@ -66,6 +66,8 @@ const CommunitiesServe = page(() => import("@/screens/communities/Communities"))
 const CommunityPage = page(() => import("@/screens/communities/CommunityPage"));
 const Cities = page(() => import("@/screens/cities/Cities"));
 const CityPage = page(() => import("@/screens/cities/CityPage"));
+const Languages = page(() => import("@/screens/languages/Languages"));
+const LanguagePage = page(() => import("@/screens/languages/LanguagePage"));
 const NotFound = page(() => import("@/screens/notFound/NotFound"));
 
 // Same table as the public <Route>s below; translated paths (/kn/about-us) drop the prefix.
@@ -84,6 +86,8 @@ const PUBLIC_PAGES: [RegExp, Page][] = [
   [/^\/privacy$/, PrivacyPolicy],
   [/^\/matrimony$/, Cities],
   [/^\/matrimony\/[^/]+$/, CityPage],
+  [/^\/languages$/, Languages],
+  [/^\/languages\/[^/]+$/, LanguagePage],
 ];
 
 /** Loads the chunk of the public page at `path` (if any), so hydration doesn't suspend. */
@@ -125,6 +129,8 @@ const AppRoutes = () => (
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/matrimony" element={<Cities />} />
         <Route path="/matrimony/:slug" element={<CityPage />} />
+        <Route path="/languages" element={<Languages />} />
+        <Route path="/languages/:slug" element={<LanguagePage />} />
         {/* Translated pages in their own language, e.g. /kn/about-us (see TRANSLATED_PATHS). */}
         {PATH_LANGS.map((lang) => (
           <Route key={lang} path={`/${lang}`}>
