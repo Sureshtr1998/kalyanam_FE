@@ -13,6 +13,7 @@ import NotFound from "@/screens/notFound/NotFound";
 import { SEO_URL } from "@/utils/constants";
 import { usePricing } from "@/lib/pricing";
 import { communities } from "./seoComm";
+import { communityDetails } from "./communityDetails";
 
 /** Landing page for one community, e.g. /communities/brahmin-matrimony. */
 const CommunityPage = () => {
@@ -25,6 +26,7 @@ const CommunityPage = () => {
   const subs = sub.split(",").map((s) => s.trim()).filter(Boolean);
   const url = `${SEO_URL}/communities/${community.slug}`;
   const related = communities.filter((c) => c.slug !== community.slug).slice(0, 8);
+  const detail = communityDetails[community.slug];
 
   const faqs = [
     {
@@ -119,6 +121,38 @@ const CommunityPage = () => {
           </div>
         ))}
       </section>
+
+      {detail && (
+        <section className="mx-auto max-w-3xl px-4 pb-14 sm:px-6">
+          <h2 className="font-display text-3xl font-bold">About {name} families</h2>
+          <p className="mt-3 text-muted-foreground sm:text-lg">{detail.about}</p>
+          <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <dt className="text-xs font-bold uppercase tracking-wider text-gold-foreground">Where families live</dt>
+              <dd className="mt-1 text-sm">{detail.regions}</dd>
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <dt className="text-xs font-bold uppercase tracking-wider text-gold-foreground">Languages at home</dt>
+              <dd className="mt-1 text-sm">{detail.languages}</dd>
+            </div>
+          </dl>
+
+          <h2 className="mt-10 font-display text-2xl font-bold">Common {name} wedding customs</h2>
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-muted-foreground">
+            {detail.customs.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Customs vary from family to family and region to region; this is a general guide.
+          </p>
+
+          <div className="mt-8 rounded-2xl border border-gold/40 bg-accent/40 p-5">
+            <h2 className="font-semibold">Tip for {name} families</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{detail.tip}</p>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-3xl px-4 pb-14 sm:px-6">
         <h2 className="mb-5 text-center font-display text-3xl font-bold">{name} matrimony questions</h2>

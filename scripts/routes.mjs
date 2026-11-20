@@ -53,7 +53,7 @@ const englishPages = () => [
   ["/privacy", "yearly", "0.3", "2026-11-17"],
   ["/refund-policy", "yearly", "0.3", "2026-11-17"],
   ...blogPosts().map((p) => [`/blog/${p.slug}`, "monthly", "0.7", p.updatedAt]),
-  ...slugsIn("src/screens/communities/seoComm.ts").map((s) => [`/communities/${s}`, "monthly", "0.7", "2026-10-31"]),
+  ...slugsIn("src/screens/communities/seoComm.ts").map((s) => [`/communities/${s}`, "monthly", "0.7", "2026-11-20"]),
   ...slugsIn("src/screens/cities/seoCities.ts").map((s) => [`/matrimony/${s}`, "monthly", "0.7", "2026-11-02"]),
 ];
 

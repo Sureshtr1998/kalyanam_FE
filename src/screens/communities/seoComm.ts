@@ -79,7 +79,7 @@ export const communities = [
   {
     id: 27,
     name: "Kumbhar",
-    sub: "Praiapati, Chakravarti",
+    sub: "Prajapati, Chakravarti",
     slug: "kumbhar-matrimony",
   },
   {
