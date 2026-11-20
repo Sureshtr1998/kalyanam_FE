@@ -101,7 +101,9 @@ const Lander = () => {
           <div className="grid items-start gap-6 sm:gap-8 lg:grid-cols-[1.1fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-4">
             {/* The round logo, with a Sanskrit verse (romanised) set on an arc above it and another below. */}
             <div className="lg:col-start-1 lg:row-start-1">
+              {/* Screen-reader/search heading: the brand and what the site is, then the verse drawn on the arc below. */}
               <h1 className="sr-only">
+                {seoText.home[lang].title.replace(" | ", ": ")}.{" "}
                 <span lang="sa-Latn">tava anveṣaṇaṃ saphalaṃ bhavatu</span> ({t.srMeaning})
               </h1>
               <div className="relative mx-auto size-[18.5rem] sm:size-96 lg:size-[30rem]">

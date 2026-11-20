@@ -71,17 +71,76 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 - **Teasers:** each part teases the next. Part 3 teases next week's theme.
 - **Organic only: the series is never added to Meta paid ads** (user's rule, 15 Nov 2026). Don't make ad cuts of it and don't propose it as an ad.
 
-**"Why ₹351, not free?": a one-off feed post for the next run (user's request, 19 Nov 2026)**
+**Weekly topics: the same core topics EVERY week, a fresh angle each time (user's rule, 20 Nov 2026)**
 
-- Put it in as **one of the 3 feed posts** of the next week, then mark it done here: **used** as F1, Wed 25 Nov 2026 (Tamil lead). Remove this section on the next run.
-- **Message:** "Why ₹351, not free? Because marriage isn't time-pass." A small paid sign-up keeps casual browsers away, so the families here are serious about marriage.
-- **Allowed claims only:**
-  - registration is paid: ₹351 a year, less than ₹1 a day;
-  - OTP-verified profiles;
-  - no agents, no sales calls.
-- **Never claim** "no fake profiles", "100% genuine", or anything about other sites.
-- **Format:** 4:5, text-led, with the lead language from the language balance rule. The caption opens in the lead language, then the other 4 languages, and ends with a soft call to register.
-- **Make it a new organic design.** Don't reuse the paid images in `Downloads\SRK_marketing\meta-ads\why351\`: paid and organic stay separate (organic-never-paid rule).
+The user wants the same core messages every week, each told differently, not one-off posts. Each week has these topics:
+
+| Topic | Where it runs each week | Fresh every week |
+|---|---|---|
+| **Pricing** ("every price, on one page") | Feed post 1 | A new angle and a new design |
+| **Why ₹351, not free?** (serious families only) | Feed post 2 | A new angle and a new design |
+| **Safe for daughters** (women's safety) | The daily 12:30 pm post (see below) | A new theme every day |
+| **Ramayana series** | Tue, Thu and Sun videos (see above) | The next 3 parts |
+| **Rotating topic**: tips for parents, how it works, a festival or tradition, or a community | Feed post 3 | Pick by the calendar and last week's best post |
+
+**How to keep each topic fresh:**
+- **Angle log:** keep one at `C:\Users\Suresh\Downloads\SRK_marketing\weekly_topics_log.md`. Create it if it's missing. Each week, add one line per topic: the week, the angle, the lead language, the design style, and the post's results once known.
+- **No repeats:** don't repeat an angle within 4 weeks, or a design style within 2 weeks.
+- **Use what works:** check last week's numbers for each topic in Business Suite, and lean towards the angles that got the most reach and saves.
+- **Change the format too,** not just the words. Rotate between:
+  - a price list;
+  - a question and answer;
+  - myth vs fact;
+  - "a mother asks…";
+  - a simple sum ("₹351 ÷ 12 months");
+  - a checklist;
+  - a carousel;
+  - a story slide set.
+
+**Pricing: angle bank** (re-read https://www.seetharamakalyana.in/pricing each week; if a price changed, use the page's):
+1. Every price on one page, before you register (used 24–30 Nov).
+2. What ₹351 gets you: 36 credits, and 1 credit = 1 interest.
+3. The monthly sum: ₹351 a year is about ₹29 a month.
+4. How credits work: contact details are shared free when they accept; to see a contact straight away, it's 5 credits.
+5. Top up only if you need more: ₹101 for 21 credits, or ₹251 for 56 credits.
+6. "How much does it really cost?" as a question and answer.
+7. Nobody calls to sell you a plan.
+8. Pay securely online through Razorpay.
+
+**Why ₹351: angle bank:**
+1. Marriage isn't time-pass (used 25 Nov).
+2. A small fee shows a family is serious.
+3. Less than ₹1 a day.
+4. "Why not free?" as a question and answer.
+5. A mother's view: "I want families who are as serious as we are."
+6. What the fee helps pay for: OTP verification, and every report reviewed within 24 hours.
+7. Paid sign-up keeps casual browsers away.
+
+**Allowed claims, for both topics:**
+- every price is shown on one page, before you register;
+- registration is paid: ₹351 a year, less than ₹1 a day;
+- OTP-verified profiles;
+- no agents, no sales calls;
+- every report is reviewed within 24 hours;
+- only members who fit your preferences can see your profile.
+
+**Never:**
+- name or describe other matrimony sites, or say "others hide their prices" or "free sites…";
+- say "no hidden charges", "100% genuine" or "no fake profiles";
+- show the ₹999 crossed-out price;
+- use invented testimonials or member counts.
+
+**Links:**
+- Pricing posts go to the lead language's pricing page, written in that language: Kannada `seetharamakalyana.in/kn/pricing`, Telugu `/te/pricing`, Tamil `/ta/pricing`, Hindi `/hi/pricing`, English `seetharamakalyana.in/pricing`.
+- Why ₹351 posts go to the lead language's register page.
+- On IG, also add "Link in bio".
+
+**Design:**
+- Every week is a new organic design.
+- Never reuse the paid images in `Downloads\SRK_marketing\meta-ads\` (why351, pricing, safety and so on). Paid and organic stay separate (organic-never-paid rule).
+- The weekly topics are organic; this command never touches paid ads.
+
+**Lead languages:** the 3 feed posts and Reel B follow the language balance rule below (one each for Kannada, Telugu, Tamil and Hindi, rotating days). An English lead is fine for an extra piece.
 
 **"Safe for daughters": a daily women's safety post (user's request, 17 Nov 2026)**
 
