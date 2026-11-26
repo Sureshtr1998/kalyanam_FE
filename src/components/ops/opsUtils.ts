@@ -26,6 +26,8 @@ export interface OpsAction {
     to?: string;
     from?: number;
     mode?: Mode;
+    /** Set by the agent when the problem an alert reported has cleared. */
+    resolvedAt?: string;
   };
   runAt?: string;
   ranAt?: string;

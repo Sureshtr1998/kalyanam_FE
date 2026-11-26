@@ -72,7 +72,8 @@ export const TodayView = ({ overview, reload, onOpenActivity }: { overview: Over
   const soon = feed
     .filter((a) => a.status === "scheduled" && a.runAt)
     .sort((a, b) => Date.parse(a.runAt!) - Date.parse(b.runAt!));
-  const alerts = feed.filter((a) => a.status === "info" && Date.now() - Date.parse(a.createdAt) < 3 * 86400000);
+  // Alerts from the last 3 days, minus those the agent has marked resolved (e.g. missed runs once runs are back).
+  const alerts = feed.filter((a) => a.status === "info" && !a.payload?.resolvedAt && Date.now() - Date.parse(a.createdAt) < 3 * 86400000);
   const ideas = feed.filter((a) => a.status === "idea");
   const shadow = feed.filter((a) => a.status === "shadow");
   const recent = feed.filter((a) => ["done", "failed"].includes(a.status)).slice(0, 6);

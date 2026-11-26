@@ -156,6 +156,11 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
       ))}
       {action.effect && open && <p className="mt-2 rounded-lg bg-muted px-3 py-2 text-xs"><span className="font-semibold">If nobody acts: </span>{action.effect}</p>}
       {action.error && <p className="mt-2 text-xs text-destructive">{action.error}</p>}
+      {action.payload?.resolvedAt && (
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-emerald-700">
+          <CircleCheck className="size-3.5 shrink-0" /> Resolved {relative(action.payload.resolvedAt)}
+        </p>
+      )}
 
       {isRefund && open && (
         <div className="mt-3 space-y-2">
