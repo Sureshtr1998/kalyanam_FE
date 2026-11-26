@@ -149,11 +149,22 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
       </div>
       <h4 className="mt-2 font-semibold leading-snug">{action.title}</h4>
       {!compact && action.reason && <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{action.reason}</p>}
-      {(action.result?.steps ?? []).map((s) => (
-        <p key={`${s.type}-${s.at}`} className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <CircleCheck className="size-3.5 shrink-0 text-emerald-600" /> Done {relative(s.at)}: {STEP_LABEL[s.type] ?? s.title}
-        </p>
-      ))}
+      {(action.result?.steps ?? []).map((s, i) =>
+        s.at ? (
+          <p key={`${s.type}-${s.at}`} className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+            <CircleCheck className="size-3.5 shrink-0 text-emerald-600" /> Done {relative(s.at)}: {STEP_LABEL[s.type ?? ""] ?? s.title}
+          </p>
+        ) : s.summary ? (
+          // An idea card's planned steps: what each became (scheduled, or needs you and why).
+          <p key={i} className="mt-1 flex items-start gap-1.5 text-xs text-muted-foreground">
+            <CircleCheck className={`mt-0.5 size-3.5 shrink-0 ${s.status === "needs_you" ? "text-amber-600" : "text-emerald-600"}`} />
+            <span>
+              {s.summary.length > 140 ? `${s.summary.slice(0, 140)}…` : s.summary} ·{" "}
+              <b>{s.status === "needs_you" ? `needs you${s.error ? `: ${s.error}` : ""}` : s.status ?? "planned"}</b>
+            </span>
+          </p>
+        ) : null
+      )}
       {action.effect && open && <p className="mt-2 rounded-lg bg-muted px-3 py-2 text-xs"><span className="font-semibold">If nobody acts: </span>{action.effect}</p>}
       {action.error && <p className="mt-2 text-xs text-destructive">{action.error}</p>}
       {action.payload?.resolvedAt && (

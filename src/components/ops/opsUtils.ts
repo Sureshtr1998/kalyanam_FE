@@ -33,7 +33,13 @@ export interface OpsAction {
   ranAt?: string;
   error?: string;
   /** Steps already done on this card (e.g. hidden, then waits to delete). */
-  result?: { steps?: { type: string; title: string; at: string }[] } & Record<string, unknown>;
+  /**
+   * Steps already done on this card (`type`/`title`/`at`), or, on an idea card,
+   * the steps it planned (`kind`/`summary`/`status`/`error`).
+   */
+  result?: {
+    steps?: { type?: string; title?: string; at?: string; kind?: string; summary?: string; status?: string; error?: string }[];
+  } & Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
   decidedBy?: string;
@@ -150,9 +156,9 @@ export const remove = async (path: string) => {
 };
 
 /** POST with a toast for the server's message. */
-export const post = async <T = { msg?: string },>(path: string, body?: unknown, quiet = false) => {
+export const post = async <T = { msg?: string },>(path: string, body?: unknown, quiet = false, timeoutMs?: number) => {
   try {
-    const r = await api.post<T & { msg?: string }>(path, body ?? {});
+    const r = await api.post<T & { msg?: string }>(path, body ?? {}, timeoutMs ? { timeout: timeoutMs } : undefined);
     if (!quiet && r.data?.msg) toast.success(r.data.msg);
     return r.data;
   } catch (e) {

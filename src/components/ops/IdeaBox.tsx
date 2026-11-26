@@ -68,7 +68,8 @@ export const IdeaBox = ({ onPlanned }: { onPlanned: () => void }) => {
       return;
     }
     try {
-      const r = await post<{ title: string; steps: PlannedStep[] }>("/manage/ops/ideas", { text });
+      // Planning writes ad copy in every language and can take a minute or two: wait up to 4 minutes.
+      const r = await post<{ title: string; steps: PlannedStep[] }>("/manage/ops/ideas", { text }, false, 240000);
       setResult(r);
       setText("");
       onPlanned();
