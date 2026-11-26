@@ -4,7 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { Panel } from "./shared";
-import { post } from "./opsUtils";
+import { post, remove, useOps } from "./opsUtils";
+
+type Where = "once" | "organic" | "ads" | "both";
+const WHERE: { id: Where; label: string; help: string }[] = [
+  { id: "once", label: "Once, on dates", help: "Turned into posts, ads, ad sets or budget changes on the dates you mention." },
+  { id: "organic", label: "Organic posts", help: "Kept in the weekly organic mix: at least one post a week uses it, scored on sign-ups like the other ideas." },
+  { id: "ads", label: "Meta ads", help: "Tested first in the next batch of fresh ads, then kept or dropped on cost per member." },
+  { id: "both", label: "Both", help: "In the weekly organic mix and tested in the next batch of fresh ads." },
+];
+
+interface StandingIdea {
+  key: string;
+  label: string;
+  hint: string;
+  target: "organic" | "ads" | "both";
+  text: string;
+}
 
 interface PlannedStep {
   kind: "organic_post" | "ad_creatives" | "new_adset" | "budget" | "unsupported";
@@ -33,10 +49,24 @@ export const IdeaBox = ({ onPlanned }: { onPlanned: () => void }) => {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<{ title: string; steps: PlannedStep[] } | null>(null);
+  const [where, setWhere] = useState<Where>("once");
+  const standing = useOps<{ ideas: StandingIdea[]; builtIn: { key: string; label: string }[] }>("/manage/ops/ideas/standing");
 
   const plan = async () => {
     setBusy(true);
     setResult(null);
+    if (where !== "once") {
+      try {
+        await post("/manage/ops/ideas/standing", { text, target: where });
+        setText("");
+        standing.reload();
+      } catch {
+        /* toast shown */
+      } finally {
+        setBusy(false);
+      }
+      return;
+    }
     try {
       const r = await post<{ title: string; steps: PlannedStep[] }>("/manage/ops/ideas", { text });
       setResult(r);
@@ -52,12 +82,24 @@ export const IdeaBox = ({ onPlanned }: { onPlanned: () => void }) => {
   return (
     <Panel
       title={<span className="flex items-center gap-2"><Lightbulb className="size-4 text-gold" /> Plan an idea</span>}
-      sub="Write it in your own words. The agent turns it into posts, ads, ad sets or budget changes and schedules them with the usual notice; cancel anything you don't like."
+      sub="Write it in your own words and choose where it goes. Once: turned into scheduled posts or ads on the dates you mention. Organic posts / Meta ads / Both: added to the agent's regular idea mix and used every week until you remove it."
     >
+      <div className="mb-2 flex flex-wrap gap-1.5">
+        {WHERE.map((w) => (
+          <button
+            key={w.id}
+            onClick={() => setWhere(w.id)}
+            className={cn("rounded-full border px-3 py-1 text-xs font-medium", where === w.id ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:bg-accent")}
+          >
+            {w.label}
+          </button>
+        ))}
+      </div>
+      <p className="mb-2 text-xs text-muted-foreground">{WHERE.find((w) => w.id === where)?.help}</p>
       <Textarea rows={3} value={text} onChange={(e) => setText(e.target.value)} placeholder={`e.g. ${EXAMPLES[0]}`} disabled={busy} />
       <div className="mt-2 flex flex-wrap items-center gap-2">
         <Button disabled={busy || text.trim().length < 8} onClick={plan}>
-          {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} {busy ? "Planning…" : "Plan it"}
+          {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} {busy ? "Planning…" : where === "once" ? "Plan it" : "Add to the mix"}
         </Button>
         {!text && !busy && (
           <div className="flex flex-wrap gap-1.5">
@@ -87,6 +129,27 @@ export const IdeaBox = ({ onPlanned }: { onPlanned: () => void }) => {
             ))}
           </ul>
           <p className="mt-2 text-xs text-muted-foreground">Everything scheduled is on the Calendar and in Activity.</p>
+        </div>
+      )}
+      {standing.data && (
+        <div className="mt-4 border-t border-border pt-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Your ideas in the regular mix</p>
+          {standing.data.ideas.length ? (
+            <ul className="mt-2 space-y-1.5">
+              {standing.data.ideas.map((i) => (
+                <li key={i.key} className="flex items-start justify-between gap-3 text-sm">
+                  <span className="min-w-0">
+                    <b>{i.label}</b> <span className="text-xs text-muted-foreground">· {i.target === "both" ? "organic + ads" : i.target === "ads" ? "Meta ads" : "organic"}</span>
+                    <span className="block text-xs text-muted-foreground">{i.hint}</span>
+                  </span>
+                  <Button size="sm" variant="ghost" onClick={async () => { await remove(`/manage/ops/ideas/standing/${i.key}`); standing.reload(); }}>Remove</Button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-1 text-xs text-muted-foreground">None yet.</p>
+          )}
+          <p className="mt-2 text-xs text-muted-foreground">Built in: {standing.data.builtIn.map((b) => b.label).join(" · ")}</p>
         </div>
       )}
     </Panel>

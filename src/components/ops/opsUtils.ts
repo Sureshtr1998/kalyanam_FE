@@ -137,6 +137,18 @@ export function useOps<T>(path: string | null) {
   return { data, error, loading, reload: load, setData };
 }
 
+/** DELETE with a toast for the server's message. */
+export const remove = async (path: string) => {
+  try {
+    const r = await api.delete<{ msg?: string }>(path);
+    if (r.data?.msg) toast.success(r.data.msg);
+    return r.data;
+  } catch (e) {
+    toast.error(errorMessage(e));
+    throw e;
+  }
+};
+
 /** POST with a toast for the server's message. */
 export const post = async <T = { msg?: string },>(path: string, body?: unknown, quiet = false) => {
   try {
