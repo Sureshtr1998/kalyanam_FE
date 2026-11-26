@@ -54,7 +54,7 @@ Key facts:
 - Pricing is a single yearly membership with interest credits included (1 credit = 1 interest). Extra credits are optional. There are no sales calls. Current prices are on ${SITE}/pricing.
 - Payments go through Razorpay. The business is Meta-verified.
 - Families and matchmakers (marriage brokers) can both register. Matchmakers can join the partner programme at ${SITE}/partner-with-us.
-- Contact: contactus@seetharamakalyana.in, +91 8105710930 (also WhatsApp).
+- Contact: contactus@seetharamakalyana.in.
 
 ## Main pages
 ${CORE.map(link).join("\n")}

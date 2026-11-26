@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BadgeIndianRupee, ChartLine, Megaphone, MessageCircle } from "lucide-react";
+import { BadgeIndianRupee, ChartLine, Megaphone, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ import type { BrokerRegistrationForm } from "@/utils/brokerInterface";
 import type { ImageFile } from "@/utils/interfaces";
 import {
   MIN_PASSWORD_LENGTH,
-  SUPPORT_NUMBER,
+  SUPPORT_EMAIL,
   UPLOAD_REUSE_MS,
   brokerFormDefaultVals,
 } from "@/utils/constants";
@@ -188,8 +188,8 @@ const PartnerWithUs = () => {
           <div className="mt-4 flex flex-col items-center justify-between gap-3 rounded-2xl border border-gold/40 bg-accent p-4 sm:flex-row">
             <p className="text-sm font-medium">{t("contact_support")}</p>
             <Button asChild className="bg-success text-success-foreground hover:bg-success/90">
-              <a href={`https://wa.me/${SUPPORT_NUMBER}`} target="_blank" rel="noreferrer">
-                <MessageCircle />
+              <a href={`mailto:${SUPPORT_EMAIL}`}>
+                <Mail />
                 {t("contact_button")}
               </a>
             </Button>

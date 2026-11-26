@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { LANGUAGES, localeOf, localePath, splitLocalePath, TRANSLATED_PATHS } from "@/lib/i18n";
-import { BRAND_SPELLINGS, SEO_URL, SITE_NAME, SOCIAL_PROFILES, SUPPORT_EMAIL, SUPPORT_PHONE } from "@/utils/constants";
+import { BRAND_SPELLINGS, SEO_URL, SITE_NAME, SOCIAL_PROFILES, SUPPORT_EMAIL } from "@/utils/constants";
 
 type JsonLd = Record<string, unknown>;
 
@@ -71,7 +71,6 @@ export default function SEO({
         "@type": "ContactPoint",
         contactType: "customer support",
         email: SUPPORT_EMAIL,
-        telephone: SUPPORT_PHONE.replace(/\s/g, ""),
         areaServed: "IN",
         availableLanguage: ["English", "Kannada", "Hindi", "Telugu", "Tamil"],
       },

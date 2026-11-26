@@ -1,5 +1,5 @@
 import type { Lang } from "@/lib/i18n";
-import { SUPPORT_PHONE } from "../../utils/constants";
+import { SUPPORT_EMAIL } from "../../utils/constants";
 
 export const translations: Record<Lang, Record<string, string>> = {
   kn: {
@@ -17,7 +17,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     benefit_3_text:
       "ಒಮ್ಮೆ ನೋಂದಾಯಿಸಿದ ನಂತರ, ನಿಮ್ಮ ಅನನ್ಯ ರೆಫರಲ್ ಕೋಡ್ ಬಳಸಿಕೊಂಡು ಯಶಸ್ವಿಯಾಗಿ ನೋಂದಾಯಿಸಿದ ಎಲ್ಲಾ ಬಳಕೆದಾರರನ್ನು ನೋಡಲು ನೀವು ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಪ್ರವೇಶ ಪಡೆಯುತ್ತೀರಿ.",
     contact_support: "ವಿವರವಾದ ಕಮಿಷನ್ ರಚನೆಗಳು ಮತ್ತು ಬೆಂಬಲಕ್ಕಾಗಿ:",
-    contact_button: `${SUPPORT_PHONE}`,
+    contact_button: `${SUPPORT_EMAIL}`,
     onboarding_title: "ನಿಮ್ಮ 3-ಹಂತದ ಆನ್‌ಬೋರ್ಡಿಂಗ್ ಪ್ರಕ್ರಿಯೆ",
     step_1_title: "ನೋಂದಣಿ",
     step_1_desc:
@@ -70,7 +70,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     benefit_3_text:
       "Once registered, you will gain access to a dashboard to view all users who have registered successfully using your unique referral code.",
     contact_support: "For detailed commission structures and support:",
-    contact_button: `${SUPPORT_PHONE}`,
+    contact_button: `${SUPPORT_EMAIL}`,
     onboarding_title: "Your 3-Step Onboarding Process",
     step_1_title: "Registration",
     step_1_desc:
@@ -121,7 +121,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     benefit_3_text:
       "एक बार पंजीकृत होने के बाद, आपको अपने विशिष्ट रेफरल कोड का उपयोग करके सफलतापूर्वक पंजीकृत सभी उपयोगकर्ताओं को देखने के लिए एक डैशबोर्ड तक पहुंच प्राप्त होगी।",
     contact_support: "विस्तृत कमीशन संरचनाओं और समर्थन के लिए:",
-    contact_button: `${SUPPORT_PHONE}`,
+    contact_button: `${SUPPORT_EMAIL}`,
     onboarding_title: "आपकी 3-चरणीय ऑनबोर्डिंग प्रक्रिया",
     step_1_title: "पंजीकरण",
     step_1_desc:
@@ -173,7 +173,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     benefit_3_text:
       "பதிவு செய்தவுடன், உங்கள் தனிப்பட்ட பரிந்துரைக் குறியீட்டைப் பயன்படுத்தி வெற்றிகரமாகப் பதிவு செய்த அனைத்து பயனர்களையும் பார்க்க ஒரு டாஷ்போர்டை அணுகுவீர்கள்.",
     contact_support: "விரிவான கமிஷன் கட்டமைப்புகள் மற்றும் ஆதரவுக்காக:",
-    contact_button: `${SUPPORT_PHONE}`,
+    contact_button: `${SUPPORT_EMAIL}`,
     onboarding_title: "உங்கள் 3-படி ஆன்போர்டிங் செயல்முறை",
     step_1_title: "பதிவு",
     step_1_desc:
@@ -224,7 +224,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     benefit_3_text:
       "రిజిస్టర్ చేసుకున్న తర్వాత, మీ ప్రత్యేక రెఫరల్ కోడ్‌ని ఉపయోగించి విజయవంతంగా రిజిస్టర్ చేసుకున్న వినియోగదారులందరినీ చూడటానికి మీకు డాష్‌బోర్డ్ యాక్సెస్ లభిస్తుంది.",
     contact_support: "వివరణాత్మక కమిషన్ నిర్మాణాలు మరియు మద్దతు కోసం:",
-    contact_button: `${SUPPORT_PHONE}`,
+    contact_button: `${SUPPORT_EMAIL}`,
     onboarding_title: "మీ 3-దశల ఆన్‌బోర్డింగ్ ప్రక్రియ",
     step_1_title: "నమోదు",
     step_1_desc:

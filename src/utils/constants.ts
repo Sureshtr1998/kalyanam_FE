@@ -551,7 +551,6 @@ export const BRAND_SPELLINGS = [
 export const BRAND_COLOR = "#c2410c"
 
 export const SUPPORT_EMAIL = 'contactus@seetharamakalyana.in'
-export const SUPPORT_PHONE = '+91 8105710930'
 /**
  * The brand's official social profiles (full URLs). Listed as the organisation's
  * schema.org sameAs, which helps Google and AI assistants tie them to this site.
@@ -560,8 +559,6 @@ export const SOCIAL_PROFILES: string[] = [
   "https://www.facebook.com/seetharamakalyana.in",
   "https://www.instagram.com/seetharamakalyanamat/",
 ]
-/** SUPPORT_PHONE as digits only, for wa.me / tel: links. */
-export const SUPPORT_NUMBER = SUPPORT_PHONE.replace(/\D/g, "")
 
 // Prices come from the server at runtime (GET /pricing, see src/lib/pricing.ts):
 // an admin picks the pricing level in the panel.
