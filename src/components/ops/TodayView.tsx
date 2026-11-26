@@ -97,8 +97,7 @@ export const TodayView = ({ overview, reload, onOpenActivity }: { overview: Over
         <Kpi
           label="Meta funds"
           value={inr(kpi.funds)}
-          hint={kpi.runway != null ? `~${kpi.runway.toFixed(1)} days left` : "Not read yet"}
-          tone={kpi.runway != null && kpi.runway < 3 ? "bad" : kpi.runway != null && kpi.runway < 5 ? "warn" : undefined}
+          hint={kpi.runway != null ? `~${kpi.runway.toFixed(1)} days at last week's spend` : "Not read yet"}
         />
         <Kpi label="Spend · 7 days" value={inr(kpi.spend)} hint={kpi.cpm ? `${inr(kpi.cpm)} per new member` : "–"} />
         <Kpi label="Earned · 7 days" value={inr(kpi.earned)} hint={`${num(kpi.joined)} joined`} tone={kpi.earned >= kpi.spend ? "good" : "bad"} />

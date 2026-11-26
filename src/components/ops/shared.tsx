@@ -5,6 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MODULE_LABEL, inr, post, relative, when, type ActionStatus, type Mode, type OpsAction } from "./opsUtils";
 
+/** Earlier steps of a card that carries on with a next step. */
+const STEP_LABEL: Record<string, string> = {
+  "comments.hide": "hidden on the Page",
+  "organic.schedule": "scheduled on Facebook",
+};
+
 /* ------------------------------ small pieces ----------------------------- */
 
 export const Panel = ({ title, sub, actions, children, className }: { title?: ReactNode; sub?: ReactNode; actions?: ReactNode; children: ReactNode; className?: string }) => (
@@ -142,7 +148,12 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
         )}
       </div>
       <h4 className="mt-2 font-semibold leading-snug">{action.title}</h4>
-      {!compact && action.reason && <p className="mt-1 text-sm text-muted-foreground">{action.reason}</p>}
+      {!compact && action.reason && <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">{action.reason}</p>}
+      {(action.result?.steps ?? []).map((s) => (
+        <p key={`${s.type}-${s.at}`} className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+          <CircleCheck className="size-3.5 shrink-0 text-emerald-600" /> Done {relative(s.at)}: {STEP_LABEL[s.type] ?? s.title}
+        </p>
+      ))}
       {action.effect && open && <p className="mt-2 rounded-lg bg-muted px-3 py-2 text-xs"><span className="font-semibold">If nobody acts: </span>{action.effect}</p>}
       {action.error && <p className="mt-2 text-xs text-destructive">{action.error}</p>}
 

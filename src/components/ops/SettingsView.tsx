@@ -33,7 +33,6 @@ const LIMITS: { key: string; label: string; unit: string }[] = [
   { key: "scaleRoas", label: "Scale only at return of at least", unit: "x" },
   { key: "netRevenuePerMember", label: "Net revenue per paid member", unit: "₹" },
   { key: "losingCostPerMember", label: "Real cost per member that counts as losing (7 & 14 days)", unit: "₹" },
-  { key: "minRunwayDays", label: "Without auto top-up: don't scale with funds for fewer than", unit: "days" },
   { key: "adNoticeHours", label: "Notice before ad changes", unit: "h" },
   { key: "supportDelayHours", label: "Wait before replies & verification", unit: "h" },
   { key: "commentDeleteHours", label: "Delete hidden comments after", unit: "h" },
@@ -73,6 +72,7 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
   const auto = overview.automation;
   const [limits, setLimits] = useState(overview.limits);
   const [ads, setAds] = useState<AdsSettings | undefined>(overview.ads);
+  const [planEvenings, setPlanEvenings] = useState(!!overview.organic?.planEvenings);
   const [brief, setBrief] = useState(overview.brief);
   const [targets, setTargets] = useState(() =>
     nextMonths().map((m) => overview.targets.find((t) => t.month === m) ?? { month: m, members: 0, revenue: 0, spend: 0 })
@@ -227,7 +227,7 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
       {ads && (
         <Panel
           title="Ads rules"
-          sub="How the ads agent paces itself. Budget moves run any Monday (steps under 20% don't reset Meta's learning); new or paused ads and new ad sets only on batch days."
+          sub="How the ads agent paces itself. Budgets go up or down only on how the ads do, never on the prepaid balance. Budget moves run any Monday (steps under 20% don't reset Meta's learning); new or paused ads and new ad sets only on batch days."
         >
           <div className="space-y-2">
             {(
@@ -235,7 +235,6 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                 ["rebalance", "Move budget between languages", "From languages that cost ≥ 20% more per member to ones that cost ≥ 15% less. Total stays the same."],
                 ["pauseLosingAds", "Pause ads that cost far more", "Ads costing ≥ 1.8× their campaign per member over 14 days. Never leaves an ad set with fewer than 2 ads."],
                 ["newAdsets", "Create new ad sets", "Off until an ad set gets ~35+ members a week; a new one splits Meta's learning."],
-                ["autoTopUp", "Meta auto top-up is on", "Low funds alone don't block scaling; you're emailed only if the balance nearly runs out."],
               ] as const
             ).map(([key, label, help]) => (
               <label key={key} className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-2">
@@ -252,22 +251,10 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                 <span>Days between batches</span>
                 <span className="flex items-center gap-1"><Input className="h-8 w-20 text-right" inputMode="numeric" value={ads.batchEveryDays} onChange={(e) => setAds({ ...ads, batchEveryDays: Number(e.target.value) || 0 })} /><span className="w-8 text-xs text-muted-foreground">days</span></span>
               </label>
-              {ads.autoTopUp && (
-                <>
-                  <label className="flex items-center justify-between gap-2 rounded-xl border border-border px-3 py-2 text-sm">
-                    <span>Meta tops up below</span>
-                    <span className="flex items-center gap-1"><Input className="h-8 w-24 text-right" inputMode="numeric" value={ads.topUpBelow} onChange={(e) => setAds({ ...ads, topUpBelow: Number(e.target.value) || 0 })} /><span className="w-8 text-xs text-muted-foreground">₹</span></span>
-                  </label>
-                  <label className="flex items-center justify-between gap-2 rounded-xl border border-border px-3 py-2 text-sm">
-                    <span>Top-up amount</span>
-                    <span className="flex items-center gap-1"><Input className="h-8 w-24 text-right" inputMode="numeric" value={ads.topUpAmount} onChange={(e) => setAds({ ...ads, topUpAmount: Number(e.target.value) || 0 })} /><span className="w-8 text-xs text-muted-foreground">₹</span></span>
-                  </label>
-                </>
-              )}
             </div>
             <label className="block text-sm">
               <span className="font-medium">Email urgent alerts to</span>
-              <span className="block text-xs text-muted-foreground">Funds, account problems, disapproved ads, stalled delivery. Blank = every admin's account email.</span>
+              <span className="block text-xs text-muted-foreground">Account problems, disapproved ads, stalled delivery, a language without ads. Blank = every admin's account email.</span>
               <Input className="mt-1" type="email" placeholder="you@example.com" value={ads.alertEmail} onChange={(e) => setAds({ ...ads, alertEmail: e.target.value })} />
             </label>
             <label className="block text-sm">
@@ -279,6 +266,22 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
           </div>
         </Panel>
       )}
+
+      <Panel
+        title="Organic posts"
+        sub="Your /weekly-posts fill the evenings. Meta's API can't see posts you schedule in Business Suite, so the agent only plans evening posts when you turn this on (for weeks you skip /weekly-posts)."
+      >
+        <div className="space-y-2">
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-2">
+            <Checkbox className="mt-0.5" checked={planEvenings} onCheckedChange={(v) => setPlanEvenings(v === true)} />
+            <span className="text-sm">
+              <b>The agent plans next week's evening posts</b>
+              <span className="block text-xs text-muted-foreground">Every Thursday, 7:30 pm posts for evenings it doesn't already have. Leave off while you run /weekly-posts, or the evenings get two posts.</span>
+            </span>
+          </label>
+          <Button size="sm" disabled={!!busy} onClick={() => act("organic", () => post("/manage/ops/config", { organic: { planEvenings } }))}>Save</Button>
+        </div>
+      </Panel>
 
       <Panel title="Limits" sub="Guard rails the agent never crosses.">
         <div className="grid gap-2 sm:grid-cols-2">

@@ -30,6 +30,8 @@ export interface OpsAction {
   runAt?: string;
   ranAt?: string;
   error?: string;
+  /** Steps already done on this card (e.g. hidden, then waits to delete). */
+  result?: { steps?: { type: string; title: string; at: string }[] } & Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
   decidedBy?: string;
@@ -52,9 +54,6 @@ export interface AdsSettings {
   rebalance: boolean;
   pauseLosingAds: boolean;
   newAdsets: boolean;
-  autoTopUp: boolean;
-  topUpBelow: number;
-  topUpAmount: number;
   alertEmail: string;
   preferences: string;
 }
@@ -63,6 +62,7 @@ export interface Overview {
   modes: Record<ModuleId, Mode>;
   limits: Record<string, number>;
   ads?: AdsSettings;
+  organic?: { planEvenings: boolean };
   targets: { month: string; members: number; revenue: number; spend: number }[];
   brief: string;
   lastRuns: Record<string, { at: string; ok: boolean; error?: string; ms?: number; result?: unknown }>;

@@ -155,7 +155,6 @@ export const AdsView = () => {
   const w0 = done.slice(-14, -7);
   const funds = [...days].reverse().find((d) => d.funds != null)?.funds;
   const avg = w1.length ? sum(w1, "spend") / w1.length : 0;
-  const autoTopUp = !!data.settings?.autoTopUp;
   const runwayDays = avg && funds != null ? funds / avg : null;
   const calib = data.units.find((u) => u.metrics.calib)?.metrics.calib ?? 1;
   const placementTotal = data.placements.reduce((t, p) => t + p.spend, 0);
@@ -175,12 +174,7 @@ export const AdsView = () => {
         <Kpi
           label="Prepaid funds"
           value={inr(funds)}
-          hint={
-            runwayDays == null
-              ? "–"
-              : `~${runwayDays.toFixed(1)} days at ${inr(avg)}/day${autoTopUp ? ` · auto top-up ${inr(data.settings?.topUpAmount)} below ${inr(data.settings?.topUpBelow)}` : ""}`
-          }
-          tone={runwayDays != null && runwayDays < (autoTopUp ? 0.6 : 3) ? "bad" : undefined}
+          hint={runwayDays == null ? "–" : `~${runwayDays.toFixed(1)} days at ${inr(avg)}/day · for reference; never used for ad decisions`}
         />
         <Kpi label="Spend · 7 days" value={inr(sum(w1, "spend"))} hint={trend(sum(w1, "spend"), sum(w0, "spend"))} />
         <Kpi label="Real joins · 7 days" value={num(sum(w1, "joined"))} hint={`${cpp(sum(w1, "spend"), sum(w1, "joined"))} each · Meta says ${num(sum(w1, "paid"))}`} />
