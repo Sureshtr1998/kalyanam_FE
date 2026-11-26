@@ -70,6 +70,28 @@ export const StatusChip = ({ status }: { status: ActionStatus }) => {
  * One agent action: what, why, what happens if nobody acts, and the buttons.
  * Drafts (mail replies, comment replies) can be edited before they go out.
  */
+/** "2 h 30 min" from a gap in ms. */
+const span = (ms: number) => {
+  const min = Math.round(Math.abs(ms) / 60000);
+  const h = Math.floor(min / 60);
+  const d = Math.floor(h / 24);
+  if (d >= 2) return `${d} days`;
+  if (h >= 1) return `${h} h${min % 60 ? ` ${min % 60} min` : ""}`;
+  return `${Math.max(1, min)} min`;
+};
+
+/**
+ * Exactly when a planned action runs. The agent runs every 15 minutes, so an
+ * action goes out at the first run after its time. Shadow cards never run.
+ */
+const runLabel = (status: ActionStatus, runAt?: string) => {
+  if (!runAt) return "";
+  const gap = new Date(runAt).getTime() - Date.now();
+  if (status === "shadow") return `Shadow: logged only, not run (planned ${when(runAt)})`;
+  if (gap <= 0) return `Due now: goes out within 15 min (was due ${span(gap)} ago)`;
+  return `Runs ${when(runAt)} · in ${span(gap)}`;
+};
+
 export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAction; onChanged: () => void; compact?: boolean }) => {
   // Empty payloads are dropped by MongoDB, so never assume one exists.
   const action = { ...raw, payload: raw.payload ?? {} };
@@ -112,10 +134,7 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
         <StatusChip status={action.status} />
         <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{MODULE_LABEL[action.module]}</span>
         {action.runAt && open && action.status !== "idea" && (
-          <span className="ml-auto text-xs font-medium text-muted-foreground" title={when(action.runAt)}>
-            {action.status === "shadow" ? "would run " : "runs "}
-            {relative(action.runAt)}
-          </span>
+          <span className="ml-auto text-right text-xs font-medium text-muted-foreground">{runLabel(action.status, action.runAt)}</span>
         )}
         {action.status === "idea" && action.runAt && <span className="ml-auto text-xs text-muted-foreground">suggested {when(action.runAt)}</span>}
         {!open && (action.ranAt || action.updatedAt) && (
