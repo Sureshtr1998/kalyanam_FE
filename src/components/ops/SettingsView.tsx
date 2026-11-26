@@ -75,6 +75,7 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
   const [limits, setLimits] = useState(overview.limits);
   const [ads, setAds] = useState<AdsSettings | undefined>(overview.ads);
   const [planEvenings, setPlanEvenings] = useState(!!overview.organic?.planEvenings);
+  const [ownerUntil, setOwnerUntil] = useState(overview.organic?.ownerUntil ? overview.organic.ownerUntil.slice(0, 10) : "");
   const [brief, setBrief] = useState(overview.brief);
   const [targets, setTargets] = useState(() =>
     nextMonths().map((m) => overview.targets.find((t) => t.month === m) ?? { month: m, members: 0, revenue: 0, spend: 0 })
@@ -271,17 +272,21 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
 
       <Panel
         title="Organic posts"
-        sub="Your /weekly-posts fill the evenings. Meta's API can't see posts you schedule in Business Suite, so the agent only plans evening posts when you turn this on (for weeks you skip /weekly-posts)."
+        sub="The agent runs your organic posts: every Thursday it writes, designs and schedules next week. Meta's API can't see posts you schedule by hand in Business Suite, so days you scheduled yourself are set below and left alone."
       >
         <div className="space-y-2">
           <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-2">
             <Checkbox className="mt-0.5" checked={planEvenings} onCheckedChange={(v) => setPlanEvenings(v === true)} />
             <span className="text-sm">
-              <b>The agent plans next week's evening posts</b>
-              <span className="block text-xs text-muted-foreground">Every Thursday, 7:30 pm posts for evenings it doesn't already have. Leave off while you run /weekly-posts, or the evenings get two posts.</span>
+              <b>The agent plans and posts everything</b>
+              <span className="block text-xs text-muted-foreground">Each day: a 7:30 pm post, a 12:30 pm safety post and an 8:30 am story. Reels and videos aren't made by the agent.</span>
             </span>
           </label>
-          <Button size="sm" disabled={!!busy} onClick={() => act("organic", () => post("/manage/ops/config", { organic: { planEvenings } }))}>Save</Button>
+          <label className="flex items-center justify-between gap-2 rounded-xl border border-border px-3 py-2 text-sm">
+            <span>You scheduled posts by hand up to</span>
+            <Input type="date" className="h-8 w-40" value={ownerUntil} onChange={(e) => setOwnerUntil(e.target.value)} />
+          </label>
+          <Button size="sm" disabled={!!busy} onClick={() => act("organic", () => post("/manage/ops/config", { organic: { planEvenings, ownerUntil: ownerUntil || null } }))}>Save</Button>
         </div>
       </Panel>
 

@@ -64,7 +64,7 @@ export interface Overview {
   modes: Record<ModuleId, Mode>;
   limits: Record<string, number>;
   ads?: AdsSettings;
-  organic?: { planEvenings: boolean };
+  organic?: { planEvenings: boolean; ownerUntil?: string | null };
   targets: { month: string; members: number; revenue: number; spend: number }[];
   brief: string;
   lastRuns: Record<string, { at: string; ok: boolean; error?: string; ms?: number; result?: unknown }>;

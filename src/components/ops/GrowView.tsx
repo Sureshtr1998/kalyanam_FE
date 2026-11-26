@@ -12,6 +12,7 @@ interface Post {
   topic: string;
   angle?: string;
   format?: "card" | "join";
+  kind?: "post" | "safety" | "story";
   code?: string;
   caption: string;
   cta?: string;
@@ -92,7 +93,9 @@ export const OrganicView = () => {
         <p className="font-semibold">{when(p.publishAt)}</p>
         <p className="text-xs text-muted-foreground">
           {p.language} · {p.topic} · {p.platforms.join(" + ")}
-          {p.format === "join" && <span className="ml-1 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">Join post</span>}
+          {p.kind === "story" && <span className="ml-1 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold">Story</span>}
+          {p.kind === "safety" && <span className="ml-1 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold">Safety</span>}
+          {p.format === "join" && p.kind !== "story" && p.kind !== "safety" && <span className="ml-1 rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">Join post</span>}
         </p>
         {p.angle && <p className="mt-0.5 text-[11px] italic text-muted-foreground">{p.angle}</p>}
         {p.design?.headline && <p className="mt-1 text-sm font-semibold">{p.design.headline}</p>}
@@ -108,7 +111,7 @@ export const OrganicView = () => {
     <div className="space-y-4">
       <Panel
         title="Organic posts"
-        sub="Your /weekly-posts fill the evenings. The agent's own planner (Settings → Organic posts) is for weeks you skip them: it writes, designs and schedules 7:30 pm posts. Goal: sign-ups. Facebook posts carry a tracked link to the post's language page; Instagram says link in bio. Never boosted."
+        sub="Every Thursday the agent writes next week: a 7:30 pm post, a 12:30 pm safety post and an 8:30 am story each day, languages in turn. It designs the images and schedules them. Goal: sign-ups. Facebook posts carry a tracked link to the post's language page; Instagram says link in bio. Never boosted."
         actions={
           <Button size="sm" variant="outline" disabled={busy} onClick={async () => { setBusy(true); try { await post("/manage/ops/run/organicPlan"); reload(); } finally { setBusy(false); } }}>
             {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} Plan next week now
