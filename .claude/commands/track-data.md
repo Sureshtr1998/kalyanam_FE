@@ -6,6 +6,8 @@ Run the "track data" routine for Seetha Rama Kalyana. Read only: never edit ads,
 
 Follow the memory notes `track-data-routine`, `meta-ads-campaign-status` and `ads-account-structure-rule`.
 
+**Every verdict and recommendation follows the `meta-ads-playbook` skill** (the same rules the Ops agent runs: 7-day judgement confirmed on 14, real joins, moving budget between languages, the ad pause rule, batch days). The quickest source of numbers is the Ops API described in that skill (section 6).
+
 ## 0. Account structure (as of 15 Nov 2026): one campaign per language, same format in all 4
 
 Every campaign has 2 ad sets: **Parents 45-65 (4 ads)** and **Young 24-34 (2 ads)**. 24 ads in total, ₹8,000/day.
@@ -39,7 +41,7 @@ Open https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=33111394190
 - Spend, link clicks, CTR, CPC, CPM, frequency, landing page views, Leads, paid (Website completed registration), cost per paid
   - for today, yesterday, the last 7 days and lifetime
 - The same per ad set
-- Per ad: the top 3 and bottom 3 by cost per paid, and ads with **frequency above 2 or falling CTR** (fatigue)
+- Per ad: the top 3 and bottom 3 by cost per paid, ads that meet the playbook's pause rule, and fatigue (7-day frequency ≥ 2.5, or week-on-week CTR down 20% with cost up 15%)
 - Parents vs Young ad set in each language (which audience is cheaper).
 - WhatsApp placements (marketing messages + Status) as their own line
 - Total spend vs total budget (₹8,000/day), and the prepaid balance from Billing
@@ -59,7 +61,7 @@ Open https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=33111394190
 | Landing page views per click | 70–85% |
 | Leads per landing page view | 10–20% |
 | Paid per Lead | 10% or more |
-| Cost per paid member | ₹351 or less (break-even); scale rule: 3-day cost under ₹250 |
+| Cost per paid member | Real ₹285 or less (break-even); scale only at real ₹190 or less (1.5x) over 7 and 14 days (playbook) |
 | Frequency | under 2.5 |
 | CPM | ₹80–200 |
 

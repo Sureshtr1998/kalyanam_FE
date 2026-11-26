@@ -19,6 +19,7 @@ import { PhotoManager, type PhotoItem } from "@/components/profile/PhotoManager"
 import { BlockingLoader } from "@/components/common/Loaders";
 import { useCheckout, type PaidOrder } from "@/hooks/useCheckout";
 import { trackPixel } from "@/lib/pixel";
+import { newEventId, trackingContext } from "@/lib/attribution";
 import api from "@/utils/api";
 import { setItem, user_login_token } from "@/utils/localStore";
 import {
@@ -265,8 +266,9 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
       }
       // Pricing level 1: no checkout, the server creates the account straight away.
       setBusy("creating");
-      const res = await api.post("/user-register", { registration });
-      trackPixel("CompleteRegistration", { value: 0, currency: "INR", content_name: "Free registration" });
+      const eventId = newEventId();
+      const res = await api.post("/user-register", { registration, tracking: trackingContext(eventId) });
+      trackPixel("CompleteRegistration", { value: 0, currency: "INR", content_name: "Free registration" }, eventId);
       setItem(user_login_token, res.data);
       toast.success(t.welcome, { description: t.welcomeDesc });
       window.location.href = "/profile";

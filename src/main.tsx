@@ -8,8 +8,11 @@ import "@fontsource-variable/fraunces/opsz.css";
 import "./index.css";
 import App, { preloadRoute } from "./App.tsx";
 import { initPWA } from "./lib/pwa";
+import { captureAttribution } from "./lib/attribution";
 
 initPWA();
+// Remember which ad brought this visitor (utm tags, Meta click id) for their sign-up.
+captureAttribution();
 
 // Static meta tags in index.html (defaults, or the prerendered page's own) give way to the
 // ones <SEO> renders, so they are not duplicated.

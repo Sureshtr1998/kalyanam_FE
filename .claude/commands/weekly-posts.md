@@ -2,9 +2,10 @@
 description: Create next week's organic Facebook and Instagram posts, reels/videos and stories, and schedule them after approval
 ---
 
-Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `weekly-organic-social-workflow`. **Goal: bring more sign-ups**, not just likes. Every piece should make a family want to register.
+Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `weekly-organic-social-workflow` and the **`organic-playbook` skill** (tracked links, angles, writing rules, measuring). **Goal: bring more sign-ups**, not just likes. Every piece should make a family want to register.
 
 **0. Look back first (read only):**
+- **Start with sign-ups per post:** call the Ops API `GET /api/manage/ops/organic` from the logged-in admin tab (see the organic-playbook skill, section 6). Rank last month's pieces by sign-ups, then link clicks or profile visits, then engagement. Do more of the winners' angle, language and format.
 - Read the previous week's `APPROVAL_SHEET` in `C:\Users\Suresh\Downloads\SRK_social_week_*` so themes don't repeat.
 - Check Business Suite → Insights → Content (asset_id 914182555118025) for last week's top post and reel. Do more of what worked.
 - Check the `meta-ads-campaign-status` memory for the current best ad messages (e.g. Communities, For parents, Brand). Turn one into an organic post each week.
@@ -213,7 +214,9 @@ Each week, spread the lead languages evenly:
     | Tamil | seetharamakalyana.in/ta | இங்கே பதிவு செய்யுங்கள்: seetharamakalyana.in/ta |
     | Hindi | seetharamakalyana.in/hi | यहाँ रजिस्टर करें: seetharamakalyana.in/hi |
     | English (incl. Ramayana series) | seetharamakalyana.in | Register: seetharamakalyana.in |
-    - Facebook makes the link clickable. On Instagram, captions links are not clickable, so also add "Link in bio" there.
+    - **Facebook captions use the full tracked link** (since 26 Nov 2026), so sign-ups are counted per piece: `https://www.seetharamakalyana.in/<lang>?p=f<lang><MMDD><type>`, with type `p` post, `r` reel, `s` safety post. Example: `https://www.seetharamakalyana.in/te?p=fte1201r`. English has no `/<lang>` path: `https://www.seetharamakalyana.in/?p=fen1201p`.
+    - On Instagram, caption links can't be clicked, so write the short address and "Link in bio". The bio link is `?p=bio`.
+    - Hashtags: 2–3 on Facebook, 5–8 on Instagram.
     - Stories: put the lead language's link on the story image's footer.
   4. Then 5–8 hashtags, mixing #KannadaMatrimony #TeluguMatrimony #TamilMatrimony #HindiMatrimony #HinduMatrimony to match the lead.
   5. Then the AI line.
@@ -240,7 +243,10 @@ Each week, spread the lead languages evenly:
 6. Always click "Maybe later" on the Boost offer.
 7. Take a Planner screenshot, then give a summary, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
 
-**One-time (suggest once if not done):** pin 3 Instagram posts that answer "Is this real? How does it work? What does it cost?".
+**One-time (suggest once if not done):**
+- Pin 3 Instagram posts that answer "Is this real? How does it work? What does it cost?".
+- Set the Instagram bio link to `https://www.seetharamakalyana.in/?p=bio`.
+- Point the Facebook Page's "Sign up" button at `https://www.seetharamakalyana.in/?p=fbpage`.
 
 **Hard rules:**
 - **This command is organic only (user's rule, 15 Nov 2026).** Never open Ads Manager; never create, change, pause or delete ads; never make ad cuts; never Boost; never spend money. Paid ads are handled only in `/track-data` sessions, and only when the user asks.

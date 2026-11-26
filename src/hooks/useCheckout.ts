@@ -6,6 +6,7 @@ import { env } from "@/config/env";
 import { BRAND_COLOR, SEO_URL, SITE_NAME } from "@/utils/constants";
 import { errorMessage } from "@/lib/errors";
 import { trackPixel, type PixelEvent } from "@/lib/pixel";
+import { trackingContext } from "@/lib/attribution";
 
 const pixelEvents: Record<CheckoutRequest["purpose"], PixelEvent> = {
   registration: "CompleteRegistration",
@@ -59,7 +60,8 @@ export const useCheckout = ({ description, onPaid }: Options) => {
       }
       setIsStarting(true);
       try {
-        const { data } = await api.post("/create-order", request);
+        // Meta cookies and the ad's tags go along, so the server can report the sign-up to Meta too.
+        const { data } = await api.post("/create-order", { ...request, tracking: trackingContext() });
 
         await new Promise<void>((resolve) => {
           const options: RazorpayOrderOptions = {
@@ -73,11 +75,12 @@ export const useCheckout = ({ description, onPaid }: Options) => {
             handler: (response) => {
               resolve();
               // Razorpay amounts are in paise.
-              trackPixel(pixelEvents[request.purpose], {
-                value: data.amount / 100,
-                currency: data.currency,
-                content_name: description,
-              });
+              // The order id is also the server's event id, so Meta counts this once.
+              trackPixel(
+                pixelEvents[request.purpose],
+                { value: data.amount / 100, currency: data.currency, content_name: description },
+                data.orderId
+              );
               void onPaid({
                 orderId: response.razorpay_order_id,
                 paymentId: response.razorpay_payment_id,

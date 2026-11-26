@@ -45,9 +45,24 @@ export interface AccountDay {
   funds?: number;
 }
 
+/** Ops → Settings → Ads rules (OpsConfig.ads on the server). */
+export interface AdsSettings {
+  handsOffUntil: string | null;
+  batchEveryDays: number;
+  rebalance: boolean;
+  pauseLosingAds: boolean;
+  newAdsets: boolean;
+  autoTopUp: boolean;
+  topUpBelow: number;
+  topUpAmount: number;
+  alertEmail: string;
+  preferences: string;
+}
+
 export interface Overview {
   modes: Record<ModuleId, Mode>;
   limits: Record<string, number>;
+  ads?: AdsSettings;
   targets: { month: string; members: number; revenue: number; spend: number }[];
   brief: string;
   lastRuns: Record<string, { at: string; ok: boolean; error?: string; ms?: number; result?: unknown }>;
@@ -63,7 +78,7 @@ export interface Overview {
     byTask: { task: string; usd: number; calls: number }[];
   };
   accountDays: AccountDay[];
-  automation?: { ready: boolean; scheduled: boolean; error: string | null; lastTickMinutes: number | null; healthy: boolean };
+  automation?: { ready: boolean; scheduled: boolean; error: string | null; lastTickMinutes: number | null; healthy: boolean; stalled?: boolean; source?: string | null };
   weekly?: { body: string; period: string; createdAt: string; data?: { nextSteps?: unknown[] } } | null;
   jobs: string[];
 }

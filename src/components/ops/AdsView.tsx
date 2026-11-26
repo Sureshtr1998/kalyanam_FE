@@ -3,18 +3,53 @@ import { Loader2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ActionCard, DualBars, Empty, ErrorNote, Kpi, Panel } from "./shared";
-import { inr, num, post, useOps, type AccountDay, type OpsAction } from "./opsUtils";
+import { inr, num, post, useOps, type AccountDay, type AdsSettings, type OpsAction } from "./opsUtils";
 
 interface Unit {
   id: string;
   name: string;
+  language?: string;
   level: "campaign" | "adset";
   dailyBudget: number | null;
-  state: "learning" | "winning" | "healthy" | "tired" | "losing";
+  state: "learning" | "low_data" | "winning" | "healthy" | "losing";
+  flags?: { tired?: boolean };
   notes: string[];
-  metrics: { spend7: number; paid7: number; leads7: number; roas7: number; cpp7: number; frequency7: number };
+  metrics: {
+    spend7: number;
+    paid7: number;
+    leads7: number;
+    roas7: number;
+    roas14?: number;
+    cpp7: number;
+    cpp14?: number;
+    frequency7: number;
+    real7?: number | null;
+    spendRate7?: number | null;
+    calib?: number;
+  };
 }
 interface AdRow { _id: string; name: string; campaignName?: string; spend: number; paid: number; leads: number; clicks: number }
+interface IdeaRow { idea: string; label: string; language: string; audience: string; spend: number; paid: number; cpp: number | null; ads: number }
+interface Creative {
+  _id: string;
+  idea?: string;
+  ideaLabel?: string;
+  role?: "proven" | "test";
+  angle?: string;
+  review?: string;
+  verdict?: "win" | "even" | "lose" | "unclear";
+  results?: { note?: string };
+  campaignName?: string;
+  adsetName?: string;
+  language: string;
+  status: "design" | "ready" | "live" | "cancelled" | "failed";
+  imageUrl?: string;
+  design?: { kicker?: string; headline?: string; highlight?: string };
+  primaryText?: string;
+  translation?: string;
+  utmContent?: string;
+  createdAt: string;
+}
 interface AdsData {
   configured: boolean;
   latestDate: string | null;
@@ -24,14 +59,70 @@ interface AdsData {
   worstAds: AdRow[];
   placements: { _id: string; spend: number; paid: number; leads: number }[];
   actions: OpsAction[];
+  settings?: AdsSettings;
+  creatives?: Creative[];
+  ideas?: IdeaRow[];
 }
 
+const LANGS = ["Kannada", "Telugu", "Tamil", "Hindi", "English"];
+const VERDICT: Record<NonNullable<Creative["verdict"]>, { label: string; cls: string }> = {
+  win: { label: "Won", cls: "bg-success/15 text-success" },
+  even: { label: "Even", cls: "bg-accent text-accent-foreground" },
+  lose: { label: "Lost", cls: "bg-destructive/10 text-destructive" },
+  unclear: { label: "Too little delivery", cls: "bg-muted text-muted-foreground" },
+};
+
+/** Idea × language table for one audience: cost per member, blank where untested. */
+const IdeaTable = ({ rows, audience }: { rows: IdeaRow[]; audience: string }) => {
+  const mine = rows.filter((r) => r.audience === audience);
+  const ideas = [...new Set(mine.map((r) => r.idea))];
+  const langs = LANGS.filter((l) => mine.some((r) => r.language === l));
+  if (!ideas.length) return null;
+  const cell = (idea: string, lang: string) => mine.find((r) => r.idea === idea && r.language === lang);
+  const best = Math.min(...mine.filter((r) => r.paid >= 5 && r.cpp).map((r) => r.cpp as number));
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[420px] text-xs">
+        <thead>
+          <tr className="text-left text-muted-foreground">
+            <th className="py-1.5 pr-2 font-medium">Idea</th>
+            {langs.map((l) => <th key={l} className="px-2 py-1.5 text-right font-medium">{l}</th>)}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-border">
+          {ideas.map((idea) => (
+            <tr key={idea}>
+              <td className="py-1.5 pr-2 font-medium">{mine.find((r) => r.idea === idea)?.label}</td>
+              {langs.map((l) => {
+                const c = cell(idea, l);
+                return (
+                  <td key={l} className={cn("px-2 py-1.5 text-right", c?.cpp === best && "font-bold text-success")} title={c ? `${inr(c.spend)} · ${c.paid} members · ${c.ads} ad(s)` : "Not tried"}>
+                    {!c ? <span className="text-muted-foreground">–</span> : c.spend < 1500 ? <span className="text-muted-foreground">testing</span> : c.cpp ? inr(c.cpp) : "no joins"}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 const STATE: Record<Unit["state"], { label: string; cls: string; tip: string }> = {
-  winning: { label: "Winning", cls: "bg-success/15 text-success", tip: "Return ≥ target and steady: gets +10% once a week" },
-  healthy: { label: "Healthy", cls: "bg-accent text-accent-foreground", tip: "Paying its way: left alone" },
-  learning: { label: "Learning", cls: "bg-muted text-muted-foreground", tip: "Changed in the last 3 days: not judged yet" },
-  tired: { label: "Tired", cls: "bg-gold/20 text-gold-foreground", tip: "Same people see it too often: fresh creatives next change day" },
-  losing: { label: "Losing", cls: "bg-destructive/10 text-destructive", tip: "Cost per member over the limit: −15% once a week" },
+  winning: { label: "Winning", cls: "bg-success/15 text-success", tip: "Return at or above target over 7 and 14 days: +10% (or +15%) once a week, if it spends its budget" },
+  healthy: { label: "Healthy", cls: "bg-accent text-accent-foreground", tip: "Paying its way: budget may move to or from it on Mondays" },
+  learning: { label: "Learning", cls: "bg-muted text-muted-foreground", tip: "Changed recently: not judged until Meta has re-learned" },
+  low_data: { label: "Too early", cls: "bg-muted text-muted-foreground", tip: "Not enough spend or members in 7 days to judge" },
+  losing: { label: "Losing", cls: "bg-destructive/10 text-destructive", tip: "Real cost per member over the limit for 7 and 14 days: money moves to a cheaper language, or -15%" },
+};
+
+const CREATIVE_STATUS: Record<Creative["status"], string> = {
+  design: "Being drawn",
+  ready: "Ready, waiting for its day",
+  live: "Live",
+  cancelled: "Cancelled",
+  failed: "Failed",
 };
 
 const cpp = (spend: number, paid: number) => (paid ? inr(spend / paid) : spend ? "No joins" : "–");
@@ -64,6 +155,9 @@ export const AdsView = () => {
   const w0 = done.slice(-14, -7);
   const funds = [...days].reverse().find((d) => d.funds != null)?.funds;
   const avg = w1.length ? sum(w1, "spend") / w1.length : 0;
+  const autoTopUp = !!data.settings?.autoTopUp;
+  const runwayDays = avg && funds != null ? funds / avg : null;
+  const calib = data.units.find((u) => u.metrics.calib)?.metrics.calib ?? 1;
   const placementTotal = data.placements.reduce((t, p) => t + p.spend, 0);
   const openActions = data.actions.filter((a) => ["scheduled", "needs_you", "shadow"].includes(a.status));
   const trend = (a: number, b: number) => (b ? `${a >= b ? "▲" : "▼"} ${Math.abs(Math.round(((a - b) / b) * 100))}% vs last week` : "");
@@ -78,7 +172,16 @@ export const AdsView = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-        <Kpi label="Prepaid funds" value={inr(funds)} hint={avg && funds != null ? `~${(funds / avg).toFixed(1)} days at ${inr(avg)}/day` : "–"} tone={avg && funds != null && funds / avg < 3 ? "bad" : undefined} />
+        <Kpi
+          label="Prepaid funds"
+          value={inr(funds)}
+          hint={
+            runwayDays == null
+              ? "–"
+              : `~${runwayDays.toFixed(1)} days at ${inr(avg)}/day${autoTopUp ? ` · auto top-up ${inr(data.settings?.topUpAmount)} below ${inr(data.settings?.topUpBelow)}` : ""}`
+          }
+          tone={runwayDays != null && runwayDays < (autoTopUp ? 0.6 : 3) ? "bad" : undefined}
+        />
         <Kpi label="Spend · 7 days" value={inr(sum(w1, "spend"))} hint={trend(sum(w1, "spend"), sum(w0, "spend"))} />
         <Kpi label="Real joins · 7 days" value={num(sum(w1, "joined"))} hint={`${cpp(sum(w1, "spend"), sum(w1, "joined"))} each · Meta says ${num(sum(w1, "paid"))}`} />
         <Kpi
@@ -101,7 +204,10 @@ export const AdsView = () => {
         </Panel>
       )}
 
-      <Panel title="Campaigns & ad sets" sub="How the agent sees each budget right now.">
+      <Panel
+        title="Campaigns & ad sets"
+        sub={`How the agent sees each budget right now, judged on 7 days and confirmed on 14. Real return counts Meta's members ×${calib.toFixed(2)}, because Meta misses some joins (our joins ÷ Meta's, last 14 days).`}
+      >
         {data.units.length === 0 ? (
           <Empty>No active campaigns in the latest snapshot.</Empty>
         ) : (
@@ -109,15 +215,38 @@ export const AdsView = () => {
             {data.units.map((u) => (
               <div key={u.id} className="rounded-xl border border-border p-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", STATE[u.state].cls)} title={STATE[u.state].tip}>{STATE[u.state].label}</span>
+                  <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-semibold", (STATE[u.state] ?? STATE.healthy).cls)} title={(STATE[u.state] ?? STATE.healthy).tip}>
+                    {(STATE[u.state] ?? STATE.healthy).label}
+                  </span>
+                  {u.flags?.tired && (
+                    <span
+                      className="rounded-full bg-gold/20 px-2 py-0.5 text-[11px] font-semibold text-gold-foreground"
+                      title="Same people see these ads too often, or clicks fell while cost rose: fresh ads on the next batch day"
+                    >
+                      Tired ads
+                    </span>
+                  )}
                   <span className="min-w-0 flex-1 truncate font-semibold">{u.name}</span>
                   <span className="text-sm font-semibold">{u.dailyBudget ? `${inr(u.dailyBudget)}/day` : ""}</span>
                 </div>
-                <div className="mt-2 grid grid-cols-4 gap-2 text-center text-xs">
+                <div className="mt-2 grid grid-cols-2 gap-2 text-center text-xs sm:grid-cols-5">
                   <div><p className="text-muted-foreground">Spend 7d</p><p className="font-semibold">{inr(u.metrics.spend7)}</p></div>
-                  <div><p className="text-muted-foreground">Paid 7d</p><p className="font-semibold">{u.metrics.paid7}</p></div>
-                  <div><p className="text-muted-foreground">Per member</p><p className="font-semibold">{cpp(u.metrics.spend7, u.metrics.paid7)}</p></div>
-                  <div><p className="text-muted-foreground">Return</p><p className={cn("font-semibold", u.metrics.roas7 >= 1.5 ? "text-success" : u.metrics.roas7 < 1 ? "text-destructive" : "")}>{u.metrics.roas7.toFixed(2)}x</p></div>
+                  <div>
+                    <p className="text-muted-foreground">Members 7d</p>
+                    <p className="font-semibold">
+                      {u.metrics.paid7}
+                      {u.metrics.real7 != null && <span className="font-normal text-muted-foreground"> · {u.metrics.real7} {u.language ?? ""} joined</span>}
+                    </p>
+                  </div>
+                  <div><p className="text-muted-foreground">Per member 7d</p><p className="font-semibold">{cpp(u.metrics.spend7, u.metrics.paid7)}</p></div>
+                  <div><p className="text-muted-foreground">Per member 14d</p><p className="font-semibold">{u.metrics.cpp14 != null && Number.isFinite(u.metrics.cpp14) ? inr(u.metrics.cpp14) : "–"}</p></div>
+                  <div className="col-span-2 sm:col-span-1">
+                    <p className="text-muted-foreground">Real return</p>
+                    <p className={cn("font-semibold", u.metrics.roas7 >= 1.5 ? "text-success" : u.metrics.roas7 < 1 ? "text-destructive" : "")}>
+                      {u.metrics.roas7.toFixed(2)}x
+                      {u.metrics.spendRate7 != null && <span className="font-normal text-muted-foreground"> · spends {Math.round(u.metrics.spendRate7 * 100)}%</span>}
+                    </p>
+                  </div>
                 </div>
                 {u.notes.length > 0 && <p className="mt-2 text-xs text-muted-foreground">{u.notes.join(" ")}</p>}
               </div>
@@ -142,6 +271,66 @@ export const AdsView = () => {
           </Panel>
         ))}
       </div>
+
+      {(data.ideas?.length ?? 0) > 0 && (
+        <Panel
+          title="Idea library · 60 days"
+          sub="Cost per member for each idea, by language. Fresh ads repeat the best proven idea and test the most promising untried one. “testing” = under ₹1,500 spent so far."
+        >
+          <div className="space-y-4">
+            {["parents", "young"].map((a) => (
+              <div key={a}>
+                <p className="mb-1 text-sm font-semibold">{a === "parents" ? "Parents 45–65" : "Young 24–34"}</p>
+                <IdeaTable rows={data.ideas!} audience={a} />
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
+
+      {(data.creatives?.length ?? 0) > 0 && (
+        <Panel title="Ads the agent made" sub="Drawn in your winning ads' layout. Each has its own utm_content, so its joins show separately. Check the English version.">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {data.creatives!.map((c) => (
+              <div key={c._id} className="overflow-hidden rounded-xl border border-border">
+                {c.imageUrl ? (
+                  <img src={c.imageUrl} alt={c.design?.headline ?? "Ad"} className="aspect-[4/5] w-full bg-muted object-cover" loading="lazy" />
+                ) : (
+                  <div className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-1 bg-muted/60 p-4 text-center">
+                    <span className="text-xs font-semibold text-primary">{c.design?.kicker}</span>
+                    <span className="font-semibold">{c.design?.headline}</span>
+                    <span className="font-semibold text-primary">{c.design?.highlight}</span>
+                  </div>
+                )}
+                <div className="space-y-1 p-3 text-xs">
+                  <p className="font-semibold">
+                    {c.campaignName}
+                    {c.adsetName ? ` › ${c.adsetName}` : ""}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {CREATIVE_STATUS[c.status]}
+                    {c.utmContent ? ` · ${c.utmContent}` : ""}
+                  </p>
+                  {c.ideaLabel && (
+                    <p className="flex flex-wrap items-center gap-1">
+                      <span className="rounded-full bg-primary/10 px-1.5 py-0.5 font-semibold text-primary">{c.role === "proven" ? "Proven" : "Test"}: {c.ideaLabel}</span>
+                      {c.verdict && <span className={cn("rounded-full px-1.5 py-0.5 font-semibold", VERDICT[c.verdict].cls)}>{VERDICT[c.verdict].label}</span>}
+                    </p>
+                  )}
+                  {c.results?.note && <p className="text-muted-foreground">{c.results.note}</p>}
+                  {c.angle && <p className="italic text-muted-foreground">{c.angle}</p>}
+                  {c.translation && (
+                    <details>
+                      <summary className="cursor-pointer font-medium text-primary">In English</summary>
+                      <p className="mt-1 whitespace-pre-line text-muted-foreground">{c.translation}</p>
+                    </details>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Panel>
+      )}
 
       {data.placements.length > 0 && (
         <Panel title="Where the money went · 7 days">
