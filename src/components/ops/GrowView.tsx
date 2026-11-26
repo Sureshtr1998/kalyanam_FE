@@ -59,7 +59,8 @@ interface OrganicData {
   posts: Post[];
   stories?: Story[];
   storyConcepts?: StoryConcept[];
-  stats: { period: string; posts: PostStat[]; totals: { facebook: number; instagram: number; bio: number; total: number } } | null;
+  stats: { period: string; posts: PostStat[]; totals: { facebook: number; instagram: number; bio: number; total: number }; insightsErrors?: Record<string, string> } | null;
+  storyInsightsErrors?: Record<string, string> | null;
   signups: Record<string, number>;
 }
 
@@ -121,6 +122,16 @@ export const OrganicView = () => {
         <Kpi label="From Facebook" value={num(total - fromInstagram)} hint="Post links and comment replies" />
         <Kpi label="From Instagram" value={num(fromInstagram)} hint={`${num(data.signups.bio ?? 0)} via the bio link`} />
       </div>
+
+      {Object.keys({ ...(data.stats?.insightsErrors ?? {}), ...(data.storyInsightsErrors ?? {}) }).length > 0 && (
+        <ErrorNote>
+          Meta didn't share some numbers (reach, clicks, profile visits), so posts and stories are ranked on sign-ups and likes only.{" "}
+          {Object.entries({ ...(data.stats?.insightsErrors ?? {}), ...(data.storyInsightsErrors ?? {}) })
+            .slice(0, 3)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(" · ")}
+        </ErrorNote>
+      )}
 
       {ranked.length > 0 && (
         <Panel title="What brought sign-ups · 28 days" sub={`All Page and Instagram posts, yours and the agent's, ranked by sign-ups, then clicks. Updated ${data.stats?.period ?? ""}. Posts without a ?p= code can't be traced to sign-ups.`}>
