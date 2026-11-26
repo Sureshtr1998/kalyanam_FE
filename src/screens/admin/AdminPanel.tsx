@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import {
   BadgeCheck,
   Ban,
@@ -40,6 +40,7 @@ import { AbandonedCheckouts } from "@/components/staff/AbandonedCheckouts";
 import { MemberReferrals } from "@/components/staff/MemberReferrals";
 import { AdSpend } from "@/components/staff/AdSpend";
 import { Backups } from "@/components/staff/Backups";
+import { OpsPanel } from "@/components/ops/OpsPanel";
 import { useUser } from "@/context/UserContext";
 import api from "@/utils/api";
 import { cn } from "@/lib/utils";
@@ -446,7 +447,9 @@ const Payments = () => {
 
 const AdminPanel = () => {
   const { user, loaded } = useUser();
-  const [tab, setTab] = useState("overview");
+  // ?tab=ops opens a tab directly (e.g. a phone home-screen bookmark to the Ops panel).
+  const [params] = useSearchParams();
+  const [tab, setTab] = useState(() => params.get("tab") || "overview");
   const [summary, setSummary] = useState<Summary | null>(null);
   const [referralFilter, setReferralFilter] = useState<string | undefined>();
 
@@ -481,6 +484,7 @@ const AdminPanel = () => {
       <Tabs value={tab} onValueChange={(v) => { setTab(v); if (v !== "members") setReferralFilter(undefined); }}>
         <TabsList className="mb-4 h-auto w-full flex-wrap justify-start bg-card p-1 shadow-sm ring-1 ring-border sm:w-fit">
           {[
+            ["ops", "Ops"],
             ["overview", "Overview"],
             ["members", "Members"],
             ["partners", `Partners${summary?.brokers?.pending ? ` (${summary.brokers.pending} new)` : ""}`],
@@ -495,6 +499,9 @@ const AdminPanel = () => {
             </TabsTrigger>
           ))}
         </TabsList>
+        <TabsContent value="ops">
+          <OpsPanel />
+        </TabsContent>
         <TabsContent value="overview">
           <Overview summary={summary} />
         </TabsContent>

@@ -1,0 +1,94 @@
+import { useState } from "react";
+import { Lightbulb, Loader2, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { Panel } from "./shared";
+import { post } from "./opsUtils";
+
+interface PlannedStep {
+  kind: "organic_post" | "ad_creatives" | "new_adset" | "budget" | "unsupported";
+  summary: string;
+  date: string;
+  status: string;
+  error?: string;
+}
+
+const KIND: Record<PlannedStep["kind"], string> = {
+  organic_post: "Post",
+  ad_creatives: "New ads",
+  new_adset: "New ad set",
+  budget: "Budget",
+  unsupported: "Not possible",
+};
+
+const EXAMPLES = [
+  "Diwali posts in Kannada, Telugu, Tamil and Hindi from 1 to 5 Nov",
+  "Try an ad for second marriages, ages 35–50, in Bengaluru with ₹500/day",
+  "Push Telugu harder this weekend",
+];
+
+/** Type an idea; the agent turns it into scheduled posts, ads, ad sets or budget changes. */
+export const IdeaBox = ({ onPlanned }: { onPlanned: () => void }) => {
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<{ title: string; steps: PlannedStep[] } | null>(null);
+
+  const plan = async () => {
+    setBusy(true);
+    setResult(null);
+    try {
+      const r = await post<{ title: string; steps: PlannedStep[] }>("/manage/ops/ideas", { text });
+      setResult(r);
+      setText("");
+      onPlanned();
+    } catch {
+      /* toast shown */
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Panel
+      title={<span className="flex items-center gap-2"><Lightbulb className="size-4 text-gold" /> Plan an idea</span>}
+      sub="Write it in your own words. The agent turns it into posts, ads, ad sets or budget changes and schedules them with the usual notice; cancel anything you don't like."
+    >
+      <Textarea rows={3} value={text} onChange={(e) => setText(e.target.value)} placeholder={`e.g. ${EXAMPLES[0]}`} disabled={busy} />
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <Button disabled={busy || text.trim().length < 8} onClick={plan}>
+          {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} {busy ? "Planning…" : "Plan it"}
+        </Button>
+        {!text && !busy && (
+          <div className="flex flex-wrap gap-1.5">
+            {EXAMPLES.slice(1).map((e) => (
+              <button key={e} onClick={() => setText(e)} className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground hover:bg-accent">
+                {e}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      {result && (
+        <div className="mt-4 rounded-xl bg-muted/60 p-3">
+          <p className="text-sm font-semibold">{result.title}</p>
+          <ul className="mt-2 space-y-1.5">
+            {result.steps.map((s, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm">
+                <span className="mt-0.5 shrink-0 rounded-md bg-card px-1.5 text-[11px] font-semibold">{KIND[s.kind]}</span>
+                <span className="min-w-0 flex-1">
+                  {s.summary} <span className="text-xs text-muted-foreground">· {s.date}</span>
+                  {s.error && <span className="block text-xs text-destructive">{s.error}</span>}
+                </span>
+                <span className={cn("shrink-0 text-[11px] font-semibold uppercase", s.status === "needs_you" ? "text-destructive" : "text-success")}>
+                  {s.status === "needs_you" ? "needs you" : s.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-xs text-muted-foreground">Everything scheduled is on the Calendar and in Activity.</p>
+        </div>
+      )}
+    </Panel>
+  );
+};
