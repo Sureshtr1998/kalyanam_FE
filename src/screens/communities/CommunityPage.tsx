@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowRight, BadgeCheck, EyeOff, Heart, Sparkles, Users } from "lucide-react";
+import { ArrowRight, BadgeCheck, EyeOff, Heart, Languages, MapPin, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -14,6 +14,7 @@ import { SEO_URL } from "@/utils/constants";
 import { usePricing } from "@/lib/pricing";
 import { communities } from "./seoComm";
 import { communityDetails } from "./communityDetails";
+import { citiesForCommunity, languagesForCommunity, relatedCommunities } from "@/lib/seoLinks";
 
 /** Landing page for one community, e.g. /communities/brahmin-matrimony. */
 const CommunityPage = () => {
@@ -25,7 +26,9 @@ const CommunityPage = () => {
   const { name, sub } = community;
   const subs = sub.split(",").map((s) => s.trim()).filter(Boolean);
   const url = `${SEO_URL}/communities/${community.slug}`;
-  const related = communities.filter((c) => c.slug !== community.slug).slice(0, 8);
+  const related = relatedCommunities(community.slug);
+  const langLinks = languagesForCommunity(community.slug);
+  const cityLinks = citiesForCommunity(community.slug);
   const detail = communityDetails[community.slug];
 
   const faqs = [
@@ -168,7 +171,29 @@ const CommunityPage = () => {
 
       <section className="border-t border-border bg-accent/40">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <h2 className="mb-5 font-display text-2xl font-bold">Other communities</h2>
+          {(langLinks.length > 0 || cityLinks.length > 0) && (
+            <div className="mb-10 flex flex-wrap gap-3">
+              {langLinks.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold hover:border-gold/60">
+                  <Languages className="size-4 text-primary" />
+                  {l.label}
+                </Link>
+              ))}
+              {cityLinks.map((c) => (
+                <Link
+                  key={c.to}
+                  to={c.to}
+                  className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold hover:border-gold/60">
+                  <MapPin className="size-4 text-primary" />
+                  {c.label}
+                </Link>
+              ))}
+            </div>
+          )}
+          <h2 className="mb-5 font-display text-2xl font-bold">Related communities</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((c) => (
               <Link

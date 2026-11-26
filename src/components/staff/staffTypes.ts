@@ -31,6 +31,10 @@ export interface MemberRow {
 
 export interface MemberDetail extends UserDetails {
   _id: string;
+  /** Asked for help with the OTP codes (OtpVerifyDialog "Copy message"). */
+  verifyHelp?: { at?: string; email?: string; mobile?: string };
+  /** Verified by the admin's auto-verify mode, without OTPs. */
+  autoVerifiedAt?: string;
   stats: {
     remainingCredits: number;
     sent: number;

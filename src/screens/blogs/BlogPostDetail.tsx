@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { pagesForPost } from "@/lib/seoLinks";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/misc/SEO";
 import NotFound from "@/screens/notFound/NotFound";
@@ -24,6 +25,8 @@ const BlogPostPage = () => {
     .sort((a, b) => b.s - a.s || a.p.id - b.p.id)
     .slice(0, 3)
     .map(({ p }) => p);
+  // Landing pages this post is about (communities, languages, cities), so its readers and Google reach them.
+  const pages = pagesForPost(post);
   const url = `${SEO_URL}/blog/${post.slug}`;
   const published = post.publishedAt ?? BLOG_PUBLISHED;
   const updated = post.updatedAt ?? BLOG_UPDATED;
@@ -125,6 +128,19 @@ const BlogPostPage = () => {
             </section>
           ))}
         </div>
+        <nav aria-label="Related matrimony pages" className="mt-10 rounded-2xl border border-gold/40 bg-accent/40 p-5">
+          <h2 className="font-display text-xl font-bold">Related matrimony pages</h2>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {pages.map((p) => (
+              <Link
+                key={p.to}
+                to={p.to}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold hover:border-gold/60 hover:text-primary">
+                {p.label} <ArrowRight className="size-3.5" />
+              </Link>
+            ))}
+          </div>
+        </nav>
       </article>
       <section className="border-t border-border bg-accent/30">
         <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">

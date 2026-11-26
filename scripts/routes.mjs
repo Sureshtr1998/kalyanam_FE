@@ -50,7 +50,7 @@ const englishPages = () => [
   ["/faq", "monthly", "0.7", "2026-11-17"],
   ["/partner-with-us", "monthly", "0.6", "2026-11-01"],
   ["/contact-us", "yearly", "0.5", "2026-11-17"],
-  ["/terms", "yearly", "0.3", "2026-11-17"],
+  ["/terms", "yearly", "0.3", "2026-11-20"],
   ["/privacy", "yearly", "0.3", "2026-11-17"],
   ["/refund-policy", "yearly", "0.3", "2026-11-17"],
   ...blogPosts().map((p) => [`/blog/${p.slug}`, "monthly", "0.7", p.updatedAt]),

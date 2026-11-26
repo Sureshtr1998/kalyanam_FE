@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, CreditCard, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, CreditCard, ShieldCheck, Ticket, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,10 +91,14 @@ const eighteenYearsAgo = () => {
 const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) => void }) => {
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<BasicDetailsIn>({ ...formDefaultVals.basic, referralId: "" } as BasicDetailsIn);
+  const [showReferral, setShowReferral] = useState(false);
   // Refer & earn links (/?join=1&ref=CODE) fill in the friend's code. Read after mount for hydration.
   useEffect(() => {
     const ref = new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase();
-    if (ref && /^[A-Z0-9]{7}$/.test(ref)) setForm((f) => (f.referralId ? f : { ...f, referralId: ref }));
+    if (ref && /^[A-Z0-9]{7}$/.test(ref)) {
+      setForm((f) => (f.referralId ? f : { ...f, referralId: ref }));
+      setShowReferral(true);
+    }
   }, []);
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -152,6 +156,7 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
   const code = referralOk ? (form.referralId?.trim().toUpperCase() ?? "") : "";
   const amount = code && !DISCOUNT_NAMES.includes(code) ? pricing.referralFee : pricing.registrationFee;
   const free = amount <= 0;
+  const referralApplied = !!code && code.length === 7;
 
   const validate = (s: Step) => {
     const e: Record<string, string> = {};
@@ -353,14 +358,58 @@ const RegistrationForm = ({ setCurrentForm }: { setCurrentForm: (f: FormType) =>
             <Field label={t.altNumber} hint={t.optional} error={errors.alternateMob}>
               <Input inputMode="numeric" value={form.alternateMob} onChange={(e) => set("alternateMob", e.target.value.replace(/\D/g, "").slice(0, 10))} className="h-10 bg-card" />
             </Field>
+          </FieldGrid>
+          {/* Most people have no code; keep the field closed so nobody thinks it's needed. */}
+          {showReferral ? (
             <Field
               label={t.referral}
-              hint={t.referralHint}
-              error={form.referralId && !referralOk ? t.invalidReferral : undefined}
-              className="sm:col-span-2">
-              <Input value={form.referralId ?? ""} maxLength={7} onChange={(e) => set("referralId", e.target.value.toUpperCase())} className="h-10 bg-card font-mono uppercase" />
+              hint={
+                referralApplied ? (
+                  <span className="inline-flex items-center gap-1 font-medium text-success">
+                    <Check className="size-3.5" />
+                    {t.referralApplied}
+                  </span>
+                ) : (
+                  t.referralHint
+                )
+              }
+              error={form.referralId && form.referralId.length === 7 && !referralOk ? t.invalidReferral : errors.referralId}>
+              <div className="flex gap-2">
+                <Input
+                  value={form.referralId ?? ""}
+                  maxLength={7}
+                  autoFocus={!form.referralId}
+                  onChange={(e) => set("referralId", e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""))}
+                  aria-invalid={(!!form.referralId && !referralOk) || undefined}
+                  className="h-10 bg-card font-mono uppercase tracking-widest"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-10 shrink-0"
+                  aria-label={t.referralRemove}
+                  title={t.referralRemove}
+                  onClick={() => {
+                    set("referralId", "");
+                    setShowReferral(false);
+                  }}>
+                  <X />
+                </Button>
+              </div>
             </Field>
-          </FieldGrid>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowReferral(true)}
+              className="flex items-center gap-3 rounded-xl border border-dashed border-border px-4 py-3 text-left transition-colors hover:bg-muted/50">
+              <Ticket className="size-5 shrink-0 text-muted-foreground" />
+              <span className="flex flex-col">
+                <span className="text-sm font-semibold text-primary">{t.referralAsk}</span>
+                <span className="text-xs text-muted-foreground">{t.referralAskSub}</span>
+              </span>
+            </button>
+          )}
           <div className="flex items-center justify-between rounded-2xl border border-gold/40 bg-accent p-4">
             <div>
               <p className="text-sm font-semibold">{t.annual}</p>

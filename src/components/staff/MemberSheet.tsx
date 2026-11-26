@@ -231,6 +231,16 @@ export const MemberSheet = ({ id, kind, onClose, onChanged }: Props) => {
                     ) : (
                       <Badge variant="outline">Not verified</Badge>
                     )}
+                    {member.autoVerifiedAt && (
+                      <Badge variant="outline" title="Verified automatically, without OTP codes">
+                        Auto-verified {formatInstant(member.autoVerifiedAt)}
+                      </Badge>
+                    )}
+                    {!member.isVerified && member.verifyHelp?.at && (
+                      <Badge variant="outline" className="border-gold text-gold-foreground" title={`${member.verifyHelp.email ?? ""} · ${member.verifyHelp.mobile ?? ""}`}>
+                        Asked for help {formatInstant(member.verifyHelp.at, true)}
+                      </Badge>
+                    )}
                     {member.isHidden && <Badge variant="secondary"><EyeOff /> Hidden</Badge>}
                     {!member.hasCompleteProfile && <Badge variant="outline" className="border-gold text-gold-foreground">Incomplete</Badge>}
                     {member.isAdmin && <Badge><ShieldCheck /> Admin</Badge>}

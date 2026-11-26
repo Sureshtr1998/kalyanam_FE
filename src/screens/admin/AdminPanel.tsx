@@ -36,6 +36,7 @@ import { ConfirmButton } from "@/components/staff/MemberSheet";
 import { inr, type BrokerInfo, type Summary } from "@/components/staff/staffTypes";
 import { SignupBars, Stat } from "@/components/staff/StaffStats";
 import { PricingLevels } from "@/components/staff/PricingLevels";
+import { AutoVerifySetting } from "@/components/staff/AutoVerifySetting";
 import { AbandonedCheckouts } from "@/components/staff/AbandonedCheckouts";
 import { MemberReferrals } from "@/components/staff/MemberReferrals";
 import { AdSpend } from "@/components/staff/AdSpend";
@@ -512,6 +513,7 @@ const AdminPanel = () => {
               <Button size="xs" variant="ghost" onClick={() => setReferralFilter(undefined)}>Show everyone</Button>
             </div>
           )}
+          <AutoVerifySetting onChanged={loadSummary} />
           <MemberManager kind="admin" referralId={referralFilter} onChanged={loadSummary} />
         </TabsContent>
         <TabsContent value="partners">

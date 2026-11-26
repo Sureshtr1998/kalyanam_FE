@@ -101,7 +101,22 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
     `and email ID ${email}. I am not able to receive or enter the verification codes. ` +
     `${v.ask}\n\nThank you.`;
 
+  // Tells the server this member is stuck, once per open. If the admin's auto-verify mode is on,
+  // they're verified automatically 4 hours later (see /verification-help). Partners have no account yet.
+  const helpReported = useRef(false);
+  const reportHelp = () => {
+    if (variant !== "member" || helpReported.current) return;
+    helpReported.current = true;
+    api.post("/verification-help", { email, mobile }).catch(() => {
+      helpReported.current = false;
+    });
+  };
+  useEffect(() => {
+    if (!open) helpReported.current = false;
+  }, [open]);
+
   const copyHelp = async () => {
+    reportHelp();
     try {
       await navigator.clipboard.writeText(helpMessage);
       setCopied(true);
@@ -180,6 +195,7 @@ export const OtpVerifyDialog = ({ name, email, mobile, open, onOpenChange, onVer
             Still stuck? Copy this message and email it to{" "}
             <a
               href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(helpSubject)}&body=${encodeURIComponent(helpMessage)}`}
+              onClick={reportHelp}
               className="font-semibold text-primary hover:underline">
               {SUPPORT_EMAIL}
             </a>

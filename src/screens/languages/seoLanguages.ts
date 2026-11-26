@@ -90,7 +90,7 @@ export const languages: LanguagePage[] = [
       "Phere around the sacred fire, kanyadaan and sindoor daan",
     ],
     tip: "Add your community, gotra and home state; many families avoid a match within the same gotra.",
-    communities: ["agarwal-matrimony", "kayastha-matrimony", "rajput-matrimony", "yadav-matrimony", "jat-matrimony", "bhumihar-matrimony", "kurmi-matrimony"],
+    communities: ["agarwal-matrimony", "kayastha-matrimony", "rajput-matrimony", "yadav-matrimony", "jat-matrimony", "bhumihar-matrimony", "kurmi-matrimony", "maheshwari-matrimony", "baniya-matrimony", "teli-matrimony", "sonar-matrimony"],
     cities: ["delhi-ncr", "lucknow", "jaipur", "mumbai"],
   },
   {
