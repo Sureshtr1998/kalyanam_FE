@@ -6,6 +6,7 @@ Do next week's organic posts for Seetha Rama Kalyana. Follow the memory note `we
 
 **0. Look back first (read only):**
 - **Start with sign-ups per post:** call the Ops API `GET /api/manage/ops/organic` from the logged-in admin tab (see the organic-playbook skill, section 6). Rank last month's pieces by sign-ups, then link clicks or profile visits, then engagement. Do more of the winners' angle, language and format.
+- **Stories:** the same call returns `storyConcepts` (profile visits and replies per 100 reached, exit rate). Plan the 7 stories from the playbook's story concepts (section 2b): the top concept gets 2, keep 1 test, at least one per language.
 - Read the previous week's `APPROVAL_SHEET` in `C:\Users\Suresh\Downloads\SRK_social_week_*` so themes don't repeat.
 - Check Business Suite → Insights → Content (asset_id 914182555118025) for last week's top post and reel. Do more of what worked.
 - Check the `meta-ads-campaign-status` memory for the current best ad messages (e.g. Communities, For parents, Brand). Turn one into an organic post each week.
@@ -241,7 +242,8 @@ Each week, spread the lead languages evenly:
      - Fix IG: row → panel "Actions" → "Edit Reel" → paste into "Describe your reel…" → Next → Schedule.
      - Keep the caption text in a JS const inside the same call. A localStorage handoff pasted the word "null".
 6. Always click "Maybe later" on the Boost offer.
-7. Take a Planner screenshot, then give a summary, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
+7. **Register the week's stories** so their results are tracked per concept: from the admin tab, `POST https://api.seetharamakalyana.in/api/manage/ops/organic/stories` with the `x-auth-token` header (token from `localStorage.user_login_token`) and `{ "stories": [{ "at": "<ISO time>", "language": "Tamil", "concept": "why351" }, …] }`. Concept keys are in the organic-playbook (section 2b).
+8. Take a Planner screenshot, then give a summary, "Series: X/15 done, next theme: …", and next week's themes. Update series.json.
 
 **One-time (suggest once if not done):**
 - Pin 3 Instagram posts that answer "Is this real? How does it work? What does it cost?".

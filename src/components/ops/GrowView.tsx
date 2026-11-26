@@ -33,8 +33,32 @@ interface PostStat {
   profileVisits?: number | null;
   signups: number | null;
 }
+interface Story {
+  _id: string;
+  plannedAt?: string;
+  at?: string;
+  language?: string;
+  concept?: string;
+  permalink?: string;
+  reach?: number | null;
+  replies?: number | null;
+  profileVisits?: number | null;
+  follows?: number | null;
+  navigation?: { exited?: number | null };
+}
+interface StoryConcept {
+  concept: string;
+  stories: number;
+  avgReach: number;
+  profileVisitsPer100: number;
+  repliesPer100: number;
+  follows: number;
+  exitRate: number | null;
+}
 interface OrganicData {
   posts: Post[];
+  stories?: Story[];
+  storyConcepts?: StoryConcept[];
   stats: { period: string; posts: PostStat[]; totals: { facebook: number; instagram: number; bio: number; total: number } } | null;
   signups: Record<string, number>;
 }
@@ -83,7 +107,7 @@ export const OrganicView = () => {
     <div className="space-y-4">
       <Panel
         title="Organic posts"
-        sub="Every Thursday the agent writes posts for next week's free evenings (7:30 pm, languages in turn), designs their images and schedules them. Goal: sign-ups. Facebook posts carry a tracked link to the post's language page; Instagram says link in bio. Never boosted."
+        sub="Your /weekly-posts fill the evenings. The agent's own planner (Settings → Organic posts) is for weeks you skip them: it writes, designs and schedules 7:30 pm posts. Goal: sign-ups. Facebook posts carry a tracked link to the post's language page; Instagram says link in bio. Never boosted."
         actions={
           <Button size="sm" variant="outline" disabled={busy} onClick={async () => { setBusy(true); try { await post("/manage/ops/run/organicPlan"); reload(); } finally { setBusy(false); } }}>
             {busy ? <Loader2 className="animate-spin" /> : <Sparkles />} Plan next week now
@@ -121,6 +145,46 @@ export const OrganicView = () => {
           </ul>
         </Panel>
       )}
+
+      <Panel
+        title="Stories · 5 weeks"
+        sub="Instagram stories, read every 3 hours while they're live (the API shows a story for 24 hours only). Concepts are ranked by profile visits per 100 reached, the closest a story gets to a sign-up. /weekly-posts tags each story with its language and concept."
+      >
+        {(data.storyConcepts ?? []).length ? (
+          <ul className="mb-3 divide-y divide-border text-sm">
+            {(data.storyConcepts ?? []).map((c) => (
+              <li key={c.concept} className="flex items-start justify-between gap-3 py-2">
+                <span className="min-w-0">
+                  <span className="block font-medium">{c.concept}</span>
+                  <span className="block text-xs text-muted-foreground">{c.stories} stor{c.stories === 1 ? "y" : "ies"} · {num(c.avgReach)} reach on average</span>
+                </span>
+                <span className="shrink-0 text-right text-xs">
+                  <span className="block font-semibold">{c.profileVisitsPer100} profile visits / 100</span>
+                  <span className="block text-muted-foreground">
+                    {c.repliesPer100} replies / 100{c.exitRate != null ? ` · ${c.exitRate}% left` : ""}{c.follows ? ` · ${c.follows} follows` : ""}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Empty>No story results yet. They appear a few hours after a story goes live.</Empty>
+        )}
+        {(data.stories ?? []).length > 0 && (
+          <ul className="divide-y divide-border border-t border-border text-xs">
+            {(data.stories ?? []).slice(0, 14).map((s) => (
+              <li key={s._id} className="flex items-center justify-between gap-3 py-1.5">
+                <span className="min-w-0 truncate">
+                  {when(s.at ?? s.plannedAt ?? "")} · {s.language || "?"} · {s.concept || "not tagged"}
+                </span>
+                <span className="shrink-0 text-muted-foreground">
+                  {s.reach != null ? `${num(s.reach)} reach · ${num(s.profileVisits ?? 0)} visits · ${num(s.replies ?? 0)} replies` : "planned"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Panel>
 
       {past.length > 0 && (
         <Panel title="Published">

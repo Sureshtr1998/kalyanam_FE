@@ -46,6 +46,8 @@ const JOB_LABEL: Record<string, string> = {
   ideasAuto: "Plan waiting ideas",
   weeklyReview: "Weekly review",
   organicPlan: "Plan next week's posts",
+  organicStats: "Post results",
+  storyStats: "Story results",
   seoWeekly: "Search Console",
   tools: "Tools reading",
   support: "Check inbox",
