@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight, Repeat } from "lucide-react";
+import { ChevronLeft, ChevronRight, Repeat, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ActionCard, ErrorNote, Panel } from "./shared";
@@ -9,7 +9,26 @@ interface CalendarData {
   actions: OpsAction[];
   posts: { _id: string; publishAt: string; language: string; topic: string; caption: string; imageUrl: string; status: string }[];
   recurring: { at: string; module: ModuleId; title: string }[];
+  /** Hindu calendar entries the agent plans around (computed from the panchang). */
+  festivals?: Festival[];
 }
+
+interface Festival {
+  key: string;
+  name: string;
+  start: string;
+  end: string;
+  kind: "festival" | "auspicious" | "no_weddings";
+  regions: string[];
+  note: string;
+}
+
+const KIND_LABEL: Record<Festival["kind"], string> = { festival: "Festival", auspicious: "Auspicious", no_weddings: "No weddings" };
+const KIND_STYLE: Record<Festival["kind"], string> = {
+  festival: "border-gold/50 bg-gold/10",
+  auspicious: "border-success/40 bg-success/10",
+  no_weddings: "border-border bg-muted",
+};
 
 const DOT: Record<ModuleId, string> = {
   ads: "bg-primary",
@@ -62,6 +81,9 @@ export const CalendarView = () => {
   const dayActions = (data?.actions ?? []).filter((a) => a.runAt && istDay(a.runAt) === selected);
   const dayPosts = (data?.posts ?? []).filter((p) => istDay(p.publishAt) === selected);
   const dayRecurring = (data?.recurring ?? []).filter((r) => istDay(r.at) === selected);
+  const dayFestivals = (data?.festivals ?? []).filter((f) => f.start <= selected && f.end >= selected);
+  // Single-day festivals get a star on their day.
+  const festivalDays = useMemo(() => new Set((data?.festivals ?? []).filter((f) => f.kind !== "no_weddings" && f.start === f.end).map((f) => f.start)), [data]);
   const today = istDay(new Date().toISOString());
 
   return (
@@ -95,7 +117,10 @@ export const CalendarView = () => {
                   k === today && k !== selected && "ring-2 ring-gold"
                 )}
               >
-                {d.getDate()}
+                <span className="flex items-center gap-0.5">
+                  {d.getDate()}
+                  {festivalDays.has(k) && <Sparkles aria-label="Festival" className={cn("size-2.5", k === selected ? "text-primary-foreground" : "text-gold")} />}
+                </span>
                 <span className="flex h-1.5 gap-0.5">
                   {[...(info?.modules ?? [])].slice(0, 4).map((m) => <i key={m} className={cn("size-1.5 rounded-full", k === selected ? "bg-primary-foreground" : DOT[m])} />)}
                 </span>
@@ -105,6 +130,7 @@ export const CalendarView = () => {
         </div>
         <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
           {(Object.keys(DOT) as ModuleId[]).map((m) => <span key={m} className="flex items-center gap-1"><i className={cn("size-2 rounded-full", DOT[m])} />{MODULE_LABEL[m]}</span>)}
+          <span className="flex items-center gap-1"><Sparkles className="size-2.5 text-gold" />Festival</span>
         </div>
       </Panel>
 
@@ -112,6 +138,18 @@ export const CalendarView = () => {
         <h3 className="font-display text-xl font-bold">
           {new Date(`${selected}T12:00:00`).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })}
         </h3>
+        {dayFestivals.map((f) => (
+          <div key={f.key} className={cn("rounded-2xl border px-4 py-3 text-sm", KIND_STYLE[f.kind])}>
+            <p className="flex flex-wrap items-center gap-x-2 font-medium">
+              {f.name}
+              <span className="text-xs font-normal text-muted-foreground">
+                {KIND_LABEL[f.kind]} · {f.regions.length >= 4 ? "all languages" : f.regions.join(", ")}
+                {f.start !== f.end && ` · ${new Date(`${f.start}T12:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short" })} – ${new Date(`${f.end}T12:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`}
+              </span>
+            </p>
+            {f.note && <p className="mt-0.5 text-xs text-muted-foreground">{f.note}</p>}
+          </div>
+        ))}
         {dayRecurring.map((r) => (
           <div key={r.title} className="flex items-center gap-3 rounded-2xl border border-dashed border-border px-4 py-3 text-sm">
             <Repeat className="size-4 text-muted-foreground" />
@@ -130,7 +168,7 @@ export const CalendarView = () => {
           </div>
         ))}
         {dayActions.map((a) => <ActionCard key={a._id} action={a} onChanged={reload} />)}
-        {!dayActions.length && !dayPosts.length && !dayRecurring.length && (
+        {!dayActions.length && !dayPosts.length && !dayRecurring.length && !dayFestivals.length && (
           <p className="rounded-2xl border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">Nothing on this day.</p>
         )}
       </div>
