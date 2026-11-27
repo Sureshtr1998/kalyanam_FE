@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { UserProvider, useUser } from "@/context/UserContext";
+import { MembershipBanner } from "@/components/membership/Membership";
 import { getSession, isBroker, signOut } from "@/lib/session";
 import { cn } from "@/lib/utils";
 import { imageUrl } from "@/utils/constants";
@@ -159,6 +160,8 @@ const Shell = ({ children }: { children: ReactNode }) => {
       </header>
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-28 pt-6 sm:px-6 sm:pt-8 lg:pb-12">
+        {/* The Account page shows the full membership card instead. */}
+        {!broker && loaded && user._id && location.pathname !== "/account" && <MembershipBanner />}
         {children}
       </main>
 

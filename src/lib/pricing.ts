@@ -21,6 +21,9 @@ export interface Pricing {
   interestPacks: Record<PackKey, { amount: number; interests: number }>;
   astroFees: Record<AstroMode, number>;
   brokerRegistrationFee: number;
+  /** Membership renewal: one more year plus these interests. */
+  renewalFee?: number;
+  renewalInterests?: number;
 }
 
 export type PackKey = "basic" | "premium";

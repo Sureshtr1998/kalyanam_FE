@@ -53,6 +53,8 @@ const ProfileCard = ({ match, remaining, onRemoved }: Props) => {
   const age = ageFromFloating(basic.dob);
   const score = broker ? null : matchScore(user, match);
   const active = activityLabel(match.lastActiveAt);
+  // Ended but still in the 15-day grace period (paused profiles never reach other members).
+  const membershipEnding = !!match.membershipEndsAt && new Date(match.membershipEndsAt).getTime() < Date.now();
   const photos = basic.images?.length ?? 0;
   const motherTongue = basic.motherTongue ? fetchLabel(motherTongueOptions, basic.motherTongue) : null;
 
@@ -97,6 +99,13 @@ const ProfileCard = ({ match, remaining, onRemoved }: Props) => {
           {match.isVerified && (
             <span className="flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-bold text-success shadow-sm">
               <BadgeCheck className="size-3.5" /> Verified
+            </span>
+          )}
+          {membershipEnding && (
+            <span
+              className="rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-bold text-muted-foreground shadow-sm"
+              title="Their membership has ended. They may not reply to new interests until they renew.">
+              Membership ending
             </span>
           )}
           {isNewProfile(match.createdAt) && (

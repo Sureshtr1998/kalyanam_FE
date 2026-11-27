@@ -40,6 +40,7 @@ const LIMITS: { key: string; label: string; unit: string }[] = [
 ];
 
 const JOB_LABEL: Record<string, string> = {
+  membership: "Membership: reminders & hiding",
   adsSnapshot: "Ads snapshot",
   adsWeekly: "Ads budgets (Mondays)",
   adsPlan: "Ads batch: pauses & new ads",

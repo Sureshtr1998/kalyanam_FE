@@ -1,4 +1,5 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Ban, Copy, EyeOff, Heart, LogOut, Sparkles, Trash2, Zap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import SEO from "@/components/misc/SEO";
@@ -36,6 +37,8 @@ import { formatInstant } from "@/lib/dates";
 import { errorMessage } from "@/lib/errors";
 import { signOut } from "@/lib/session";
 import { cn } from "@/lib/utils";
+import { MarriageCard, MembershipCard } from "@/components/membership/Membership";
+import { useMembership } from "@/hooks/useMembership";
 
 const inr = (n?: number) =>
   new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n ?? 0);
@@ -64,6 +67,13 @@ const Accounts = () => {
   const [pack, setPack] = useState<PackKey | null>(null);
   const [blockId, setBlockId] = useState("");
   const [blocking, setBlocking] = useState(false);
+  const membership = useMembership();
+  const { hash } = useLocation();
+
+  // Renewal banners and reminders link to /account#membership (or #marriage).
+  useEffect(() => {
+    if (hash && membership) document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+  }, [hash, membership]);
 
   const blockById = async () => {
     setBlocking(true);
@@ -134,7 +144,9 @@ const Accounts = () => {
     <div className="mx-auto max-w-5xl">
       <SEO title="Account | Seetha Rama Kalyana" description="Your account." noindex />
       <BlockingLoader show={applying} message="Confirming your payment…" />
-      <PageHeader title="Account" description="Your credits, payments and privacy settings." />
+      <PageHeader title="Account" description="Your membership, credits, payments and privacy settings." />
+
+      <MembershipCard />
 
       {/* Balance */}
       <div className="mb-6 grid grid-cols-3 gap-3 sm:gap-4">
@@ -295,6 +307,10 @@ const Accounts = () => {
           <p className="mt-2 text-xs text-muted-foreground">Manage blocked members under Activity, Blocked.</p>
         </CardContent>
       </Card>
+
+      <div className="mb-4">
+        <MarriageCard />
+      </div>
 
       {/* Privacy & danger zone */}
       <div className="grid gap-4 md:grid-cols-2">

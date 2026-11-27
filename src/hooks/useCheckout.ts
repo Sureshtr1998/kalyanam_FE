@@ -13,6 +13,7 @@ const pixelEvents: Record<CheckoutRequest["purpose"], PixelEvent> = {
   interest: "Purchase",
   astro: "Purchase",
   broker: "SubmitApplication",
+  renewal: "Purchase",
 };
 
 export interface PaidOrder {
@@ -28,7 +29,8 @@ export type CheckoutRequest =
   | { purpose: "registration"; registration: Record<string, unknown> }
   | { purpose: "interest"; pack: "basic" | "premium" }
   | { purpose: "astro"; astro: Record<string, unknown> }
-  | { purpose: "broker"; broker: Record<string, unknown> };
+  | { purpose: "broker"; broker: Record<string, unknown> }
+  | { purpose: "renewal" };
 
 interface Options {
   description: string;

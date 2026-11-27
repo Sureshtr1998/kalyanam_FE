@@ -148,6 +148,8 @@ export interface UserDetails {
     hideProfiles?: string[]
     shortlisted?: string[]
     lastActiveAt?: string
+    /** Membership end date; past it (15-day grace) the profile shows "Membership ending". */
+    membershipEndsAt?: string
     createdAt?: string
     /** Only on "viewed you" lists. */
     viewedAt?: string

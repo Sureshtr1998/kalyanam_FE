@@ -52,6 +52,9 @@ import { LanguageSelect } from "@/components/common/LanguageSelect";
 import ganesh from "@/assets/ganesh.webp";
 import { homeText } from "./lang";
 import { LoginNotice, MembershipNotes } from "./LoginNotice";
+import { MembershipPaused } from "@/components/membership/Membership";
+import { MEMBERSHIP_REQUIRED, refreshMembership, useMembership } from "@/hooks/useMembership";
+import { isAxiosError } from "axios";
 
 // Divisible by every grid width (1, 2, 3 and 4 columns), so full pages never end on a half row.
 const PAGE_SIZE = 12;
@@ -131,6 +134,9 @@ const Home = () => {
   const [memberLang, setMemberLang] = useMemberLang(user.basic?.motherTongue);
   const lang = broker ? "en" : memberLang;
   const t = homeText[lang];
+  const membership = useMembership();
+  const browseBlocked =
+    !broker && !!membership && (membership.stage === "closed" || (membership.launched && membership.stage === "paused"));
 
   useEffect(() => {
     if (!loaded || !user._id || !filters) return;
@@ -144,6 +150,11 @@ const Home = () => {
         setTotal(res.data.totalProfiles);
       })
       .catch((err) => {
+        // Ended membership: the paused screen explains it, so no error toast.
+        if (isAxiosError(err) && err.response?.data?.code === MEMBERSHIP_REQUIRED) {
+          void refreshMembership(true);
+          return;
+        }
         if (!cancelled)
           toast.error("Couldn't load matches", {
             description: errorMessage(err),
@@ -223,6 +234,15 @@ const Home = () => {
       toggle: () => quick({ diet: vegOnly ? [] : ["Vegetarian"] }),
     },
   ];
+
+  if (browseBlocked && membership) {
+    return (
+      <div className="pt-4">
+        <SEO title="Matches | Seetha Rama Kalyana" description="Your matches." noindex />
+        <MembershipPaused m={membership} />
+      </div>
+    );
+  }
 
   return (
     <>
