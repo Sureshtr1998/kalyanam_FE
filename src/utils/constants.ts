@@ -533,7 +533,7 @@ export const mandatoryPartnerFields: (keyof PartnerDetailsIn)[] = [
 export const MAX_IMAGES = 3;
 export const MAX_FILE_SIZE_MB = 1;
 
-export const updatedDate = "November 20, 2026"
+export const updatedDate = "November 28, 2026"
 
 export const SITE_NAME = "Seetha Rama Kalyana"
 /**

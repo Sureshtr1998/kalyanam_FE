@@ -101,8 +101,29 @@ const faqItems: FAQItem[] = [
     id: "faq-8",
     question: "Is it easy to delete or hide my profile?",
     answer:
-      "Yes, you can manage profile visibility or delete your profile directly from the account settings.",
+      "Yes, you can manage profile visibility or delete your profile directly from the account settings. Profiles not visited for 90 days are also hidden from matches until you log in again.",
     icon: "pi pi-cog",
+  },
+  {
+    id: "faq-membership",
+    question: "How long is my membership valid?",
+    answer:
+      "Membership is valid for 1 year from the day you register. If you registered before 1 March 2027, your first year ends on 29 February 2028. You can see your end date under Account and renew there from 30 days before it ends. Renewing early adds a full year to your current end date, and unused credits carry over.",
+    icon: "pi pi-calendar",
+  },
+  {
+    id: "faq-expiry",
+    question: "What happens if I don't renew?",
+    answer:
+      "For 15 days after your membership ends, your profile stays visible and you can still reply to interests you have received. After that, your profile is hidden from other members until you renew. Nothing is deleted: renewing shows your profile again. Only an account that stays hidden and is not used for 2 years is deleted, and we warn you by email and WhatsApp 30 days and 2 days before.",
+    icon: "pi pi-clock",
+  },
+  {
+    id: "faq-married",
+    question: "My marriage is fixed. What should I do?",
+    answer:
+      "Congratulations! Open Account and choose Marriage fixed. Your profile is hidden from everyone and we stop all reminders. If plans change, you can reopen it from the same page.",
+    icon: "pi pi-heart",
   },
   {
     id: "faq-10",
