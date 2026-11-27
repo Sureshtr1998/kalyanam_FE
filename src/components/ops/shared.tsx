@@ -236,6 +236,14 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
         )
       ))}
 
+      {action.status === "failed" && ["ads", "organic", "support"].includes(action.module) && (
+        <div className="mt-3">
+          <Button size="sm" variant="outline" disabled={!!busy} onClick={() => run("retry", () => post(`/manage/ops/actions/${action._id}/retry`, {}, false, 120000))}>
+            {busy === "retry" ? <Loader2 className="animate-spin" /> : <Play />} Retry
+          </Button>
+        </div>
+      )}
+
       {undoable && (
         <div className="mt-3">
           <Button
