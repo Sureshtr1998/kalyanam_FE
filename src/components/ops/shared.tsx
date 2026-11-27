@@ -137,9 +137,10 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
     }
   };
 
-  const refund = (paymentId: string) =>
+  const refund = (paymentId: string, fromRazorpay: boolean) =>
     run(`refund-${paymentId}`, async () => {
-      await post(`/manage/users/${action.payload.userId}/refund`, { paymentId });
+      // A payment found in Razorpay (no account, or not on it) is refunded through the card itself.
+      await post(fromRazorpay ? `/manage/ops/actions/${action._id}/refund` : `/manage/users/${action.payload.userId}/refund`, { paymentId });
       // The refund went through; send the confirmation reply and close the card.
       await post(`/manage/ops/actions/${action._id}/run`, {}, true);
     });
@@ -194,12 +195,17 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
           {(action.payload.payments ?? []).map((p) => (
             <div key={p.paymentId} className="flex items-center justify-between gap-2 rounded-xl border border-border px-3 py-2">
               <div className="min-w-0 text-sm">
-                <p className="font-semibold">{inr(p.amount)} · {p.note || "Payment"}</p>
+                <p className="font-semibold">{inr(p.amount)} · {p.note || "Payment"}{p.date ? ` · ${new Date(p.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}` : ""}</p>
                 <p className="truncate font-mono text-xs text-muted-foreground">{p.paymentId}</p>
+                {p.source === "razorpay" && <p className="text-xs text-muted-foreground">Found in Razorpay by their {p.matchedBy ?? "email"} (no payment on an account)</p>}
               </div>
-              <Button size="sm" variant="destructive" disabled={!!busy || action.status === "shadow"} onClick={() => refund(p.paymentId)}>
-                {busy === `refund-${p.paymentId}` ? <Loader2 className="animate-spin" /> : null} Refund
-              </Button>
+              {p.refunded ? (
+                <span className="shrink-0 text-xs font-medium text-emerald-700">Refunded{p.refundId ? ` · ${p.refundId}` : " in Razorpay"}</span>
+              ) : (
+                <Button size="sm" variant="destructive" disabled={!!busy || action.status === "shadow"} onClick={() => window.confirm(`Refund ${inr(p.amount)} to this person through Razorpay?`) && refund(p.paymentId, p.source === "razorpay")}>
+                  {busy === `refund-${p.paymentId}` ? <Loader2 className="animate-spin" /> : null} Refund
+                </Button>
+              )}
             </div>
           ))}
         </div>

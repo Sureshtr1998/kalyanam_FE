@@ -22,7 +22,8 @@ export interface OpsAction {
     draft?: string;
     reply?: string;
     userId?: string | null;
-    payments?: { paymentId: string; amount: number; note?: string; date?: string }[];
+    /** source "razorpay": found in Razorpay by the person's email or mobile (no payment on an account). */
+    payments?: { paymentId: string; amount: number; note?: string; date?: string; source?: "razorpay"; matchedBy?: "email" | "mobile"; refunded?: boolean; refundId?: string }[];
     to?: string;
     from?: number;
     mode?: Mode;
