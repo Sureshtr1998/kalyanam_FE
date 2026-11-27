@@ -66,10 +66,25 @@ export interface AdsSettings {
   preferences: string;
 }
 
+/** Ops → Settings → WhatsApp alerts (OpsConfig.alerts on the server). */
+export interface AlertSettings {
+  /** "91XXXXXXXXXX", or "" when off. */
+  whatsapp: string;
+  lastSentAt: string | null;
+  lastError: string;
+  lastErrorAt: string | null;
+  /** MSG91 WhatsApp is set up on the server. */
+  ready: boolean;
+  template: string;
+  templateLanguage: string;
+  templateBody: string;
+}
+
 export interface Overview {
   modes: Record<ModuleId, Mode>;
   limits: Record<string, number>;
   ads?: AdsSettings;
+  alerts?: AlertSettings;
   organic?: { planEvenings: boolean; ownerUntil?: string | null };
   targets: { month: string; members: number; revenue: number; spend: number }[];
   brief: string;

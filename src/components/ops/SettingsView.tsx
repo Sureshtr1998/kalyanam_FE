@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Circle, Loader2, Play, Power } from "lucide-react";
+import { CheckCircle2, Circle, Loader2, MessageCircle, Play, Power, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -81,6 +81,9 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
     nextMonths().map((m) => overview.targets.find((t) => t.month === m) ?? { month: m, members: 0, revenue: 0, spend: 0 })
   );
   const [busy, setBusy] = useState<string | null>(null);
+  const alerts = overview.alerts;
+  const [whatsapp, setWhatsapp] = useState(alerts?.whatsapp ? alerts.whatsapp.replace(/^91/, "") : "");
+  const savedWhatsapp = alerts?.whatsapp ? alerts.whatsapp.replace(/^91/, "") : "";
 
   const act = async (key: string, fn: () => Promise<unknown>) => {
     setBusy(key);
@@ -124,6 +127,48 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
           The agent checks mail and comments every 15 minutes, reads Meta every 3 hours (urgent problems are emailed), moves ad budgets on Mondays, batches new and paused ads every 2 weeks, plans posts on Thursdays and writes a weekly review every Monday.
         </p>
       </Panel>
+
+      {alerts && (
+        <Panel
+          title={
+            <span className="flex items-center gap-2">
+              <MessageCircle className="size-4" />
+              WhatsApp alerts: {alerts.whatsapp ? "on" : "off"}
+            </span>
+          }
+          sub="Sent to your phone at once when something fails or breaks, when a member writes a 3rd time about a refund or a question the agent couldn't answer, for urgent mails (safety, legal, payment disputes) and anything else only you can handle. Meta and MSG91 balances are never sent: those are yours to watch. The same thing isn't sent twice within 12 hours."
+        >
+          <div className="space-y-2">
+            <label className="block text-sm">
+              <span className="font-medium">Your WhatsApp number</span>
+              <span className="mt-1 flex flex-wrap items-center gap-2">
+                <span className="text-sm text-muted-foreground">+91</span>
+                <Input className="h-9 w-44" inputMode="numeric" placeholder="10-digit mobile" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+                <Button size="sm" disabled={!!busy || whatsapp.trim() === savedWhatsapp} onClick={() => act("whatsapp", () => post("/manage/ops/config", { alerts: { whatsapp } }))}>
+                  {busy === "whatsapp" ? <Loader2 className="animate-spin" /> : null} Save
+                </Button>
+                <Button size="sm" variant="outline" disabled={!!busy || !alerts.whatsapp || !alerts.ready} onClick={() => act("whatsapp-test", () => post("/manage/ops/alerts/test", {}))}>
+                  {busy === "whatsapp-test" ? <Loader2 className="animate-spin" /> : <Send />} Send test
+                </Button>
+              </span>
+            </label>
+            {!alerts.ready && <p className="text-xs text-destructive">MSG91 WhatsApp isn't set up on the server (MSG91_AUTHKEY, MSG91_WHATSAPP_SENDER_ID, MSG91_WHATSAPP_API).</p>}
+            {alerts.lastError && (
+              <p className="text-xs text-destructive">
+                The last WhatsApp failed{alerts.lastErrorAt ? ` (${relative(alerts.lastErrorAt)})` : ""}: {alerts.lastError}. Alerts still go to your email.
+              </p>
+            )}
+            {alerts.lastSentAt && !alerts.lastError && <p className="text-xs text-muted-foreground">Last sent {relative(alerts.lastSentAt)}.</p>}
+            <details className="rounded-xl border border-border px-3 py-2 text-xs text-muted-foreground">
+              <summary className="cursor-pointer">The WhatsApp template behind it</summary>
+              <p className="mt-1">
+                WhatsApp lets a business start a chat only with a template Meta has approved. In MSG91 → WhatsApp → Templates it is <b>{alerts.template}</b> (category Utility, language English, code "{alerts.templateLanguage}") with this body:
+              </p>
+              <pre className="mt-1 whitespace-pre-wrap rounded-lg bg-muted p-2 font-sans">{alerts.templateBody}</pre>
+            </details>
+          </div>
+        </Panel>
+      )}
 
       <Panel title="What the agent may do" sub="Start in Shadow, read the Shadow log for a week or two, then switch to Live.">
         <div className="divide-y divide-border">
