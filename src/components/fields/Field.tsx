@@ -31,7 +31,7 @@ export const Field = ({
     )}
     {children}
     {error ? (
-      <p className="text-xs font-medium text-destructive">{error}</p>
+      <p data-field-error className="text-xs font-medium text-destructive">{error}</p>
     ) : hint ? (
       <p className="text-xs text-muted-foreground">{hint}</p>
     ) : null}

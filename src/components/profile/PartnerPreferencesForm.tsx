@@ -170,7 +170,7 @@ export const PartnerPreferencesForm = ({ value, onChange, errors = {}, writeNote
 
     <div className="grid gap-x-8 lg:grid-cols-2">
       <div>
-        <PrefGroup name="age" value={value} onChange={onChange} title="Age *" hint={errors.ageFrom || errors.ageTo ? "Please choose an age range" : undefined}>
+        <PrefGroup name="age" value={value} onChange={onChange} title="Age *" hint={errors.ageFrom || errors.ageTo ? <span data-field-error className="text-destructive">Please choose an age range</span> : undefined}>
           <RangeField
             explicit
             options={ageOptions}
@@ -198,7 +198,7 @@ export const PartnerPreferencesForm = ({ value, onChange, errors = {}, writeNote
         <PrefGroup name="martialStatus" value={value} onChange={onChange} title="Marital status" hint="Leave empty for any">
           <ChipGroup options={maritalOptions} value={value.martialStatus} onChange={(v) => onChange("martialStatus", v)} />
         </PrefGroup>
-        <PrefGroup name="employedIn" value={value} onChange={onChange} title="Employed in *" hint={errors.employedIn ? <span className="text-destructive">Choose at least one</span> : undefined}>
+        <PrefGroup name="employedIn" value={value} onChange={onChange} title="Employed in *" hint={errors.employedIn ? <span data-field-error className="text-destructive">Choose at least one</span> : undefined}>
           <ChipGroup options={employedInOptions} value={value.employedIn} onChange={(v) => onChange("employedIn", v)} />
         </PrefGroup>
       </div>

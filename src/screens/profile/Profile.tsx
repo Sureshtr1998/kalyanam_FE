@@ -57,7 +57,7 @@ const MANDATORY: Record<Section, string[]> = {
   partner: mandatoryPartnerFields,
 };
 
-const isEmpty = (v: unknown) => (Array.isArray(v) ? v.length === 0 : !v);
+const isEmpty =(v: unknown) => (Array.isArray(v) ? v.length === 0 : !v);
 
 const findErrors = (data: UserDetails): Errors => {
   const errors: Errors = { basic: {}, personal: {}, family: {}, partner: {} };
@@ -178,12 +178,11 @@ const Profile = () => {
     setShowErrors(true);
     const firstBad = SECTIONS.find((s) => errorCount(s.id));
     if (firstBad || !photos.length) {
+      // No toast: switch to the tab with gaps and scroll to the first red field (or the photo).
       if (firstBad) setTab(firstBad.id);
-      toast.error("A few details are missing", {
-        description: !photos.length
-          ? "Please add at least one photo."
-          : `Please fill the required fields in ${firstBad!.label} details.`,
-      });
+      requestAnimationFrame(() =>
+        document.querySelector("[data-field-error]")?.scrollIntoView({ behavior: "smooth", block: "center" })
+      );
       return;
     }
     if (!/^\d{10}$/.test(basic.mobile ?? "")) {
@@ -228,6 +227,11 @@ const Profile = () => {
         <div className="grid gap-6 p-4 sm:p-6 md:grid-cols-[1fr_1.1fr]">
           <div className="-mt-14 sm:-mt-16">
             <PhotoManager value={photos} onChange={setPhotos} />
+            {showErrors && !photos.length && (
+              <p data-field-error className="mt-2 text-xs font-medium text-destructive">
+                Please add at least one photo
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2">
