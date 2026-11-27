@@ -158,7 +158,7 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                 The last WhatsApp failed{alerts.lastErrorAt ? ` (${relative(alerts.lastErrorAt)})` : ""}: {alerts.lastError}. Alerts still go to your email.
               </p>
             )}
-            {alerts.lastSentAt && !alerts.lastError && <p className="text-xs text-muted-foreground">Last sent {relative(alerts.lastSentAt)}.</p>}
+            {alerts.lastSentAt && !alerts.lastError && <p className="text-xs text-muted-foreground">Last handed to MSG91 {relative(alerts.lastSentAt)}. Delivery shows in MSG91 → WhatsApp → Logs.</p>}
             <details className="rounded-xl border border-border px-3 py-2 text-xs text-muted-foreground">
               <summary className="cursor-pointer">The WhatsApp template behind it</summary>
               <p className="mt-1">
