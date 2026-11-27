@@ -52,6 +52,7 @@ const JOB_LABEL: Record<string, string> = {
   tools: "Tools reading",
   support: "Check inbox",
   comments: "Check comments",
+  reminders: "Reminders (unpaid & verify)",
 };
 
 const TASK_LABEL: Record<string, string> = {
