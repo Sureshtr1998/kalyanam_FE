@@ -50,6 +50,9 @@ interface Creative {
   utmContent?: string;
   /** e.g. "/kn/pricing"; null when the ad keeps the copied ad's link. */
   linkPage?: string | null;
+  /** When its launch card runs (scheduled ads). */
+  launchAt?: string | null;
+  liveAt?: string | null;
   createdAt: string;
 }
 interface AdsData {
@@ -67,6 +70,9 @@ interface AdsData {
 }
 
 const LANGS = ["Kannada", "Telugu", "Tamil", "Hindi", "English"];
+/** "28 Nov, 8:31 am" in IST. */
+const when = (iso: string) =>
+  new Date(iso).toLocaleString("en-IN", { timeZone: "Asia/Kolkata", day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true });
 const VERDICT: Record<NonNullable<Creative["verdict"]>, { label: string; cls: string }> = {
   win: { label: "Won", cls: "bg-success/15 text-success" },
   even: { label: "Even", cls: "bg-accent text-accent-foreground" },
@@ -286,8 +292,22 @@ export const AdsView = () => {
 
       {(data.creatives?.length ?? 0) > 0 && (
         <Panel title="Ads the agent made" sub="Drawn in your winning ads' layout. Each has its own utm_content, so its joins show separately. Check the English version.">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {data.creatives!.map((c) => (
+          {(() => {
+            const all = data.creatives!;
+            const groups: { key: string; title: string; items: Creative[]; folded?: boolean }[] = [
+              {
+                key: "scheduled",
+                title: "Scheduled",
+                items: all
+                  .filter((c) => c.status === "design" || c.status === "ready")
+                  .sort((a, b) => new Date(a.launchAt ?? "9999").getTime() - new Date(b.launchAt ?? "9999").getTime()),
+              },
+              { key: "live", title: "Live", items: all.filter((c) => c.status === "live") },
+              { key: "old", title: "Old / cancelled", items: all.filter((c) => c.status === "cancelled" || c.status === "failed"), folded: true },
+            ];
+            const grid = (items: Creative[]) => (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((c) => (
               <div key={c._id} className="overflow-hidden rounded-xl border border-border">
                 {c.imageUrl ? (
                   <img src={c.imageUrl} alt={c.design?.headline ?? "Ad"} className="aspect-[4/5] w-full bg-muted object-cover" loading="lazy" />
@@ -303,6 +323,10 @@ export const AdsView = () => {
                     {c.campaignName}
                     {c.adsetName ? ` › ${c.adsetName}` : ""}
                   </p>
+                  {(c.status === "design" || c.status === "ready") && c.launchAt && (
+                    <p className="font-semibold text-primary">Goes live {when(c.launchAt)}</p>
+                  )}
+                  {c.status === "live" && c.liveAt && <p className="font-semibold text-emerald-700">Live since {when(c.liveAt)}</p>}
                   <p className="text-muted-foreground">
                     {CREATIVE_STATUS[c.status]}
                     {c.utmContent ? ` · ${c.utmContent}` : ""}
@@ -324,8 +348,29 @@ export const AdsView = () => {
                   )}
                 </div>
               </div>
-            ))}
-          </div>
+                ))}
+              </div>
+            );
+            return (
+              <div className="space-y-4">
+                {groups.map((g) =>
+                  g.folded ? (
+                    g.items.length > 0 && (
+                      <details key={g.key}>
+                        <summary className="cursor-pointer text-sm font-semibold">{g.title} · {g.items.length}</summary>
+                        <div className="mt-2">{grid(g.items)}</div>
+                      </details>
+                    )
+                  ) : (
+                    <div key={g.key} className="space-y-2">
+                      <h4 className="text-sm font-semibold">{g.title} · {g.items.length}</h4>
+                      {g.items.length ? grid(g.items) : <p className="text-xs text-muted-foreground">None.</p>}
+                    </div>
+                  )
+                )}
+              </div>
+            );
+          })()}
         </Panel>
       )}
 
