@@ -48,6 +48,8 @@ interface Creative {
   primaryText?: string;
   translation?: string;
   utmContent?: string;
+  /** e.g. "/kn/pricing"; null when the ad keeps the copied ad's link. */
+  linkPage?: string | null;
   createdAt: string;
 }
 interface AdsData {
@@ -305,6 +307,7 @@ export const AdsView = () => {
                     {CREATIVE_STATUS[c.status]}
                     {c.utmContent ? ` · ${c.utmContent}` : ""}
                   </p>
+                  {c.linkPage && <p className="text-muted-foreground">Links to seetharamakalyana.in{c.linkPage}</p>}
                   {c.ideaLabel && (
                     <p className="flex flex-wrap items-center gap-1">
                       <span className="rounded-full bg-primary/10 px-1.5 py-0.5 font-semibold text-primary">{c.role === "proven" ? "Proven" : "Test"}: {c.ideaLabel}</span>

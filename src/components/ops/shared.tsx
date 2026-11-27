@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Check, Clock, Eye, Lightbulb, Loader2, Pause, Pencil, Play, X, AlertTriangle, Info, CircleCheck, CircleX } from "lucide-react";
+import { Check, Clock, Eye, Lightbulb, Loader2, Pause, Pencil, Play, X, AlertTriangle, Info, CircleCheck, CircleX, Sparkles, Undo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -105,6 +105,21 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
   const [editing, setEditing] = useState(false);
   const field = typeof action.payload.draft === "string" ? "draft" : typeof action.payload.reply === "string" ? "reply" : null;
   const [text, setText] = useState(field ? String(action.payload[field] ?? "") : "");
+  // "Format my mail": the text before formatting, so it can be put back.
+  const [beforeFormat, setBeforeFormat] = useState<string | null>(null);
+  const formatMail = async () => {
+    setBusy("format");
+    try {
+      // Writing in the member's language can take a little while.
+      const r = await post<{ draft: string }>(`/manage/ops/actions/${action._id}/format`, { text }, true, 120000);
+      setBeforeFormat(text);
+      setText(r.draft);
+    } catch {
+      /* toast already shown */
+    } finally {
+      setBusy(null);
+    }
+  };
   const open = ["scheduled", "needs_you", "idea", "shadow"].includes(action.status);
   // Ad changes the agent made can be reversed in Meta from here.
   const undoable = action.status === "done" && ["ads.budget", "ads.creative_launch", "ads.new_adset", "support.profile_change"].includes(action.type);
@@ -192,11 +207,26 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
 
       {field && (editing ? (
         <div className="mt-3 space-y-2">
-          <Textarea value={text} onChange={(e) => setText(e.target.value)} rows={6} className="text-sm" />
-          <div className="flex gap-2">
-            <Button size="sm" disabled={!!busy} onClick={() => run("save", async () => { await post(`/manage/ops/actions/${action._id}`, { [field]: text }); setEditing(false); })}>
+          {field === "draft" && (
+            <p className="text-xs text-muted-foreground">
+              Write in your own words, then press <b>Format my mail</b>: it becomes a structured mail in the member's language, with nothing added. Check it, then Save.
+            </p>
+          )}
+          <Textarea value={text} onChange={(e) => { setText(e.target.value); setBeforeFormat(null); }} rows={field === "draft" ? 10 : 6} className="text-sm" />
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" disabled={!!busy} onClick={() => run("save", async () => { await post(`/manage/ops/actions/${action._id}`, { [field]: text }); setEditing(false); setBeforeFormat(null); })}>
               <Check /> Save
             </Button>
+            {field === "draft" && (
+              <Button size="sm" variant="outline" disabled={!!busy || text.trim().length < 5} onClick={formatMail}>
+                {busy === "format" ? <Loader2 className="animate-spin" /> : <Sparkles />} {busy === "format" ? "Formatting…" : "Format my mail"}
+              </Button>
+            )}
+            {beforeFormat !== null && (
+              <Button size="sm" variant="ghost" disabled={!!busy} onClick={() => { setText(beforeFormat); setBeforeFormat(null); }}>
+                <Undo2 /> Undo format
+              </Button>
+            )}
             <Button size="sm" variant="ghost" onClick={() => setEditing(false)}>Back</Button>
           </div>
         </div>
