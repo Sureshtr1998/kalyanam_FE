@@ -69,6 +69,8 @@ export interface AdsSettings {
   midweekRaises?: boolean;
   /** The mid-week brake (−step when the last 3 days cost twice the usual). */
   brake?: boolean;
+  /** The daily budget ceiling raises itself when budgets earn their target. */
+  autoCeiling?: boolean;
   alertEmail: string;
   preferences: string;
 }

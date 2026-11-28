@@ -26,7 +26,7 @@ const MODE_HELP: Record<Mode, string> = {
 };
 
 const LIMITS: { key: string; label: string; unit: string }[] = [
-  { key: "maxDailySpend", label: "Max total daily ad budget", unit: "₹" },
+  { key: "maxDailySpend", label: "Daily budget ceiling (raises itself if switched on in Ads rules)", unit: "₹" },
   { key: "maxWeeklyIncreasePct", label: "Max budget increase per week", unit: "%" },
   { key: "stepUpPct", label: "Budget step up", unit: "%" },
   { key: "stepDownPct", label: "Budget step down", unit: "%" },
@@ -308,16 +308,17 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                 ["newAdsets", "Create new ad sets", "Off until an ad set gets ~35+ members a week; a new one splits Meta's learning."],
                 ["midweekRaises", "Raise winners on Thursdays too", "A second +10% step for a winning language, 3+ days after Monday's. The weekly +25% limit still applies."],
                 ["brake", "Mid-week brake", "If a language's last 3 days cost twice its usual (₹3,000+ spent), −15% without waiting for Monday. Ramp-up languages get an alert instead."],
+                ["autoCeiling", "Raise the daily ceiling by itself", "When budgets reach 90% of the ceiling (Limits) and the account earns its target return over 14 days: +25%, with a WhatsApp. Turn off to stop at a fixed number."],
               ] as const
             ).map(([key, label, help]) => (
               <label key={key} className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-2">
-                <Checkbox className="mt-0.5" checked={key === "midweekRaises" || key === "brake" ? ads[key] !== false : !!ads[key]} onCheckedChange={(v) => setAds({ ...ads, [key]: v === true })} />
+                <Checkbox className="mt-0.5" checked={key === "midweekRaises" || key === "brake" || key === "autoCeiling" ? ads[key] !== false : !!ads[key]} onCheckedChange={(v) => setAds({ ...ads, [key]: v === true })} />
                 <span className="text-sm"><b>{label}</b><span className="block text-xs text-muted-foreground">{help}</span></span>
               </label>
             ))}
             <div className="rounded-xl border border-border px-3 py-2 text-sm">
               <b>Ramp-up languages</b>
-              <span className="block text-xs text-muted-foreground">Newer languages that cost more for now: they never give budget away and are never cut. They can still receive money and be raised when they win.</span>
+              <span className="block text-xs text-muted-foreground">Newer languages that cost more for now: they never give budget away and are never cut. They can still receive money and be raised when they win. No end date unless you set one; if one still costs over 1.5× the others after 4 weeks, you get a WhatsApp to decide.</span>
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 {["Kannada", "Telugu", "Tamil", "Hindi"].map((l) => {
                   const list = ads.rampUp?.languages ?? [];
@@ -332,7 +333,7 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                   );
                 })}
                 <span className="flex items-center gap-1.5">
-                  until
+                  until (optional)
                   <Input type="date" className="h-8 w-40" value={ads.rampUp?.until ? ads.rampUp.until.slice(0, 10) : ""} onChange={(e) => setAds({ ...ads, rampUp: { languages: ads.rampUp?.languages ?? [], until: e.target.value || null } })} />
                 </span>
               </div>

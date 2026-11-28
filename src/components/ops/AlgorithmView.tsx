@@ -41,7 +41,8 @@ interface AlgorithmState {
   nextReviewAt: string | null;
   lastSummary: string;
   rules: Rule[];
-  fixed: string[];
+  ownerRules: string[];
+  safetyDefaults: string[];
   history: HistoryRow[];
   pending: OpsAction[];
 }
@@ -153,11 +154,21 @@ export const AlgorithmView = () => {
         </div>
       </Panel>
 
-      <Panel title="Your rules (never changed by the review)">
+      <Panel title="Your rules" sub="What you told the agent, and what you set in Settings. The review never changes these; you can.">
         <ul className="space-y-1.5 text-sm">
-          {data.fixed.map((f) => (
+          {data.ownerRules.map((f) => (
             <li key={f} className="flex items-start gap-2">
               <Lock className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" /> {f}
+            </li>
+          ))}
+        </ul>
+      </Panel>
+
+      <Panel title="Safety defaults" sub="Added by the agent to protect the account and Meta's learning. Not tuned by the review either.">
+        <ul className="space-y-1.5 text-sm text-muted-foreground">
+          {data.safetyDefaults.map((f) => (
+            <li key={f} className="flex items-start gap-2">
+              <Lock className="mt-0.5 size-3.5 shrink-0" /> {f}
             </li>
           ))}
         </ul>
