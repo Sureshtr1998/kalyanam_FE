@@ -11,7 +11,7 @@ interface Unit {
   language?: string;
   level: "campaign" | "adset";
   dailyBudget: number | null;
-  state: "learning" | "low_data" | "winning" | "healthy" | "losing";
+  state: "learning" | "low_data" | "winning" | "healthy" | "losing" | "ramping";
   flags?: { tired?: boolean };
   notes: string[];
   metrics: {
@@ -118,7 +118,8 @@ const IdeaTable = ({ rows, audience }: { rows: IdeaRow[]; audience: string }) =>
 };
 
 const STATE: Record<Unit["state"], { label: string; cls: string; tip: string }> = {
-  winning: { label: "Winning", cls: "bg-success/15 text-success", tip: "Return at or above target over 7 and 14 days: +10% (or +15%) once a week, if it spends its budget" },
+  winning: { label: "Winning", cls: "bg-success/15 text-success", tip: "Return at or above target over 7 and 14 days: +10% (or +15%) on Mondays and again on Thursdays, if it spends its budget and its audience isn't tired" },
+  ramping: { label: "Ramping up", cls: "bg-gold/15 text-foreground", tip: "A ramp-up language: costs more for now, but never gives budget away or gets cut; judged on its own trend" },
   healthy: { label: "Healthy", cls: "bg-accent text-accent-foreground", tip: "Paying its way: budget may move to or from it on Mondays" },
   learning: { label: "Learning", cls: "bg-muted text-muted-foreground", tip: "Changed recently: not judged until Meta has re-learned" },
   low_data: { label: "Too early", cls: "bg-muted text-muted-foreground", tip: "Not enough spend or members in 7 days to judge" },

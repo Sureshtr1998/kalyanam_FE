@@ -63,6 +63,12 @@ export interface AdsSettings {
   rebalance: boolean;
   pauseLosingAds: boolean;
   newAdsets: boolean;
+  /** Languages that never give budget away or get cut, until the date. */
+  rampUp?: { languages: string[]; until: string | null };
+  /** A second raise on Thursdays for winners. */
+  midweekRaises?: boolean;
+  /** The mid-week brake (−step when the last 3 days cost twice the usual). */
+  brake?: boolean;
   alertEmail: string;
   preferences: string;
 }

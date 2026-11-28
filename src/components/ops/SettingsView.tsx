@@ -304,13 +304,37 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
                 ["rebalance", "Move budget between languages", "From languages that cost ≥ 20% more per member to ones that cost ≥ 15% less. Total stays the same."],
                 ["pauseLosingAds", "Pause ads that cost far more", "Ads costing ≥ 1.8× their campaign per member over 14 days. Never leaves an ad set with fewer than 2 ads."],
                 ["newAdsets", "Create new ad sets", "Off until an ad set gets ~35+ members a week; a new one splits Meta's learning."],
+                ["midweekRaises", "Raise winners on Thursdays too", "A second +10% step for a winning language, 3+ days after Monday's. The weekly +25% limit still applies."],
+                ["brake", "Mid-week brake", "If a language's last 3 days cost twice its usual (₹3,000+ spent), −15% without waiting for Monday. Ramp-up languages get an alert instead."],
               ] as const
             ).map(([key, label, help]) => (
               <label key={key} className="flex cursor-pointer items-start gap-3 rounded-xl border border-border px-3 py-2">
-                <Checkbox className="mt-0.5" checked={!!ads[key]} onCheckedChange={(v) => setAds({ ...ads, [key]: v === true })} />
+                <Checkbox className="mt-0.5" checked={key === "midweekRaises" || key === "brake" ? ads[key] !== false : !!ads[key]} onCheckedChange={(v) => setAds({ ...ads, [key]: v === true })} />
                 <span className="text-sm"><b>{label}</b><span className="block text-xs text-muted-foreground">{help}</span></span>
               </label>
             ))}
+            <div className="rounded-xl border border-border px-3 py-2 text-sm">
+              <b>Ramp-up languages</b>
+              <span className="block text-xs text-muted-foreground">Newer languages that cost more for now: they never give budget away and are never cut. They can still receive money and be raised when they win.</span>
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                {["Kannada", "Telugu", "Tamil", "Hindi"].map((l) => {
+                  const list = ads.rampUp?.languages ?? [];
+                  return (
+                    <label key={l} className="flex cursor-pointer items-center gap-1.5">
+                      <Checkbox
+                        checked={list.includes(l)}
+                        onCheckedChange={(v) => setAds({ ...ads, rampUp: { until: ads.rampUp?.until ?? null, languages: v === true ? [...new Set([...list, l])] : list.filter((x) => x !== l) } })}
+                      />
+                      {l}
+                    </label>
+                  );
+                })}
+                <span className="flex items-center gap-1.5">
+                  until
+                  <Input type="date" className="h-8 w-40" value={ads.rampUp?.until ? ads.rampUp.until.slice(0, 10) : ""} onChange={(e) => setAds({ ...ads, rampUp: { languages: ads.rampUp?.languages ?? [], until: e.target.value || null } })} />
+                </span>
+              </div>
+            </div>
             <div className="grid gap-2 sm:grid-cols-2">
               <label className="flex items-center justify-between gap-2 rounded-xl border border-border px-3 py-2 text-sm">
                 <span>No ad changes before</span>
