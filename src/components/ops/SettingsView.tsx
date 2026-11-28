@@ -172,6 +172,25 @@ export const SettingsView = ({ overview, reload }: { overview: Overview; reload:
         </Panel>
       )}
 
+      {overview.reminders && (
+        <Panel
+          title="Reminders · last 24 hours"
+          sub="Unpaid sign-ups (2 h after leaving, then every 3 days) and unverified members (1, 4 and 7 days after joining). At most 3 per person, 8 am – 9 pm."
+        >
+          <div className="grid gap-2 text-sm sm:grid-cols-4">
+            <p><b>{overview.reminders.unpaid}</b> to unpaid sign-ups</p>
+            <p><b>{overview.reminders.verify}</b> to unverified members</p>
+            <p><b>{overview.reminders.whatsapp}</b> also on WhatsApp</p>
+            <p><b>{overview.reminders.paidAfter}</b> paid after a reminder</p>
+          </div>
+          {(overview.reminders.failed > 0 || overview.reminders.bounced > 0) && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              {overview.reminders.failed} couldn't be sent{overview.reminders.lastError ? ` (last: ${overview.reminders.lastError})` : ""} · {overview.reminders.bounced} email address(es) bounced, so those members get no more email reminders.
+            </p>
+          )}
+        </Panel>
+      )}
+
       <Panel title="What the agent may do" sub="Start in Shadow, read the Shadow log for a week or two, then switch to Live.">
         <div className="divide-y divide-border">
           {(Object.keys(MODULE_LABEL) as ModuleId[]).map((m) => (

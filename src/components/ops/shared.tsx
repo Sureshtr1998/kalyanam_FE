@@ -242,6 +242,14 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
         )
       ))}
 
+      {action.status === "info" && !action.payload?.resolvedAt && (
+        <div className="mt-3">
+          <Button size="sm" variant="outline" disabled={!!busy} onClick={() => run("dismiss", () => post(`/manage/ops/actions/${action._id}/dismiss`))}>
+            {busy === "dismiss" ? <Loader2 className="animate-spin" /> : <Check />} Mark as done
+          </Button>
+        </div>
+      )}
+
       {action.status === "failed" && ["ads", "organic", "support"].includes(action.module) && (
         <div className="mt-3">
           <Button size="sm" variant="outline" disabled={!!busy} onClick={() => run("retry", () => post(`/manage/ops/actions/${action._id}/retry`, {}, false, 120000))}>

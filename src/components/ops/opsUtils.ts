@@ -86,6 +86,8 @@ export interface Overview {
   limits: Record<string, number>;
   ads?: AdsSettings;
   alerts?: AlertSettings;
+  /** Reminders in the last 24 hours (src/ops/reminders.js). */
+  reminders?: { unpaid: number; verify: number; whatsapp: number; failed: number; lastError: string | null; bounced: number; paidAfter: number } | null;
   organic?: { planEvenings: boolean; ownerUntil?: string | null };
   targets: { month: string; members: number; revenue: number; spend: number }[];
   brief: string;
