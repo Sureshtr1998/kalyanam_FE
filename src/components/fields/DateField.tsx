@@ -103,7 +103,7 @@ export const DateField = ({
           {value ? formatFloating(value) : placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[19rem] overflow-hidden p-0" align="start">
+      <PopoverContent className="w-[19rem] p-0" align="start">
         {/* Selected date */}
         <div className="border-b border-border bg-accent/40 px-4 py-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
