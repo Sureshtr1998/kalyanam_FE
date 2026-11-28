@@ -43,6 +43,8 @@ const JOB_LABEL: Record<string, string> = {
   membership: "Membership: reminders & hiding",
   adsSnapshot: "Ads snapshot",
   adsWeekly: "Ads budgets (Mondays)",
+  adsMidweek: "Ads raises (Thursdays)",
+  algorithmReview: "Algorithm review (monthly)",
   adsPlan: "Ads batch: pauses & new ads",
   ideasAuto: "Plan waiting ideas",
   weeklyReview: "Weekly review",
