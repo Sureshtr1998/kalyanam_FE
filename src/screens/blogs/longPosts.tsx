@@ -1,4 +1,5 @@
 import type { BlogPost } from "./blogsContents";
+import A from "./BlogLink";
 
 // Long-form rewrites of the most-searched posts (the originals were ~150 words, which Google
 // crawled but did not index). Merged into blogPosts by slug at the end of blogsContents.tsx.
@@ -793,6 +794,7 @@ export const LONG_POSTS: Record<string, LongPost> = {
         heading: "Seetha Rama Kalyana for Tamil families",
         blocks: [
           "The site is available in Tamil as well as English. Profiles show community, sub-community and gotra, Kundli matching by our astrologer is available, and phone numbers are shared only after both families agree to go ahead.",
+          <>Comparing sites? Read our guide on <A to="/blog/how-to-choose-tamil-matrimony-site">how to choose a Tamil matrimony site</A>: free vs paid, what to check and what verification covers.</>,
         ],
       },
     ],

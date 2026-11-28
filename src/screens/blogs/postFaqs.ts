@@ -121,4 +121,11 @@ export const POST_FAQS: Record<string, [question: string, answer: string][]> = {
     ["Which filters matter most?", "Use strict filters only for genuine deal-breakers, often community, language, diet and location, and keep age, height and income as ranges."],
     ["How often should I check a matrimony site?", "A few minutes every day or two works best: new profiles appear regularly and quick replies are noticed."],
   ],
+  "how-to-choose-tamil-matrimony-site": [
+    ["Which is the best Tamil matrimony site?", "There is no single best site for every family. Compare what is free and what needs a paid plan, how contact details are shared, whether the plan renews automatically, what verification covers, and whether there are enough Tamil profiles from your community. The best site is the one that fits those needs."],
+    ["Is there a free Tamil matrimony search?", "Most sites, including Seetha Rama Kalyana, let you register, create a profile and browse Tamil profiles for free. Sending interests or unlocking contact details usually needs a paid plan."],
+    ["What does a verified badge mean on a matrimony profile?", "It depends on the site, so read what each one checks. On Seetha Rama Kalyana, the verified badge means the member’s email and mobile number were confirmed by OTP. It does not confirm identity, age, marital status, caste, income or photos, so check those with the family yourself."],
+    ["How much does Seetha Rama Kalyana membership cost?", "Membership is ₹351 a year. Paid members get interest credits to send interests and unlock contacts. See seetharamakalyana.in/pricing for current details."],
+    ["Is it safe to share my number on a matrimony site?", "Share it only when you are comfortable with a match and their family. Talk on the site first, involve your family, meet in a public place, and never send money or OTPs to anyone you met online."],
+  ],
 };
