@@ -122,7 +122,7 @@ export const ActionCard = ({ action: raw, onChanged, compact }: { action: OpsAct
   };
   const open = ["scheduled", "needs_you", "idea", "shadow"].includes(action.status);
   // Ad changes the agent made can be reversed in Meta from here.
-  const undoable = action.status === "done" && ["ads.budget", "ads.rebalance", "ads.pause_ad", "ads.creative_launch", "ads.new_adset", "ads.merge_test", "support.profile_change"].includes(action.type);
+  const undoable = action.status === "done" && ["ads.budget", "ads.rebalance", "ads.pause_ad", "ads.creative_launch", "ads.new_adset", "ads.merge_test", "ads.algorithm_update", "support.profile_change"].includes(action.type);
   const isRefund = action.type === "support.refund";
 
   const run = async (key: string, fn: () => Promise<unknown>) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CalendarDays, Code2, Cog, Gauge, History, Inbox, Megaphone, RefreshCw, Search, Sprout, Wrench } from "lucide-react";
+import { BrainCircuit, CalendarDays, Code2, Cog, Gauge, History, Inbox, Megaphone, RefreshCw, Search, Sprout, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -14,14 +14,16 @@ import { ToolsView } from "./ToolsView";
 import { DevView } from "./DevView";
 import { SettingsView } from "./SettingsView";
 import { ActivityView } from "./ActivityView";
+import { AlgorithmView } from "./AlgorithmView";
 
-type View = "today" | "activity" | "calendar" | "ads" | "inbox" | "organic" | "seo" | "tools" | "dev" | "settings";
+type View = "today" | "activity" | "calendar" | "ads" | "algorithm" | "inbox" | "organic" | "seo" | "tools" | "dev" | "settings";
 
 const VIEWS: { id: View; label: string; icon: typeof Gauge; module?: ModuleId }[] = [
   { id: "today", label: "Today", icon: Gauge },
   { id: "activity", label: "Activity", icon: History },
   { id: "calendar", label: "Calendar", icon: CalendarDays },
   { id: "ads", label: "Ads", icon: Megaphone, module: "ads" },
+  { id: "algorithm", label: "Algorithm", icon: BrainCircuit, module: "ads" },
   { id: "inbox", label: "Inbox", icon: Inbox, module: "support" },
   { id: "organic", label: "Organic", icon: Sprout, module: "organic" },
   { id: "seo", label: "SEO", icon: Search, module: "seo" },
@@ -121,6 +123,7 @@ export const OpsPanel = () => {
           {view === "activity" && <ActivityView />}
           {view === "calendar" && <CalendarView />}
           {view === "ads" && <AdsView />}
+          {view === "algorithm" && <AlgorithmView />}
           {view === "inbox" && <InboxView />}
           {view === "organic" && <OrganicView />}
           {view === "seo" && <SeoView />}
