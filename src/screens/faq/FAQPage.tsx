@@ -101,7 +101,7 @@ const faqItems: FAQItem[] = [
     id: "faq-8",
     question: "Is it easy to delete or hide my profile?",
     answer:
-      "Yes, you can manage profile visibility or delete your profile directly from the account settings. Profiles not visited for 90 days are also hidden from matches until you log in again.",
+      "Yes, you can manage profile visibility or delete your profile directly from the account settings.",
     icon: "pi pi-cog",
   },
   {
