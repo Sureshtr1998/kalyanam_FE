@@ -38,6 +38,7 @@ const JOB_LABEL: Record<string, string> = {
   organicStats: "Post results",
   storyStats: "Story results",
   seoWeekly: "Search Console",
+  seoIndex: "Blog indexing (Google)",
   tools: "Tools reading",
   support: "Check inbox",
   comments: "Check comments",
