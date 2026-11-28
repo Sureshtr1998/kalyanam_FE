@@ -146,4 +146,5 @@ Registrations, not just visits. Rank in this order:
 
 Newest first. One line per change: date, what changed, pages, and later what it did.
 
+- 2026-11-28: new post how-to-choose-tamil-matrimony-site, targeting tamil matrimony queries (about 70 impressions, 0 clicks, positions 12-62); check indexing at 3, 7 and 14 days and impressions at 2, 4 and 8 weeks. Linked from tamil-matrimony-iyer-iyengar-weddings and marriage-bureau-vs-matrimony-apps (updatedAt bumped on both). The requested link to high-cost-of-matrimony-subscriptions-exposed was skipped because that post does not exist; linked reasons-to-choose-trusted-hindu-matrimony instead. Note for the owner (not blog work): the home page is stuck at position 11 for "sita rama kalyana" and "seetharama kalyana", and /matrimony has 143 impressions at position 54.
 - 2026-11-28: plan written from Search Console data (28 days to 26 Nov). No changes yet.

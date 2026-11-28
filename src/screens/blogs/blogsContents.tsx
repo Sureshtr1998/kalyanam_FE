@@ -717,7 +717,7 @@ export const blogPosts: BlogPost[] = [
     id: 28,
     title: "Tamil Matrimony: Exploring the Grace of Iyer and Iyengar Weddings",
     slug: "tamil-matrimony-iyer-iyengar-weddings",
-    updatedAt: "2026-11-08",
+    updatedAt: "2026-11-28",
     keywords:
       "Tamil matrimony, Iyer matrimony, Iyengar matrimony, Tamil Brahmin bride, Tamil wedding rituals, Chennai matrimony",
     summary:
@@ -1168,7 +1168,7 @@ export const blogPosts: BlogPost[] = [
     id: 45,
     title: "Marriage Bureau vs. Matrimony Apps: Which One is Right for You?",
     slug: "marriage-bureau-vs-matrimony-apps",
-    updatedAt: "2026-11-08",
+    updatedAt: "2026-11-28",
     keywords:
       "marriage bureau near me, online matrimony vs traditional, finding match through agent, modern matrimonial services",
     summary:
@@ -1248,6 +1248,22 @@ export const blogPosts: BlogPost[] = [
         so your time goes into conversations that matter.
       </>,
     ],
+  },
+  {
+    id: 49,
+    title: "Best Tamil Matrimony Site: How to Choose (Free vs Paid)",
+    slug: "how-to-choose-tamil-matrimony-site",
+    publishedAt: "2026-11-28",
+    updatedAt: "2026-11-28",
+    keywords:
+      "tamil matrimony, tamil matrimonial, best tamil matrimony, best tamil matrimonial sites, tamil matrimony free search, matrimony in tamil, tamil matrimony registration, tamil matrimonial service",
+    summary:
+      "How to choose a Tamil matrimony site: free vs paid, what to check before you pay, safety tips and what OTP verification does and does not confirm.",
+    category: "Tips",
+    readTime: "6 min read",
+    imageUrl: tipsUrl,
+    // Long content lives in guidePosts.tsx.
+    fullContent: [],
   },
 ];
 

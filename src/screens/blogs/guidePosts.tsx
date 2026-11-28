@@ -363,6 +363,7 @@ export const GUIDE_POSTS: Record<string, LongPost> = {
               "If you are unsure: use both, and let relatives know you are looking too.",
             ],
           },
+          <>Looking for a Tamil family match? See <A to="/blog/how-to-choose-tamil-matrimony-site">how to choose a Tamil matrimony site</A>.</>,
         ],
       },
       {
@@ -933,6 +934,96 @@ export const GUIDE_POSTS: Record<string, LongPost> = {
               <>Paperwork for marriage registration afterwards; see our <A to="/blog/modern-groom-checklist-india">pre-wedding checklist</A>.</>,
             ],
           },
+        ],
+      },
+    ],
+  },
+  "how-to-choose-tamil-matrimony-site": {
+    readTime: "6 min read",
+    answer:
+      "Pick a Tamil matrimony site by checking what is free and what needs a paid plan, how contact details are shared, whether the plan renews automatically, and what its verification actually covers. Then check every important detail with the other family yourself, whichever site you use.",
+    keyFacts: [
+      "Most sites let you browse for free; sending interests and unlocking contacts usually needs a paid plan.",
+      "Read the renewal terms before you pay: find out whether the plan renews automatically and how to stop it.",
+      "On Seetha Rama Kalyana, the verified badge means the member’s email and mobile number were confirmed by OTP. It does not confirm identity, age, marital status, caste, income or photos.",
+      "Seetha Rama Kalyana membership is ₹351 a year.",
+      "Always check details with the family yourself before going ahead.",
+    ],
+    fullContent: [
+      "Tamil families looking for an alliance today have many choices: large national matrimony sites, Tamil-focused services, community groups, local marriage information centres (thirumana thagaval maiyam) and introductions through relatives. Searching “best Tamil matrimony site” will not give you one right answer, because the right site depends on what your family needs.",
+      "This guide explains what to compare, what free and paid plans usually include, how to stay safe and what a “verified” badge really tells you. It does not rank or name other services; use the checklist on any site you are considering.",
+    ],
+    sections: [
+      {
+        heading: "Is a free Tamil matrimony site enough?",
+        blocks: [
+          "A free plan is a good place to start. On most sites you can register, create a profile and browse matches without paying, which is enough to see whether the site has families from your community, region and preferred sub-sect.",
+          "Where free plans usually stop is contact: sending interests, seeing phone numbers or messaging often needs a paid plan. If you only want to look around, free is enough. If you want to start conversations with families, expect to pay something, and compare what that payment actually buys.",
+          "A small fee also tends to filter out casual sign-ups, while a fully free service gives more reach but needs more screening from your side. Neither is automatically better.",
+        ],
+      },
+      {
+        heading: "Free vs paid: what changes?",
+        blocks: [
+          {
+            list: [
+              <><strong>Free:</strong> registration, profile, photos, browsing and search filters such as community, language and location.</>,
+              <><strong>Paid:</strong> usually the ability to send interests, unlock contact details or message members.</>,
+              <><strong>Duration:</strong> plans can run for a few months or a year; check how long you get for the price.</>,
+              <><strong>Renewal:</strong> some plans renew automatically. Find out before paying, and note how to switch it off.</>,
+              <><strong>Add-ons:</strong> some services sell extra visibility or assisted plans. Decide whether you really need them.</>,
+            ],
+          },
+          <>For a fuller checklist on pricing, refunds and privacy, see our guide on <A to="/blog/reasons-to-choose-trusted-hindu-matrimony">how to choose a Hindu matrimony site</A>.</>,
+        ],
+      },
+      {
+        heading: "What to check before you register",
+        blocks: [
+          {
+            list: [
+              "Does the site have enough profiles from Tamil families in your community, and filters for sub-community, gotra and location?",
+              "Is it available in Tamil as well as English, so elders in the family can use it too?",
+              "How are contact details shared, and who can see your phone number?",
+              "What does verification cover, exactly?",
+              "What is the full price, how long does the plan last, does it renew automatically, and is there a refund policy?",
+              "Will you get sales calls or agents pushing upgrades?",
+              "Can you hide photos, or delete your profile easily when you are done?",
+            ],
+          },
+          <>If you are deciding between an online site and a local bureau or thirumana thagaval maiyam, our comparison of a <A to="/blog/marriage-bureau-vs-matrimony-apps">marriage bureau vs matrimony apps</A> sets out the trade-offs. Many families use both.</>,
+        ],
+      },
+      {
+        heading: "How to stay safe when talking to a match",
+        blocks: [
+          {
+            list: [
+              "Talk on the site first, and share your phone number only when you are comfortable.",
+              "Involve your family early; a family call is a good first step.",
+              "Meet for the first time in a public place, with a family member if possible.",
+              "Never send money, gift cards or OTPs to anyone you met online, whatever the reason given.",
+              "Be careful with profiles that avoid video calls, push to move fast, or have stories that change.",
+              "Report suspicious profiles to the site.",
+            ],
+          },
+          <>Our <A to="/blog/online-matrimony-safety-guide">online matrimony safety guide</A> covers warning signs in more detail.</>,
+        ],
+      },
+      {
+        heading: "What does a verified badge really mean?",
+        blocks: [
+          "A “verified” badge means different things on different sites, so always read what that site says it checks. A badge is a starting point, not a guarantee about the person.",
+          "On Seetha Rama Kalyana, the verified badge means the member’s email address and mobile number were confirmed with a one-time password (OTP). That tells you the contact details are real and belong to the person who registered. It does not confirm their identity, age, marital status, caste, income or that the photos are theirs.",
+          "For those, do what Tamil families have always done: talk to the family, ask about relatives and friends you have in common, match horoscopes, and confirm education and work details yourself before going ahead.",
+        ],
+      },
+      {
+        heading: "Where does Seetha Rama Kalyana fit?",
+        blocks: [
+          <>Seetha Rama Kalyana is a matrimony site for Hindu families across India, available in Tamil as well as English. You can register and browse for free; membership is ₹351 a year, and paid members get interest credits to send interests and unlock contacts. For current details, see the <A to="/pricing">pricing page</A>.</>,
+          <>Tamil families can start from our <A to="/languages/tamil-matrimony">Tamil matrimony page</A> or use the site <A to="/ta">in Tamil</A>. If your family follows Tamil Brahmin traditions, our guide to <A to="/blog/tamil-matrimony-iyer-iyengar-weddings">Iyer and Iyengar weddings</A> explains the rituals and what families usually look for in an alliance.</>,
+          "Whichever site you choose, use the same checklist: know what you are paying for, read the renewal terms, understand what verification covers, and check the details with the family yourself.",
         ],
       },
     ],
